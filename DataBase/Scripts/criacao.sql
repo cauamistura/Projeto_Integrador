@@ -7,13 +7,12 @@ USE `DBPI` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DBPI`.`TUser` (
   `BDCPF` INT NOT NULL,
-  `BDMAIL` VARCHAR(100) NOT NULL,
+  `BDMAIL` VARCHAR(100)NOT NULL,
   `BDSENHA` VARCHAR(8) NOT NULL,
-  `BDCLINICA` TINYINT NOT NULL,
+  `BDCLINICA` Integer NOT NULL,
   `BDIDPERMISSAO` INT NULL,
   PRIMARY KEY (`BDCPF`))
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TEstados`
@@ -61,6 +60,22 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TEndereco` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `DBPI`.`TClinicas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBPI`.`TClinicas` (
+  `BDCNPJ` INT NOT NULL,
+  `BDCEP` INT NOT NULL,
+  `BDTELEFONE` VARCHAR(13) NULL,
+  `BDNOME` VARCHAR(50) NOT NULL,
+  `BDNOMEFANTASIA` VARCHAR(150) NULL,
+  PRIMARY KEY (`BDCNPJ`),
+    CONSTRAINT `fk_TClinicas_TEndereco1`
+    FOREIGN KEY (`BDCEP`)
+    REFERENCES `DBPI`.`TEndereco` (`BDCEP`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TDadosUser`
