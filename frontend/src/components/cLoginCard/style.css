@@ -1,4 +1,3 @@
-
 .box {
     width: 35rem;
     height: 42rem;
@@ -10,9 +9,6 @@
 .ImgContainer{
     text-align: center;
     margin-top: 5rem;
-}
-.ContentContainer{
-    text-align: center;
 }
 .Inputs{
     margin-left: auto;
