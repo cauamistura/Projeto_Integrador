@@ -8,9 +8,9 @@ public class Conexao {
 	
 	private static Connection conexao;
 	private static Conexao instancia;
-	private static final String DATABASE = "DBPI";
+	private static final String DATABASE = "dbpi";
 	private static final String USER     = "root";
-	private static final String PSW      = "@Anaf10052022";
+	private static final String PSW      = "aluno";
 	
 	private Conexao() {}
 	
