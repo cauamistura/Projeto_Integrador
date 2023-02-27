@@ -77,7 +77,7 @@ public class VLoginClinicaCON extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<MTClinica> TListClinica = new ArrayList<>();
-				TListClinica = FDAOTClinica.ListTClinica();
+				TListClinica = FDAOTClinica.ListTClinica(FDAOTClinica);
 				if (getExiste(TListClinica)) {
 					lbAlerta.setText("User Cadastrado!");
 				} else {
