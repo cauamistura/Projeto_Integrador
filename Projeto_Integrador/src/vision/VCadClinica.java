@@ -12,11 +12,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
+import javax.swing.JTabbedPane;
 
-public class vCadClinica extends JFrame {
+public class VCadClinica extends JFrame {
 
-	public DAOTClinica DC = new DAOTClinica();
+	public DAOTClinica FDAOTClinica = new DAOTClinica();
 	private JPanel contentPane;
+	private JTextField edID;
 
 	/**
 	 * Launch the application.
@@ -25,7 +27,7 @@ public class vCadClinica extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vCadClinica frame = new vCadClinica();
+					VCadClinica frame = new VCadClinica();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,49 +39,61 @@ public class vCadClinica extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public vCadClinica() {
+	public VCadClinica() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 163);
+		setBounds(100, 100, 462, 221);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		JTextField edCPF = new JTextField();
-		edCPF.setBounds(163, 13, 114, 19);
+		edCPF.setBounds(158, 60, 114, 19);
 		contentPane.add(edCPF);
 		edCPF.setColumns(10);
 		
 		JTextField edSenha = new JTextField();
 		edSenha.setColumns(10);
-		edSenha.setBounds(163, 42, 114, 19);
+		edSenha.setBounds(158, 89, 114, 19);
 		contentPane.add(edSenha);
 		
 		JButton btnCadastro = new JButton("Cadastro");
 		btnCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				
 				String vCpf = String.valueOf(edCPF.getText());
 				String vSenha = String.valueOf(edSenha.getText());
+				Integer vId = Integer.valueOf(edID.getText());
 				
-				DC.setBDCNPJ(vCpf);
-				DC.setBDSENHA(vSenha);
+				FDAOTClinica.setBDCNPJ(vCpf);
+				FDAOTClinica.setBDSENHA(vSenha);
+				FDAOTClinica.setBDIDCLINICA(vId);
 				
-				DC.inserir(DC);
+				
+				FDAOTClinica.inserir(FDAOTClinica);
 				
 			}
 		});
-		btnCadastro.setBounds(166, 79, 99, 25);
+		btnCadastro.setBounds(163, 134, 99, 25);
 		contentPane.add(btnCadastro);
 		
 		JLabel lbCNPJ = new JLabel("CNPJ: ");
-		lbCNPJ.setBounds(93, 15, 41, 15);
+		lbCNPJ.setBounds(88, 62, 41, 15);
 		contentPane.add(lbCNPJ);
 		
 		JLabel lbSenha = new JLabel("Senha:");
-		lbSenha.setBounds(88, 44, 50, 15);
+		lbSenha.setBounds(83, 91, 50, 15);
 		contentPane.add(lbSenha);
 		
+		edID = new JTextField();
+		edID.setColumns(10);
+		edID.setBounds(158, 21, 114, 19);
+		contentPane.add(edID);
+		
+		JLabel lbID = new JLabel("ID: ");
+		lbID.setBounds(88, 23, 41, 15);
+		contentPane.add(lbID);
+		
 	}
-
 }

@@ -1,6 +1,6 @@
 package vision;
 
-import java.awt.EventQueue;
+import java.awt.EventQueue; 
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -82,15 +82,6 @@ public class VLoginClinicaCON extends JFrame {
 					lbAlerta.setText("User Cadastrado!");
 				} else {
 					lbAlerta.setText("User não cadastrado!");
-				}
-				String alerta = String.valueOf(lbAlerta);
-				boolean test = alerta.contains("não");
-				
-				vCadClinica vc = new vCadClinica();
-				if (test == true) {
-					vc.setLocationRelativeTo(null);
-					vc.setVisible(true);
-					dispose();
 				}
 			}
 		});
