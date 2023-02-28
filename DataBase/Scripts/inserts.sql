@@ -1,9 +1,32 @@
-INSERT INTO `dbpi`.`testados`
-(`BDIDUF`,
-`BDNOMEUF`,
-`BDSIGLAUF`)
-VALUES
-(1, 'Santa Catarina', 'SC');
+
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (1,'AC', 'Acre');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (2,'AL', 'Alagoas');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (3,'AP', 'Amapá');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (4,'AM', 'Amazonas');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (5,'BA', 'Bahia');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (6,'CE', 'Ceará');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (7,'DF', 'Distrito Federal');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (8,'ES', 'Espírito Santo');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (9,'GO', 'Goiás');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (10,'MA', 'Maranhão');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (11,'MT', 'Mato Grosso');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (12,'MS', 'Mato Grosso do Sul');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (13,'MG', 'Minas Gerais');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (14,'PA', 'Pará');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (15,'PB', 'Paraíba');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (16,'PR', 'Paraná');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (17,'PE', 'Pernambuco');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (18,'PI', 'Piauí');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (19,'RJ', 'Rio de Janeiro');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (20,'RN', 'Rio Grande do Norte');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (21,'RS', 'Rio Grande do Sul');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (22,'RO', 'Rondônia');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (23,'RR', 'Roraima');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (24,'SC', 'Santa Catarina');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (25,'SP', 'São Paulo');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (26,'SE', 'Sergipe');
+INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (27,'TO', 'Tocantins');
+
 
 INSERT INTO `dbpi`.`tcidades`
 (`BDIDCIDADE`,
@@ -128,6 +151,13 @@ INSERT INTO `dbpi`.`tpets_tuser`
 `BDIDCLINICA`)
 VALUES
 (1, 1, 1);
+
+-- -----------------------------------------------------
+-- Inserts Estados
+-- -----------------------------------------------------
+
+
+
 
 
 
