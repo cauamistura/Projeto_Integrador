@@ -1,6 +1,6 @@
 package control;
 
-import java.sql.Connection;
+import java.sql.Connection;  
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -14,22 +14,16 @@ public class DAOTEndereco extends MTEndereco{
 	
 	// Insert
 	public Boolean inserir(DAOTEndereco prDAO) {
-		
-		
 		Connection c = prDAO.append();
 		try {
 			wSQL = "INSERT INTO `dbpi`.`tendereco`(`BDCEP`,`BDIDCIDADE`,`BDBAIRRO`)VALUES(?,?,?);";
-	
-			
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
 			stm.setString(1, prDAO.getBDCEP());
-			stm.setInt(2, prDAO.getBDIDCIDADE());
 			stm.setString(3, prDAO.getBDBAIRRO());
 			
 			stm.executeUpdate();
 			return true;
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,16 +36,13 @@ public class DAOTEndereco extends MTEndereco{
 		Connection c = prDAO.append();
 		try {
 			wSQL = "UPDATE `dbpi`.`tendereco`SET `BDCEP` = ?,`BDIDCIDADE` = ?,`BDBAIRRO` = ? WHERE `BDCEP` = ?;";
-	
-			
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
 			stm.setString(1, prDAO.getBDCEP());
 			stm.setInt(2, prDAO.getBDIDCIDADE());
 			stm.setString(3, prDAO.getBDBAIRRO());
 	
-			return true;
-			
+			return true;	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,18 +54,15 @@ public class DAOTEndereco extends MTEndereco{
 	public Boolean deletar(DAOTEndereco prDAO) {
 		Connection c = prDAO.append();
 		try {
-			
 			wSQL = "DELETE FROM `dbpi`.`tendereco` WHERE BDCEP = ?;";
-			
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
-		//	stm.setString(1, prDAO.getBDCEP());
+			stm.setString(1, prDAO.getBDCEP());
 			stm.setInt(2, prDAO.getBDIDCIDADE());
 			stm.setString(3, prDAO.getBDBAIRRO());
 	
 			stm.execute();
 			return true;
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -82,6 +70,7 @@ public class DAOTEndereco extends MTEndereco{
 		return false;
 	}	
 	
+	// Select
 	public ArrayList<MTEndereco> ListTEndereco (DAOTEndereco prDAO) {
 		
 		ArrayList<MTEndereco> ListTaEndereco = new ArrayList<>();
@@ -93,15 +82,14 @@ public class DAOTEndereco extends MTEndereco{
 			ResultSet rs = stm.executeQuery(wSQL);
 			
 			while (rs.next()) {
-				MTEndereco lc = new MTEndereco();
-			
+				MTEndereco le = new MTEndereco();
+
+				le.setBDBAIRRO(rs.getString("BDBAIRRO"));
+				le.setBDCEP(rs.getString("BDCEP"));
+				le.setBDIDCIDADE(rs.getInt("BDIDCIDADE"));
 				
-//				lc.setBDBAIRRO(rs.);
-//				lc.setBDCEP();
-//				lc.setBDIDCIDADE();
+				ListTaEndereco.add(le);
 			}
-			
-		
 			
 		} catch (Exception e) {
 			e.printStackTrace();

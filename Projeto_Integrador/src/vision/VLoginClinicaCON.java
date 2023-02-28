@@ -79,9 +79,7 @@ public class VLoginClinicaCON extends JFrame {
 				ArrayList<MTClinica> TListClinica = new ArrayList<>();
 				TListClinica = FDAOTClinica.ListTClinica(FDAOTClinica);
 				if (getExiste(TListClinica)) {
-					VMenu menu = new VMenu();
-					menu.setVisible(true);
-					dispose();
+					lbAlerta.setText("User Cadastrado!");
 				} else {
 					lbAlerta.setText("User não cadastrado!");
 				}
