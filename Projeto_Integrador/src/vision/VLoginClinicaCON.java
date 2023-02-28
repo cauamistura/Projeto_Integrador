@@ -65,7 +65,7 @@ public class VLoginClinicaCON extends JFrame {
 		contentPane.add(lbCnpj);
 		
 		JLabel lbSenha = new JLabel("Senha:");
-		lbSenha.setBounds(64, 45, 46, 14);
+		lbSenha.setBounds(64, 45, 56, 14);
 		contentPane.add(lbSenha);
 		
 		JLabel lbAlerta = new JLabel("<Aguardando>");
@@ -82,6 +82,15 @@ public class VLoginClinicaCON extends JFrame {
 					lbAlerta.setText("User Cadastrado!");
 				} else {
 					lbAlerta.setText("User não cadastrado!");
+				}
+				String alerta = String.valueOf(lbAlerta);
+				boolean test = alerta.contains("não");
+				
+				vCadClinica vc = new vCadClinica();
+				if (test == true) {
+					vc.setLocationRelativeTo(null);
+					vc.setVisible(true);
+					dispose();
 				}
 			}
 		});
