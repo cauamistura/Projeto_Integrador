@@ -41,7 +41,7 @@ public class VUserCad extends JFrame {
 		contentPane.setLayout(null);
 		
 		textField = new JTextField();
-		textField.setBounds(97, 43, 86, 20);
+		textField.setBounds(124, 40, 86, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 	}
