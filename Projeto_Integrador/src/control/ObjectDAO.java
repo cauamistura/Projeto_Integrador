@@ -1,6 +1,10 @@
 package control;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import model.MTClinica;
 
 public class ObjectDAO {
 
@@ -27,6 +31,22 @@ public class ObjectDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Integer getChaveID(String prTable, String prColumId) {
+		Connection c = append();
+		try {
+			Statement stm = c.createStatement();
+			String wSql = "SELECT max("+ prColumId +") as BDCHAVE FROM "+ prTable +";";
+			ResultSet rs =  stm.executeQuery(wSql);
+			
+			return (rs.getInt("BDCHAVE") + 1);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		post();
+		return 0;
 	}
 	
 	
