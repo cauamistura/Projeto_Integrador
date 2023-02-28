@@ -15,6 +15,10 @@ import java.awt.event.ActionEvent;
 
 import control.DAOTClinica;
 import model.MTClinica;
+import java.awt.SystemColor;
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class VLoginClinicaCON extends JFrame {
 
@@ -43,37 +47,46 @@ public class VLoginClinicaCON extends JFrame {
 	 */
 	public VLoginClinicaCON() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 162);
+		setBounds(100, 100, 450, 600);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(158, 174, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		edCNPJ = new JTextField();
-		edCNPJ.setBounds(138, 11, 86, 20);
+		edCNPJ.setBounds(78, 232, 284, 31);
 		contentPane.add(edCNPJ);
 		edCNPJ.setColumns(10);
 		
 		edSenha = new JTextField();
-		edSenha.setBounds(138, 42, 86, 20);
+		edSenha.setBounds(78, 317, 284, 31);
 		contentPane.add(edSenha);
 		edSenha.setColumns(10);
 		
 		JLabel lbCnpj = new JLabel("CNPJ:");
-		lbCnpj.setBounds(64, 14, 46, 14);
+		lbCnpj.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbCnpj.setBounds(78, 209, 46, 14);
 		contentPane.add(lbCnpj);
 		
 		JLabel lbSenha = new JLabel("Senha:");
-		lbSenha.setBounds(64, 45, 56, 14);
+		lbSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbSenha.setBounds(78, 294, 56, 14);
 		contentPane.add(lbSenha);
 		
 		JLabel lbAlerta = new JLabel("<Aguardando>");
+		lbAlerta.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lbAlerta.setHorizontalAlignment(SwingConstants.CENTER);
-		lbAlerta.setBounds(64, 85, 160, 14);
+		lbAlerta.setBounds(131, 488, 176, 26);
 		contentPane.add(lbAlerta);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setIcon(null);
+		btnLogin.setForeground(new Color(0, 0, 0));
+		btnLogin.setBackground(new Color(255, 199, 0));
+		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<MTClinica> TListClinica = new ArrayList<>();
@@ -85,8 +98,18 @@ public class VLoginClinicaCON extends JFrame {
 				}
 			}
 		});
-		btnLogin.setBounds(261, 10, 89, 23);
+		btnLogin.setBounds(78, 395, 284, 37);
 		contentPane.add(btnLogin);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/imagen/Group (2).png")));
+		lblNewLabel_1.setBounds(155, 47, 135, 145);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel fundo = new JLabel("");
+		fundo.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/imagen/BG (1).png")));
+		fundo.setBounds(64, 24, 311, 514);
+		contentPane.add(fundo);
 	}
 	private Boolean getExiste(ArrayList<MTClinica> prList) {
 		Boolean wValida = false;
