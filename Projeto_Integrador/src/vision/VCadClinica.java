@@ -20,6 +20,8 @@ public class VCadClinica extends JFrame {
 	public DAOTClinica FDAOTClinica = new DAOTClinica();
 	private JPanel contentPane;
 	private JTextField edID;
+	private JTextField edSenha;
+	private JTextField edCPF;
 
 	/**
 	 * Launch the application.
@@ -48,12 +50,12 @@ public class VCadClinica extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		JTextField edCPF = new JTextField();
+		edCPF = new RoundJTextField(15);
 		edCPF.setBounds(158, 60, 114, 19);
 		contentPane.add(edCPF);
 		edCPF.setColumns(10);
 		
-		JTextField edSenha = new JTextField();
+		edSenha = new RoundJTextField(15);
 		edSenha.setColumns(10);
 		edSenha.setBounds(158, 89, 114, 19);
 		contentPane.add(edSenha);
@@ -87,7 +89,7 @@ public class VCadClinica extends JFrame {
 		lbSenha.setBounds(83, 91, 50, 15);
 		contentPane.add(lbSenha);
 		
-		edID = new JTextField();
+		edID = new RoundJTextField(15);
 		edID.setColumns(10);
 		edID.setBounds(158, 21, 114, 19);
 		contentPane.add(edID);
