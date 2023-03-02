@@ -36,7 +36,5 @@ public class MTEstado extends ObjectDAO{
 	public void setBDSIGLAUF(String bDSIGLAUF) {
 		BDSIGLAUF = bDSIGLAUF;
 	}
-
-	
 	
 }

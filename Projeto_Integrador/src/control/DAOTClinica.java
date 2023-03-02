@@ -1,6 +1,6 @@
 package control;
 
-import java.sql.Connection; 
+import java.sql.Connection;  
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -80,8 +80,8 @@ public class DAOTClinica extends MTClinica {
 		    
 		Connection c = prDAO.append();
 		try {
-			Statement stm = c.createStatement();
 			wSql = "SELECT * FROM tclinica";
+			Statement stm = c.createStatement();
 			ResultSet rs =  stm.executeQuery(wSql);
 			
 			while (rs.next()) {

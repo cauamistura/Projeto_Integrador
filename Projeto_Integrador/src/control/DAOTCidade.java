@@ -1,6 +1,6 @@
 package control;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -81,9 +81,8 @@ public class DAOTCidade extends MTCidade{
 			ArrayList<MTCidade> ListTaCidade = new ArrayList<>();
 			Connection c = prDAO.append();
 			try {
-				
-				Statement stm = c.prepareStatement(wSQL);
 				wSQL = "SELECT * FROM tcidade";
+				Statement stm = c.prepareStatement(wSQL);
 				ResultSet rs = stm.executeQuery(wSQL);
 				
 				while (rs.next()) {

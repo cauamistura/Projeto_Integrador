@@ -17,8 +17,6 @@ public class MTEndereco extends MTCidade{
 		BDCEP = bDCEP;
 	}
 
-
-
 	public String getBDBAIRRO() {
 		return BDBAIRRO;
 	}

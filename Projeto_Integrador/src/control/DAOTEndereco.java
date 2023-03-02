@@ -1,13 +1,13 @@
 package control;
 
-import java.sql.Connection;  
+import java.sql.Connection;   
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.MTEndereco;
-
+ 
 public class DAOTEndereco extends MTEndereco{
 	
 	private String wSQL;
@@ -76,9 +76,8 @@ public class DAOTEndereco extends MTEndereco{
 		ArrayList<MTEndereco> ListTaEndereco = new ArrayList<>();
 		Connection c = prDAO.append();
 		try {
-			
-			Statement stm = c.prepareStatement(wSQL);
 			wSQL = "SELECT * FROM tendereco";
+			Statement stm = c.prepareStatement(wSQL);
 			ResultSet rs = stm.executeQuery(wSQL);
 			
 			while (rs.next()) {
