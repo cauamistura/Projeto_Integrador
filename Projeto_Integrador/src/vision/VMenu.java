@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import vision.cadastros.VPetCad;
 import vision.cadastros.VUserCad;
 
 import javax.swing.JMenuBar;
@@ -61,6 +62,40 @@ public class VMenu extends JFrame {
 			}
 		});
 		mmCad.add(miUser);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		miUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VUserCad uc = new VUserCad();
+				uc.setLocationRelativeTo(null);
+				uc.setVisible(true);
+			}
+		});
+		mmCad.add(miUser);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		JMenuItem miPet = new JMenuItem("Pet");
+		miPet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VUserCad uc = new VUserCad();
+				uc.setLocationRelativeTo(null);
+				uc.setVisible(true);
+			}
+		});
+		mmCad.add(miPet);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		miPet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VPetCad uc = new VPetCad();
+				uc.setLocationRelativeTo(null);
+				uc.setVisible(true);
+			}
+		});
+		mmCad.add(miPet);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
