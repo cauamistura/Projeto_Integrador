@@ -1,6 +1,15 @@
+
+/*
+ * Link dessa classe foi pega no link:
+ * https://www.guj.com.br/t/resolvido-arredondar-borda-de-um-textfield-java/342996/2
+ * 
+ * 
+ * Essa classe tem como função fodificar os parametros do TextField
+ * */
+
 package vision;
 
-import java.awt.Graphics;
+import java.awt.Graphics; 
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
@@ -14,16 +23,16 @@ public class RoundJTextField extends JTextField {
     }
     protected void paintComponent(Graphics g) {
          g.setColor(getBackground());
-         g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+         g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 30, 30);
          super.paintComponent(g);
     }
     protected void paintBorder(Graphics g) {
          g.setColor(getForeground());
-         g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+         g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 30, 30);
     }
     public boolean contains(int x, int y) {
          if (shape == null || !shape.getBounds().equals(getBounds())) {
-             shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+             shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 30, 30);
          }
          return shape.contains(x, y);
     }
