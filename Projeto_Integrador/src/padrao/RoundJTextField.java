@@ -7,7 +7,7 @@
  * Essa classe tem como função fodificar os parametros do TextField
  * */
 
-package vision;
+package padrao;
 
 import java.awt.Graphics; 
 import java.awt.Shape;
@@ -16,7 +16,11 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JTextField;
 
 public class RoundJTextField extends JTextField {
-    private Shape shape;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Shape shape;
     public RoundJTextField(int size) {
         super(size);
         setOpaque(false);

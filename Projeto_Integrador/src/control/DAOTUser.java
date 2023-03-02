@@ -25,7 +25,7 @@ public class DAOTUser extends MTUser{
 			stm.setString(3, prDAO.getBDCPF());
 			stm.setString(4, prDAO.getBDMAIL());
 			stm.setString(5, prDAO.getBDSENHA());
-			stm.setString(6, prDAO.getBDIDPERMICAO());
+			stm.setInt   (6, prDAO.getBDIDPERMICAO());
 			
 			stm.executeUpdate();
 			return true;
@@ -76,32 +76,32 @@ public class DAOTUser extends MTUser{
 		
 	// SELECT
 	public ArrayList<MTClinica> ListTClinica(DAOTUser prDAO) {
-		ArrayList<MTClinica> ListTaClinica = new ArrayList<>();
+		ArrayList<MTClinica> ListaUser = new ArrayList<>();
 		    
 		Connection c = prDAO.append();
 		try {
 			Statement stm = c.createStatement();
-//			wSql = "SELECT * FROM tclinica";
-//			ResultSet rs =  stm.executeQuery(wSql);
-//			
-//			while (rs.next()) {
-//				MTClinica lc = new MTClinica();
-//				
-//				lc.setBDIDCLINICA	(rs.getInt("BDIDCLINICA"));
-//				lc.setBDIDCEP	 	(rs.getInt("BDIDCEP"));
-//				lc.setBDCNPJ	 	(rs.getString("BDCNPJ"));	
-//				lc.setBDNOME	 	(rs.getString("BDNOME"));
-//				lc.setBDNOMEFANTASIA(rs.getString("BDNOMEFANTASIA"));
-//				lc.setBDSENHA	 	(rs.getString("BDSENHA"));
-//			
-//				ListTaClinica.add(lc);
-//			}
+			wSql = "SELECT * FROM tuser";
+			ResultSet rs =  stm.executeQuery(wSql);
+			
+			while (rs.next()) {
+				MTUser lc = new MTUser();
+				
+				lc.setBDIDUSER	  (rs.getInt("BDIDUSER"));
+				lc.setBDIDCLINICA (rs.getInt("BDIDCLINICA"));
+				lc.setBDCPF		  (rs.getString("BDCPF"));
+				lc.setBDMAIL	  (rs.getString("BDMAIL"));
+				lc.setBDSENHA	  (rs.getString("BDSENHA"));
+				lc.setBDIDPERMICAO(rs.getInt("BDIDPERMICAO"));
+			
+				ListaUser.add(lc);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		prDAO.post();
-		return ListTaClinica;
+		return ListaUser;
 	}
 
 }

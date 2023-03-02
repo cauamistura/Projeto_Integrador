@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 
 import control.DAOTClinica;
 import model.MTClinica;
+import padrao.RoundJTextField;
+
 import java.awt.SystemColor;
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -26,6 +28,7 @@ public class VLoginClinicaCON extends JFrame {
 	private JTextField edCNPJ;
 	private JTextField edSenha;
 	private DAOTClinica FDAOTClinica = new DAOTClinica();
+	private VMenu menu;
 	/**
 	 * Launch the application.
 	 */
@@ -34,6 +37,7 @@ public class VLoginClinicaCON extends JFrame {
 			public void run() {
 				try {
 					VLoginClinicaCON frame = new VLoginClinicaCON();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -91,7 +95,8 @@ public class VLoginClinicaCON extends JFrame {
 				ArrayList<MTClinica> TListClinica = new ArrayList<>();
 				TListClinica = FDAOTClinica.ListTClinica(FDAOTClinica);
 				if (getExiste(TListClinica)) {
-					lbAlerta.setText("User Cadastrado!");
+					menu.setVisible(true);
+					dispose();
 				} else {
 					lbAlerta.setText("User não cadastrado!");
 				}
@@ -115,6 +120,10 @@ public class VLoginClinicaCON extends JFrame {
 		for (MTClinica l : prList) {
 			if(l.getBDCNPJ().equals(edCNPJ.getText()) && l.getBDSENHA().equalsIgnoreCase(edSenha.getText())) {
 				wValida = true;
+				menu = new VMenu();
+				menu.FIDClinica  = l.getBDIDCLINICA();
+				menu.FNOMEClinica= l.getBDNOME();
+				menu.FCNPJClinica= l.getBDCNPJ();
 				break;
 			}
 		}

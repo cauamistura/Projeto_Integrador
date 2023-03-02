@@ -6,6 +6,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< Updated upstream
 	<classpathentry kind="lib" path="C:/Users/Aluno/Desktop/Projeto_Integrador/jar/mysql-connector-java-8.0.30.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/Aluno/Desktop/pi/Projeto_Integrador/jar/mysql-connector-java-8.0.30.jar"/>
+>>>>>>> Stashed changes
 	<classpathentry kind="output" path="bin"/>
 </classpath>

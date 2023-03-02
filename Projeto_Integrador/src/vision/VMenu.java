@@ -17,10 +17,18 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class VMenu extends JFrame {
-
+	
+	public static Integer FIDClinica;
+	public static String  FNOMEClinica;
+	public static String  FCNPJClinica;
 	private JPanel contentPane;
+	private JTextField edDescricao;
 
 	/**
 	 * Launch the application.
@@ -42,6 +50,12 @@ public class VMenu extends JFrame {
 	 * Create the frame.
 	 */
 	public VMenu() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				edDescricao.setText(FCNPJClinica + " - " + FNOMEClinica);
+			}
+		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -101,6 +115,10 @@ public class VMenu extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		edDescricao = new JTextField();
+		edDescricao.setEnabled(false);
+		contentPane.add(edDescricao, BorderLayout.SOUTH);
+		edDescricao.setColumns(10);
 	}
-
 }

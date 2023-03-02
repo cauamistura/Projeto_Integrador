@@ -5,11 +5,11 @@ import control.ObjectDAO;
 public class MTUser extends MTClinica {
 			
 	Integer BDIDUSER,
-			BDIDCLINICA;
+			BDIDCLINICA,
+			BDIDPERMICAO;
 	String  BDCPF,
 			BDMAIL,
-			BDSENHA,
-			BDIDPERMICAO;
+			BDSENHA;
 	
 	public Integer getBDIDUSER() {
 		return BDIDUSER;
@@ -41,12 +41,10 @@ public class MTUser extends MTClinica {
 	public void setBDSENHA(String bDSENHA) {
 		BDSENHA = bDSENHA;
 	}
-	public String getBDIDPERMICAO() {
+	public Integer getBDIDPERMICAO() {
 		return BDIDPERMICAO;
 	}
-	public void setBDIDPERMICAO(String bDIDPERMICAO) {
+	public void setBDIDPERMICAO(Integer bDIDPERMICAO) {
 		BDIDPERMICAO = bDIDPERMICAO;
 	}
-
-
 }

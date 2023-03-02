@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
-import vision.RoundJTextField;
+import padrao.RoundJTextField;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JSeparator;
