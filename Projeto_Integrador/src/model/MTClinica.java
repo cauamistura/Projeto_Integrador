@@ -11,6 +11,7 @@ public class MTClinica extends ObjectDAO{
 			BDNOMEFANTASIA,
 			BDSENHA;
 	
+	
 	public Integer getBDIDCLINICA() {
 		return BDIDCLINICA;
 	}

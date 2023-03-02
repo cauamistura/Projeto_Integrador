@@ -8,12 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
 import padrao.RoundJTextField;
+import vision.VMenu;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JSeparator;
@@ -22,11 +24,11 @@ public class VCadClinica extends JFrame {
 
 	public DAOTClinica FDAOTClinica = new DAOTClinica();
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField edUf;
+	private JTextField edCidade;
+	private JTextField edDescricao;
+	private JTextField edCep;
+	private JTextField edBairro;
 	private JTextField edId;
 	private JTextField edNome;
 	private JTextField edCnpj;
@@ -69,33 +71,33 @@ public class VCadClinica extends JFrame {
 		lbUf.setBounds(77, 58, 70, 15);
 		pEndereco.add(lbUf);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(165, 56, 114, 19);
-		pEndereco.add(textField_1);
+		edUf = new JTextField();
+		edUf.setColumns(10);
+		edUf.setBounds(165, 56, 114, 19);
+		pEndereco.add(edUf);
 		
 		JLabel lbCidade = new JLabel("Cidade :");
 		lbCidade.setBounds(320, 53, 70, 15);
 		pEndereco.add(lbCidade);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(408, 51, 114, 19);
-		pEndereco.add(textField_2);
+		edCidade = new JTextField();
+		edCidade.setColumns(10);
+		edCidade.setBounds(408, 51, 114, 19);
+		pEndereco.add(edCidade);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(408, 89, 114, 19);
-		pEndereco.add(textField_3);
+		edDescricao = new JTextField();
+		edDescricao.setColumns(10);
+		edDescricao.setBounds(408, 89, 114, 19);
+		pEndereco.add(edDescricao);
 		
 		JLabel lbDesc = new JLabel("Descrição : ");
 		lbDesc.setBounds(320, 91, 87, 15);
 		pEndereco.add(lbDesc);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(152, 87, 114, 19);
-		pEndereco.add(textField_4);
+		edCep = new JTextField();
+		edCep.setColumns(10);
+		edCep.setBounds(152, 87, 114, 19);
+		pEndereco.add(edCep);
 		
 		JLabel lbCep = new JLabel("CEP :");
 		lbCep.setBounds(64, 89, 70, 15);
@@ -105,14 +107,30 @@ public class VCadClinica extends JFrame {
 		lbBairro.setBounds(77, 118, 70, 15);
 		pEndereco.add(lbBairro);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(165, 116, 114, 19);
-		pEndereco.add(textField_5);
+		edBairro = new JTextField();
+		edBairro.setColumns(10);
+		edBairro.setBounds(165, 116, 114, 19);
+		pEndereco.add(edBairro);
 		
 		JLabel lbEndereo = new JLabel("Endereço");
 		lbEndereo.setBounds(0, 0, 70, 15);
 		pEndereco.add(lbEndereo);
+		
+		JButton btnCad = new JButton("Cadastrar");
+		btnCad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				FDAOTClinica.setBDCNPJ(edCnpj.getText());
+				FDAOTClinica.setBDNOME(edNome.getText());
+				FDAOTClinica.setBDNOMEFANTASIA(edNomeFan.getText());
+				
+				
+		        FDAOTClinica.inserir(FDAOTClinica);
+				JOptionPane.showMessageDialog(null, "foi hehe");
+			}
+		});
+		btnCad.setBounds(419, 132, 89, 23);
+		pEndereco.add(btnCad);
 		
 		JPanel pDados = new JPanel();
 		pDados.setBounds(12, 0, 601, 158);

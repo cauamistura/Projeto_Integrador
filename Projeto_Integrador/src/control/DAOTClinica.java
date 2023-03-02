@@ -1,6 +1,7 @@
 package control;
 
 import java.sql.Connection;  
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -12,6 +13,7 @@ public class DAOTClinica extends MTClinica {
 	
 //	private static DAOTClinica FDAOTClinica;
 	private String wSql;
+	
 	
 	//Insert
 	public Boolean inserir(DAOTClinica prDAO) {
