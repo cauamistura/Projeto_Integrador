@@ -1,8 +1,9 @@
 package vision.cadastros;
 
-import java.awt.EventQueue; 
+import java.awt.EventQueue;  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,25 +15,31 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
+import control.DAOTEndereco;
+import control.DAOTEstado;
+import model.MTClinica;
+import model.MTEndereco;
+import model.MTEstado;
 import padrao.RoundJTextField;
 import vision.VMenu;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JSeparator;
+import javax.swing.JComboBox;
 
 public class VCadClinica extends JFrame {
 
 	public DAOTClinica FDAOTClinica = new DAOTClinica();
+	public DAOTEndereco FDAOTEndereco = new DAOTEndereco();
 	private JPanel contentPane;
-	private JTextField edUf;
 	private JTextField edCidade;
 	private JTextField edDescricao;
 	private JTextField edCep;
 	private JTextField edBairro;
-	private JTextField edId;
 	private JTextField edNome;
 	private JTextField edCnpj;
 	private JTextField edNomeFan;
+	private JTextField edSenha;
 
 	/**
 	 * Launch the application.
@@ -70,11 +77,6 @@ public class VCadClinica extends JFrame {
 		JLabel lbUf = new JLabel("UF : ");
 		lbUf.setBounds(77, 58, 70, 15);
 		pEndereco.add(lbUf);
-		
-		edUf = new JTextField();
-		edUf.setColumns(10);
-		edUf.setBounds(165, 56, 114, 19);
-		pEndereco.add(edUf);
 		
 		JLabel lbCidade = new JLabel("Cidade :");
 		lbCidade.setBounds(320, 53, 70, 15);
@@ -120,17 +122,36 @@ public class VCadClinica extends JFrame {
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				FDAOTClinica.setBDIDCLINICA(FDAOTClinica.getChaveID("TClinica","BDIDCLINICA"));
 				FDAOTClinica.setBDCNPJ(edCnpj.getText());
 				FDAOTClinica.setBDNOME(edNome.getText());
 				FDAOTClinica.setBDNOMEFANTASIA(edNomeFan.getText());
+				FDAOTClinica.setBDSENHA(edSenha.getText()) ;
 				
+				FDAOTEndereco.setBDIDCIDADE(FDAOTEndereco.getChaveID("TCidade", "BDIDCIDADE"));
+				FDAOTEndereco.setBDNOMECID(edCidade.getText());
+				FDAOTEndereco.setBDDESCCID(edDescricao.getText());
 				
+				FDAOTEndereco.setBDBAIRRO(edBairro.getText());
+				FDAOTEndereco.setBDBAIRRO(edCep.getText());
+				
+				FDAOTClinica.inserir(FDAOTClinica);
+				FDAOTEndereco.inserir(FDAOTEndereco);
 		        FDAOTClinica.inserir(FDAOTClinica);
-				JOptionPane.showMessageDialog(null, "foi hehe");
 			}
 		});
-		btnCad.setBounds(419, 132, 89, 23);
+		btnCad.setBounds(419, 132, 125, 23);
 		pEndereco.add(btnCad);
+		
+		ArrayList<MTEndereco> TListEndereco = new ArrayList<>();
+		TListEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
+		
+		JComboBox cbUF = new JComboBox();
+		for (MTEndereco mtEndereco : TListEndereco) {
+			cbUF.addItem(mtEndereco.getBDSIGLAUF());
+		}
+		cbUF.setBounds(152, 53, 114, 24);
+		pEndereco.add(cbUF);
 		
 		JPanel pDados = new JPanel();
 		pDados.setBounds(12, 0, 601, 158);
@@ -138,44 +159,44 @@ public class VCadClinica extends JFrame {
 		pDados.setLayout(null);
 		
 		JLabel lbCnpj = new JLabel("CNPJ :");
-		lbCnpj.setBounds(104, 116, 70, 15);
+		lbCnpj.setBounds(116, 91, 70, 15);
 		pDados.add(lbCnpj);
-		
-		edId = new JTextField();
-		edId.setColumns(10);
-		edId.setBounds(192, 25, 55, 19);
-		pDados.add(edId);
 		
 		edNome = new JTextField();
 		edNome.setColumns(10);
-		edNome.setBounds(192, 52, 312, 19);
+		edNome.setBounds(204, 27, 312, 19);
 		pDados.add(edNome);
 		
 		edCnpj = new JTextField();
 		edCnpj.setColumns(10);
-		edCnpj.setBounds(192, 114, 312, 19);
+		edCnpj.setBounds(204, 89, 312, 19);
 		pDados.add(edCnpj);
 		
 		edNomeFan = new JTextField();
 		edNomeFan.setColumns(10);
-		edNomeFan.setBounds(192, 83, 312, 19);
+		edNomeFan.setBounds(204, 58, 312, 19);
 		pDados.add(edNomeFan);
 		
 		JLabel lbNome = new JLabel("Nome :");
-		lbNome.setBounds(121, 54, 61, 15);
+		lbNome.setBounds(133, 29, 61, 15);
 		pDados.add(lbNome);
 		
 		JLabel lbNomeFan = new JLabel("Nome Fantasia :");
-		lbNomeFan.setBounds(63, 83, 126, 15);
+		lbNomeFan.setBounds(75, 58, 126, 15);
 		pDados.add(lbNomeFan);
 		
-		JLabel lbID = new JLabel("ID :");
-		lbID.setBounds(144, 27, 42, 15);
-		pDados.add(lbID);
-		
 		JLabel lbDadosClinica = new JLabel("Dados Clinica");
-		lbDadosClinica.setBounds(0, 0, 126, 15);
+		lbDadosClinica.setBounds(12, 0, 126, 15);
 		pDados.add(lbDadosClinica);
+		
+		edSenha = new JTextField();
+		edSenha.setBounds(204, 120, 312, 19);
+		pDados.add(edSenha);
+		edSenha.setColumns(10);
+		
+		JLabel lbSenha = new JLabel("Senha:");
+		lbSenha.setBounds(116, 118, 70, 15);
+		pDados.add(lbSenha);
 		
 	}
 }

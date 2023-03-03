@@ -23,7 +23,6 @@ public class DAOTClinica extends MTClinica {
 			PreparedStatement stm = c.prepareStatement(wSql);
 			
 			stm.setInt   (1, prDAO.getBDIDCLINICA());
-			stm.setInt   (2, prDAO.getBDIDCEP());
 			stm.setString(3, prDAO.getBDCNPJ());
 			stm.setString(4, prDAO.getBDNOME());
 			stm.setString(5, prDAO.getBDNOMEFANTASIA());
@@ -46,7 +45,6 @@ public class DAOTClinica extends MTClinica {
 			PreparedStatement stm = c.prepareStatement(wSql);
 			
 			stm.setInt   (6, prDAO.getBDIDCLINICA());
-			stm.setInt   (1, prDAO.getBDIDCEP());
 			stm.setString(2, prDAO.getBDCNPJ());
 			stm.setString(3, prDAO.getBDNOME());
 			stm.setString(4, prDAO.getBDNOMEFANTASIA());
@@ -90,7 +88,6 @@ public class DAOTClinica extends MTClinica {
 				MTClinica lc = new MTClinica();
 				
 				lc.setBDIDCLINICA	(rs.getInt("BDIDCLINICA"));
-				lc.setBDIDCEP	 	(rs.getInt("BDIDCEP"));
 				lc.setBDCNPJ	 	(rs.getString("BDCNPJ"));	
 				lc.setBDNOME	 	(rs.getString("BDNOME"));
 				lc.setBDNOMEFANTASIA(rs.getString("BDNOMEFANTASIA"));
