@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 
 import control.DAOTClinica;
 import model.MTClinica;
+import padrao.RoundButton;
 import padrao.RoundJTextField;
 
 import java.awt.SystemColor;
@@ -84,12 +85,11 @@ public class VLoginClinicaCON extends JFrame {
 		lbAlerta.setBounds(131, 488, 176, 26);
 		contentPane.add(lbAlerta);
 		
-		JButton btnLogin = new JButton("Login");
+		JButton btnLogin = new RoundButton("Login");
 		btnLogin.setIcon(null);
 		btnLogin.setForeground(new Color(0, 0, 0));
 		btnLogin.setBackground(new Color(255, 199, 0));
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<MTClinica> TListClinica = new ArrayList<>();

@@ -20,6 +20,7 @@ import control.DAOTEstado;
 import model.MTClinica;
 import model.MTEndereco;
 import model.MTEstado;
+import padrao.RoundButton;
 import padrao.RoundJTextField;
 import vision.VMenu;
 
@@ -82,12 +83,12 @@ public class VCadClinica extends JFrame {
 		lbCidade.setBounds(320, 53, 70, 15);
 		pEndereco.add(lbCidade);
 		
-		edCidade = new JTextField();
+		edCidade = new RoundJTextField(15);
 		edCidade.setColumns(10);
 		edCidade.setBounds(408, 51, 114, 19);
 		pEndereco.add(edCidade);
 		
-		edDescricao = new JTextField();
+		edDescricao = new RoundJTextField(15);
 		edDescricao.setColumns(10);
 		edDescricao.setBounds(408, 89, 114, 19);
 		pEndereco.add(edDescricao);
@@ -96,7 +97,7 @@ public class VCadClinica extends JFrame {
 		lbDesc.setBounds(320, 91, 87, 15);
 		pEndereco.add(lbDesc);
 		
-		edCep = new JTextField();
+		edCep = new RoundJTextField(15);
 		edCep.setColumns(10);
 		edCep.setBounds(152, 87, 114, 19);
 		pEndereco.add(edCep);
@@ -109,7 +110,7 @@ public class VCadClinica extends JFrame {
 		lbBairro.setBounds(77, 118, 70, 15);
 		pEndereco.add(lbBairro);
 		
-		edBairro = new JTextField();
+		edBairro = new RoundJTextField(15);
 		edBairro.setColumns(10);
 		edBairro.setBounds(165, 116, 114, 19);
 		pEndereco.add(edBairro);
@@ -118,7 +119,7 @@ public class VCadClinica extends JFrame {
 		lbEndereo.setBounds(0, 0, 70, 15);
 		pEndereco.add(lbEndereo);
 		
-		JButton btnCad = new JButton("Cadastrar");
+		JButton btnCad = new RoundButton("Cadastrar");
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -162,17 +163,17 @@ public class VCadClinica extends JFrame {
 		lbCnpj.setBounds(116, 91, 70, 15);
 		pDados.add(lbCnpj);
 		
-		edNome = new JTextField();
+		edNome = new RoundJTextField(15);
 		edNome.setColumns(10);
 		edNome.setBounds(204, 27, 312, 19);
 		pDados.add(edNome);
 		
-		edCnpj = new JTextField();
+		edCnpj = new RoundJTextField(15);
 		edCnpj.setColumns(10);
 		edCnpj.setBounds(204, 89, 312, 19);
 		pDados.add(edCnpj);
 		
-		edNomeFan = new JTextField();
+		edNomeFan = new RoundJTextField(15);
 		edNomeFan.setColumns(10);
 		edNomeFan.setBounds(204, 58, 312, 19);
 		pDados.add(edNomeFan);
@@ -189,7 +190,7 @@ public class VCadClinica extends JFrame {
 		lbDadosClinica.setBounds(12, 0, 126, 15);
 		pDados.add(lbDadosClinica);
 		
-		edSenha = new JTextField();
+		edSenha = new RoundJTextField(15);
 		edSenha.setBounds(204, 120, 312, 19);
 		pDados.add(edSenha);
 		edSenha.setColumns(10);
