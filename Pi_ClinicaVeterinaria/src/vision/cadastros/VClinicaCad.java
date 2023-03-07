@@ -19,7 +19,7 @@ import vision.padrao.RoundJTextField;
 
 import javax.swing.JComboBox;
 
-public class VCadClinica extends JFrame {
+public class VClinicaCad extends JFrame {
 
 	/**
 	 * 
@@ -40,7 +40,7 @@ public class VCadClinica extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VCadClinica() {
+	public VClinicaCad() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 635, 378);
 		contentPane = new JPanel();
