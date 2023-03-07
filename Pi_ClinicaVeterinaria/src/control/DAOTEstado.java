@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.MTCidade;
 import model.MTEstado;
 
 public class DAOTEstado extends ObjectDAO{
@@ -23,7 +22,8 @@ public class DAOTEstado extends ObjectDAO{
 			
 			while (rs.next()) {
 				MTEstado le = new MTEstado();
-			
+				
+				le.setBDIDUF(rs.getInt("BDIDUF"));
 				le.setBDSIGLAUF(rs.getString("BDSIGLAUF"));
 				
 				ListTaEstado.add(le);

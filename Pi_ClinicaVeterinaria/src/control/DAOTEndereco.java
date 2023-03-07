@@ -19,7 +19,7 @@ public class DAOTEndereco extends MTEndereco{
 			wSQL = "INSERT INTO `dbpi`.`tendereco`(`BDCEP`,`BDIDCIDADE`,`BDBAIRRO`)VALUES(?,?,?);";
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
-			stm.setString(1, prDAO.getBDCEP());
+			stm.setInt(1, prDAO.getBDCEP());
 			stm.setString(3, prDAO.getBDBAIRRO());
 			
 			stm.executeUpdate();
@@ -38,7 +38,7 @@ public class DAOTEndereco extends MTEndereco{
 			wSQL = "UPDATE `dbpi`.`tendereco`SET `BDCEP` = ?,`BDIDCIDADE` = ?,`BDBAIRRO` = ? WHERE `BDCEP` = ?;";
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
-			stm.setString(1, prDAO.getBDCEP());
+			stm.setInt(1, prDAO.getBDCEP());
 			stm.setInt(2, prDAO.getBDIDCIDADE());
 			stm.setString(3, prDAO.getBDBAIRRO());
 	
@@ -57,7 +57,7 @@ public class DAOTEndereco extends MTEndereco{
 			wSQL = "DELETE FROM `dbpi`.`tendereco` WHERE BDCEP = ?;";
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
-			stm.setString(1, prDAO.getBDCEP());
+			stm.setInt(1, prDAO.getBDCEP());
 			stm.setInt(2, prDAO.getBDIDCIDADE());
 			stm.setString(3, prDAO.getBDBAIRRO());
 	
@@ -84,7 +84,7 @@ public class DAOTEndereco extends MTEndereco{
 				MTEndereco le = new MTEndereco();
 
 				le.setBDBAIRRO(rs.getString("BDBAIRRO"));
-				le.setBDCEP(rs.getString("BDCEP"));
+				le.setBDCEP(rs.getInt("BDCEP"));
 				le.setBDIDCIDADE(rs.getInt("BDIDCIDADE"));
 				
 				ListTaEndereco.add(le);

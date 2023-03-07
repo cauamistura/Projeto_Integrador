@@ -81,12 +81,17 @@ public class DAOTCidade extends MTCidade{
 			ArrayList<MTCidade> ListTaCidade = new ArrayList<>();
 			Connection c = prDAO.append();
 			try {
-				wSQL = "SELECT * FROM tcidade";
+				wSQL = "SELECT `tcidades`.* FROM `dbpi`.`tcidades`;";
 				Statement stm = c.prepareStatement(wSQL);
 				ResultSet rs = stm.executeQuery(wSQL);
 				
 				while (rs.next()) {
 					MTCidade lc = new MTCidade();
+					
+					lc.setBDIDCIDADE(rs.getInt   ("BDIDCIDADE"));
+					lc.setBDIDUF	(rs.getInt   ("BDIDUF"));
+					lc.setBDNOMECID (rs.getString("BDNOMECID"));
+					
 					ListTaCidade.add(lc);
 				}
 				

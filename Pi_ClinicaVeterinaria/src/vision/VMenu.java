@@ -10,6 +10,8 @@ import vision.cadastros.VUserCad;
 
 import javax.swing.JMenuBar;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -18,6 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import vision.cadastros.*;
 
 public class VMenu extends JFrame {
 	
@@ -31,6 +34,23 @@ public class VMenu extends JFrame {
 	private JPanel contentPane;
 	private JTextField edDescricao;
 
+
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VMenu frame = new VMenu();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
@@ -80,17 +100,6 @@ public class VMenu extends JFrame {
 		miPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VUserCad uc = new VUserCad();
-				uc.setLocationRelativeTo(null);
-				uc.setVisible(true);
-			}
-		});
-		mmCad.add(miPet);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		miPet.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VPetCad uc = new VPetCad();
 				uc.setLocationRelativeTo(null);
 				uc.setVisible(true);
 			}

@@ -1,20 +1,31 @@
 package vision.cadastros;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import control.DAOTCidade;
+import control.DAOTEndereco;
+import control.DAOTEstado;
 import control.DAOTUser;
-import vision.VMenu;
+import model.MTCidade;
+import model.MTEndereco;
+import model.MTEstado;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
+
+import java.util.ArrayList;
+
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class VUserCad extends JFrame {
 
@@ -23,16 +34,24 @@ public class VUserCad extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private DAOTUser FDAOTUser = new DAOTUser();
 	private JTextField edNome;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField edTelefone;
+	private JTextField edDataNascimento;
 	private JTextField edCep;
 	private JTextField edCidade;
-	private JTextField textField_5;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_6;
+	private JTextField edBairro;
+	private JTextField edCpf;
+	private JTextField edEmail;
+	private JTextField edSenha;
+	private JComboBox<String> cbUF;
+	
+	// Declarações dos Objetos
+	private DAOTUser     FDAOTUser     = new DAOTUser();
+	private DAOTEstado   FDAOUF        = new DAOTEstado();
+	private ArrayList<MTEstado> ListEstado = new ArrayList<>();
+	
+	private DAOTEndereco FDAOTEndereco = new DAOTEndereco();
+	private DAOTCidade   FDAOTCidade   = new DAOTCidade();	
 
 	/**
 	 * Create the frame.
@@ -53,6 +72,11 @@ public class VUserCad extends JFrame {
 		contentPane.add(Endereco);
 		
 		edCep = new JTextField();
+		edCep.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(getCEPExiste(Integer.valueOf(edCep.getText()))) { JOptionPane.showMessageDialog(null, "já existe");}}
+		});
 		edCep.setColumns(10);
 		edCep.setBounds(104, 11, 156, 20);
 		Endereco.add(edCep);
@@ -67,14 +91,14 @@ public class VUserCad extends JFrame {
 		edCidade.setBounds(104, 39, 156, 20);
 		Endereco.add(edCidade);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(104, 70, 156, 20);
-		Endereco.add(textField_5);
+		edBairro = new JTextField();
+		edBairro.setColumns(10);
+		edBairro.setBounds(104, 70, 156, 20);
+		Endereco.add(edBairro);
 		
-		JComboBox<String> cbUf = new JComboBox<String>();
-		cbUf.setBounds(316, 38, 46, 22);
-		Endereco.add(cbUf);
+		JComboBox<String> cbUF = new JComboBox<String>();
+		cbUF.setBounds(316, 38, 46, 22);
+		Endereco.add(cbUF);
 		
 		JLabel lbCidade = new JLabel("Cidade:");
 		lbCidade.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -97,44 +121,44 @@ public class VUserCad extends JFrame {
 		User.setBounds(13, 11, 354, 233);
 		contentPane.add(User);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(104, 11, 156, 20);
-		User.add(textField_3);
+		edCpf = new JTextField();
+		edCpf.setColumns(10);
+		edCpf.setBounds(104, 11, 156, 20);
+		User.add(edCpf);
 		
-		JLabel lbCpf_1 = new JLabel("Cpf:");
-		lbCpf_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbCpf_1.setBounds(48, 11, 46, 14);
-		User.add(lbCpf_1);
+		JLabel lbCpf = new JLabel("Cpf:");
+		lbCpf.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbCpf.setBounds(48, 11, 46, 14);
+		User.add(lbCpf);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(104, 39, 156, 20);
-		User.add(textField_4);
+		edEmail = new JTextField();
+		edEmail.setColumns(10);
+		edEmail.setBounds(104, 39, 156, 20);
+		User.add(edEmail);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(104, 70, 156, 20);
-		User.add(textField_6);
+		edSenha = new JTextField();
+		edSenha.setColumns(10);
+		edSenha.setBounds(104, 70, 156, 20);
+		User.add(edSenha);
 		
-		JComboBox<String> cbPermissao_1 = new JComboBox<String>();
-		cbPermissao_1.setBounds(104, 101, 156, 22);
-		User.add(cbPermissao_1);
+		JComboBox<String> cbPermissao = new JComboBox<String>();
+		cbPermissao.setBounds(104, 101, 156, 22);
+		User.add(cbPermissao);
 		
-		JLabel lbMail_1 = new JLabel("Email:");
-		lbMail_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbMail_1.setBounds(48, 39, 46, 14);
-		User.add(lbMail_1);
+		JLabel lbMail = new JLabel("Email:");
+		lbMail.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbMail.setBounds(48, 39, 46, 14);
+		User.add(lbMail);
 		
-		JLabel lbSenha_1 = new JLabel("Senha:");
-		lbSenha_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbSenha_1.setBounds(48, 70, 46, 14);
-		User.add(lbSenha_1);
+		JLabel lbSenha = new JLabel("Senha:");
+		lbSenha.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbSenha.setBounds(48, 70, 46, 14);
+		User.add(lbSenha);
 		
-		JLabel lbPermissao_1 = new JLabel("Permissão:");
-		lbPermissao_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbPermissao_1.setBounds(22, 102, 72, 14);
-		User.add(lbPermissao_1);
+		JLabel lbPermissao = new JLabel("Permissão:");
+		lbPermissao.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbPermissao.setBounds(22, 102, 72, 14);
+		User.add(lbPermissao);
 		
 		JPanel DadosUser = new JPanel();
 		DadosUser.setBounds(377, 11, 311, 233);
@@ -152,37 +176,79 @@ public class VUserCad extends JFrame {
 		lbNome.setBounds(48, 11, 46, 14);
 		DadosUser.add(lbNome);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(104, 39, 156, 20);
-		DadosUser.add(textField_1);
+		edTelefone = new JTextField();
+		edTelefone.setColumns(10);
+		edTelefone.setBounds(104, 39, 156, 20);
+		DadosUser.add(edTelefone);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(104, 70, 156, 20);
-		DadosUser.add(textField_2);
+		edDataNascimento = new JTextField();
+		edDataNascimento.setColumns(10);
+		edDataNascimento.setBounds(104, 70, 156, 20);
+		DadosUser.add(edDataNascimento);
 		
 		JComboBox<String> cbGenero = new JComboBox<String>();
+		cbGenero.addItem("Masculino");
+		cbGenero.addItem("Feminino");
 		cbGenero.setBounds(104, 101, 156, 22);
 		DadosUser.add(cbGenero);
 		
-		JLabel lbMail = new JLabel("Email:");
-		lbMail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbMail.setBounds(48, 39, 46, 14);
-		DadosUser.add(lbMail);
+		JLabel lbTelefone = new JLabel("Telefone:");
+		lbTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbTelefone.setBounds(48, 39, 46, 14);
+		DadosUser.add(lbTelefone);
 		
-		JLabel lbDataNacimento = new JLabel("Data Nacimento:");
-		lbDataNacimento.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbDataNacimento.setBounds(0, 70, 94, 14);
-		DadosUser.add(lbDataNacimento);
+		JLabel lbDataNascimento = new JLabel("Data Nascimento:");
+		lbDataNascimento.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbDataNascimento.setBounds(0, 70, 94, 14);
+		DadosUser.add(lbDataNascimento);
 		
 		JLabel lbGenero = new JLabel("Sexo:");
 		lbGenero.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbGenero.setBounds(22, 102, 72, 14);
 		DadosUser.add(lbGenero);
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.setBounds(311, 434, 89, 23);
-		contentPane.add(btnNewButton_1);
+		JButton btnCAD = new JButton("CADASTRAR");
+		btnCAD.setBounds(288, 437, 132, 23);
+		contentPane.add(btnCAD);
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				ListEstado = FDAOUF.ListTEstado(FDAOUF);
+				for (MTEstado l : ListEstado) {
+					cbUF.addItem(l.getBDSIGLAUF());
+				}
+			}
+		});
+	}
+	
+	private Boolean getCEPExiste(int prCEP) {
+		//Valida se existe CEP
+		ArrayList<MTEndereco> lEndereco = new ArrayList<>();
+		lEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
+		for (MTEndereco l : lEndereco) {
+			
+			if(l.getBDCEP() == prCEP) {
+				edBairro.setText(l.getBDBAIRRO());
+			
+				//Procura Cidade Vinculada
+				ArrayList<MTCidade> lCidade = new ArrayList<>();
+				lCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
+				for (MTCidade lc : lCidade) {
+					if(l.getBDIDCIDADE() == lc.getBDIDCIDADE()) {
+						edCidade.setText(lc.getBDNOMECID());
+						
+						//Procura Estado vinculado
+						for (MTEstado le : ListEstado) {
+							if (lc.getBDIDUF() == le.getBDIDUF()) {
+								cbUF.setSelectedItem(lc.getBDSIGLAUF());
+							}
+						}
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 }
