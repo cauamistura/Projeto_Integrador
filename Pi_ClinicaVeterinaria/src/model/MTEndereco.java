@@ -2,29 +2,27 @@ package model;
 
 public class MTEndereco extends MTCidade{
 	
-	String BDBAIRRO,
-		   BDCEP;
-
-	public MTEndereco() {
-		super();
-	}
-
+	String  BDBAIRRO;
+	Integer BDCEP, 
+			BDIDCIDADE;
 	
-	public String getBDCEP() {
-		return BDCEP;
-	}
-	public void setBDCEP(String bDCEP) {
-		BDCEP = bDCEP;
-	}
-
 	public String getBDBAIRRO() {
 		return BDBAIRRO;
 	}
 	public void setBDBAIRRO(String bDBAIRRO) {
 		BDBAIRRO = bDBAIRRO;
 	}
-	
-	
-	
+	public Integer getBDCEP() {
+		return BDCEP;
+	}
+	public void setBDCEP(Integer dBCEP) {
+		BDCEP = dBCEP;
+	}
+	public Integer getBDIDCIDADE() {
+		return BDIDCIDADE;
+	}
+	public void setBDIDCIDADE(Integer bDIDCIDADE) {
+		BDIDCIDADE = bDIDCIDADE;
+	}
 
 }

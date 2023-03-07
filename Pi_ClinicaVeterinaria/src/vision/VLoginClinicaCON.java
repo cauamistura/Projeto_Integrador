@@ -63,11 +63,13 @@ public class VLoginClinicaCON extends JFrame {
 		contentPane.setLayout(null);
 		
 		edCNPJ = new RoundJTextField(15);
+		edCNPJ.setText("cnpj");
 		edCNPJ.setBounds(78, 232, 284, 31);
 		contentPane.add(edCNPJ);
 		edCNPJ.setColumns(10);
 		
 		edSenha = new RoundJTextField(15);
+		edSenha.setText("1");
 		edSenha.setBounds(78, 317, 284, 31);
 		contentPane.add(edSenha);
 		edSenha.setColumns(10);
