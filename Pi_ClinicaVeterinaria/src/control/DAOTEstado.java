@@ -16,7 +16,7 @@ public class DAOTEstado extends ObjectDAO{
 		ArrayList<MTEstado> ListTaEstado = new ArrayList<>();
 		Connection c = prDAO.append();
 		try {
-			wSQL = "Select BDSIGLAUF from testados";
+			wSQL = "Select * from testados";
 			Statement stm = c.prepareStatement(wSQL);
 			ResultSet rs = stm.executeQuery(wSQL);
 			

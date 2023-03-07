@@ -2,12 +2,11 @@ package model;
 
 import control.ObjectDAO;
 
-public class MTEstado extends ObjectDAO{
-	
+public class MTEstado extends ObjectDAO {
+
 	Integer BDIDUF;
-	
-	String BDNOMEUF,
-		   BDSIGLAUF;
+
+	String BDNOMEUF, BDSIGLAUF;
 
 	public MTEstado() {
 		super();
@@ -36,12 +35,10 @@ public class MTEstado extends ObjectDAO{
 	public void setBDSIGLAUF(String bDSIGLAUF) {
 		BDSIGLAUF = bDSIGLAUF;
 	}
-	
+
 	@Override
 	public String toString() {
-		return this.BDSIGLAUF ;
+		return this.BDIDUF + " - " + this.BDSIGLAUF;
 	}
-	
-	
-	
+
 }
