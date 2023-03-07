@@ -83,8 +83,8 @@ public class DAOTEndereco extends MTEndereco{
 			while (rs.next()) {
 				MTEndereco le = new MTEndereco();
 
-				le.setBDBAIRRO  (rs.getString("BDBAIRRO"));
-				le.setBDCEP     (rs.getInt("BDCEP"));
+				le.setBDBAIRRO(rs.getString("BDBAIRRO"));
+				le.setBDCEP(rs.getInt("BDCEP"));
 				le.setBDIDCIDADE(rs.getInt("BDIDCIDADE"));
 				
 				ListTaEndereco.add(le);

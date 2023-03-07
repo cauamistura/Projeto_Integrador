@@ -10,6 +10,8 @@ import vision.cadastros.VUserCad;
 
 import javax.swing.JMenuBar;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -32,6 +34,23 @@ public class VMenu extends JFrame {
 	private JPanel contentPane;
 	private JTextField edDescricao;
 
+
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VMenu frame = new VMenu();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.

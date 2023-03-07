@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.MTCidade;
 import model.MTEstado;
 
 public class DAOTEstado extends ObjectDAO{
