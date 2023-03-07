@@ -23,7 +23,8 @@ public class DAOTEstado extends ObjectDAO{
 			
 			while (rs.next()) {
 				MTEstado le = new MTEstado();
-			
+				
+				le.setBDIDUF(rs.getInt("BDIDUF"));
 				le.setBDSIGLAUF(rs.getString("BDSIGLAUF"));
 				
 				ListTaEstado.add(le);

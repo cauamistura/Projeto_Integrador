@@ -5,9 +5,11 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import control.DAOTCidade;
 import control.DAOTEndereco;
 import control.DAOTEstado;
 import control.DAOTUser;
+import model.MTCidade;
 import model.MTEndereco;
 import model.MTEstado;
 
@@ -41,11 +43,15 @@ public class VUserCad extends JFrame {
 	private JTextField edCpf;
 	private JTextField edEmail;
 	private JTextField edSenha;
+	private JComboBox<String> cbUF;
 	
 	// Declarações dos Objetos
 	private DAOTUser     FDAOTUser     = new DAOTUser();
 	private DAOTEstado   FDAOUF        = new DAOTEstado();
+	private ArrayList<MTEstado> ListEstado = new ArrayList<>();
+	
 	private DAOTEndereco FDAOTEndereco = new DAOTEndereco();
+	private DAOTCidade   FDAOTCidade   = new DAOTCidade();	
 
 	/**
 	 * Create the frame.
@@ -208,7 +214,6 @@ public class VUserCad extends JFrame {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				ArrayList<MTEstado> ListEstado = new ArrayList<>();
 				ListEstado = FDAOUF.ListTEstado(FDAOUF);
 				for (MTEstado l : ListEstado) {
 					cbUF.addItem(l.getBDSIGLAUF());
@@ -218,12 +223,29 @@ public class VUserCad extends JFrame {
 	}
 	
 	private Boolean getCEPExiste(int prCEP) {
+		//Valida se existe CEP
 		ArrayList<MTEndereco> lEndereco = new ArrayList<>();
 		lEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
 		for (MTEndereco l : lEndereco) {
+			
 			if(l.getBDCEP() == prCEP) {
-				edCidade.setText(String.valueOf(l.getBDIDCIDADE()));
 				edBairro.setText(l.getBDBAIRRO());
+			
+				//Procura Cidade Vinculada
+				ArrayList<MTCidade> lCidade = new ArrayList<>();
+				lCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
+				for (MTCidade lc : lCidade) {
+					if(l.getBDIDCIDADE() == lc.getBDIDCIDADE()) {
+						edCidade.setText(lc.getBDNOMECID());
+						
+						//Procura Estado vinculado
+						for (MTEstado le : ListEstado) {
+							if (lc.getBDIDUF() == le.getBDIDUF()) {
+								cbUF.setSelectedItem(lc.getBDSIGLAUF());
+							}
+						}
+					}
+				}
 				return true;
 			}
 		}
