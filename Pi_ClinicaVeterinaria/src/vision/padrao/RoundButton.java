@@ -1,4 +1,4 @@
-package padrao;
+package vision.padrao;
 
 import java.awt.Color;
 import java.awt.Dimension;

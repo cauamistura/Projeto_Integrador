@@ -6,7 +6,7 @@
  * Essa classe tem como função fodificar os parametros do TextField
  * */
 
-package padrao;
+package  vision.padrao;
 
 import java.awt.Graphics; 
 import java.awt.Shape;

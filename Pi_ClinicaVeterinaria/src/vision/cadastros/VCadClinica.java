@@ -20,8 +20,8 @@ import control.DAOTEstado;
 import model.MTClinica;
 import model.MTEndereco;
 import model.MTEstado;
-import padrao.RoundButton;
-import padrao.RoundJTextField;
+import vision.padrao.RoundButton;
+import vision.padrao.RoundJTextField;
 import vision.VMenu;
 
 import javax.swing.JTabbedPane;

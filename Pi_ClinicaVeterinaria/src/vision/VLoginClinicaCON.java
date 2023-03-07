@@ -15,8 +15,8 @@ import java.awt.event.ActionEvent;
 
 import control.DAOTClinica;
 import model.MTClinica;
-import padrao.RoundButton;
-import padrao.RoundJTextField;
+import vision.padrao.RoundButton;
+import vision.padrao.RoundJTextField;
 
 import java.awt.SystemColor;
 import java.awt.Color;
