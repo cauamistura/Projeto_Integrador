@@ -22,7 +22,13 @@ import model.MTEstado;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 
+<<<<<<< HEAD:Pi_ClinicaVeterinaria/src/vision/cadastros/VClinicaCad.java
+import javax.swing.JComboBox;
+
+public class VClinicaCad extends JFrame {
+=======
 public class VCadClinica extends JFrame {
+>>>>>>> main:Pi_ClinicaVeterinaria/src/vision/cadastros/VCadClinica.java
 
 	/**
 	 * 
@@ -59,7 +65,7 @@ public class VCadClinica extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VCadClinica() {
+	public VClinicaCad() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 635, 378);
 		contentPane = new JPanel();
