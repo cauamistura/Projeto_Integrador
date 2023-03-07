@@ -1,15 +1,10 @@
 package vision.padrao;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
 public class RoundButton extends JButton
  {

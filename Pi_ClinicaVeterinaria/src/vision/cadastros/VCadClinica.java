@@ -1,35 +1,30 @@
 package vision.cadastros;
 
-import java.awt.EventQueue;  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
 import control.DAOTEndereco;
-import control.DAOTEstado;
-import model.MTClinica;
 import model.MTEndereco;
-import model.MTEstado;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
-import vision.VMenu;
 
-import javax.swing.JTabbedPane;
-import javax.swing.JSeparator;
 import javax.swing.JComboBox;
 
 public class VCadClinica extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public DAOTClinica FDAOTClinica = new DAOTClinica();
 	public DAOTEndereco FDAOTEndereco = new DAOTEndereco();
 	private JPanel contentPane;
@@ -41,22 +36,6 @@ public class VCadClinica extends JFrame {
 	private JTextField edCnpj;
 	private JTextField edNomeFan;
 	private JTextField edSenha;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VCadClinica frame = new VCadClinica();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -147,7 +126,7 @@ public class VCadClinica extends JFrame {
 		ArrayList<MTEndereco> TListEndereco = new ArrayList<>();
 		TListEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
 		
-		JComboBox cbUF = new JComboBox();
+		JComboBox<String> cbUF = new JComboBox<String>();
 		for (MTEndereco mtEndereco : TListEndereco) {
 			cbUF.addItem(mtEndereco.getBDSIGLAUF());
 		}

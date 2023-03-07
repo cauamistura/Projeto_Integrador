@@ -21,6 +21,7 @@ public class Conexao {
 	
 	public static Connection conectar() {
 		try {
+			Class.forName("com.mysql.jdbc.Driver"); /* Aqui registra */
 			conexao = DriverManager.getConnection("jdbc:mysql://localhost/"+ DATABASE + "?serverTimezone=UTC", USER, PSW);
 		} catch (Exception e) { e.printStackTrace(); }
 		return conexao;		
