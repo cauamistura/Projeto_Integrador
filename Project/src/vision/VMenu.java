@@ -34,24 +34,6 @@ public class VMenu extends JFrame {
 	private JPanel contentPane;
 	private JTextField edDescricao;
 
-
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VMenu frame = new VMenu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
@@ -99,7 +81,7 @@ public class VMenu extends JFrame {
 		JMenuItem miPet = new JMenuItem("Pet");
 		miPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VUserCad uc = new VUserCad();
+				VPetCad uc = new VPetCad();
 				uc.setLocationRelativeTo(null);
 				uc.setVisible(true);
 			}

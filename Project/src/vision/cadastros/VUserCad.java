@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTCidade;
+import control.DAOTClinica;
 import control.DAOTDadosUser;
 import control.DAOTEndereco;
 import control.DAOTEstado;

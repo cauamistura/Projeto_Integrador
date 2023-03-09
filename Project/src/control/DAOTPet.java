@@ -19,7 +19,7 @@ public class DAOTPet extends MTPet {
 		public Boolean inserir(DAOTPet prDAO) {
 			Connection c = prDAO.append();
 			try {
-				wSql = "INSERT INTO `dbpi`.`tpets`(`BDIDPET`, `BDIDRACA`, `BDNOMEPET`, `BDAPELIDO`, `BDDATANASCIMENTO`)VALUES(?,?,?,?,?);";
+				wSql = "INSERT INTO `DBPI`.`TPets`(`BDIDPET`, `BDIDRACA`, `BDNOMEPET`, `BDAPELIDO`, `BDDATANASCIMENTO`)VALUES(?,?,?,?,?);";
 				PreparedStatement stm = c.prepareStatement(wSql);
 				
 				stm.setInt(1, prDAO.getBDIDPET());
