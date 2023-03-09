@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import vision.cadastros.VPetCad;
 import vision.cadastros.VUserCad;
 
 import javax.swing.JMenuBar;
@@ -20,7 +19,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import vision.cadastros.*;
 
 public class VMenu extends JFrame {
 	
@@ -33,24 +31,6 @@ public class VMenu extends JFrame {
 	public static String  FCNPJClinica;
 	private JPanel contentPane;
 	private JTextField edDescricao;
-
-
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VMenu frame = new VMenu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -99,7 +79,7 @@ public class VMenu extends JFrame {
 		JMenuItem miPet = new JMenuItem("Pet");
 		miPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VUserCad uc = new VUserCad();
+				VPetCad uc = new VPetCad();
 				uc.setLocationRelativeTo(null);
 				uc.setVisible(true);
 			}

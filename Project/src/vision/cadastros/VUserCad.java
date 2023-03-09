@@ -1,11 +1,11 @@
 package vision.cadastros;
 
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTCidade;
+import control.DAOTClinica;
 import control.DAOTDadosUser;
 import control.DAOTEndereco;
 import control.DAOTEstado;
@@ -219,15 +219,18 @@ public class VUserCad extends JFrame {
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					FDAOTUser.setBDIDUSER    (FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
-					FDAOTUser.setBDIDCLINICA (VMenu.FIDClinica);
-					FDAOTUser.setBDIDPERMICAO(1);
-					FDAOTUser.setBDMAIL		 (edEmail.getText());
-					FDAOTUser.setBDCPF		 (edCpf.getText());
-					FDAOTUser.setBDSENHA	 (edSenha.getText());
-					FDAOTUser.inserir		 (FDAOTUser);
-					
-					JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+					if(FDAOTUser.getExsisteUSER(FDAOTUser,edCpf.getText())) {
+						FDAOTUser.setBDIDUSER    (FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
+						FDAOTUser.setBDIDCLINICA (VMenu.FIDClinica);
+						FDAOTUser.setBDIDPERMICAO(1);
+						FDAOTUser.setBDMAIL		 (edEmail.getText());
+						FDAOTUser.setBDCPF		 (edCpf.getText());
+						FDAOTUser.setBDSENHA	 (edSenha.getText());
+						FDAOTUser.inserir		 (FDAOTUser);
+						JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+					} else {
+						JOptionPane.showMessageDialog(null, "CPF já cadastrado");
+					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Erro ao salvar");
 				}

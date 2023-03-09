@@ -3,6 +3,7 @@ package control;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import vision.VMenu;
 
 public class ObjectDAO {
 
@@ -11,8 +12,6 @@ public class ObjectDAO {
 	public String  FCNPJEMPRESA;
 	private Conexao FConexao;
 
-	private static ObjectDAO FObjectDAO;
-	
 	public Connection append(){
 		try {
 			// Instacia coenexão
@@ -53,8 +52,4 @@ public class ObjectDAO {
 		post();
 		return 0;
 	}
-	
-
-	
-	
 }

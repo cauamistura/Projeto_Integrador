@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import model.MTClinica;
 import model.MTUser;
+import vision.VMenu;
 
 public class DAOTUser extends MTUser{
 	
@@ -38,8 +39,8 @@ public class DAOTUser extends MTUser{
 	
 	// UPDATE
 	public Boolean alterar(DAOTUser prDAO) {
-		Connection c = prDAO.append();
-		try {
+//		Connection c = prDAO.append();
+//		try {
 //			wSql = "UPDATE `dbpi`.`tclinica` SET `BDIDCEP` = ?, `BDCNPJ` = ?, `BDNOME` = ?, `BDNOMEFANTASIA` = ?, `BDSENHA` = ? WHERE `BDIDCLINICA` = ?;";
 //			PreparedStatement stm = c.prepareStatement(wSql);
 //			
@@ -49,12 +50,12 @@ public class DAOTUser extends MTUser{
 //			stm.setString(3, prDAO.getBDNOME());
 //			stm.setString(4, prDAO.getBDNOMEFANTASIA());
 //			stm.setString(5, prDAO.getBDSENHA());
-			
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		prDAO.post();
+//			
+//			return true;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		prDAO.post();
 		return false;
 	}
 	
@@ -103,6 +104,28 @@ public class DAOTUser extends MTUser{
 		prDAO.post();
 		return ListaUser;
 	}
+	
+	public Boolean getExsisteUSER(DAOTUser prDAO, String prCPF) {
+		Connection c = prDAO.append();
+		try {
+			Statement stm = c.createStatement();
+			
+			String wSql = "SELECT BDCPF FROM `dbpi`.`tuser` t where t.BDIDCLINICA = "+String.valueOf(VMenu.FIDClinica)+" and t.BDCPF = "+prCPF+";";
+			
+			ResultSet rs =  stm.executeQuery(wSql);
 
+	        if(rs.next()){
+	        	if(rs.getString("BDCPF") == prCPF) {
+	        		return true;
+	        	}
+	        }
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		prDAO.post();
+		return false;
+	}
+	
 }
 
