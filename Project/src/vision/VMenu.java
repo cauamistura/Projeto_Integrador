@@ -105,6 +105,16 @@ public class VMenu extends JFrame {
 			}
 		});
 		mmCad.add(miPet);
+		
+		JMenuItem miCLinica = new JMenuItem("Clinica");
+		miCLinica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VClinicaCad vc = new VClinicaCad();
+				vc.setLocationRelativeTo(null);
+				vc.setVisible(true);
+			}
+		});
+		mmCad.add(miCLinica);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

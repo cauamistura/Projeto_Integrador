@@ -23,6 +23,7 @@ public class DAOTClinica extends MTClinica {
 			PreparedStatement stm = c.prepareStatement(wSql);
 			
 			stm.setInt   (1, prDAO.getBDIDCLINICA());
+			stm.setInt(2, prDAO.getBDIDCEP());
 			stm.setString(3, prDAO.getBDCNPJ());
 			stm.setString(4, prDAO.getBDNOME());
 			stm.setString(5, prDAO.getBDNOMEFANTASIA());
@@ -44,11 +45,12 @@ public class DAOTClinica extends MTClinica {
 			wSql = "UPDATE `dbpi`.`tclinica` SET `BDIDCEP` = ?, `BDCNPJ` = ?, `BDNOME` = ?, `BDNOMEFANTASIA` = ?, `BDSENHA` = ? WHERE `BDIDCLINICA` = ?;";
 			PreparedStatement stm = c.prepareStatement(wSql);
 			
-			stm.setInt   (6, prDAO.getBDIDCLINICA());
+			stm.setInt(1, prDAO.getBDIDCEP());
 			stm.setString(2, prDAO.getBDCNPJ());
 			stm.setString(3, prDAO.getBDNOME());
 			stm.setString(4, prDAO.getBDNOMEFANTASIA());
 			stm.setString(5, prDAO.getBDSENHA());
+			stm.setInt   (6, prDAO.getBDIDCLINICA());
 			
 			return true;
 		} catch (Exception e) {
@@ -92,6 +94,7 @@ public class DAOTClinica extends MTClinica {
 				lc.setBDNOME	 	(rs.getString("BDNOME"));
 				lc.setBDNOMEFANTASIA(rs.getString("BDNOMEFANTASIA"));
 				lc.setBDSENHA	 	(rs.getString("BDSENHA"));
+				lc.setBDIDCEP       (rs.getInt("BDIDCEP"));
 				
 				ListTaClinica.add(lc);
 			}

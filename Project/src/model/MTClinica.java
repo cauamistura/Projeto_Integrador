@@ -4,7 +4,8 @@ import control.ObjectDAO;
 
 public class MTClinica extends ObjectDAO{
 	
-	Integer BDIDCLINICA;
+	Integer BDIDCEP,
+			BDIDCLINICA;
 	
 	String  BDCNPJ,
 			BDNOME,
@@ -12,6 +13,12 @@ public class MTClinica extends ObjectDAO{
 			BDSENHA;
 	
 	
+	public Integer getBDIDCEP() {
+		return BDIDCEP;
+	}
+	public void setBDIDCEP(Integer bDIDCEP) {
+		BDIDCEP = bDIDCEP;
+	}
 	public Integer getBDIDCLINICA() {
 		return BDIDCLINICA;
 	}

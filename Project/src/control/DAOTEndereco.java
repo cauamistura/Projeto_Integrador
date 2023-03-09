@@ -16,11 +16,11 @@ public class DAOTEndereco extends MTEndereco{
 	public Boolean inserir(DAOTEndereco prDAO) {
 		Connection c = prDAO.append();
 		try {
-			wSQL = "INSERT INTO `dbpi`.`tendereco`(`BDCEP`,`BDIDCIDADE`,`BDBAIRRO`)VALUES(?,?,?);";
+			wSQL = "INSERT INTO `dbpi`.`tendereco`(`BDCEP`,`BDBAIRRO`)VALUES(?,?);";
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
 			stm.setInt(1, prDAO.getBDCEP());
-			stm.setString(3, prDAO.getBDBAIRRO());
+			stm.setString(2, prDAO.getBDBAIRRO());
 			
 			stm.executeUpdate();
 			return true;
@@ -35,12 +35,11 @@ public class DAOTEndereco extends MTEndereco{
 	public Boolean alterar(DAOTEndereco prDAO) {
 		Connection c = prDAO.append();
 		try {
-			wSQL = "UPDATE `dbpi`.`tendereco`SET `BDCEP` = ?,`BDIDCIDADE` = ?,`BDBAIRRO` = ? WHERE `BDCEP` = ?;";
+			wSQL = "UPDATE `dbpi`.`tendereco`SET `BDCEP` = ?,`BDBAIRRO` = ? WHERE `BDCEP` = ?;";
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
 			stm.setInt(1, prDAO.getBDCEP());
-			stm.setInt(2, prDAO.getBDIDCIDADE());
-			stm.setString(3, prDAO.getBDBAIRRO());
+			stm.setString(2, prDAO.getBDBAIRRO());
 	
 			return true;	
 		} catch (Exception e) {
@@ -58,8 +57,7 @@ public class DAOTEndereco extends MTEndereco{
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
 			stm.setInt(1, prDAO.getBDCEP());
-			stm.setInt(2, prDAO.getBDIDCIDADE());
-			stm.setString(3, prDAO.getBDBAIRRO());
+			stm.setString(2, prDAO.getBDBAIRRO());
 	
 			stm.execute();
 			return true;

@@ -16,6 +16,7 @@ import control.DAOTCidade;
 import control.DAOTClinica;
 import control.DAOTEndereco;
 import control.DAOTEstado;
+import model.MTEndereco;
 import model.MTEstado;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -100,27 +101,29 @@ public class VClinicaCad extends JFrame {
 		JLabel lbEndereo = new JLabel("Endereço");
 		lbEndereo.setBounds(0, 0, 70, 15);
 		pEndereco.add(lbEndereo);
-
 		JButton btnCad = new RoundButton("Cadastrar");
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				//receber o id da cidade 
+				FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidades", "BDIDCIDADE"));
+				FDAOTEndereco.setBDNOMECID(edCidade.getText());
+				FDAOTEndereco.setBDDESCCID(edDescricao.getText());
+				FDAOTEndereco.setBDBAIRRO(edBairro.getText());
+				FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getText()));
+				
+				FDAOTEndereco.inserir(FDAOTEndereco);
+				
 				FDAOTClinica.setBDIDCLINICA(FDAOTClinica.getChaveID("TClinica", "BDIDCLINICA"));
 				FDAOTClinica.setBDCNPJ(edCnpj.getText());
 				FDAOTClinica.setBDNOME(edNome.getText());
 				FDAOTClinica.setBDNOMEFANTASIA(edNomeFan.getText());
 				FDAOTClinica.setBDSENHA(edSenha.getText());
-
-				FDAOTCidade.setBDIDCIDADE(FDAOTEndereco.getChaveID("TCidade", "BDIDCIDADE"));
-				FDAOTCidade.setBDNOMECID(edCidade.getText());
-				FDAOTCidade.setBDDESCCID(edDescricao.getText());
-				FDAOTCidade.setBDIDUF(10);
-
-				FDAOTEndereco.setBDBAIRRO(edBairro.getText());
-				FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getText()));
-
-				FDAOTCidade.inserir(FDAOTCidade);
-				FDAOTEndereco.inserir(FDAOTEndereco);
+				
+				//receber o cep que foi cadastrado no endereco
+				FDAOTClinica.setBDIDCEP(1);
+	
+				
 				FDAOTClinica.inserir(FDAOTClinica);
 			}
 		});

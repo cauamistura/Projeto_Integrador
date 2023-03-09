@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import model.MTCidade;
 import model.MTEndereco;
+import model.MTEstado;
 
 public class DAOTCidade extends MTCidade{
 	
