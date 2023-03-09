@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import vision.cadastros.VPetCad;
 import vision.cadastros.VUserCad;
 
 import javax.swing.JMenuBar;
@@ -20,7 +19,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import vision.cadastros.*;
 
 public class VMenu extends JFrame {
 	

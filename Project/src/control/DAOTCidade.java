@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.MTCidade;
-import model.MTEndereco;
 
 public class DAOTCidade extends MTCidade{
 	

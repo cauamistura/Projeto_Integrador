@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.MTEndereco;
 import model.MTPet;
 
 public class DAOTPet extends MTPet {

@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
@@ -111,12 +112,12 @@ public class VLoginClinicaCON extends JFrame {
 		contentPane.add(btnLogin);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-//		lblNewLabel_1.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/imagen/Group (2).png")));
+		lblNewLabel_1.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/images/Group (2).png")));
 		lblNewLabel_1.setBounds(155, 47, 135, 145);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel fundo = new JLabel("");
-//		fundo.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/imagen/BG (1).png")));
+		fundo.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/images/BG (1).png")));
 		fundo.setBounds(64, 24, 311, 514);
 		contentPane.add(fundo);
 	}
