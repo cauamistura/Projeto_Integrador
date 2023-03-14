@@ -3,6 +3,7 @@ package vision.cadastros;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,6 +17,7 @@ import control.DAOTCidade;
 import control.DAOTClinica;
 import control.DAOTEndereco;
 import control.DAOTEstado;
+import model.MTClinica;
 import model.MTEndereco;
 import model.MTEstado;
 import vision.padrao.RoundButton;
@@ -40,6 +42,7 @@ public class VClinicaCad extends JFrame {
 	private JTextField edCnpj;
 	private JTextField edNomeFan;
 	private JTextField edSenha;
+	private JComboBox<MTEstado> cbUF;
 
 	/**
 	 * Create the frame.
@@ -106,9 +109,14 @@ public class VClinicaCad extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				//receber o id da cidade 
-				FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidades", "BDIDCIDADE"));
-				FDAOTEndereco.setBDNOMECID(edCidade.getText());
-				FDAOTEndereco.setBDDESCCID(edDescricao.getText());
+				FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidades", "BDIDCIDADE"));
+				FDAOTCidade.setBDNOMECID(edCidade.getText());
+				FDAOTCidade.setBDDESCCID(edDescricao.getText());
+				FDAOTCidade.setBDIDUF(achaIdUf());
+				
+				FDAOTCidade.inserir(FDAOTCidade);
+				
+				FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
 				FDAOTEndereco.setBDBAIRRO(edBairro.getText());
 				FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getText()));
 				
@@ -119,12 +127,11 @@ public class VClinicaCad extends JFrame {
 				FDAOTClinica.setBDNOME(edNome.getText());
 				FDAOTClinica.setBDNOMEFANTASIA(edNomeFan.getText());
 				FDAOTClinica.setBDSENHA(edSenha.getText());
-				
-				//receber o cep que foi cadastrado no endereco
-				FDAOTClinica.setBDIDCEP(1);
-	
+				FDAOTClinica.setBDIDCEP(FDAOTEndereco.getBDCEP());
 				
 				FDAOTClinica.inserir(FDAOTClinica);
+				
+				dispose();
 			}
 		});
 		btnCad.setBounds(419, 132, 125, 23);
@@ -133,7 +140,7 @@ public class VClinicaCad extends JFrame {
 		ArrayList<MTEstado> TListEstado = new ArrayList<>();
 		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
 
-		JComboBox<MTEstado> cbUF = new JComboBox<MTEstado>();
+		cbUF = new JComboBox<MTEstado>();
 		for (MTEstado mtEstado : TListEstado) {
 			cbUF.addItem(mtEstado);
 		}
@@ -186,5 +193,21 @@ public class VClinicaCad extends JFrame {
 		lbSenha.setBounds(116, 118, 70, 15);
 		pDados.add(lbSenha);
 
+	}
+	public Integer achaIdUf() {
+		
+		Integer idUf = 0; 
+		ArrayList<MTEstado> TListEstado = new ArrayList<>();
+		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
+
+		for (MTEstado mtEstado : TListEstado) {
+			
+		if (mtEstado.getBDSIGLAUF().equals(cbUF.getSelectedItem().toString())) {
+			idUf = mtEstado.getBDIDUF();
+			
+		}		
+		      
+		}
+		return idUf;
 	}
 }

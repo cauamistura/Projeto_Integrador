@@ -16,7 +16,7 @@ public class DAOTCidade extends MTCidade{
 	public Boolean inserir(DAOTCidade prDAO) {
 		Connection c = prDAO.append();
 		try {
-			wSQL = "INSERT INTO `dbpi`.`tcidades`(`BDIDCIDADE`,`BDNOMECID`,`BDDESCCID`,`BDIDUF`)VALUES?,?,?,?;";
+			wSQL = "INSERT INTO `dbpi`.`tcidades`(`BDIDCIDADE`,`BDNOMECID`,`BDDESCCID`,`BDIDUF`)VALUES (?,?,?,?);";
 			PreparedStatement stm = c.prepareStatement(wSQL);
 			
 			stm.setInt(1, prDAO.getBDIDCIDADE());

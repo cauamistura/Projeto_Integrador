@@ -38,7 +38,9 @@ public class MTEstado extends ObjectDAO {
 
 	@Override
 	public String toString() {
-		return this.BDIDUF + " - " + this.BDSIGLAUF;
+		return BDSIGLAUF;
 	}
+	
+	
 
 }
