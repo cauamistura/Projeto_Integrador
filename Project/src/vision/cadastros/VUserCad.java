@@ -14,7 +14,7 @@ import model.MTCidade;
 import model.MTEndereco;
 import model.MTEstado;
 import vision.VMenu;
-import vision.padrao.TelefoneField;
+import vision.padrao.TelefoneTextField;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -43,7 +43,7 @@ public class VUserCad extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField edNome;
-	private TelefoneField edTelefone;
+	private TelefoneTextField edTelefone;
 	private JTextField edDataNascimento;
 	private JTextField edCep;
 	private JTextField edCidade;
@@ -188,7 +188,7 @@ public class VUserCad extends JFrame {
 		lbNome.setBounds(48, 11, 46, 14);
 		DadosUser.add(lbNome);
 
-		edTelefone = new TelefoneField();
+		edTelefone = new TelefoneTextField();
 		edTelefone.setColumns(10);
 		edTelefone.setBounds(104, 39, 156, 20);
 		DadosUser.add(edTelefone);
