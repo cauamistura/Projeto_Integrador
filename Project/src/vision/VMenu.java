@@ -5,11 +5,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import vision.cadastros.VUserCad;
+import vision.cadastros.*;
 
 import javax.swing.JMenuBar;
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
