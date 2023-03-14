@@ -14,6 +14,7 @@ import model.MTCidade;
 import model.MTEndereco;
 import model.MTEstado;
 import vision.VMenu;
+import vision.padrao.TelefoneField;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -28,6 +29,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -39,7 +43,7 @@ public class VUserCad extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField edNome;
-	private JTextField edTelefone;
+	private TelefoneField edTelefone;
 	private JTextField edDataNascimento;
 	private JTextField edCep;
 	private JTextField edCidade;
@@ -184,7 +188,7 @@ public class VUserCad extends JFrame {
 		lbNome.setBounds(48, 11, 46, 14);
 		DadosUser.add(lbNome);
 
-		edTelefone = new JTextField();
+		edTelefone = new TelefoneField();
 		edTelefone.setColumns(10);
 		edTelefone.setBounds(104, 39, 156, 20);
 		DadosUser.add(edTelefone);
@@ -219,7 +223,9 @@ public class VUserCad extends JFrame {
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(FDAOTUser.getExsisteUSER(FDAOTUser,edCpf.getText())) {
+//					if(FDAOTUser.getExsisteUSER(FDAOTUser,edCpf.getText())) {
+					if(true) {
+						
 						FDAOTUser.setBDIDUSER    (FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
 						FDAOTUser.setBDIDCLINICA (VMenu.FIDClinica);
 						FDAOTUser.setBDIDPERMICAO(1);
@@ -227,6 +233,29 @@ public class VUserCad extends JFrame {
 						FDAOTUser.setBDCPF		 (edCpf.getText());
 						FDAOTUser.setBDSENHA	 (edSenha.getText());
 						FDAOTUser.inserir		 (FDAOTUser);
+						
+						
+						if(!getCEPExiste(Integer.valueOf(edCep.getText()))) {
+							FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidade", "BDIDCIDADE"));
+							FDAOTCidade.setBDNOMECID(edCidade.getText());
+							FDAOTCidade.setBDIDUF(1);
+							FDAOTCidade.inserir(FDAOTCidade);
+							
+							FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getText()));
+							FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
+							FDAOTEndereco.setBDBAIRRO(edBairro.getText());
+							FDAOTEndereco.inserir(FDAOTEndereco);
+						}
+						
+						FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
+						FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
+						FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getText()));
+						FDAOTDadosUser.setBDNOME(edNome.getText());
+						FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
+						FDAOTDadosUser.setBDDATANASCIMENTO(LocalDate.parse("2023-02-01"));
+						FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
+						FDAOTDadosUser.inserir(FDAOTDadosUser);
+						
 						JOptionPane.showMessageDialog(null, "Salvo com sucesso");
 					} else {
 						JOptionPane.showMessageDialog(null, "CPF já cadastrado");

@@ -14,7 +14,7 @@ public class DAOTDadosUser extends MTDadosUser {
 	public Boolean inserir(DAOTDadosUser prDAO) {
 		Connection c = prDAO.append();
 		try {
-			wSql = "INSERT INTO `dbpi`.`tdadosuser`(`BDCEP`,`BDNOME`,`BDGENERO`,`BDTELEFONE`,`BDDATANASCIMENTO`,`BDIDUSER`,`BDIDCLINICA`)VALUES(?,?,?,?,?,?);";
+			wSql = "INSERT INTO `dbpi`.`tdadosuser`(`BDCEP`,`BDNOME`,`BDGENERO`,`BDTELEFONE`,`BDDATANASCIMENTO`,`BDIDUSER`,`BDIDCLINICA`)VALUES(?,?,?,?,?,?,?);";
 			PreparedStatement stm = c.prepareStatement(wSql);
 			
 			stm.setInt	 (1, prDAO.getBDCEP());
