@@ -3,6 +3,7 @@ package vision.cadastros;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,7 +11,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import control.DAOTDadosUser;
 import control.DAOTPet;
+import control.DAOTPetUser;
+import control.DAOTUser;
+import model.MTDadosUser;
+import model.MTEstado;
+import model.MTUser;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,6 +25,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -30,9 +38,11 @@ public class VPetCad extends JFrame {
 	 * 
 	 */
 	public DAOTPet FDAOTPet = new DAOTPet();
+	public DAOTPetUser FDAOTPetUser = new DAOTPetUser();
+	public DAOTUser FDAOTUser = new DAOTUser();
+	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
 	private JTextField txtApelidoPet;
 	private JTextField txtNomePet;
 	private JTextField txtDataNasc;
@@ -66,7 +76,12 @@ public class VPetCad extends JFrame {
 		txtApelidoPet.setColumns(10);
 		txtApelidoPet.setColumns(10);
 		
-		txtDataNasc = new JTextField();
+		try {
+			txtDataNasc = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e2) {
+			JOptionPane.showMessageDialog(null, "Data inválida");
+			e2.printStackTrace();
+		}
 		txtDataNasc.setBounds(147, 165, 86, 20);
 		contentPane.add(txtDataNasc);
 		txtDataNasc.setColumns(10);
@@ -85,6 +100,17 @@ public class VPetCad extends JFrame {
 		lblDataDeNasc.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDataDeNasc.setBounds(37, 168, 100, 14);
 		contentPane.add(lblDataDeNasc);
+		
+		ArrayList<MTDadosUser> TListUser = new ArrayList<>();
+		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
+
+		JComboBox<MTDadosUser> cbUser = new JComboBox<MTDadosUser>();
+		for (MTDadosUser mtUser : TListUser) {
+			cbUser.addItem(mtUser);
+		}
+		
+		cbUser.setBounds(147, 204, 86, 24);
+		contentPane.add(cbUser);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -111,20 +137,38 @@ public class VPetCad extends JFrame {
 				FDAOTPet.setBDIDRACA(FDAOTPet.getChaveID("TPets", "BDIDRACA"));
 				FDAOTPet.setBDNOMEPET(txtNomePet.getText());
 				FDAOTPet.setBDAPELIDO(txtApelidoPet.getText());
-				FDAOTPet.setBDDATANASCIMENTO(LocalDate.parse(txtDataNasc.getText(), formatter));
+				
+				try {
+					FDAOTPet.setBDDATANASCIMENTO(LocalDate.parse(txtDataNasc.getText(), formatter));
+				} catch (Exception e2) {
+					e2.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Data inválida. Tente novamente.");
+					return;
+				}
+				
+				FDAOTPetUser.setBDIDPET(FDAOTPet.getBDIDPET());
+				FDAOTPetUser.setBDIDUSER(FDAOTUser.getChaveID("TUser", "BDIDUSER"));
+				FDAOTPetUser.setBDIDCLINICA(FDAOTUser.getChaveID("TUser", "BDIDCLINICA"));
 				
 				try {
 					FDAOTPet.inserir(FDAOTPet);
+					txtNomePet.setText("");
+					txtApelidoPet.setText("");
+					txtDataNasc.setText("");
 					JOptionPane.showMessageDialog(null, "Seu pet foi cadastrado com sucesso!");
 				} catch (Exception e1) {
-					e1.printStackTrace();
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o pet");
 				}
 				
 			}
 		});
-		btnNewButton.setBounds(59, 239, 174, 53);
+		btnNewButton.setBounds(59, 254, 174, 53);
 		contentPane.add(btnNewButton);
+		
+		JLabel lblUsurio = new JLabel("Usuário:");
+		lblUsurio.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblUsurio.setBounds(37, 209, 100, 14);
+		contentPane.add(lblUsurio);
 	}
 }

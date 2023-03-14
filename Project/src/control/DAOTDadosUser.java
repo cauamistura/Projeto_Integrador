@@ -3,8 +3,13 @@ package control;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import model.MTDadosUser;
+import model.MTUser;
+import vision.VMenu;
 
 public class DAOTDadosUser extends MTDadosUser {
 	
@@ -35,4 +40,29 @@ public class DAOTDadosUser extends MTDadosUser {
 	}
 	
 
+	// SELECT
+		public ArrayList<MTDadosUser> ListTDadosUser(DAOTDadosUser prDAO) {
+			ArrayList<MTDadosUser> ListaDadosUser = new ArrayList<>();
+			    
+			Connection c = prDAO.append();
+			try {
+				Statement stm = c.createStatement();
+				wSql = "SELECT `tdadosuser`.* FROM `dbpi`.`tdadosuser` where BDIDCLINICA = " + String.valueOf(VMenu.FIDClinica)+" ;";
+				ResultSet rs =  stm.executeQuery(wSql);
+				
+				while (rs.next()) {
+					MTDadosUser lc = new MTDadosUser();
+					
+					lc.setBDNOME(rs.getString("BDNOME"));
+					lc.setBDIDUSER(rs.getInt("BDIDUSER"));
+					
+					ListaDadosUser.add(lc);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			prDAO.post();
+			return ListaDadosUser;
+		}
 }

@@ -53,4 +53,9 @@ public class MTDadosUser extends MTUser{
 	public void setBDDATANASCIMENTO(LocalDate bDDATANASCIMENTO) {
 		BDDATANASCIMENTO = bDDATANASCIMENTO;
 	}
+	
+	@Override
+	public String toString() {
+		return this.BDIDUSER + " - " + this.BDNOME;
+	}
 }

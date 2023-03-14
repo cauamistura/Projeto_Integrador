@@ -76,8 +76,8 @@ public class DAOTUser extends MTUser{
 	}
 		
 	// SELECT
-	public ArrayList<MTClinica> ListTClinica(DAOTUser prDAO) {
-		ArrayList<MTClinica> ListaUser = new ArrayList<>();
+	public ArrayList<MTUser> ListTUser(DAOTUser prDAO) {
+		ArrayList<MTUser> ListaUser = new ArrayList<>();
 		    
 		Connection c = prDAO.append();
 		try {
