@@ -17,6 +17,7 @@ import control.DAOTPetUser;
 import control.DAOTUser;
 import model.MTDadosUser;
 import model.MTEstado;
+import model.MTRaca;
 import model.MTUser;
 
 import javax.swing.JLabel;
@@ -66,12 +67,12 @@ public class VPetCad extends JFrame {
 		contentPane.setLayout(null);
 		
 		txtNomePet = new JTextField();
-		txtNomePet.setBounds(147, 63, 86, 20);
+		txtNomePet.setBounds(148, 116, 86, 20);
 		contentPane.add(txtNomePet);
 		
 		
 		txtApelidoPet = new JTextField();
-		txtApelidoPet.setBounds(147, 113, 86, 20);
+		txtApelidoPet.setBounds(148, 166, 86, 20);
 		contentPane.add(txtApelidoPet);
 		txtApelidoPet.setColumns(10);
 		txtApelidoPet.setColumns(10);
@@ -82,23 +83,23 @@ public class VPetCad extends JFrame {
 			JOptionPane.showMessageDialog(null, "Data inválida");
 			e2.printStackTrace();
 		}
-		txtDataNasc.setBounds(147, 165, 86, 20);
+		txtDataNasc.setBounds(148, 218, 86, 20);
 		contentPane.add(txtDataNasc);
 		txtDataNasc.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nome:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(91, 66, 46, 14);
+		lblNewLabel.setBounds(92, 119, 46, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblApelidoopcional = new JLabel("Apelido (opcional):");
 		lblApelidoopcional.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblApelidoopcional.setBounds(25, 116, 114, 14);
+		lblApelidoopcional.setBounds(26, 169, 114, 14);
 		contentPane.add(lblApelidoopcional);
 		
 		JLabel lblDataDeNasc = new JLabel("Data de nasc:");
 		lblDataDeNasc.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDataDeNasc.setBounds(37, 168, 100, 14);
+		lblDataDeNasc.setBounds(38, 221, 100, 14);
 		contentPane.add(lblDataDeNasc);
 		
 		ArrayList<MTDadosUser> TListUser = new ArrayList<>();
@@ -109,7 +110,15 @@ public class VPetCad extends JFrame {
 			cbUser.addItem(mtUser);
 		}
 		
-		cbUser.setBounds(147, 204, 86, 24);
+		ArrayList<MTRaca> TListRaca = new ArrayList<>();
+		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
+
+		JComboBox<MTDadosUser> cbRaca = new JComboBox<MTDadosUser>();
+		for (MTDadosUser mtUser : TListUser) {
+			cbUser.addItem(mtUser);
+		}
+		
+		cbUser.setBounds(147, 24, 86, 24);
 		contentPane.add(cbUser);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
@@ -163,12 +172,18 @@ public class VPetCad extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(59, 254, 174, 53);
+		btnNewButton.setBounds(58, 285, 174, 31);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblUsurio = new JLabel("Usuário:");
 		lblUsurio.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUsurio.setBounds(37, 209, 100, 14);
+		lblUsurio.setBounds(37, 29, 100, 14);
 		contentPane.add(lblUsurio);
+		
+		JLabel lblEspcie = new JLabel("Raça:");
+		lblEspcie.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEspcie.setBounds(38, 79, 100, 14);
+		contentPane.add(lblEspcie);
+		
 	}
 }

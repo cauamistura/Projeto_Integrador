@@ -22,6 +22,7 @@ import vision.padrao.RoundJTextField;
 import java.awt.Color;
 //import javax.swing.ImageIcon;
 import java.awt.Font;
+import javax.swing.JTextArea;
 
 public class VLoginClinicaCON extends JFrame {
 
@@ -104,7 +105,7 @@ public class VLoginClinicaCON extends JFrame {
 					menu.setVisible(true);
 					dispose();
 				} else {
-					lbAlerta.setText("User não cadastrado!");
+					lbAlerta.setText("CNPJ ou senha incorreto!");
 				}
 			}
 		});
