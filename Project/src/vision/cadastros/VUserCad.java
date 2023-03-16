@@ -3,6 +3,7 @@ package vision.cadastros;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import control.DAOTCidade;
 import control.DAOTClinica;
@@ -20,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.Date;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.awt.event.ActionListener;
@@ -43,7 +46,7 @@ public class VUserCad extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField edNome;
-	private TelefoneTextField edTelefone;
+	private JTextField edTelefone;
 	private JTextField edDataNascimento;
 	private JTextField edCep;
 	private JTextField edCidade;
@@ -81,6 +84,12 @@ public class VUserCad extends JFrame {
 		contentPane.add(Endereco);
 
 		edCep = new JTextField();
+		try {
+			edCep = new JFormattedTextField(new MaskFormatter("#####-###"));
+		} catch (ParseException e2) {
+			JOptionPane.showMessageDialog(null, "CEP inválido");
+			e2.printStackTrace();
+		}
 		edCep.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -134,6 +143,12 @@ public class VUserCad extends JFrame {
 		contentPane.add(User);
 
 		edCpf = new JTextField();
+		try {
+			edCpf = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+		} catch (ParseException e2) {
+			JOptionPane.showMessageDialog(null, "CPF inválido");
+			e2.printStackTrace();
+		}
 		edCpf.setColumns(10);
 		edCpf.setBounds(104, 11, 156, 20);
 		User.add(edCpf);
@@ -188,12 +203,24 @@ public class VUserCad extends JFrame {
 		lbNome.setBounds(48, 11, 46, 14);
 		DadosUser.add(lbNome);
 
-		edTelefone = new TelefoneTextField();
+		edTelefone = new JTextField();
+		try {
+			edTelefone = new JFormattedTextField(new MaskFormatter("+55 (##) ####-####"));
+		} catch (ParseException e2) {
+			JOptionPane.showMessageDialog(null, "Telefone inválido");
+			e2.printStackTrace();
+		}
 		edTelefone.setColumns(10);
 		edTelefone.setBounds(104, 39, 156, 20);
 		DadosUser.add(edTelefone);
 
 		edDataNascimento = new JTextField();
+		try {
+			edDataNascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		} catch (ParseException e2) {
+			JOptionPane.showMessageDialog(null, "Datra de nascimento inválida");
+			e2.printStackTrace();
+		}
 		edDataNascimento.setColumns(10);
 		edDataNascimento.setBounds(104, 70, 156, 20);
 		DadosUser.add(edDataNascimento);
