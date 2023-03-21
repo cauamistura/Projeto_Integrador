@@ -53,17 +53,9 @@ public class VMenu extends JFrame {
 		menuBar.add(mmCad);
 		
 		JMenuItem miUser = new JMenuItem("User");
-		miUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VUserCad uc = new VUserCad();
-				uc.setLocationRelativeTo(null);
-				uc.setVisible(true);
-			}
-		});
 		mmCad.add(miUser);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
 		miUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VUserCad uc = new VUserCad();

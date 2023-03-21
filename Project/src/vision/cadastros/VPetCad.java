@@ -57,7 +57,7 @@ public class VPetCad extends JFrame {
 		setTitle("Cadastro de pets");
 
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 319, 380);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("");

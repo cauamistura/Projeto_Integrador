@@ -1,12 +1,26 @@
 package vision.cadastros;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import control.DAOTCidade;
-import control.DAOTClinica;
 import control.DAOTDadosUser;
 import control.DAOTEndereco;
 import control.DAOTEstado;
@@ -15,28 +29,6 @@ import model.MTCidade;
 import model.MTEndereco;
 import model.MTEstado;
 import vision.VMenu;
-import vision.padrao.TelefoneTextField;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.SwingConstants;
-
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.sql.Date;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VUserCad extends JFrame {
 
@@ -54,12 +46,12 @@ public class VUserCad extends JFrame {
 	private JTextField edCpf;
 	private JTextField edEmail;
 	private JTextField edSenha;
-	private JComboBox<String> cbUF;
+	private JComboBox<MTEstado> cbUF;
 
 	// Declarações dos Objetos
 	private DAOTUser FDAOTUser = new DAOTUser();
 	private DAOTEstado FDAOUF = new DAOTEstado();
-	private ArrayList<MTEstado> ListEstado = new ArrayList<>();
+	private ArrayList<MTEstado> ListEstado;
 
 	private DAOTEndereco FDAOTEndereco = new DAOTEndereco();
 	private DAOTCidade FDAOTCidade = new DAOTCidade();
@@ -69,7 +61,7 @@ public class VUserCad extends JFrame {
 	 * Create the frame.
 	 */
 	public VUserCad() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 714, 561);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,12 +76,12 @@ public class VUserCad extends JFrame {
 		contentPane.add(Endereco);
 
 		edCep = new JTextField();
-		try {
-			edCep = new JFormattedTextField(new MaskFormatter("#####-###"));
-		} catch (ParseException e2) {
-			JOptionPane.showMessageDialog(null, "CEP inválido");
-			e2.printStackTrace();
-		}
+//		try {
+//			edCep = new JFormattedTextField(new MaskFormatter("#####-###"));
+//		} catch (ParseException e2) {
+		JOptionPane.showMessageDialog(null, "CEP inválido");
+//			e2.printStackTrace();
+//		}
 		edCep.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -117,9 +109,14 @@ public class VUserCad extends JFrame {
 		edBairro.setBounds(104, 70, 156, 20);
 		Endereco.add(edBairro);
 
-		JComboBox<String> cbUF = new JComboBox<String>();
+		cbUF = new JComboBox<>();
 		cbUF.setBounds(316, 38, 46, 22);
 		Endereco.add(cbUF);
+		ListEstado = new ArrayList<>();
+		ListEstado = FDAOUF.ListTEstado(FDAOUF);
+		for (MTEstado mtEstado : ListEstado) {
+			cbUF.addItem(mtEstado);
+		}
 
 		JLabel lbCidade = new JLabel("Cidade:");
 		lbCidade.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -205,7 +202,7 @@ public class VUserCad extends JFrame {
 
 		edTelefone = new JTextField();
 		try {
-			edTelefone = new JFormattedTextField(new MaskFormatter("+55 (##) ####-####"));
+			edTelefone = new JFormattedTextField(new MaskFormatter("(##)####-####"));
 		} catch (ParseException e2) {
 			JOptionPane.showMessageDialog(null, "Telefone inválido");
 			e2.printStackTrace();
@@ -251,42 +248,43 @@ public class VUserCad extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 //					if(FDAOTUser.getExsisteUSER(FDAOTUser,edCpf.getText())) {
-					if(true) {
-						
-						FDAOTUser.setBDIDUSER    (FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
-						FDAOTUser.setBDIDCLINICA (VMenu.FIDClinica);
+					if (true) {
+
+						FDAOTUser.setBDIDUSER(FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
+						FDAOTUser.setBDIDCLINICA(VMenu.FIDClinica);
 						FDAOTUser.setBDIDPERMICAO(1);
-						FDAOTUser.setBDMAIL		 (edEmail.getText());
-						FDAOTUser.setBDCPF		 (edCpf.getText());
-						FDAOTUser.setBDSENHA	 (edSenha.getText());
-						FDAOTUser.inserir		 (FDAOTUser);
-						
-						
-						if(!getCEPExiste(Integer.valueOf(edCep.getText()))) {
+						FDAOTUser.setBDMAIL(edEmail.getText());
+						FDAOTUser.setBDCPF(edCpf.getText());
+						FDAOTUser.setBDSENHA(edSenha.getText());
+						FDAOTUser.inserir(FDAOTUser);
+
+						if (!getCEPExiste(Integer.valueOf(edCep.getText()))) {
 							FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidade", "BDIDCIDADE"));
 							FDAOTCidade.setBDNOMECID(edCidade.getText());
-							FDAOTCidade.setBDIDUF(1);
+							MTEstado selectedItem = (MTEstado) cbUF.getSelectedItem();
+							FDAOTCidade.setBDIDUF(selectedItem.getBDIDUF());
 							FDAOTCidade.inserir(FDAOTCidade);
-							
+
 							FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getText()));
 							FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
 							FDAOTEndereco.setBDBAIRRO(edBairro.getText());
 							FDAOTEndereco.inserir(FDAOTEndereco);
 						}
-						
+
 						FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
 						FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
 						FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getText()));
 						FDAOTDadosUser.setBDNOME(edNome.getText());
 						FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
-						FDAOTDadosUser.setBDDATANASCIMENTO(LocalDate.parse("2023-02-01"));
+						FDAOTDadosUser.setBDDATANASCIMENTO(LocalDate.parse(FDAOTDadosUser.Dateconvert(edDataNascimento.getText())));
 						FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
 						FDAOTDadosUser.inserir(FDAOTDadosUser);
-						
+
 						JOptionPane.showMessageDialog(null, "Salvo com sucesso");
-					} else {
-						JOptionPane.showMessageDialog(null, "CPF já cadastrado");
 					}
+//					else {
+//						JOptionPane.showMessageDialog(null, "CPF já cadastrado");
+//					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Erro ao salvar");
 				}
@@ -295,15 +293,6 @@ public class VUserCad extends JFrame {
 		btnCAD.setBounds(288, 437, 132, 23);
 		contentPane.add(btnCAD);
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-				ListEstado = FDAOUF.ListTEstado(FDAOUF);
-				for (MTEstado l : ListEstado) {
-					cbUF.addItem(l.getBDSIGLAUF());
-				}
-			}
-		});
 	}
 
 	private Boolean getCEPExiste(int prCEP) {
@@ -325,7 +314,7 @@ public class VUserCad extends JFrame {
 						// Procura Estado vinculado
 						for (MTEstado le : ListEstado) {
 							if (lc.getBDIDUF() == le.getBDIDUF()) {
-//								cbUF.set();;
+								cbUF.setSelectedIndex(lc.getBDIDUF()-1);
 							}
 						}
 					}

@@ -16,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
 import model.MTClinica;
-import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -82,7 +81,7 @@ public class VLoginClinicaCON extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(158, 174, 255));
 		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[33.00px:n:50px][304.00px,grow][88.00px:n:50px]", "[50px][450px,grow][50px]"));
+		//panel.setLayout(new MigLayout("", "[33.00px:n:50px][304.00px,grow][88.00px:n:50px]", "[50px][450px,grow][50px]"));
 		
 		
 		BufferedImage bg = null;
@@ -105,7 +104,7 @@ public class VLoginClinicaCON extends JFrame {
 		
 		panel_1.setBackground(new Color(158, 174, 255));
 		panel.add(panel_1, "cell 1 1,alignx center");
-		panel_1.setLayout(new MigLayout("", "[65.00px:n:50px][210.00px:n:200px,grow][39.00px:n:50px]", "[156.00][15.00px][50px:n:50px][-12.00px][70.00px][43.00px:n:50px][50px:n:50px]"));
+		//panel_1.setLayout(new MigLayout("", "[65.00px:n:50px][210.00px:n:200px,grow][39.00px:n:50px]", "[156.00][15.00px][50px:n:50px][-12.00px][70.00px][43.00px:n:50px][50px:n:50px]"));
 		
 		JLabel lbCnpj = new JLabel("CNPJ:");
 		lbCnpj.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -156,7 +155,7 @@ public class VLoginClinicaCON extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(125, 137, 245));
 		panel_1.add(panel_2, "cell 1 0,growx");
-		panel_2.setLayout(new MigLayout("", "[][100px][][][100px][100px][]", "[][100px][][][][][100px][100px]"));
+		//panel_2.setLayout(new MigLayout("", "[][100px][][][100px][100px][]", "[][100px][][][][][100px][100px]"));
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		panel_2.add(lblNewLabel_2, "cell 4 4");
