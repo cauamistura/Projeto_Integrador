@@ -110,12 +110,12 @@ public class DAOTUser extends MTUser{
 		try {
 			Statement stm = c.createStatement();
 			
-			String wSql = "SELECT BDCPF FROM `dbpi`.`tuser` t where t.BDIDCLINICA = "+String.valueOf(VMenu.FIDClinica)+" and t.BDCPF = "+prCPF+";";
+			String wSql = "SELECT BDCPF FROM `dbpi`.`tuser` t where t.BDIDCLINICA = "+String.valueOf(VMenu.FIDClinica)+" and t.BDCPF = '"+prCPF+"'";
 			
 			ResultSet rs =  stm.executeQuery(wSql);
 
 	        if(rs.next()){
-	        	if(rs.getString("BDCPF") == prCPF) {
+	        	if(rs.getString("BDCPF").equals(prCPF)){
 	        		return true;
 	        	}
 	        }
