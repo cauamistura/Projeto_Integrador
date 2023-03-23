@@ -77,6 +77,16 @@ public class VMenu extends JFrame {
 		});
 		mmCad.add(miPet);
 		
+		JMenuItem miRaca = new JMenuItem("Raça");
+		miRaca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VRacaCad uc = new VRacaCad();
+				uc.setLocationRelativeTo(null);
+				uc.setVisible(true);
+			}
+		});
+		mmCad.add(miRaca);
+		
 		JMenuItem miCLinica = new JMenuItem("Clinica");
 		miCLinica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

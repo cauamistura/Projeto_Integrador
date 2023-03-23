@@ -39,7 +39,6 @@ public class VPetCad extends JFrame {
 	 * 
 	 */
 	public DAOTPet FDAOTPet = new DAOTPet();
-	public DAOTPetUser FDAOTPetUser = new DAOTPetUser();
 	public DAOTUser FDAOTUser = new DAOTUser();
 	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private static final long serialVersionUID = 1L;
@@ -58,7 +57,7 @@ public class VPetCad extends JFrame {
 
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 319, 380);
+		setBounds(100, 100, 319, 288);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,12 +66,12 @@ public class VPetCad extends JFrame {
 		contentPane.setLayout(null);
 		
 		txtNomePet = new JTextField();
-		txtNomePet.setBounds(148, 116, 86, 20);
+		txtNomePet.setBounds(158, 24, 86, 20);
 		contentPane.add(txtNomePet);
 		
 		
 		txtApelidoPet = new JTextField();
-		txtApelidoPet.setBounds(148, 166, 86, 20);
+		txtApelidoPet.setBounds(158, 74, 86, 20);
 		contentPane.add(txtApelidoPet);
 		txtApelidoPet.setColumns(10);
 		txtApelidoPet.setColumns(10);
@@ -83,43 +82,24 @@ public class VPetCad extends JFrame {
 			JOptionPane.showMessageDialog(null, "Data inválida");
 			e2.printStackTrace();
 		}
-		txtDataNasc.setBounds(148, 218, 86, 20);
+		txtDataNasc.setBounds(158, 126, 86, 20);
 		contentPane.add(txtDataNasc);
 		txtDataNasc.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nome:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(92, 119, 46, 14);
+		lblNewLabel.setBounds(102, 27, 46, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblApelidoopcional = new JLabel("Apelido (opcional):");
 		lblApelidoopcional.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblApelidoopcional.setBounds(26, 169, 114, 14);
+		lblApelidoopcional.setBounds(36, 77, 114, 14);
 		contentPane.add(lblApelidoopcional);
 		
 		JLabel lblDataDeNasc = new JLabel("Data de nasc:");
 		lblDataDeNasc.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDataDeNasc.setBounds(38, 221, 100, 14);
+		lblDataDeNasc.setBounds(48, 129, 100, 14);
 		contentPane.add(lblDataDeNasc);
-		
-		ArrayList<MTDadosUser> TListUser = new ArrayList<>();
-		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
-
-		JComboBox<MTDadosUser> cbUser = new JComboBox<MTDadosUser>();
-		for (MTDadosUser mtUser : TListUser) {
-			cbUser.addItem(mtUser);
-		}
-		
-		ArrayList<MTRaca> TListRaca = new ArrayList<>();
-		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
-
-		JComboBox<MTDadosUser> cbRaca = new JComboBox<MTDadosUser>();
-		for (MTDadosUser mtUser : TListUser) {
-			cbUser.addItem(mtUser);
-		}
-		
-		cbUser.setBounds(147, 24, 86, 24);
-		contentPane.add(cbUser);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -155,9 +135,6 @@ public class VPetCad extends JFrame {
 					return;
 				}
 				
-				FDAOTPetUser.setBDIDPET(FDAOTPet.getBDIDPET());
-				FDAOTPetUser.setBDIDUSER(FDAOTUser.getChaveID("TUser", "BDIDUSER"));
-				FDAOTPetUser.setBDIDCLINICA(FDAOTUser.getChaveID("TUser", "BDIDCLINICA"));
 				
 				try {
 					FDAOTPet.inserir(FDAOTPet);
@@ -172,18 +149,8 @@ public class VPetCad extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(58, 285, 174, 31);
+		btnNewButton.setBounds(68, 193, 174, 31);
 		contentPane.add(btnNewButton);
-		
-		JLabel lblUsurio = new JLabel("Usuário:");
-		lblUsurio.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUsurio.setBounds(37, 29, 100, 14);
-		contentPane.add(lblUsurio);
-		
-		JLabel lblEspcie = new JLabel("Raça:");
-		lblEspcie.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEspcie.setBounds(38, 79, 100, 14);
-		contentPane.add(lblEspcie);
 		
 	}
 }
