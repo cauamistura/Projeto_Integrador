@@ -3,40 +3,28 @@ package vision;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
 import model.MTClinica;
+import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import control.DAOTClinica;
-import model.MTClinica;
-import vision.padrao.RoundButton;
-import vision.padrao.RoundJTextField;
-
-import java.awt.Color;
-//import javax.swing.ImageIcon;
-import java.awt.Font;
-import javax.swing.JTextArea;
 
 public class VLoginClinicaCON extends JFrame {
 
@@ -70,19 +58,6 @@ public class VLoginClinicaCON extends JFrame {
 	 * Create the frame.
 	 */
 	public VLoginClinicaCON() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 433, 589);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(158, 174, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(158, 174, 255));
-		contentPane.add(panel, BorderLayout.CENTER);
-		//panel.setLayout(new MigLayout("", "[33.00px:n:50px][304.00px,grow][88.00px:n:50px]", "[50px][450px,grow][50px]"));
-		
 		
 		BufferedImage bg = null;
 		;
@@ -92,50 +67,62 @@ public class VLoginClinicaCON extends JFrame {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 		
-	
-		JPanel panel_1 = new PanelComBackgroundImage(bg);
-		//JPanel panel_1 = new JPanel();
-
-		panel_1.setBackground(new Color(0, 81, 81));
-		panel_1.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel_1.setBackground(new Color(158, 174, 255));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 561, 652);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(158, 174, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(158, 174, 255));
-		panel.add(panel_1, "cell 1 1,alignx center");
-		//panel_1.setLayout(new MigLayout("", "[65.00px:n:50px][210.00px:n:200px,grow][39.00px:n:50px]", "[156.00][15.00px][50px:n:50px][-12.00px][70.00px][43.00px:n:50px][50px:n:50px]"));
+		panel.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new MigLayout("", "[100px][300px,grow][100px]", "[100px][380px,grow][100px]"));
+		
+		JPanel panel_2 = new PanelComBackgroundImage(bg);
+		panel_2.setBackground(new Color(158, 174, 255));
+		panel_1.add(panel_2, "cell 1 1,alignx center");
+		panel_2.setLayout(new MigLayout("", "[25px][200px,grow][25px]", "[50px][60px][60px][][][30px]"));
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(125, 137, 245));
+		panel_2.add(panel_3, "cell 1 0,alignx center");
+		panel_3.setLayout(new MigLayout("", "[50px][50px][50px]", "[25px][25px][25px]"));
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/images/Group (2).png")));
+		panel_3.add(lblNewLabel_2, "cell 1 1,alignx center");
 		
 		JLabel lbCnpj = new JLabel("CNPJ:");
-		lbCnpj.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_1.add(lbCnpj, "flowy,cell 1 2");
+		panel_2.add(lbCnpj, "flowy,cell 1 1");
 		
-		
-		edCNPJ = new RoundJTextField(10);
+		edCNPJ = new RoundJTextField(8);
 		edCNPJ.setText("cnpj");
-		panel_1.add(edCNPJ, "cell 1 2,growx");
+		panel_2.add(edCNPJ, "cell 1 1,growx");
 		edCNPJ.setColumns(10);
 		
 		JLabel lbSenha = new JLabel("Senha:");
-		lbSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_1.add(lbSenha, "flowy,cell 1 4");
+		panel_2.add(lbSenha, "flowy,cell 1 2");
 		
-		
-		
-		edSenha = new RoundJTextField(10);
+		edSenha = new RoundJTextField(8);
 		edSenha.setText("1");
-		panel_1.add(edSenha, "cell 1 4,growx");
+		panel_2.add(edSenha, "cell 1 2,growx");
 		edSenha.setColumns(10);
-		
+
 		JLabel lbAlerta = new JLabel("<Aguardando>");
-		panel_1.add(lbAlerta, "cell 1 6,alignx center");
-		lbAlerta.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_2.add(lbAlerta, "cell 1 5,alignx center");
 		
 		JButton btnLogin = new  RoundButton("Login");
-		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnLogin.setBackground((new Color(255, 199, 0)));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				ArrayList<MTClinica> TListClinica = new ArrayList<>();
 				TListClinica = FDAOTClinica.ListTClinica(FDAOTClinica);
 				if (getExiste(TListClinica)) {
@@ -146,20 +133,12 @@ public class VLoginClinicaCON extends JFrame {
 				}
 			}
 				
+				
 			
 		});
-		panel_1.add(btnLogin, "cell 1 5,growx");
+		panel_2.add(btnLogin, "cell 1 3,growx");
 		
-	
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(125, 137, 245));
-		panel_1.add(panel_2, "cell 1 0,growx");
-		//panel_2.setLayout(new MigLayout("", "[][100px][][][100px][100px][]", "[][100px][][][][][100px][100px]"));
-		
-		JLabel lblNewLabel_2 = new JLabel("");
-		panel_2.add(lblNewLabel_2, "cell 4 4");
-		lblNewLabel_2.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/images/Group (2).png")));
 		
 		
 	}
