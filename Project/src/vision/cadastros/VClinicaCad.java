@@ -2,9 +2,13 @@ package vision.cadastros;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -20,8 +24,13 @@ import control.DAOTEstado;
 import model.MTClinica;
 import model.MTEndereco;
 import model.MTEstado;
+import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import java.awt.BorderLayout;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class VClinicaCad extends JFrame {
 
@@ -35,79 +44,142 @@ public class VClinicaCad extends JFrame {
 	public DAOTCidade FDAOTCidade = new DAOTCidade();
 	private JPanel contentPane;
 	private JTextField edCidade;
+	private JTextField edCnpj;
 	private JTextField edDescricao;
+	private JTextField edNomeFan;
+	private JTextField edNome;
 	private JTextField edCep;
 	private JTextField edBairro;
-	private JTextField edNome;
-	private JTextField edCnpj;
-	private JTextField edNomeFan;
 	private JTextField edSenha;
-	private JComboBox<MTEstado> cbUF;
 
 	/**
 	 * Create the frame.
 	 */
 	public VClinicaCad() {
+		BufferedImage bg = null;
+		;
+		try {
+			bg = ImageIO.read(new File("src/vision/images/BG.png"));
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 635, 378);
+		setBounds(100, 100, 900, 592);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(158, 174, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		JPanel pEndereco = new JPanel();
-		pEndereco.setBounds(12, 170, 601, 166);
-		contentPane.add(pEndereco);
-		pEndereco.setLayout(null);
-
-		JLabel lbUf = new JLabel("UF : ");
-		lbUf.setBounds(77, 58, 70, 15);
-		pEndereco.add(lbUf);
-
-		JLabel lbCidade = new JLabel("Cidade :");
-		lbCidade.setBounds(320, 53, 70, 15);
-		pEndereco.add(lbCidade);
-
-		edCidade = new RoundJTextField(15);
-		edCidade.setColumns(10);
-		edCidade.setBounds(408, 51, 114, 19);
-		pEndereco.add(edCidade);
-
-		edDescricao = new RoundJTextField(15);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(158, 174, 255));
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new MigLayout("", "[50px][800px,grow][50px]", "[50px][430px,grow][50px]"));
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(158, 174, 255));
+		panel.add(panel_1, "cell 1 1,alignx center");
+		panel_1.setLayout(new MigLayout("", "[50px][50px][400px,grow][50px,grow][50px]", "[50px][150px,grow][][50px]"));
+		
+		JPanel panel_2 = new PanelComBackgroundImage(bg);
+		panel_2.setBackground(new Color(158, 174, 255));
+		panel_1.add(panel_2, "cell 2 1,alignx center");
+		panel_2.setLayout(new MigLayout("", "[100px][200px,grow][200px,grow][100px]", "[80px][][][][][][][50px][80px]"));
+		
+		JLabel lbNomeFan = new JLabel("Nome Fantasia:");
+		panel_2.add(lbNomeFan, "flowy,cell 1 2");
+		
+		edNomeFan = new RoundJTextField(8);
+		panel_2.add(edNomeFan, "cell 1 2,growx");
+		edNomeFan.setColumns(10);
+		
+		JLabel lbDesc = new JLabel("Descricao:");
+		panel_2.add(lbDesc, "flowy,cell 2 2");
+		
+		edDescricao = new RoundJTextField(8);
+		panel_2.add(edDescricao, "cell 2 2,growx");
 		edDescricao.setColumns(10);
-		edDescricao.setBounds(408, 89, 114, 19);
-		pEndereco.add(edDescricao);
-
-		JLabel lbDesc = new JLabel("Descrição : ");
-		lbDesc.setBounds(320, 91, 87, 15);
-		pEndereco.add(lbDesc);
-
-		edCep = new RoundJTextField(15);
+		
+		JLabel lbNome = new JLabel("Nome:");
+		panel_2.add(lbNome, "flowy,cell 1 3");
+		
+		edNome = new RoundJTextField(8);
+		panel_2.add(edNome, "cell 1 3,growx");
+		edNome.setColumns(10);
+		
+		JLabel lbCnpj = new JLabel("CNPJ:");
+		panel_2.add(lbCnpj, "flowy,cell 2 3");
+		
+		edCnpj = new RoundJTextField(8);
+		panel_2.add(edCnpj, "cell 2 3,growx");
+		edCnpj.setColumns(10);
+		
+		JLabel lbCep = new JLabel("CEP:");
+		panel_2.add(lbCep, "cell 1 5");
+		
+		JLabel lbUf = new JLabel("UF:     ");
+		panel_2.add(lbUf, "flowx,cell 2 5");
+		
+		edCep = new RoundJTextField(8);
+		panel_2.add(edCep, "cell 1 6,growx");
 		edCep.setColumns(10);
-		edCep.setBounds(152, 87, 114, 19);
-		pEndereco.add(edCep);
-
-		JLabel lbCep = new JLabel("CEP :");
-		lbCep.setBounds(64, 89, 70, 15);
-		pEndereco.add(lbCep);
-
-		JLabel lbBairro = new JLabel("Bairro :");
-		lbBairro.setBounds(77, 118, 70, 15);
-		pEndereco.add(lbBairro);
-
-		edBairro = new RoundJTextField(15);
+		
+		JLabel lbBairro = new JLabel("Bairro:");
+		panel_2.add(lbBairro, "flowy,cell 1 7,alignx left");
+		
+		edBairro = new RoundJTextField(8);
+		panel_2.add(edBairro, "cell 1 7,growx");
 		edBairro.setColumns(10);
-		edBairro.setBounds(165, 116, 114, 19);
-		pEndereco.add(edBairro);
-
-		JLabel lbEndereo = new JLabel("Endereço");
-		lbEndereo.setBounds(0, 0, 70, 15);
-		pEndereco.add(lbEndereo);
-		JButton btnCad = new RoundButton("Cadastrar");
+		
+		ArrayList<MTEstado> TListEstado = new ArrayList<>();
+		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
+		
+		JComboBox cbUF = new JComboBox<MTEstado>();
+		for (MTEstado mtEstado : TListEstado) {
+			cbUF.addItem(mtEstado);
+		}
+		panel_2.add(cbUF, "flowx,cell 2 6");
+		
+		
+		edCidade = new RoundJTextField(8);
+		panel_2.add(edCidade, "cell 2 6,growx");
+		edCidade.setColumns(10);
+		
+		JLabel lbCidade = new JLabel("Cidade:");
+		panel_2.add(lbCidade, "cell 2 5");
+		
+		JLabel lbSenha = new JLabel("Senha:");
+		panel_2.add(lbSenha, "flowy,cell 2 7");
+		
+		edSenha = new RoundJTextField(8);
+		panel_2.add(edSenha, "cell 2 7,growx");
+		edSenha.setColumns(10);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(158, 174, 255));
+		panel_1.add(panel_3, "cell 3 1,grow");
+		panel_3.setLayout(new MigLayout("", "[10px][10px,grow][]", "[grow][grow][grow][]"));
+		
+		JPanel panel_4 = new PanelComBackgroundImage(bg);
+		panel_4.setBackground(new Color(125, 137, 245));
+		panel_3.add(panel_4, "cell 1 0,grow");
+		panel_4.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
+		
+		JLabel lblNewLabel_8 = new JLabel("");
+		lblNewLabel_8.setIcon(new ImageIcon(VClinicaCad.class.getResource("/vision/images/dogmal.png")));
+		panel_4.add(lblNewLabel_8, "cell 1 2,alignx center");
+		
+		JPanel panel_5 = new JPanel();
+		panel_3.add(panel_5, "cell 1 1,grow");
+		panel_5.setLayout(new BorderLayout(0, 0));
+		
+		JButton btnCad = new JButton("Cadastrar");
+		btnCad.setBackground((new Color(255, 199, 0)));
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				//receber o id da cidade 
 				FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidades", "BDIDCIDADE"));
 				FDAOTCidade.setBDNOMECID(edCidade.getText());
@@ -132,66 +204,13 @@ public class VClinicaCad extends JFrame {
 				FDAOTClinica.inserir(FDAOTClinica);
 				
 				dispose();
+			
+				
 			}
 		});
-		btnCad.setBounds(419, 132, 125, 23);
-		pEndereco.add(btnCad);
+		panel_5.add(btnCad);
 
-		ArrayList<MTEstado> TListEstado = new ArrayList<>();
-		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
-
-		cbUF = new JComboBox<MTEstado>();
-		for (MTEstado mtEstado : TListEstado) {
-			cbUF.addItem(mtEstado);
-		}
-
-		cbUF.setBounds(152, 53, 114, 24);
-		pEndereco.add(cbUF);
-
-		JPanel pDados = new JPanel();
-		pDados.setBounds(12, 0, 601, 158);
-		contentPane.add(pDados);
-		pDados.setLayout(null);
-
-		JLabel lbCnpj = new JLabel("CNPJ :");
-		lbCnpj.setBounds(116, 91, 70, 15);
-		pDados.add(lbCnpj);
-
-		edNome = new RoundJTextField(15);
-		edNome.setColumns(10);
-		edNome.setBounds(204, 27, 312, 19);
-		pDados.add(edNome);
-
-		edCnpj = new RoundJTextField(15);
-		edCnpj.setColumns(10);
-		edCnpj.setBounds(204, 89, 312, 19);
-		pDados.add(edCnpj);
-
-		edNomeFan = new RoundJTextField(15);
-		edNomeFan.setColumns(10);
-		edNomeFan.setBounds(204, 58, 312, 19);
-		pDados.add(edNomeFan);
-
-		JLabel lbNome = new JLabel("Nome :");
-		lbNome.setBounds(133, 29, 61, 15);
-		pDados.add(lbNome);
-
-		JLabel lbNomeFan = new JLabel("Nome Fantasia :");
-		lbNomeFan.setBounds(75, 58, 126, 15);
-		pDados.add(lbNomeFan);
-
-		JLabel lbDadosClinica = new JLabel("Dados Clinica");
-		lbDadosClinica.setBounds(12, 0, 126, 15);
-		pDados.add(lbDadosClinica);
-
-		edSenha = new RoundJTextField(15);
-		edSenha.setBounds(204, 120, 312, 19);
-		pDados.add(edSenha);
-		edSenha.setColumns(10);
-
-		JLabel lbSenha = new JLabel("Senha:");
-		lbSenha.setBounds(116, 118, 70, 15);
-		pDados.add(lbSenha);
+		
 
 	}
 	public Integer achaIdUf() {
@@ -202,12 +221,12 @@ public class VClinicaCad extends JFrame {
 
 		for (MTEstado mtEstado : TListEstado) {
 			
-		if (mtEstado.getBDSIGLAUF().equals(cbUF.getSelectedItem().toString())) {
+		//if (mtEstado.getBDSIGLAUF().equals(cbUF.getSelectedItem().toString())) {
 			idUf = mtEstado.getBDIDUF();
 			
 		}		
 		      
-		}
+		//}
 		return idUf;
 	}
 }
