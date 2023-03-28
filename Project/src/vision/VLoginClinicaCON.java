@@ -1,6 +1,6 @@
 package vision;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -24,7 +24,6 @@ import model.MTClinica;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
-import vision.padrao.RoundJTextField;
 
 public class VLoginClinicaCON extends JFrame {
 
@@ -104,7 +103,7 @@ public class VLoginClinicaCON extends JFrame {
 		JLabel lbCnpj = new JLabel("CNPJ:");
 		panel_2.add(lbCnpj, "flowy,cell 1 1");
 		
-		edCNPJ = new RoundJTextField(8);
+		edCNPJ = new JTextField(8);
 		edCNPJ.setText("cnpj");
 		panel_2.add(edCNPJ, "cell 1 1,growx");
 		edCNPJ.setColumns(10);
@@ -112,7 +111,7 @@ public class VLoginClinicaCON extends JFrame {
 		JLabel lbSenha = new JLabel("Senha:");
 		panel_2.add(lbSenha, "flowy,cell 1 2");
 		
-		edSenha = new RoundJTextField(8);
+		edSenha = new JTextField(8);
 		edSenha.setText("1");
 		panel_2.add(edSenha, "cell 1 2,growx");
 		edSenha.setColumns(10);

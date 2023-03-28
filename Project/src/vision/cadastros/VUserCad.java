@@ -103,6 +103,7 @@ public class VUserCad extends JFrame {
 		});
 		edCep.setColumns(10);
 		edCep.setBounds(104, 11, 156, 20);
+		edCep.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		Endereco.add(edCep);
 
 		JLabel lbCep = new JLabel("Cep:");

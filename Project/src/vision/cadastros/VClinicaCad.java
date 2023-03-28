@@ -1,6 +1,6 @@
 package vision.cadastros;
 
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,7 +28,6 @@ import model.MTEndereco;
 import model.MTEstado;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
-import vision.padrao.RoundJTextField;
 import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.ImageIcon;
@@ -96,28 +95,28 @@ public class VClinicaCad extends JFrame {
 		JLabel lbNomeFan = new JLabel("Nome Fantasia:");
 		panel_2.add(lbNomeFan, "flowy,cell 1 2");
 		
-		edNomeFan = new RoundJTextField(8);
+		edNomeFan = new JTextField(8);
 		panel_2.add(edNomeFan, "cell 1 2,growx");
 		edNomeFan.setColumns(10);
 		
 		JLabel lbDesc = new JLabel("Descricao:");
 		panel_2.add(lbDesc, "flowy,cell 2 2");
 		
-		edDescricao = new RoundJTextField(8);
+		edDescricao = new JTextField(8);
 		panel_2.add(edDescricao, "cell 2 2,growx");
 		edDescricao.setColumns(10);
 		
 		JLabel lbNome = new JLabel("Nome:");
 		panel_2.add(lbNome, "flowy,cell 1 3");
 		
-		edNome = new RoundJTextField(8);
+		edNome = new JTextField(8);
 		panel_2.add(edNome, "cell 1 3,growx");
 		edNome.setColumns(10);
 		
 		JLabel lbCnpj = new JLabel("CNPJ:");
 		panel_2.add(lbCnpj, "flowy,cell 2 3");
 		
-		edCnpj = new RoundJTextField(8);
+		edCnpj = new JTextField(8);
 		panel_2.add(edCnpj, "cell 2 3,growx");
 		edCnpj.setColumns(10);
 		
@@ -127,14 +126,14 @@ public class VClinicaCad extends JFrame {
 		JLabel lbUf = new JLabel("UF:     ");
 		panel_2.add(lbUf, "flowx,cell 2 5");
 		
-		edCep = new RoundJTextField(8);
+		edCep = new JTextField(8);
 		panel_2.add(edCep, "cell 1 6,growx");
 		edCep.setColumns(10);
 		
 		JLabel lbBairro = new JLabel("Bairro:");
 		panel_2.add(lbBairro, "flowy,cell 1 7,alignx left");
 		
-		edBairro = new RoundJTextField(8);
+		edBairro = new JTextField(8);
 		panel_2.add(edBairro, "cell 1 7,growx");
 		edBairro.setColumns(10);
 		
@@ -148,7 +147,7 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(cbUF, "flowx,cell 2 6");
 		
 		
-		edCidade = new RoundJTextField(8);
+		edCidade = new JTextField(8);
 		panel_2.add(edCidade, "cell 2 6,growx");
 		edCidade.setColumns(10);
 		
@@ -158,7 +157,7 @@ public class VClinicaCad extends JFrame {
 		JLabel lbSenha = new JLabel("Senha:");
 		panel_2.add(lbSenha, "flowy,cell 2 7");
 		
-		edSenha = new RoundJTextField(8);
+		edSenha = new JTextField(8);
 		panel_2.add(edSenha, "cell 2 7,growx");
 		edSenha.setColumns(10);
 		
