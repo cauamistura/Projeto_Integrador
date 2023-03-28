@@ -6,24 +6,32 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import control.DAOTEspecie;
 import control.DAOTPet;
 import control.DAOTRaca;
+import model.MTEspecie;
+import model.MTEstado;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VRacaCad extends JFrame {
 
 	public DAOTRaca FDAOTRaca = new DAOTRaca();
+	public DAOTEspecie FDAOTEspecie = new DAOTEspecie();
 	private JPanel contentPane;
 	private JTextField txtNomeRaca;
+	private JComboBox cbRaca;
 
 	/**
 	 * Launch the application.
@@ -58,6 +66,7 @@ public class VRacaCad extends JFrame {
 		contentPane.add(txtNomeRaca);
 		txtNomeRaca.setColumns(10);
 		
+		
 		JLabel lblNewLabel = new JLabel("Nome:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setBounds(54, 33, 46, 14);
@@ -67,16 +76,14 @@ public class VRacaCad extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-				
 				if(txtNomeRaca.getText().isEmpty() || txtNomeRaca.getText() == null) {
 					JOptionPane.showMessageDialog(null, "Campo vazio: Nome");
 					return;
 				}
 				
-				FDAOTRaca.setBDIDRACA(1);
+				FDAOTRaca.setBDIDRACA(FDAOTRaca.getChaveID("TRaca", "BDIDRACA"));
 				FDAOTRaca.setBDNOMERACA(txtNomeRaca.getText());
-				FDAOTRaca.setBDIDESPECIE(11);
+				FDAOTRaca.setBDIDESPECIE(1);
 	
 				try {
 					FDAOTRaca.inserir(FDAOTRaca);

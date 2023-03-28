@@ -12,10 +12,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import control.DAOTDadosUser;
+import control.DAOTEspecie;
 import control.DAOTPet;
 import control.DAOTPetUser;
 import control.DAOTUser;
 import model.MTDadosUser;
+import model.MTEspecie;
 import model.MTEstado;
 import model.MTRaca;
 import model.MTUser;
@@ -38,6 +40,10 @@ public class VPetCad extends JFrame {
 	/**
 	 * 
 	 */
+	
+	private JComboBox<MTEspecie> cbEspecie;
+	private ArrayList<MTEspecie> ListEspecie;
+	
 	public DAOTPet FDAOTPet = new DAOTPet();
 	public DAOTUser FDAOTUser = new DAOTUser();
 	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
@@ -46,6 +52,7 @@ public class VPetCad extends JFrame {
 	private JTextField txtApelidoPet;
 	private JTextField txtNomePet;
 	private JTextField txtDataNasc;
+	public DAOTEspecie FDAOTEspecie = new DAOTEspecie();
 
 	
 	
@@ -62,6 +69,15 @@ public class VPetCad extends JFrame {
 		contentPane.setToolTipText("");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		cbEspecie = new JComboBox<>();
+		cbEspecie.setBounds(316, 38, 46, 22);
+		contentPane.add(cbEspecie);
+		ListEspecie = new ArrayList<>();
+		ListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
+		for (MTEspecie mtEspecie : ListEspecie) {
+			cbEspecie.addItem(mtEspecie);
+		}
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
