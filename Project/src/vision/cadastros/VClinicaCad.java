@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -21,6 +22,7 @@ import control.DAOTCidade;
 import control.DAOTClinica;
 import control.DAOTEndereco;
 import control.DAOTEstado;
+import model.MTCidade;
 import model.MTClinica;
 import model.MTEndereco;
 import model.MTEstado;
@@ -42,6 +44,7 @@ public class VClinicaCad extends JFrame {
 	public DAOTEndereco FDAOTEndereco = new DAOTEndereco();
 	public DAOTEstado FDAOTEstado = new DAOTEstado();
 	public DAOTCidade FDAOTCidade = new DAOTCidade();
+	private ArrayList<MTEstado> ListEstado;
 	private JPanel contentPane;
 	private JTextField edCidade;
 	private JTextField edCnpj;
@@ -51,6 +54,7 @@ public class VClinicaCad extends JFrame {
 	private JTextField edCep;
 	private JTextField edBairro;
 	private JTextField edSenha;
+	private JComboBox cbUF;
 
 	/**
 	 * Create the frame.
@@ -82,7 +86,7 @@ public class VClinicaCad extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(158, 174, 255));
 		panel.add(panel_1, "cell 1 1,alignx center");
-		panel_1.setLayout(new MigLayout("", "[50px][50px][400px,grow][50px,grow][50px]", "[50px][150px,grow][][50px]"));
+		panel_1.setLayout(new MigLayout("", "[50px][50px][400px,grow][50px,grow][50px]", "[50px,grow][150px,grow][][50px]"));
 		
 		JPanel panel_2 = new PanelComBackgroundImage(bg);
 		panel_2.setBackground(new Color(158, 174, 255));
@@ -137,7 +141,7 @@ public class VClinicaCad extends JFrame {
 		ArrayList<MTEstado> TListEstado = new ArrayList<>();
 		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
 		
-		JComboBox cbUF = new JComboBox<MTEstado>();
+		cbUF = new JComboBox<MTEstado>();
 		for (MTEstado mtEstado : TListEstado) {
 			cbUF.addItem(mtEstado);
 		}
@@ -180,31 +184,43 @@ public class VClinicaCad extends JFrame {
 		btnCad.setBackground((new Color(255, 199, 0)));
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//receber o id da cidade 
-				FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidades", "BDIDCIDADE"));
-				FDAOTCidade.setBDNOMECID(edCidade.getText());
-				FDAOTCidade.setBDDESCCID(edDescricao.getText());
-				FDAOTCidade.setBDIDUF(achaIdUf());
-				
-				FDAOTCidade.inserir(FDAOTCidade);
-				
-				FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
-				FDAOTEndereco.setBDBAIRRO(edBairro.getText());
-				FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getText()));
-				
-				FDAOTEndereco.inserir(FDAOTEndereco);
-				
-				FDAOTClinica.setBDIDCLINICA(FDAOTClinica.getChaveID("TClinica", "BDIDCLINICA"));
-				FDAOTClinica.setBDCNPJ(edCnpj.getText());
-				FDAOTClinica.setBDNOME(edNome.getText());
-				FDAOTClinica.setBDNOMEFANTASIA(edNomeFan.getText());
-				FDAOTClinica.setBDSENHA(edSenha.getText());
-				FDAOTClinica.setBDIDCEP(FDAOTEndereco.getBDCEP());
-				
-				FDAOTClinica.inserir(FDAOTClinica);
-				
-				dispose();
 			
+				try {
+					if (!getCEPExiste(Integer.valueOf(edCep.getText()))){
+						
+						//validação do cep com o componente,
+						FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("tcidades", "BDIDCIDADE"));
+						FDAOTCidade.setBDNOMECID(edCidade.getText());
+						FDAOTCidade.setBDDESCCID(edDescricao.getText());
+						FDAOTCidade.setBDIDUF(achaIdUf());
+						
+						FDAOTCidade.inserir(FDAOTCidade);
+						
+						FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
+						FDAOTEndereco.setBDBAIRRO(edBairro.getText());
+						FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getText()));
+						
+						FDAOTEndereco.inserir(FDAOTEndereco);
+						
+						
+						//Fazer a validação para o CNPJ
+						FDAOTClinica.setBDIDCLINICA(FDAOTClinica.getChaveID("tclinica", "BDIDCLINICA"));
+						FDAOTClinica.setBDCNPJ(edCnpj.getText());
+						FDAOTClinica.setBDNOME(edNome.getText());
+						FDAOTClinica.setBDNOMEFANTASIA(edNomeFan.getText());
+						FDAOTClinica.setBDSENHA(edSenha.getText());
+						FDAOTClinica.setBDIDCEP(FDAOTEndereco.getBDCEP());
+						
+						FDAOTClinica.inserir(FDAOTClinica);
+						
+					
+						
+						JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+					}
+						
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Erro ao cadastrar endereço, verifique se preencheu toadas as informações");
+				}
 				
 			}
 		});
@@ -221,12 +237,42 @@ public class VClinicaCad extends JFrame {
 
 		for (MTEstado mtEstado : TListEstado) {
 			
-		//if (mtEstado.getBDSIGLAUF().equals(cbUF.getSelectedItem().toString())) {
+		if (mtEstado.getBDSIGLAUF().equals(cbUF.getSelectedItem().toString())) {
 			idUf = mtEstado.getBDIDUF();
 			
 		}		
 		      
-		//}
+		}
 		return idUf;
+	}
+	
+	private Boolean getCEPExiste(int prCEP) {
+		// Valida se existe CEP
+		ArrayList<MTEndereco> lEndereco = new ArrayList<>();
+		lEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
+		for (MTEndereco l : lEndereco) {
+
+			if (l.getBDCEP() == prCEP) {
+				edBairro.setText(l.getBDBAIRRO());
+
+				// Procura Cidade Vinculada
+				ArrayList<MTCidade> lCidade = new ArrayList<>();
+				lCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
+				for (MTCidade lc : lCidade) {
+					if (l.getBDIDCIDADE() == lc.getBDIDCIDADE()) {
+						edCidade.setText(lc.getBDNOMECID());
+
+						// Procura Estado vinculado
+						for (MTEstado le : ListEstado) {
+							if (lc.getBDIDUF() == le.getBDIDUF()) {
+								cbUF.setSelectedIndex(lc.getBDIDUF()-1);
+							}
+						}
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 }
