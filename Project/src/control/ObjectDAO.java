@@ -55,19 +55,4 @@ public class ObjectDAO {
 		return 0;
 	}
 	
-	
-	public String Dateconvert(String dateStr) {
-		// cria um objeto DateTimeFormatter para fazer a conversão
-	    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-	    // converte a string para um objeto LocalDate usando o formatter de entrada
-	    LocalDate date = LocalDate.parse(dateStr, inputFormatter);
-
-	    // converte o objeto LocalDate de volta para uma string usando o formatter de saída
-	    String output = date.format(outputFormatter);
-
-	    return output;
-	}
-	
 }

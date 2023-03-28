@@ -29,7 +29,10 @@ import model.MTCidade;
 import model.MTEndereco;
 import model.MTEstado;
 import vision.VMenu;
+import vision.padrao.CEPTextField;
 import vision.padrao.CPFTextField;
+import vision.padrao.DateTextField;
+import vision.padrao.TelefoneTextField;
 
 public class VUserCad extends JFrame {
 
@@ -39,14 +42,14 @@ public class VUserCad extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField edNome;
-	private JTextField edTelefone;
-	private JTextField edDataNascimento;
-	private JTextField edCep;
 	private JTextField edCidade;
 	private JTextField edBairro;
 	private JTextField edEmail;
 	private JTextField edSenha;
 	private CPFTextField edCpf;
+	private CEPTextField edCep;
+	private DateTextField edDataNascimento;
+	private TelefoneTextField edTelefone;
 
 	private JComboBox<MTEstado> cbUF;
 
@@ -77,18 +80,17 @@ public class VUserCad extends JFrame {
 		Endereco.setBounds(31, 266, 640, 116);
 		contentPane.add(Endereco);
 
-		edCep = new JTextField();
-		try {
-			edCep = new JFormattedTextField(new MaskFormatter("#####-###"));
-		} catch (ParseException e2) {
-		JOptionPane.showMessageDialog(null, "CEP inválido");
-			e2.printStackTrace();
-		}
+		edCep = new CEPTextField();
 		edCep.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (getCEPExiste(Integer.valueOf(edCep.getText()))) {
-					JOptionPane.showMessageDialog(null, "já existe");
+				if (edCep.getCEP() != null) {
+					if (getCEPExiste(Integer.valueOf(edCep.getCEP()))) {
+						JOptionPane.showMessageDialog(null, "já existe");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Cep invalido");
+					edCep.requestFocus();
 				}
 			}
 		});
@@ -141,7 +143,20 @@ public class VUserCad extends JFrame {
 		User.setBounds(13, 11, 354, 233);
 		contentPane.add(User);
 
-		edCpf = new CPFTextField();;
+		edCpf = new CPFTextField();
+		edCpf.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(edCpf.validaCPF()) {
+					if(edCpf.existeCpfUsuario(FDAOTUser)) {
+						//Implementar auto-preenchimento dos campos
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "CPF invalido");
+					edCpf.requestFocus();
+				}
+			}
+		});;
 		edCpf.setColumns(10);
 		edCpf.setBounds(104, 11, 156, 20);
 		User.add(edCpf);
@@ -196,26 +211,23 @@ public class VUserCad extends JFrame {
 		lbNome.setBounds(48, 11, 46, 14);
 		DadosUser.add(lbNome);
 
-		edTelefone = new JTextField();
-		try {
-			edTelefone = new JFormattedTextField(new MaskFormatter("(##)####-####"));
-		} catch (ParseException e2) {
-			JOptionPane.showMessageDialog(null, "Telefone inválido");
-			e2.printStackTrace();
-		}
+		edTelefone = new TelefoneTextField();
 		edTelefone.setColumns(10);
 		edTelefone.setBounds(104, 39, 156, 20);
 		DadosUser.add(edTelefone);
 
-		edDataNascimento = new JTextField();
-		try {
-			edDataNascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
-		} catch (ParseException e2) {
-			JOptionPane.showMessageDialog(null, "Datra de nascimento inválida");
-			e2.printStackTrace();
-		}
+		edDataNascimento = new DateTextField();
+		edDataNascimento.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!edDataNascimento.validaDate()){
+					JOptionPane.showMessageDialog(null, "Data Invalida");
+					edDataNascimento.requestFocus();
+				}
+			}
+		});
 		edDataNascimento.setColumns(10);
-		edDataNascimento.setBounds(104, 70, 156, 20);
+		edDataNascimento.setBounds(104, 70, 72, 20);
 		DadosUser.add(edDataNascimento);
 
 		JComboBox<String> cbGenero = new JComboBox<String>();
@@ -243,35 +255,39 @@ public class VUserCad extends JFrame {
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(edCpf.validaCPF() || !edCpf.existeCpfUsuario(FDAOTUser)) {
+					if (edCpf.validaCPF() && !edCpf.existeCpfUsuario(FDAOTUser)) {
 						FDAOTUser.setBDIDUSER(FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
 						FDAOTUser.setBDIDCLINICA(VMenu.FIDClinica);
 						FDAOTUser.setBDIDPERMICAO(1);
 						FDAOTUser.setBDMAIL(edEmail.getText());
 						FDAOTUser.setBDCPF(edCpf.getText());
 						FDAOTUser.setBDSENHA(edSenha.getText());
+						
 						FDAOTUser.inserir(FDAOTUser);
 
-						if (!getCEPExiste(Integer.valueOf(edCep.getText().replaceAll("-", "")))) {
-							FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidade", "BDIDCIDADE"));
+						if (!getCEPExiste(Integer.valueOf(edCep.getCEP()))) {
+							FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidades", "BDIDCIDADE"));
 							FDAOTCidade.setBDNOMECID(edCidade.getText());
 							MTEstado selectedItem = (MTEstado) cbUF.getSelectedItem();
 							FDAOTCidade.setBDIDUF(selectedItem.getBDIDUF());
+
 							FDAOTCidade.inserir(FDAOTCidade);
 
-							FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getText().replaceAll("-", "")));
+							FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getCEP()));
 							FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
 							FDAOTEndereco.setBDBAIRRO(edBairro.getText());
+
 							FDAOTEndereco.inserir(FDAOTEndereco);
 						}
 
 						FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
 						FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
-						FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getText().replaceAll("-", "")));
+						FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
 						FDAOTDadosUser.setBDNOME(edNome.getText());
 						FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
-						FDAOTDadosUser.setBDDATANASCIMENTO(LocalDate.parse(FDAOTDadosUser.Dateconvert(edDataNascimento.getText())));
-						FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
+						FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
+						FDAOTDadosUser.setBDTELEFONE(edTelefone.getTelefone());
+
 						FDAOTDadosUser.inserir(FDAOTDadosUser);
 
 						JOptionPane.showMessageDialog(null, "Salvo com sucesso");

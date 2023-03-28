@@ -12,8 +12,9 @@ import control.DAOTUser;
 import vision.VMenu;
 
 public class CPFTextField extends JFormattedTextField {
+	
     private static final long serialVersionUID = 1L;
-
+    
     public CPFTextField() {
         super(createFormatter());
         setColumns(14); // define o tamanho do campo
@@ -30,9 +31,10 @@ public class CPFTextField extends JFormattedTextField {
         return formatter;
     }
     
-    public String getNumericString() {
-    	String wText = getValue().toString();
-    	return wText.replaceAll("[^0-9]", "");
+    public String getCPF() {
+        String wCPF = getText();
+        wCPF = wCPF.replaceAll("[^0-9]", "");
+        return  wCPF;
     }
     
     public Boolean existeCpfUsuario(DAOTUser prDAOUser) {
@@ -58,11 +60,12 @@ public class CPFTextField extends JFormattedTextField {
 	}
     
     public Boolean validaCPF() {
-    	String wCPF = getNumericString();
-    	if(wCPF.length() != 11) {
-    		return false;
-    	} 
-    	// Calcula o primeiro dígito verificador
+        String wCPF = getText();
+        wCPF = wCPF.replaceAll("[^0-9]", "");
+        if (wCPF.length() != 11) {
+            return false;
+        }
+        // Calcula o primeiro dígito verificador
         int sum = 0;
         for (int i = 0; i < 9; i++) {
             sum += (wCPF.charAt(i) - '0') * (10 - i);
@@ -71,7 +74,7 @@ public class CPFTextField extends JFormattedTextField {
         if (firstDigit > 9) {
             firstDigit = 0; // se o resultado for maior que 9, o dígito verificador é 0
         }
-        
+
         // Calcula o segundo dígito verificador
         sum = 0;
         for (int i = 0; i < 9; i++) {
@@ -82,9 +85,10 @@ public class CPFTextField extends JFormattedTextField {
         if (secondDigit > 9) {
             secondDigit = 0; // se o resultado for maior que 9, o dígito verificador é 0
         }
-        
+
         // Compara os dígitos verificadores calculados com os dígitos do CPF
         return wCPF.charAt(9) - '0' == firstDigit && wCPF.charAt(10) - '0' == secondDigit;
     }
+
     	
 }
