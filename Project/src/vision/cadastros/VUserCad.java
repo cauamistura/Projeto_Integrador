@@ -7,6 +7,7 @@ import java.awt.event.FocusEvent;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,13 +27,18 @@ import control.DAOTEndereco;
 import control.DAOTEstado;
 import control.DAOTUser;
 import model.MTCidade;
+import model.MTDadosUser;
 import model.MTEndereco;
 import model.MTEstado;
+import model.MTUser;
 import vision.VMenu;
+import vision.consultas.VUserCON;
 import vision.padrao.CEPTextField;
 import vision.padrao.CPFTextField;
 import vision.padrao.DateTextField;
 import vision.padrao.TelefoneTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VUserCad extends JFrame {
 
@@ -66,6 +72,7 @@ public class VUserCad extends JFrame {
 	 * Create the frame.
 	 */
 	public VUserCad() {
+		setTitle("Cadastro de Usuário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 714, 561);
 		contentPane = new JPanel();
@@ -144,21 +151,19 @@ public class VUserCad extends JFrame {
 		contentPane.add(User);
 
 		edCpf = new CPFTextField();
-		edCpf.addFocusListener(new FocusAdapter() {
+		edCpf.addKeyListener(new KeyAdapter() {
 			@Override
-			public void focusLost(FocusEvent e) {
-				if(edCpf.validaCPF()) {
-					if(edCpf.existeCpfUsuario(FDAOTUser)) {
-						//Implementar auto-preenchimento dos campos
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "CPF invalido");
-					edCpf.requestFocus();
-				}
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {;
+			        List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);			   
+			        VUserCON frame = new VUserCON(lista);
+			        frame.setVisible(true);
+		        }
 			}
-		});;
+		});
 		edCpf.setColumns(10);
 		edCpf.setBounds(104, 11, 156, 20);
+		edCpf.setToolTipText("Aperte F9 para consultar");
 		User.add(edCpf);
 
 		JLabel lbCpf = new JLabel("Cpf:");

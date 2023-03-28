@@ -70,6 +70,7 @@ public class VLoginClinicaCON extends JFrame {
 		} 
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Login");
 		setBounds(100, 100, 561, 652);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(158, 174, 255));
