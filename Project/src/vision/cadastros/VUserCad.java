@@ -44,9 +44,10 @@ public class VUserCad extends JFrame {
 	private JTextField edCep;
 	private JTextField edCidade;
 	private JTextField edBairro;
-	private JTextField edCpf;
 	private JTextField edEmail;
 	private JTextField edSenha;
+	private CPFTextField edCpf;
+
 	private JComboBox<MTEstado> cbUF;
 
 	// Declarações dos Objetos
@@ -140,7 +141,7 @@ public class VUserCad extends JFrame {
 		User.setBounds(13, 11, 354, 233);
 		contentPane.add(User);
 
-		edCpf = new CPFTextField(ABORT);;
+		edCpf = new CPFTextField();;
 		edCpf.setColumns(10);
 		edCpf.setBounds(104, 11, 156, 20);
 		User.add(edCpf);
@@ -242,7 +243,7 @@ public class VUserCad extends JFrame {
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(true) {
+					if(edCpf.validaCPF() || !edCpf.existeCpfUsuario(FDAOTUser)) {
 						FDAOTUser.setBDIDUSER(FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
 						FDAOTUser.setBDIDCLINICA(VMenu.FIDClinica);
 						FDAOTUser.setBDIDPERMICAO(1);

@@ -105,27 +105,5 @@ public class DAOTUser extends MTUser{
 		return ListaUser;
 	}
 	
-	public Boolean getExsisteUSER(DAOTUser prDAO, String prCPF) {
-		Connection c = prDAO.append();
-		try {
-			Statement stm = c.createStatement();
-			
-			String wSql = "SELECT BDCPF FROM `dbpi`.`tuser` t where t.BDIDCLINICA = "+String.valueOf(VMenu.FIDClinica)+" and t.BDCPF = '"+prCPF+"'";
-			
-			ResultSet rs =  stm.executeQuery(wSql);
-
-	        if(rs.next()){
-	        	if(rs.getString("BDCPF").equals(prCPF)){
-	        		return true;
-	        	}
-	        }
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		prDAO.post();
-		return false;
-	}
-	
 }
 
