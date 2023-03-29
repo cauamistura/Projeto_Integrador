@@ -1,3 +1,4 @@
+
 -- -----------------------------------------------------
 -- Schema DBPI
 -- -----------------------------------------------------
@@ -12,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TEstados` (
   `BDNOMEUF` VARCHAR(45) NOT NULL,
   `BDSIGLAUF` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`BDIDUF`))
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -30,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TCidades` (
     REFERENCES `DBPI`.`TEstados` (`BDIDUF`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TEndereco` (
     REFERENCES `DBPI`.`TCidades` (`BDIDCIDADE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -67,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TClinica` (
     REFERENCES `DBPI`.`TEndereco` (`BDCEP`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -78,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TPermicao` (
   `BDPERMICAO` VARCHAR(40) NULL,
   `BDDESCRISSAO` VARCHAR(100) NULL,
   PRIMARY KEY (`BDIDPERMICAO`))
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -103,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TUser` (
     REFERENCES `DBPI`.`TPermicao` (`BDIDPERMICAO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -126,11 +127,38 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TDadosUser` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_TDadosUser_TUser1`
-    FOREIGN KEY (`BDIDUSER` , `BDIDCLINICA`)
-    REFERENCES `DBPI`.`TUser` (`BDIDUSER` , `BDIDCLINICA`)
+    FOREIGN KEY (`BDIDUSER`, `BDIDCLINICA`)
+    REFERENCES `DBPI`.`TUser` (`BDIDUSER`, `BDIDCLINICA`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `DBPI`.`TEspecie`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBPI`.`TEspecie` (
+  `BDIDESPECIE` INT NOT NULL,
+  `BDNOMEESPECIE` VARCHAR(45) NULL,
+  PRIMARY KEY (`BDIDESPECIE`))
+
+
+
+-- -----------------------------------------------------
+-- Table `DBPI`.`TRaca`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBPI`.`TRaca` (
+  `BDIDRACA` INT NOT NULL,
+  `BDNOMERACA` VARCHAR(50) NULL,
+  `BDIDESPECIE` INT NOT NULL,
+  PRIMARY KEY (`BDIDRACA`, `BDIDESPECIE`),
+  INDEX `fk_TRaca_TEspecie1_idx` (`BDIDESPECIE` ASC),
+  CONSTRAINT `fk_TRaca_TEspecie1`
+    FOREIGN KEY (`BDIDESPECIE`)
+    REFERENCES `DBPI`.`TEspecie` (`BDIDESPECIE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+
 
 
 -- -----------------------------------------------------
@@ -142,41 +170,14 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TPets` (
   `BDNOMEPET` VARCHAR(45) NOT NULL,
   `BDAPELIDO` VARCHAR(20) NULL,
   `BDDATANASCIMENTO` DATE NOT NULL,
-  PRIMARY KEY (`BDIDPET`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `DBPI`.`TEspecie`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DBPI`.`TEspecie` (
-  `BDIDESPECIE` INT NOT NULL,
-  `BDNOMEESPECIE` VARCHAR(45) NULL,
-  PRIMARY KEY (`BDIDESPECIE`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `DBPI`.`TRaca`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DBPI`.`TRaca` (
-  `BDIDRACA` INT NOT NULL,
-  `BDNOMERACA` VARCHAR(45) NOT NULL,
-  `BDIDESPECIE` INT NOT NULL,
-  PRIMARY KEY (`BDIDRACA`, `BDIDESPECIE`),
-  INDEX `fk_TRacas_TPets1_idx` (`BDIDRACA` ASC),
-  INDEX `fk_TRaca_TEspecie1_idx` (`BDIDESPECIE` ASC),
-  CONSTRAINT `fk_TRacas_TPets1`
+  PRIMARY KEY (`BDIDPET`, `BDIDRACA`),
+  INDEX `fk_TPets_TRaca1_idx` (`BDIDRACA` ASC),
+  CONSTRAINT `fk_TPets_TRaca1`
     FOREIGN KEY (`BDIDRACA`)
-    REFERENCES `DBPI`.`TPets` (`BDIDPET`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TRaca_TEspecie1`
-    FOREIGN KEY (`BDIDESPECIE`)
-    REFERENCES `DBPI`.`TEspecie` (`BDIDESPECIE`)
+    REFERENCES `DBPI`.`TRaca` (`BDIDRACA`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -187,57 +188,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TComorbidade` (
   `BDNOMECOMORBIDADE` VARCHAR(45) NOT NULL,
   `BDDESCCOMORBIDADE` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`BDIDCOMORBIDADE`))
-ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `DBPI`.`TAtendimento_Entrada`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Entrada` (
-  `BDIDENTRADA` INT NOT NULL,
-  `BDIDPET` INT NOT NULL,
-  `BDIDCOMORBIDADE` INT NULL,
-  `BDDATAENTRADA` DATE NULL,
-  `BDDESCRISSAO` VARCHAR(300) NULL,
-  PRIMARY KEY (`BDIDENTRADA`, `BDIDPET`),
-  INDEX `fk_TAtendimento_Entrada_TPets1_idx` (`BDIDPET` ASC),
-  INDEX `fk_TAtendimento_Entrada_TComorbidade1_idx` (`BDIDCOMORBIDADE` ASC),
-  CONSTRAINT `fk_TAtendimento_Entrada_TPets1`
-    FOREIGN KEY (`BDIDPET`)
-    REFERENCES `DBPI`.`TPets` (`BDIDPET`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TAtendimento_Entrada_TComorbidade1`
-    FOREIGN KEY (`BDIDCOMORBIDADE`)
-    REFERENCES `DBPI`.`TComorbidade` (`BDIDCOMORBIDADE`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `DBPI`.`TAtendimento_Saida`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Saida` (
-  `BDIDSAIDA` INT NOT NULL,
-  `BDIDENTRADA` INT NOT NULL,
-  `BDIDPET` INT NOT NULL,
-  `BDIDCOMORBIDADE` INT NOT NULL,
-  `BDIDDATASAIDA` DATE NULL,
-  PRIMARY KEY (`BDIDSAIDA`, `BDIDENTRADA`, `BDIDPET`, `BDIDCOMORBIDADE`),
-  INDEX `fk_TAtendimento_Saida_TAtendimento_Entrada1_idx` (`BDIDENTRADA` ASC, `BDIDPET` ASC),
-  INDEX `fk_TAtendimento_Saida_TComorbidade1_idx` (`BDIDCOMORBIDADE` ASC),
-  CONSTRAINT `fk_TAtendimento_Saida_TAtendimento_Entrada1`
-    FOREIGN KEY (`BDIDENTRADA` , `BDIDPET`)
-    REFERENCES `DBPI`.`TAtendimento_Entrada` (`BDIDENTRADA` , `BDIDPET`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TAtendimento_Saida_TComorbidade1`
-    FOREIGN KEY (`BDIDCOMORBIDADE`)
-    REFERENCES `DBPI`.`TComorbidade` (`BDIDCOMORBIDADE`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -248,31 +199,26 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TMedicacao` (
   `BDNOMEMEDICACAO` VARCHAR(45) NULL,
   `BDDESCRICAO` VARCHAR(150) NULL,
   PRIMARY KEY (`BDIDMEDICACAO`))
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TReceita`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DBPI`.`TReceita` (
-  `BDIDPET` INT NOT NULL,
+  `BDIDRECEITA` INT NOT NULL,
   `BDIDMEDICACAO` INT NOT NULL,
   `BDINICIORECEITA` DATE NULL,
   `BDFINALRECEITA` DATE NULL,
   `BDDESCRICAO` VARCHAR(300) NULL,
-  PRIMARY KEY (`BDIDPET`, `BDIDMEDICACAO`),
+  PRIMARY KEY (`BDIDRECEITA`),
   INDEX `fk_TReceita_TMedicacao1_idx` (`BDIDMEDICACAO` ASC),
-  CONSTRAINT `fk_TReceita_TPets1`
-    FOREIGN KEY (`BDIDPET`)
-    REFERENCES `DBPI`.`TPets` (`BDIDPET`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_TReceita_TMedicacao1`
     FOREIGN KEY (`BDIDMEDICACAO`)
     REFERENCES `DBPI`.`TMedicacao` (`BDIDMEDICACAO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -291,8 +237,62 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TPETS_TUSER` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_TPets_has_TUser_TUser1`
-    FOREIGN KEY (`BDIDUSER` , `BDIDCLINICA`)
-    REFERENCES `DBPI`.`TUser` (`BDIDUSER` , `BDIDCLINICA`)
+    FOREIGN KEY (`BDIDUSER`, `BDIDCLINICA`)
+    REFERENCES `DBPI`.`TUser` (`BDIDUSER`, `BDIDCLINICA`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `DBPI`.`TAtendimento_Entrada`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Entrada` (
+  `BDIDENTRADA` INT NOT NULL,
+  `BDIDPET` INT NOT NULL,
+  `BDCOMORBIDADE` INT NULL,
+  `BDDATAENT` DATE NULL,
+  `BDDESC` VARCHAR(150) NULL,
+  INDEX `fk_TAtendimento_Entrada_TComorbidade1_idx` (`BDCOMORBIDADE` ASC),
+  PRIMARY KEY (`BDIDENTRADA`, `BDIDPET`),
+  CONSTRAINT `fk_TAtendimento_Entrada_TComorbidade1`
+    FOREIGN KEY (`BDCOMORBIDADE`)
+    REFERENCES `DBPI`.`TComorbidade` (`BDIDCOMORBIDADE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_TAtendimento_Entrada_TPets1`
+    FOREIGN KEY (`BDIDPET`)
+    REFERENCES `DBPI`.`TPets` (`BDIDPET`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+
+
+
+-- -----------------------------------------------------
+-- Table `DBPI`.`TAtendimento_Saida`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Saida` (
+  `BDIDENTRADA` INT NOT NULL,
+  `BDIDPET` INT NOT NULL,
+  `BDIDRECEITA` INT NULL,
+  `BDIDCOMORBIDADE` INT NULL,
+  `BDDATASAIDA` DATE NULL,
+  `BDDESC` VARCHAR(150) NULL,
+  PRIMARY KEY (`BDIDENTRADA`, `BDIDPET`),
+  INDEX `fk_TAtendimento_Saida_TReceita1_idx` (`BDIDRECEITA` ASC),
+  INDEX `fk_TAtendimento_Saida_TComorbidade1_idx` (`BDIDCOMORBIDADE` ASC),
+  CONSTRAINT `fk_TAtendimento_Saida_TAtendimento_Entrada1`
+    FOREIGN KEY (`BDIDENTRADA`, `BDIDPET`)
+    REFERENCES `DBPI`.`TAtendimento_Entrada` (`BDIDENTRADA`, `BDIDPET`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_TAtendimento_Saida_TReceita1`
+    FOREIGN KEY (`BDIDRECEITA`)
+    REFERENCES `DBPI`.`TReceita` (`BDIDRECEITA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_TAtendimento_Saida_TComorbidade1`
+    FOREIGN KEY (`BDIDCOMORBIDADE`)
+    REFERENCES `DBPI`.`TComorbidade` (`BDIDCOMORBIDADE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
