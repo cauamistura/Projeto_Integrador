@@ -12,10 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import vision.cadastros.VClinicaCad;
-import vision.cadastros.VPetCad;
-import vision.cadastros.VRacaCad;
-import vision.cadastros.VUserCad;
+import vision.cadastros.*;
+import vision.VLoginClinicaCON;
 import vision.padrao.PanelComBackgroundImage;
 import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
@@ -33,6 +31,10 @@ import java.awt.Frame;
 
 public class VMenu extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static Integer FIDClinica;
 	public static String  FNOMEClinica;
 	public static String  FCNPJClinica;
@@ -44,7 +46,7 @@ public class VMenu extends JFrame {
 	 */
 	
 	public VMenu() {
-		setExtendedState(Frame.MAXIMIZED_BOTH);
+//		setExtendedState(Frame.MAXIMIZED_BOTH);
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
@@ -52,7 +54,7 @@ public class VMenu extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 372);
 		
 		BufferedImage bg = null;
 		;
@@ -142,20 +144,31 @@ public class VMenu extends JFrame {
 		});
 		mmCad.add(miCLinica);
 		
-		JMenu mnNewMenu = new JMenu("Consultar");
-		menuBar.add(mnNewMenu);
+		JMenu mmCON = new JMenu("Consultar");
+		menuBar.add(mmCON);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
-		mnNewMenu.add(mntmNewMenuItem);
+		mmCON.add(mntmNewMenuItem);
 		
-		JMenu mnNewMenu_1 = new JMenu("Relatorio");
-		menuBar.add(mnNewMenu_1);
+		JMenu mmREL = new JMenu("Relatorio");
+		menuBar.add(mmREL);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("New menu item");
-		mnNewMenu_1.add(mntmNewMenuItem_1);
+		mmREL.add(mntmNewMenuItem_1);
 		
-		JMenu mnNewMenu_2 = new JMenu("Atendimento");
-		menuBar.add(mnNewMenu_2);
+		JMenu mmATE = new JMenu("Atendimento");
+		menuBar.add(mmATE);
+		
+		JMenuItem miLogout = new JMenuItem("Logout");
+		miLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VLoginClinicaCON l = new VLoginClinicaCON();
+				l.setLocationRelativeTo(null);
+				l.setVisible(true);
+				dispose();
+			}
+		});
+		mmATE.add(miLogout);
 		
 		edDescricao = new JTextField();
 		edDescricao.setEnabled(false);

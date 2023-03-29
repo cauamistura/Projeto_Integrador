@@ -80,27 +80,35 @@ INSERT INTO `dbpi`.`tdadosuser`
 VALUES
 (1, 'nome clinica', 'm', '3333-3333', '2004-05-21', 1, 1);
 
-INSERT INTO `dbpi`.`tpets`
-(`BDIDPET`,
-`BDIDRACA`,
-`BDNOMEPET`,
-`BDAPELIDO`,
-`BDDATANASCIMENTO`)
-VALUES
-(1, 1, 'dog', 'mal', '2018-05-03');
-
+-- Tabela tespecie
 INSERT INTO `dbpi`.`tespecie`
 (`BDIDESPECIE`,
 `BDNOMEESPECIE`)
 VALUES
-(1, 'gato');
+(1, 'gato'),
+(2, 'cachorro'),
+(3, 'coelho'),
+(4, 'hamster');
 
+-- Tabela traca
 INSERT INTO `dbpi`.`traca`
 (`BDIDRACA`,
 `BDNOMERACA`,
 `BDIDESPECIE`)
 VALUES
-(1, 'dogmall', 1);
+(1, 'dogmall', 1),
+(2, 'labrador', 2),
+(3, 'angorá', 1),
+(4, 'poodle', 2),
+(5, 'holandês', 3),
+(6, 'sírio', 4);
+
+INSERT INTO `dbpi`.`tpets` (`BDIDPET`, `BDIDRACA`, `BDNOMEPET`, `BDAPELIDO`, `BDDATANASCIMENTO`)
+VALUES 
+(1, 1, 'Bolinha', 'Bolinha', '2018-01-01'),
+(2, 2, 'Rex', 'Rex', '2016-05-20'),
+(3, 3, 'Mel', 'Melzinha', '2020-03-10'),
+(4, 4, 'Mia', 'Mia', '2019-11-12');
 
 INSERT INTO `dbpi`.`tcomorbidade`
 (`BDIDCOMORBIDADE`,
@@ -109,40 +117,43 @@ INSERT INTO `dbpi`.`tcomorbidade`
 VALUES
 (1, 'nomecomorbidade', 'desccomorbidade');
 
-
-INSERT INTO `dbpi`.`tatendimento_entrada`
-(`BDIDENTRADA`,
-`BDIDPET`,
-`BDIDCOMORBIDADE`,
-`BDDATAENTRADA`,
-`BDDESCRISSAO`)
-VALUES
-(1, 1, 1, '2023-02-28', 'descricao');
-
-INSERT INTO `dbpi`.`tatendimento_saida`
-(`BDIDSAIDA`,
-`BDIDENTRADA`,
-`BDIDPET`,
-`BDIDCOMORBIDADE`,
-`BDIDDATASAIDA`)
-VALUES
-(1, 1, 1, 1, '2023-03-01');
-
 INSERT INTO `dbpi`.`tmedicacao`
 (`BDIDMEDICACAO`,
 `BDNOMEMEDICACAO`,
 `BDDESCRICAO`)
 VALUES
-(1, 'paracetamol', 'dores');
+(1, 'paracetamol', 'dores'),
+(2, 'ibuprofeno', 'inflamações'),
+(3, 'amoxicilina', 'antibiótico'),
+(4, 'omeprazol', 'problemas no estômago');
 
 INSERT INTO `dbpi`.`treceita`
-(`BDIDPET`,
+(`BDIDRECEITA`,
 `BDIDMEDICACAO`,
-`BDINICIORECEITA`, 
+`BDINICIORECEITA`,
 `BDFINALRECEITA`,
 `BDDESCRICAO`)
 VALUES
-(1, 1, '2022-12-01', '2023-01-23', 'dores');
+(1, 1, '2022-01-01', '2022-01-07', 'Tomar paracetamol de 8 em 8 horas para aliviar a dor de cabeça.');
+
+INSERT INTO `dbpi`.`tatendimento_entrada`
+(`BDIDENTRADA`,
+`BDIDPET`,
+`BDCOMORBIDADE`,
+`BDDATAENT`,
+`BDDESC`)
+VALUES
+(1, 1, 1, '2022-03-28', 'Pet apresentando sintomas de falta de ar.');
+
+INSERT INTO `dbpi`.`tatendimento_saida`
+(`BDIDENTRADA`,
+`BDIDPET`,
+`BDIDRECEITA`,
+`BDIDCOMORBIDADE`,
+`BDDATASAIDA`,
+`BDDESC`)
+VALUES
+(1, 1, 1, 1, '2023-03-28', 'Alta após tratamento de infecção');
 
 INSERT INTO `dbpi`.`tpets_tuser`
 (`BDIDPET`,
@@ -151,9 +162,6 @@ INSERT INTO `dbpi`.`tpets_tuser`
 VALUES
 (1, 1, 1);
 
--- -----------------------------------------------------
--- Inserts Estados
--- -----------------------------------------------------
 
 
 
