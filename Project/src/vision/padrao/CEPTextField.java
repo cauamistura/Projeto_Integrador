@@ -1,19 +1,16 @@
 package vision.padrao;
 
-import java.awt.Shape;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 
-public class CEPTextField extends RoundJFormattedTextField {
-	public CEPTextField(MaskFormatter mf) {
-		super(mf);
-		// TODO Auto-generated constructor stub
-	}
+public class CEPTextField extends JFormattedTextField {
+    private static final long serialVersionUID = 1L;
+    
+    public CEPTextField() {
+        super(createFormatter());
+        setColumns(9); // define o tamanho do campo
+    }
 
-	private static final long serialVersionUID = 1L;
-	
-  
     private static MaskFormatter createFormatter() {
         MaskFormatter formatter = null;
         try {

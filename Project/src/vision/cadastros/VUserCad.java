@@ -150,8 +150,22 @@ public class VUserCad extends JFrame {
 		User.setBorder(new EmptyBorder(5, 5, 5, 5));
 		User.setBounds(13, 11, 354, 233);
 		contentPane.add(User);
+		
+		JLabel lbStatus = new JLabel("Status: Aguardando");
+		lbStatus.setBounds(13, 498, 110, 14);
+		contentPane.add(lbStatus);
 
 		edCpf = new CPFTextField();
+		edCpf.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (edCpf.existeCpfUsuario(FDAOTUser)) {
+					lbStatus.setText("Status: Alterando");
+				} else {
+					lbStatus.setText("Status: Inserindo");
+				}
+			}
+		});
 		edCpf.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -223,15 +237,6 @@ public class VUserCad extends JFrame {
 		DadosUser.add(edTelefone);
 
 		edDataNascimento = new DateTextField();
-		edDataNascimento.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!edDataNascimento.validaDate()){
-					JOptionPane.showMessageDialog(null, "Data Invalida");
-					edDataNascimento.requestFocus();
-				}
-			}
-		});
 		edDataNascimento.setColumns(10);
 		edDataNascimento.setBounds(104, 70, 72, 20);
 		DadosUser.add(edDataNascimento);
@@ -257,50 +262,75 @@ public class VUserCad extends JFrame {
 		lbGenero.setBounds(22, 102, 72, 14);
 		DadosUser.add(lbGenero);
 
-		JButton btnCAD = new JButton("CADASTRAR");
+		JButton btnCAD = new JButton("CONFIRMAR");
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				if (!edCpf.validaCPF()) {
+					JOptionPane.showMessageDialog(null, "Cpf Invalido");
+					edCpf.setText("");
+					edCpf.requestFocus();
+					return;
+				}
+
+				if (!edDataNascimento.validaDate()) {
+					JOptionPane.showMessageDialog(null, "Data Invalida");
+					edDataNascimento.setText("");
+					edDataNascimento.requestFocus();
+					return;
+				}
+
 				try {
-					if (edCpf.validaCPF() && !edCpf.existeCpfUsuario(FDAOTUser)) {
+					Boolean existeCpf = edCpf.existeCpfUsuario(FDAOTUser);
+					
+					FDAOTUser.setBDCPF(edCpf.getText());
+					if (existeCpf) {
+						FDAOTUser.setBDIDUSER(edCpf.getIDUser(FDAOTUser));
+					} else {
 						FDAOTUser.setBDIDUSER(FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
-						FDAOTUser.setBDIDCLINICA(VMenu.FIDClinica);
-						FDAOTUser.setBDIDPERMICAO(1);
-						FDAOTUser.setBDMAIL(edEmail.getText());
-						FDAOTUser.setBDCPF(edCpf.getText());
-						FDAOTUser.setBDSENHA(edSenha.getText());
-						
+					}
+					FDAOTUser.setBDIDCLINICA(VMenu.FIDClinica);
+					FDAOTUser.setBDIDPERMICAO(1);
+					FDAOTUser.setBDMAIL(edEmail.getText());
+					FDAOTUser.setBDSENHA(edSenha.getText());
+
+					if (existeCpf) {
+						FDAOTUser.alterar(FDAOTUser);
+					} else {
 						FDAOTUser.inserir(FDAOTUser);
+					}
 
-						if (!getCEPExiste(Integer.valueOf(edCep.getCEP()))) {
-							FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidades", "BDIDCIDADE"));
-							FDAOTCidade.setBDNOMECID(edCidade.getText());
-							MTEstado selectedItem = (MTEstado) cbUF.getSelectedItem();
-							FDAOTCidade.setBDIDUF(selectedItem.getBDIDUF());
+					if (!getCEPExiste(Integer.valueOf(edCep.getCEP()))) {
 
-							FDAOTCidade.inserir(FDAOTCidade);
+						FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("TCidades", "BDIDCIDADE"));
+						FDAOTCidade.setBDNOMECID(edCidade.getText());
+						MTEstado selectedItem = (MTEstado) cbUF.getSelectedItem();
+						FDAOTCidade.setBDIDUF(selectedItem.getBDIDUF());
 
-							FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getCEP()));
-							FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
-							FDAOTEndereco.setBDBAIRRO(edBairro.getText());
+						FDAOTCidade.inserir(FDAOTCidade);
 
-							FDAOTEndereco.inserir(FDAOTEndereco);
-						}
+						FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getCEP()));
+						FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
+						FDAOTEndereco.setBDBAIRRO(edBairro.getText());
 
-						FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
-						FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
-						FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
-						FDAOTDadosUser.setBDNOME(edNome.getText());
-						FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
-						FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
-						FDAOTDadosUser.setBDTELEFONE(edTelefone.getTelefone());
+						FDAOTEndereco.inserir(FDAOTEndereco);
+					}
 
+					FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
+					FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
+					FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
+					FDAOTDadosUser.setBDNOME(edNome.getText());
+					FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
+					FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
+					FDAOTDadosUser.setBDTELEFONE(edTelefone.getTelefone());
+
+					if (existeCpf) {
+						FDAOTDadosUser.alterar(FDAOTDadosUser);
+					} else {
 						FDAOTDadosUser.inserir(FDAOTDadosUser);
-
-						JOptionPane.showMessageDialog(null, "Salvo com sucesso");
 					}
-					else {
-						JOptionPane.showMessageDialog(null, "CPF já cadastrado ou invalido");
-					}
+					
+					JOptionPane.showMessageDialog(null, "Salvo com sucesso");
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Erro ao salvar");
 				}
@@ -308,7 +338,7 @@ public class VUserCad extends JFrame {
 		});
 		btnCAD.setBounds(288, 437, 132, 23);
 		contentPane.add(btnCAD);
-
+		
 	}
 
 	private Boolean getCEPExiste(int prCEP) {

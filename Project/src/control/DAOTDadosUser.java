@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.MTDadosUser;
@@ -92,4 +94,33 @@ public class DAOTDadosUser extends MTDadosUser {
 			prDAO.post();
 			return ListaDadosUser;
 		}
+		
+		public boolean alterar(DAOTDadosUser prDAO) {
+		    Connection c = null;
+		    PreparedStatement stm = null;
+		    try {
+		        c = prDAO.append();
+		        String wSql = "UPDATE `dbpi`.`tdadosuser` SET `BDCEP` = ?, `BDNOME` = ?, `BDGENERO` = ?, `BDTELEFONE` = ?, `BDDATANASCIMENTO` = ? WHERE `BDIDUSER` = ? AND `BDIDCLINICA` = ?";
+		        
+		        stm = c.prepareStatement(wSql);
+		        
+		        stm.setInt(1, prDAO.getBDCEP());
+		        stm.setString(2, prDAO.getBDNOME());
+		        stm.setString(3, prDAO.getBDGENERO());
+		        stm.setString(4, prDAO.getBDTELEFONE());
+		        stm.setString(5, String.valueOf(prDAO.getBDDATANASCIMENTO()));
+		        stm.setInt(6, prDAO.getBDIDUSER());
+		        stm.setInt(7, VMenu.FIDClinica);
+		        
+		        int rowsAffected = stm.executeUpdate();
+		        return rowsAffected > 0;
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        try { if (stm != null) stm.close(); } catch (SQLException e) { }
+		        try { if (c != null) c.close(); } catch (SQLException e) { }
+		    }
+		    return false;
+		}
+
 }

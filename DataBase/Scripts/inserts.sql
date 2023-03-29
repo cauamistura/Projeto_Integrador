@@ -78,7 +78,7 @@ INSERT INTO `dbpi`.`tdadosuser`
 `BDIDUSER`,
 `BDIDCLINICA`)
 VALUES
-(1, 'nome clinica', 'm', '3333-3333', '2004-05-21', 1, 1);
+(1, 'Joao Pikas', 'm', '3333-3333', '2004-05-21', 1, 1);
 
 -- Tabela tespecie
 INSERT INTO `dbpi`.`tespecie`

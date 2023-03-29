@@ -3,6 +3,7 @@ package control;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -38,26 +39,29 @@ public class DAOTUser extends MTUser{
 	}
 	
 	// UPDATE
-	public Boolean alterar(DAOTUser prDAO) {
-//		Connection c = prDAO.append();
-//		try {
-//			wSql = "UPDATE `dbpi`.`tclinica` SET `BDIDCEP` = ?, `BDCNPJ` = ?, `BDNOME` = ?, `BDNOMEFANTASIA` = ?, `BDSENHA` = ? WHERE `BDIDCLINICA` = ?;";
-//			PreparedStatement stm = c.prepareStatement(wSql);
-//			
-//			stm.setInt   (6, prDAO.getBDIDCLINICA());
-//			stm.setInt   (1, prDAO.getBDIDCEP());
-//			stm.setString(2, prDAO.getBDCNPJ());
-//			stm.setString(3, prDAO.getBDNOME());
-//			stm.setString(4, prDAO.getBDNOMEFANTASIA());
-//			stm.setString(5, prDAO.getBDSENHA());
-//			
-//			return true;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		prDAO.post();
-		return false;
+	public boolean alterar(DAOTUser prDAO) {
+	    boolean success = false;
+	    try (Connection c = prDAO.append();
+	         PreparedStatement stm = c.prepareStatement(
+	                 "UPDATE dbpi.tuser SET BDMAIL = ?, BDSENHA = ?, BDIDPERMICAO = ? " +
+	                 "WHERE BDIDUSER = ? AND BDIDCLINICA = ?"))
+	    {
+	        stm.setString(1, prDAO.getBDMAIL());
+	        stm.setString(2, prDAO.getBDSENHA());
+	        stm.setInt(3, prDAO.getBDIDPERMICAO());
+	        stm.setInt(4, prDAO.getBDIDUSER());
+	        stm.setInt(5, VMenu.FIDClinica);
+	        
+	        int count = stm.executeUpdate();
+	        success = (count == 1);
+	    } catch (SQLException e) {
+	        System.err.println("Error updating user record: " + e.getMessage());
+	    } finally {
+	        prDAO.post();
+	    }
+	    return success;
 	}
+
 	
 	// DELETE
 	public Boolean deletar(DAOTUser prDAO) {
