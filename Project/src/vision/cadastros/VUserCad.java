@@ -6,6 +6,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,7 @@ public class VUserCad extends JFrame {
 	private TelefoneTextField edTelefone;
 
 	private JComboBox<MTEstado> cbUF;
+	private JComboBox<String>   cbGenero;
 
 	// Declarações dos Objetos
 	private DAOTUser FDAOTUser = new DAOTUser();
@@ -170,12 +173,14 @@ public class VUserCad extends JFrame {
 				}
 			}
 		});
+		
+		VUserCad local = this;
 		edCpf.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_F9) {;
 			        List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);			   
-			        VUserCON frame = new VUserCON(lista);
+			        VUserCON frame = new VUserCON(lista, local);
 			        frame.setVisible(true);
 		        }
 			}
@@ -251,7 +256,7 @@ public class VUserCad extends JFrame {
 		edDataNascimento.setBounds(104, 70, 94, 20);
 		DadosUser.add(edDataNascimento);
 
-		JComboBox<String> cbGenero = new JComboBox<String>();
+		cbGenero = new JComboBox<String>();
 		cbGenero.addItem("Masculino");
 		cbGenero.addItem("Feminino");
 		cbGenero.setBounds(104, 101, 156, 22);
@@ -332,15 +337,16 @@ public class VUserCad extends JFrame {
 					FDAOTDadosUser.setBDNOME(edNome.getText());
 					FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
 					FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
-					FDAOTDadosUser.setBDTELEFONE(edTelefone.getTelefone());
+					FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
 
 					if (existeCpf) {
 						FDAOTDadosUser.alterar(FDAOTDadosUser);
 					} else {
 						FDAOTDadosUser.inserir(FDAOTDadosUser);
 					}
-					
 					JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+					edCpf.requestFocus();
+					limpaCampos(false);
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Erro ao salvar");
 				}
@@ -349,35 +355,78 @@ public class VUserCad extends JFrame {
 		btnCAD.setBounds(288, 437, 132, 23);
 		contentPane.add(btnCAD);
 		
+		RoundButton btnLimpar = new RoundButton("LIMPAR");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpaCampos(true);
+			}
+		});
+		btnLimpar.setBounds(430, 437, 89, 23);
+		contentPane.add(btnLimpar);
+		
+		RoundButton btnExcluir = new RoundButton("EXCLUIR");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnExcluir.setBounds(529, 437, 89, 23);
+		contentPane.add(btnExcluir);
+		
 	}
 
 	private Boolean getCEPExiste(int prCEP) {
 		// Valida se existe CEP
 		ArrayList<MTEndereco> lEndereco = new ArrayList<>();
-		lEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
-		for (MTEndereco l : lEndereco) {
-
-			if (l.getBDCEP() == prCEP) {
-				edBairro.setText(l.getBDBAIRRO());
-
-				// Procura Cidade Vinculada
-				ArrayList<MTCidade> lCidade = new ArrayList<>();
-				lCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
-				for (MTCidade lc : lCidade) {
-					if (l.getBDIDCIDADE() == lc.getBDIDCIDADE()) {
-						edCidade.setText(lc.getBDNOMECID());
-
-						// Procura Estado vinculado
-						for (MTEstado le : ListEstado) {
-							if (lc.getBDIDUF() == le.getBDIDUF()) {
-								cbUF.setSelectedIndex(lc.getBDIDUF()-1);
-							}
-						}
-					}
+		lEndereco = FDAOTEndereco.ListTEnderecoCON(FDAOTEndereco);
+		
+		for (MTEndereco lista : lEndereco) {
+			if (lista.getBDCEP().equals(prCEP)) {
+				try {
+					edCidade.setText(lista.getBDNOMECID());
+					edBairro.setText(lista.getBDBAIRRO());
+					cbUF.setSelectedIndex(lista.getBDIDUF() - 1);
+					return true;
+				} catch (Exception e) {
+					return false;
 				}
-				return true;
 			}
 		}
 		return false;
+	}
+	
+	public void preencheCampos(MTDadosUser prDadosUser) {
+		if(prDadosUser != null) {
+			edCpf.setText(prDadosUser.getBDCPF());
+			edEmail.setText(prDadosUser.getBDMAIL());
+			edSenha.setText(prDadosUser.getBDSENHA());
+			edNome.setText(prDadosUser.getBDNOME());
+			edTelefone.setText(prDadosUser.getBDTELEFONE());
+			
+			DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+			edDataNascimento.setText(prDadosUser.getBDDATANASCIMENTO().format(FOMATTER));
+			
+			if (prDadosUser.getBDGENERO().equalsIgnoreCase("Masculino")) {
+				cbGenero.setSelectedIndex(0);
+			} else {
+				cbGenero.setSelectedIndex(1);
+			}
+			edCep.setText(prDadosUser.getBDCEP().toString());
+			getCEPExiste(prDadosUser.getBDCEP());
+		}
+	}
+	
+	public void limpaCampos(Boolean prLimpaCPF) {
+		if(prLimpaCPF) {
+			edCpf.setText("");
+		}
+		edEmail.setText("");
+		edSenha.setText("");
+		edNome.setText("");
+		edTelefone.setText("");
+		edDataNascimento.setText("");
+		cbGenero.setSelectedIndex(0);
+		edCep.setText("");
+		edBairro.setText("");
+		edCidade.setText("");
 	}
 }

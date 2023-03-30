@@ -1,40 +1,44 @@
 package vision.consultas;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
-import control.DAOTUser;
 import model.MTDadosUser;
-import model.MTUser;
+import vision.cadastros.VUserCad;
 
 public class VUserCON extends JFrame {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
     private JTable table;
-    
     private DefaultTableModel model;
-    
-    public VUserCON(List<MTDadosUser> lista) {
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    private JButton btnConfirmar;
+    private List<MTDadosUser> dados;
+
+    public VUserCON(List<MTDadosUser> dados, VUserCad local) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 300);
         setTitle("Consulta de Usuario");
         setLocale(null);
         setLocationRelativeTo(null);;
         contentPane = new JPanel();
+        contentPane.setLayout(new BorderLayout());
         setContentPane(contentPane);
-        contentPane.setLayout(null);
+
+        this.dados = dados;
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 11, 464, 239);
-        contentPane.add(scrollPane);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
 
         table = new JTable();
         scrollPane.setViewportView(table);
@@ -44,11 +48,26 @@ public class VUserCON extends JFrame {
         model.addColumn("Nome");
         model.addColumn("Email");
 
-        for (MTDadosUser obj : lista) {
-            Object[] rowData = { obj.getBDCPF(), obj.getBDNOME(), obj.getBDMAIL()};
+        for (MTDadosUser dado : dados) {
+            Object[] rowData = { dado.getBDCPF(), dado.getBDNOME(), dado.getBDMAIL() };
             model.addRow(rowData);
         }
 
         table.setModel(model);
+
+        btnConfirmar = new JButton("Confirmar");
+        btnConfirmar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = table.getSelectedRows();
+                for (int i = 0; i < selectedRows.length; i++) {
+                    int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
+                    MTDadosUser dado = dados.get(modelIndex);
+                    local.preencheCampos(dado);
+                    dispose();
+                }
+            }
+        });
+        contentPane.add(btnConfirmar, BorderLayout.SOUTH);
     }
 }

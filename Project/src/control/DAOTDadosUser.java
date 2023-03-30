@@ -49,16 +49,25 @@ public class DAOTDadosUser extends MTDadosUser {
 			Connection c = prDAO.append();
 			try {
 				Statement stm = c.createStatement();
-				wSql = "SELECT u.BDCPF, du.BDNOME, u.BDMAIL FROM `dbpi`.`tuser` u inner join `dbpi`.`tdadosuser` du on (u.BDIDUSER = du.BDIDUSER and u.BDIDCLINICA = du.BDIDCLINICA) "
+				wSql = "SELECT u.BDIDUSER,u.BDIDPERMICAO, u.BDMAIL, u.BDCPF, u.BDSENHA, "
+						+ "	   du.BDNOME, du.BDCEP, du.BDGENERO, du.BDTELEFONE, du.BDDATANASCIMENTO FROM `dbpi`.`tuser` u "
+						+ "inner join `dbpi`.`tdadosuser` du on (u.BDIDUSER = du.BDIDUSER and u.BDIDCLINICA = du.BDIDCLINICA)"
 					 + "where u.BDIDCLINICA = " + String.valueOf(VMenu.FIDClinica)+"";
 				ResultSet rs =  stm.executeQuery(wSql);
 				
+				MTDadosUser lc = new MTDadosUser();
 				while (rs.next()) {
-					MTDadosUser lc = new MTDadosUser();
 					
+					lc.setBDIDUSER(rs.getInt("BDIDUSER"));
+					lc.setBDIDPERMICAO(rs.getInt("BDIDPERMICAO"));
+					lc.setBDMAIL(rs.getString("BDMAIL"));
+					lc.setBDSENHA(rs.getString("BDSENHA"));
 					lc.setBDCPF (rs.getString("BDCPF"));
 					lc.setBDNOME(rs.getString("BDNOME"));
-					lc.setBDMAIL(rs.getString("BDMAIL"));
+					lc.setBDCEP(rs.getInt("BDCEP"));
+					lc.setBDGENERO(rs.getString("BDGENERO"));
+					lc.setBDTELEFONE(rs.getString("BDTELEFONE"));
+					lc.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
 					
 					ListaDadosUser.add(lc);
 				}
