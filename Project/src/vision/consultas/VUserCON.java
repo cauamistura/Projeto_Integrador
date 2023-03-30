@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTDadosUser;
+import vision.cadastros.VUserCad;
 
 public class VUserCON extends JFrame {
 
@@ -24,10 +25,9 @@ public class VUserCON extends JFrame {
     private JButton btnConfirmar;
     private List<MTDadosUser> dados;
 
-    public VUserCON(List<MTDadosUser> dados) {
+    public VUserCON(List<MTDadosUser> dados, VUserCad local) {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 300);
-        setTitle("Lista de Usuario");
         setTitle("Consulta de Usuario");
         setLocale(null);
         setLocationRelativeTo(null);;
@@ -63,8 +63,8 @@ public class VUserCON extends JFrame {
                 for (int i = 0; i < selectedRows.length; i++) {
                     int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
                     MTDadosUser dado = dados.get(modelIndex);
-                    System.out.println("Nome: " + dado.getBDCPF() + ", Idade: " + dado.getBDNOME() + ", Email: "
-                            + dado.getBDMAIL());
+                    local.preencheCampos(dado);
+                    dispose();
                 }
             }
         });
