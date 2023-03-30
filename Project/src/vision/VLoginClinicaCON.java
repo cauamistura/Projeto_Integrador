@@ -24,6 +24,7 @@ import model.MTClinica;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
+import vision.padrao.RoundJTextField;
 
 public class VLoginClinicaCON extends JFrame {
 
@@ -103,7 +104,7 @@ public class VLoginClinicaCON extends JFrame {
 		JLabel lbCnpj = new JLabel("CNPJ:");
 		panel_2.add(lbCnpj, "flowy,cell 1 1");
 		
-		edCNPJ = new JTextField(8);
+		edCNPJ = new RoundJTextField();
 		edCNPJ.setText("cnpj");
 		panel_2.add(edCNPJ, "cell 1 1,growx");
 		edCNPJ.setColumns(10);
@@ -111,7 +112,7 @@ public class VLoginClinicaCON extends JFrame {
 		JLabel lbSenha = new JLabel("Senha:");
 		panel_2.add(lbSenha, "flowy,cell 1 2");
 		
-		edSenha = new JTextField(8);
+		edSenha = new RoundJTextField();
 		edSenha.setText("1");
 		panel_2.add(edSenha, "cell 1 2,growx");
 		edSenha.setColumns(10);
@@ -119,8 +120,9 @@ public class VLoginClinicaCON extends JFrame {
 		JLabel lbAlerta = new JLabel("<Aguardando>");
 		panel_2.add(lbAlerta, "cell 1 5,alignx center");
 		
-		JButton btnLogin = new  RoundButton("Login");
+		JButton btnLogin = new RoundButton("Login");
 		btnLogin.setBackground((new Color(255, 199, 0)));
+		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<MTClinica> TListClinica = new ArrayList<>();
