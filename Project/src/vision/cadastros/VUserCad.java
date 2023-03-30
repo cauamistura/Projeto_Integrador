@@ -339,7 +339,6 @@ public class VUserCad extends JFrame {
 					} else {
 						FDAOTDadosUser.inserir(FDAOTDadosUser);
 					}
-					
 					JOptionPane.showMessageDialog(null, "Salvo com sucesso");
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Erro ao salvar");
@@ -354,28 +353,19 @@ public class VUserCad extends JFrame {
 	private Boolean getCEPExiste(int prCEP) {
 		// Valida se existe CEP
 		ArrayList<MTEndereco> lEndereco = new ArrayList<>();
-		lEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
-		for (MTEndereco l : lEndereco) {
-
-			if (l.getBDCEP() == prCEP) {
-				edBairro.setText(l.getBDBAIRRO());
-
-				// Procura Cidade Vinculada
-				ArrayList<MTCidade> lCidade = new ArrayList<>();
-				lCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
-				for (MTCidade lc : lCidade) {
-					if (l.getBDIDCIDADE() == lc.getBDIDCIDADE()) {
-						edCidade.setText(lc.getBDNOMECID());
-
-						// Procura Estado vinculado
-						for (MTEstado le : ListEstado) {
-							if (lc.getBDIDUF() == le.getBDIDUF()) {
-								cbUF.setSelectedIndex(lc.getBDIDUF()-1);
-							}
-						}
-					}
+		lEndereco = FDAOTEndereco.ListTEnderecoCON(FDAOTEndereco);
+		
+		for (MTEndereco lista : lEndereco) {
+			if (lista.getBDCEP().equals(prCEP)) {
+				try {
+					edCidade.setText(lista.getBDNOMECID());
+					edBairro.setText(lista.getBDBAIRRO());
+					cbUF.setSelectedIndex(lista.getBDIDUF() - 1);
+					JOptionPane.showMessageDialog(null, "CEP já Existe");
+					return true;
+				} catch (Exception e) {
+					return false;
 				}
-				return true;
 			}
 		}
 		return false;

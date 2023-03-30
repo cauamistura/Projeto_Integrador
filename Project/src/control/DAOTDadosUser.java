@@ -49,7 +49,9 @@ public class DAOTDadosUser extends MTDadosUser {
 			Connection c = prDAO.append();
 			try {
 				Statement stm = c.createStatement();
-				wSql = "SELECT u.BDCPF, du.BDNOME, u.BDMAIL FROM `dbpi`.`tuser` u inner join `dbpi`.`tdadosuser` du on (u.BDIDUSER = du.BDIDUSER and u.BDIDCLINICA = du.BDIDCLINICA) "
+				wSql = "SELECT u.BDIDUSER,u.BDIDPERMICAO, u.BDMAIL, u.BDCPF, "
+						+ "	   du.BDNOME, du.BDCEP, du.BDGENERO, du.BDTELEFONE, du.BDDATANASCIMENTO FROM `dbpi`.`tuser` u "
+						+ "inner join `dbpi`.`tdadosuser` du on (u.BDIDUSER = du.BDIDUSER and u.BDIDCLINICA = du.BDIDCLINICA)"
 					 + "where u.BDIDCLINICA = " + String.valueOf(VMenu.FIDClinica)+"";
 				ResultSet rs =  stm.executeQuery(wSql);
 				
