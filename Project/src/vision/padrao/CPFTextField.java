@@ -11,7 +11,7 @@ import java.text.ParseException;
 import control.DAOTUser;
 import vision.VMenu;
 
-public class CPFTextField extends JFormattedTextField{
+public class CPFTextField extends RoundJFormattedTextField{
 	
     private static final long serialVersionUID = 1L;
     

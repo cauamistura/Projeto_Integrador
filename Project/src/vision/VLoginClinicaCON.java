@@ -104,8 +104,8 @@ public class VLoginClinicaCON extends JFrame {
 		JLabel lbCnpj = new JLabel("CNPJ:");
 		panel_2.add(lbCnpj, "flowy,cell 1 1");
 		
-		edCNPJ = new RoundJTextField();
-		edCNPJ.setText("cnpj");
+		edCNPJ = new JTextField(8);
+		edCNPJ.setText("11.111.111/1111-11");
 		panel_2.add(edCNPJ, "cell 1 1,growx");
 		edCNPJ.setColumns(10);
 		

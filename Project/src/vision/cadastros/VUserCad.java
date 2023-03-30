@@ -1,5 +1,6 @@
 package vision.cadastros;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -11,6 +12,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -77,6 +79,7 @@ public class VUserCad extends JFrame {
 	 * Create the frame.
 	 */
 	public VUserCad() {
+		setBackground(new Color(255, 255, 255));
 		setTitle("Cadastro de Usuário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 714, 561);
@@ -108,7 +111,7 @@ public class VUserCad extends JFrame {
 		});
 		edCep.setColumns(10);
 		edCep.setBounds(104, 11, 156, 20);
-		edCep.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
+		edCep.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		Endereco.add(edCep);
 
 		JLabel lbCep = new JLabel("Cep:");
@@ -187,7 +190,7 @@ public class VUserCad extends JFrame {
 		});
 		edCpf.setColumns(10);
 		edCpf.setBounds(104, 11, 156, 20);
-		edCpf.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
+		edCpf.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		edCpf.setToolTipText("Aperte F9 para consultar");
 		User.add(edCpf);
 
@@ -245,13 +248,13 @@ public class VUserCad extends JFrame {
 		DadosUser.add(lbNome);
 
 		edTelefone = new TelefoneTextField();
-		edTelefone.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
+		edTelefone.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		edTelefone.setColumns(10);
 		edTelefone.setBounds(104, 39, 156, 20);
 		DadosUser.add(edTelefone);
 
 		edDataNascimento = new DateTextField();
-		edDataNascimento.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
+		edDataNascimento.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		edDataNascimento.setColumns(10);
 		edDataNascimento.setBounds(104, 70, 94, 20);
 		DadosUser.add(edDataNascimento);
@@ -278,6 +281,7 @@ public class VUserCad extends JFrame {
 		DadosUser.add(lbGenero);
 
 		JButton btnCAD = new RoundButton("CONFIRMAR");
+		btnCAD.setBackground(new Color(255, 255, 255));
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
