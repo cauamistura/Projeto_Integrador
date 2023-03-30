@@ -4,7 +4,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 import java.text.ParseException;
 
-public class TelefoneTextField extends JFormattedTextField {
+public class TelefoneTextField extends RoundJFormattedTextField {
     private static final long serialVersionUID = 1L;
 
     public TelefoneTextField() {
@@ -15,7 +15,7 @@ public class TelefoneTextField extends JFormattedTextField {
     private static MaskFormatter createFormatter() {
         MaskFormatter formatter = null;
         try {
-            formatter = new MaskFormatter("(##)####-####"); // define a máscara
+            formatter = new MaskFormatter("(##)# ####-####"); // define a máscara
             formatter.setPlaceholderCharacter('_');
         } catch (ParseException ex) {
             ex.printStackTrace();

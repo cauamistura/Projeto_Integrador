@@ -1,6 +1,6 @@
 package vision.padrao;
 
-import javax.swing.JFormattedTextField;
+import javax.swing.JFormattedTextField; 
 import javax.swing.text.MaskFormatter;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.text.ParseException;
 import control.DAOTUser;
 import vision.VMenu;
 
-public class CPFTextField extends JFormattedTextField {
+public class CPFTextField extends JFormattedTextField{
 	
     private static final long serialVersionUID = 1L;
     

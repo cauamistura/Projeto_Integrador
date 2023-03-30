@@ -3,13 +3,13 @@ package vision.padrao;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 
-public class CEPTextField extends JFormattedTextField {
-    private static final long serialVersionUID = 1L;
-    
+public class CEPTextField extends RoundJFormattedTextField{
+	
+	private static final long serialVersionUID = 1L;
     public CEPTextField() {
-        super(createFormatter());
-        setColumns(9); // define o tamanho do campo
-    }
+		super(createFormatter());
+		setColumns(9);
+	}
 
     private static MaskFormatter createFormatter() {
         MaskFormatter formatter = null;

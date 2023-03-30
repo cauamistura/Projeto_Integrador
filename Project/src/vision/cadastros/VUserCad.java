@@ -36,6 +36,8 @@ import vision.consultas.VUserCON;
 import vision.padrao.CEPTextField;
 import vision.padrao.CPFTextField;
 import vision.padrao.DateTextField;
+import vision.padrao.RoundButton;
+import vision.padrao.RoundJTextField;
 import vision.padrao.TelefoneTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -103,7 +105,7 @@ public class VUserCad extends JFrame {
 		});
 		edCep.setColumns(10);
 		edCep.setBounds(104, 11, 156, 20);
-		edCep.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		edCep.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
 		Endereco.add(edCep);
 
 		JLabel lbCep = new JLabel("Cep:");
@@ -111,12 +113,14 @@ public class VUserCad extends JFrame {
 		lbCep.setBounds(48, 11, 46, 14);
 		Endereco.add(lbCep);
 
-		edCidade = new JTextField();
+		edCidade = new RoundJTextField();
+		edCidade.setBorder(new EmptyBorder(3, 3, 3, 3));
 		edCidade.setColumns(10);
 		edCidade.setBounds(104, 39, 156, 20);
 		Endereco.add(edCidade);
 
-		edBairro = new JTextField();
+		edBairro = new RoundJTextField();
+		edBairro.setBorder(new EmptyBorder(3, 3, 3, 3));
 		edBairro.setColumns(10);
 		edBairro.setBounds(104, 70, 156, 20);
 		Endereco.add(edBairro);
@@ -178,6 +182,7 @@ public class VUserCad extends JFrame {
 		});
 		edCpf.setColumns(10);
 		edCpf.setBounds(104, 11, 156, 20);
+		edCpf.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
 		edCpf.setToolTipText("Aperte F9 para consultar");
 		User.add(edCpf);
 
@@ -186,12 +191,14 @@ public class VUserCad extends JFrame {
 		lbCpf.setBounds(48, 11, 46, 14);
 		User.add(lbCpf);
 
-		edEmail = new JTextField();
+		edEmail = new RoundJTextField();
+		edEmail.setBorder(new EmptyBorder(3, 3, 3, 3));
 		edEmail.setColumns(10);
 		edEmail.setBounds(104, 39, 156, 20);
 		User.add(edEmail);
 
-		edSenha = new JTextField();
+		edSenha = new RoundJTextField();
+		edSenha.setBorder(new EmptyBorder(3, 3, 3, 3));
 		edSenha.setColumns(10);
 		edSenha.setBounds(104, 70, 156, 20);
 		User.add(edSenha);
@@ -221,7 +228,8 @@ public class VUserCad extends JFrame {
 		DadosUser.setLayout(null);
 		DadosUser.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		edNome = new JTextField();
+		edNome = new RoundJTextField();
+		edNome.setBorder(new EmptyBorder(3, 3, 3, 3));
 		edNome.setColumns(10);
 		edNome.setBounds(104, 11, 156, 20);
 		DadosUser.add(edNome);
@@ -232,13 +240,15 @@ public class VUserCad extends JFrame {
 		DadosUser.add(lbNome);
 
 		edTelefone = new TelefoneTextField();
+		edTelefone.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
 		edTelefone.setColumns(10);
 		edTelefone.setBounds(104, 39, 156, 20);
 		DadosUser.add(edTelefone);
 
 		edDataNascimento = new DateTextField();
+		edDataNascimento.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 0));
 		edDataNascimento.setColumns(10);
-		edDataNascimento.setBounds(104, 70, 72, 20);
+		edDataNascimento.setBounds(104, 70, 94, 20);
 		DadosUser.add(edDataNascimento);
 
 		JComboBox<String> cbGenero = new JComboBox<String>();
@@ -262,7 +272,7 @@ public class VUserCad extends JFrame {
 		lbGenero.setBounds(22, 102, 72, 14);
 		DadosUser.add(lbGenero);
 
-		JButton btnCAD = new JButton("CONFIRMAR");
+		JButton btnCAD = new RoundButton("CONFIRMAR");
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class DateTextField extends JFormattedTextField {
+public class DateTextField extends RoundJFormattedTextField {
     private static final long serialVersionUID = 1L;
 
     public DateTextField() {
