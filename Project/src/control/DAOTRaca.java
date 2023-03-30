@@ -72,13 +72,20 @@ private String wSQL;
 		}
 		
 		// Select
-		public ArrayList<MTRaca> ListTEndereco (DAOTRaca prDAO) {
+		public ArrayList<MTRaca> ListTRaca (DAOTRaca prDAO, int idEspecie) {
 			
 			ArrayList<MTRaca> ListTaRaca = new ArrayList<>();
 			Connection c = prDAO.append();
 			try {
-				wSQL = "SELECT * FROM traca";
+				
+				if (idEspecie == 0) {
+					wSQL = "SELECT * FROM traca";
+				} else {
+					wSQL = "SELECT * FROM traca WHERE BDIDESPECIE = " + idEspecie;
+				}
+		
 				Statement stm = c.prepareStatement(wSQL);
+				
 				ResultSet rs = stm.executeQuery(wSQL);
 				
 				while (rs.next()) {

@@ -31,7 +31,9 @@ public class VRacaCad extends JFrame {
 	public DAOTEspecie FDAOTEspecie = new DAOTEspecie();
 	private JPanel contentPane;
 	private JTextField txtNomeRaca;
-	private JComboBox cbRaca;
+	private JComboBox<MTEspecie> especieCb = new JComboBox<MTEspecie>();
+	private JLabel lblNewLabel_1;
+	ArrayList<MTEspecie> TListEspecie = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -62,14 +64,14 @@ public class VRacaCad extends JFrame {
 		contentPane.setLayout(null);
 		
 		txtNomeRaca = new JTextField();
-		txtNomeRaca.setBounds(110, 30, 121, 20);
+		txtNomeRaca.setBounds(111, 47, 121, 20);
 		contentPane.add(txtNomeRaca);
 		txtNomeRaca.setColumns(10);
 		
 		
 		JLabel lblNewLabel = new JLabel("Nome:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(54, 33, 46, 14);
+		lblNewLabel.setBounds(55, 50, 46, 14);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
@@ -83,7 +85,7 @@ public class VRacaCad extends JFrame {
 				
 				FDAOTRaca.setBDIDRACA(FDAOTRaca.getChaveID("TRaca", "BDIDRACA"));
 				FDAOTRaca.setBDNOMERACA(txtNomeRaca.getText());
-				FDAOTRaca.setBDIDESPECIE(1);
+				FDAOTRaca.setBDIDESPECIE(achaIdEspecie());
 	
 				try {
 					FDAOTRaca.inserir(FDAOTRaca);
@@ -97,5 +99,37 @@ public class VRacaCad extends JFrame {
 		});
 		btnNewButton.setBounds(71, 83, 143, 23);
 		contentPane.add(btnNewButton);
+		
+		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
+
+		for (MTEspecie mtEspecie : TListEspecie) {
+			especieCb.addItem(mtEspecie);
+		}
+		contentPane.add(especieCb);
+		
+		especieCb.setBounds(112, 13, 117, 22);
+		contentPane.add(especieCb);
+		
+		lblNewLabel_1 = new JLabel("Espécie:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_1.setBounds(55, 17, 46, 14);
+		contentPane.add(lblNewLabel_1);
+	}
+	
+	public Integer achaIdEspecie() {
+		Integer idEspecie = 0;
+		ArrayList<MTEspecie> TListEspecie = new ArrayList<>();
+		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
+
+		for (MTEspecie mtEspecie : TListEspecie) {
+
+			if (mtEspecie.getBDNOMEESPECIE().equals(especieCb.getSelectedItem().toString())) {
+				idEspecie = mtEspecie.getBDIDESPECIE();
+
+			}
+
+		}
+
+		return idEspecie;
 	}
 }

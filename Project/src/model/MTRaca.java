@@ -31,4 +31,9 @@ public class MTRaca extends ObjectDAO{
 	public void setBDNOMERACA(String bDNOMERACA) {
 		BDNOMERACA = bDNOMERACA;
 	}
+	
+	@Override
+	public String toString() {
+		return this.BDNOMERACA;
+	}
 }

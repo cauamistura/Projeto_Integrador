@@ -3,9 +3,9 @@ package model;
 import control.ObjectDAO;
 
 public class MTEspecie extends ObjectDAO {
-	
+
 	Integer BDIDESPECIE;
-	
+
 	String BDNOMEESPECIE;
 
 	public Integer getBDIDESPECIE() {
@@ -22,6 +22,11 @@ public class MTEspecie extends ObjectDAO {
 
 	public void setBDNOMEESPECIE(String bDNOMEESPECIE) {
 		BDNOMEESPECIE = bDNOMEESPECIE;
+	}
+
+	@Override
+	public String toString() {
+		return this.BDNOMEESPECIE;
 	}
 
 }
