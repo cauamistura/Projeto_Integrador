@@ -14,8 +14,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TEstados` (
   `BDSIGLAUF` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`BDIDUF`));
 
-
-
 -- -----------------------------------------------------
 -- Table `DBPI`.`TCidades`
 -- -----------------------------------------------------
@@ -32,8 +30,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TCidades` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
-
 -- -----------------------------------------------------
 -- Table `DBPI`.`TEndereco`
 -- -----------------------------------------------------
@@ -48,8 +44,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TEndereco` (
     REFERENCES `DBPI`.`TCidades` (`BDIDCIDADE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TClinica`
@@ -69,8 +63,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TClinica` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
-
 -- -----------------------------------------------------
 -- Table `DBPI`.`TPermicao`
 -- -----------------------------------------------------
@@ -79,8 +71,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TPermicao` (
   `BDPERMICAO` VARCHAR(40) NULL,
   `BDDESCRISSAO` VARCHAR(100) NULL,
   PRIMARY KEY (`BDIDPERMICAO`));
-
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TUser`
@@ -104,8 +94,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TUser` (
     REFERENCES `DBPI`.`TPermicao` (`BDIDPERMICAO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TDadosUser`
@@ -132,8 +120,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TDadosUser` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
-
 -- -----------------------------------------------------
 -- Table `DBPI`.`TEspecie`
 -- -----------------------------------------------------
@@ -141,8 +127,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TEspecie` (
   `BDIDESPECIE` INT NOT NULL,
   `BDNOMEESPECIE` VARCHAR(45) NULL,
   PRIMARY KEY (`BDIDESPECIE`));
-
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TRaca`
@@ -158,8 +142,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TRaca` (
     REFERENCES `DBPI`.`TEspecie` (`BDIDESPECIE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TPets`
@@ -178,8 +160,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TPets` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
-
 -- -----------------------------------------------------
 -- Table `DBPI`.`TComorbidade`
 -- -----------------------------------------------------
@@ -189,8 +169,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TComorbidade` (
   `BDDESCCOMORBIDADE` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`BDIDCOMORBIDADE`));
 
-
-
 -- -----------------------------------------------------
 -- Table `DBPI`.`TMedicacao`
 -- -----------------------------------------------------
@@ -199,8 +177,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TMedicacao` (
   `BDNOMEMEDICACAO` VARCHAR(45) NULL,
   `BDDESCRICAO` VARCHAR(150) NULL,
   PRIMARY KEY (`BDIDMEDICACAO`));
-
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TReceita`
@@ -218,8 +194,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TReceita` (
     REFERENCES `DBPI`.`TMedicacao` (`BDIDMEDICACAO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TPETS_TUSER`
@@ -242,8 +216,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TPETS_TUSER` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
-
 -- -----------------------------------------------------
 -- Table `DBPI`.`TAtendimento_Entrada`
 -- -----------------------------------------------------
@@ -265,8 +237,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Entrada` (
     REFERENCES `DBPI`.`TPets` (`BDIDPET`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
-
 
 -- -----------------------------------------------------
 -- Table `DBPI`.`TAtendimento_Saida`

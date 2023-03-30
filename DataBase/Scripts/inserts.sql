@@ -57,7 +57,8 @@ INSERT INTO `dbpi`.`tpermicao`
 `BDPERMICAO`,
 `BDDESCRISSAO`)
 VALUES
-(1, 'permicao', 'descricao');
+(1, 'Funcionario', 'descricao'),
+(2, 'Cliente', 'descricao');
 
 INSERT INTO `dbpi`.`tuser`
 (`BDIDUSER`,
@@ -67,7 +68,7 @@ INSERT INTO `dbpi`.`tuser`
 `BDSENHA`,
 `BDIDPERMICAO`)
 VALUES
-(1, 1, '1', 'user@gmail.com', '1', 1);
+(1, 1, '111.111.111-11', 'user@gmail.com', '1', 1);
 
 INSERT INTO `dbpi`.`tdadosuser`
 (`BDCEP`,
