@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import control.DAOTClinica;
 import model.MTClinica;
 import net.miginfocom.swing.MigLayout;
+import vision.padrao.CNPJTextFiel;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -36,7 +37,7 @@ public class VLoginClinicaCON extends JFrame {
 	private DAOTClinica FDAOTClinica = new DAOTClinica();
 	private VMenu menu;
 	private JTextField edSenha;
-	private JTextField edCNPJ;
+	private CNPJTextFiel edCNPJ;
 	/**
 	 * Launch the application.
 	 */
@@ -104,8 +105,9 @@ public class VLoginClinicaCON extends JFrame {
 		JLabel lbCnpj = new JLabel("CNPJ:");
 		panel_2.add(lbCnpj, "flowy,cell 1 1");
 		
-		edCNPJ = new JTextField(8);
+		edCNPJ = new CNPJTextFiel();
 		edCNPJ.setText("11.111.111/1111-11");
+		edCNPJ.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		panel_2.add(edCNPJ, "cell 1 1,growx");
 		edCNPJ.setColumns(10);
 		
@@ -114,6 +116,7 @@ public class VLoginClinicaCON extends JFrame {
 		
 		edSenha = new RoundJTextField();
 		edSenha.setText("1");
+		edSenha.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edSenha, "cell 1 2,growx");
 		edSenha.setColumns(10);
 
@@ -122,7 +125,6 @@ public class VLoginClinicaCON extends JFrame {
 		
 		JButton btnLogin = new RoundButton("Login");
 		btnLogin.setBackground((new Color(255, 199, 0)));
-		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<MTClinica> TListClinica = new ArrayList<>();

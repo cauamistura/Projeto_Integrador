@@ -7,7 +7,10 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -22,12 +25,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.Frame;
+import javax.swing.SwingConstants;
 
 public class VMenu extends JFrame {
 	
@@ -39,32 +45,39 @@ public class VMenu extends JFrame {
 	public static String  FNOMEClinica;
 	public static String  FCNPJClinica;
 	private JPanel contentPane;
-	private JTextField edDescricao;
+	private JPanel panel_2;
+	private JPanel panel_1;
+	private JPanel panel_3;
+	private JMenuBar menuBar;
+	private JMenu mmCad;
+	private JMenuItem miUser;
+	private JMenuItem miPet;
+	private JMenuItem miRaca;
+	private JMenuItem miCLinica;
+	private JMenu mmCON;
+	private JMenuItem mntmNewMenuItem;
+	private JMenu mmREL;
+	private JMenuItem mntmNewMenuItem_1;
+	private JMenu mmATE;
+	private JMenuItem miLogout;
+	private JTextField textField;
+	private JLabel descricao;
 
 	/**
-	 * Create the frame.
+	 * FCNPJClinica + " - " + FNOMEClinica;
 	 */
 	
 	public VMenu() {
+		
 //		setExtendedState(Frame.MAXIMIZED_BOTH);
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				edDescricao.setText(FCNPJClinica + " - " + FNOMEClinica);
+				descricao.setText(FCNPJClinica + " - " + FNOMEClinica);
 			}
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 372);
-		
-		BufferedImage bg = null;
-		;
-		try {
-			bg = ImageIO.read(new File("src/vision/images/teste.png"));
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		setBounds(100, 100, 771, 300);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -74,31 +87,34 @@ public class VMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new PanelComBackgroundImage(bg);
-		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[50,grow 50][300,grow][50,grow 50]", "[138.00][35.00,grow]"));
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.NORTH);
+		panel.setLayout(new MigLayout("", "[1,grow 1][245.00,grow][][]", "[137.00,grow,top][]"));
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(125, 137, 245));
-		panel.add(panel_1, "cell 1 1,growx,aligny top");
-		panel_1.setLayout(new MigLayout("", "[][228.00,grow][]", "[][][26.00]"));
+		panel_2 = new JPanel();
+		panel.add(panel_2, "cell 0 0,aligny center");
+		panel_2.setLayout(new MigLayout("", "[]", "[]"));
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(125, 137, 245));
-		panel_1.add(panel_2, "cell 1 1,alignx center,aligny center");
-		panel_2.setLayout(new BorderLayout(0, 0));
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/images/Group (2).png")));
+		panel_2.add(lblNewLabel_2, "cell 0 0,alignx center");
 		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setMargin(new Insets(0, 10, 0, 10));
-		menuBar.setLayout(new FlowLayout());
-		menuBar.setBackground(new Color(125, 137, 245));
-		panel_2.add(menuBar, BorderLayout.CENTER);
+		panel_1 = new JPanel();
+		panel.add(panel_1, "cell 1 0,growx,aligny center");
+		panel_1.setLayout(new MigLayout("", "[grow]", "[59.00][grow]"));
 		
-		JMenu mmCad = new JMenu("Cadastrar");
+		panel_3 = new JPanel();
+		panel_1.add(panel_3, "cell 0 0,grow");
+		panel_3.setLayout(new BorderLayout(0, 0));
+		
+		menuBar = new JMenuBar();
+		panel_3.add(menuBar, BorderLayout.CENTER);
+		
+		mmCad = new JMenu("Cadastrar");
 		mmCad.setBackground(new Color(125, 137, 245));
 		menuBar.add(mmCad);
 		
-		JMenuItem miUser = new JMenuItem("User");
+		miUser = new JMenuItem("User");
 		miUser.setBackground(new Color(125, 137, 245));
 		miUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,7 +125,8 @@ public class VMenu extends JFrame {
 		});
 		mmCad.add(miUser);
 		
-		JMenuItem miPet = new JMenuItem("Pet");
+		
+		miPet = new JMenuItem("Pet");
 		miPet.setBackground(new Color(125, 137, 245));
 		miPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -120,9 +137,7 @@ public class VMenu extends JFrame {
 		});
 		mmCad.add(miPet);
 		
-		
-		
-		JMenuItem miRaca = new JMenuItem("Raça");
+		miRaca = new JMenuItem("Raça");
 		miRaca.setBackground(new Color(125, 137, 245));
 		miRaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -133,7 +148,7 @@ public class VMenu extends JFrame {
 		});
 		mmCad.add(miRaca);
 		
-		JMenuItem miCLinica = new JMenuItem("Clinica");
+		miCLinica = new JMenuItem("Clinica");
 		miCLinica.setBackground(new Color(125, 137, 245));
 		miCLinica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -144,22 +159,22 @@ public class VMenu extends JFrame {
 		});
 		mmCad.add(miCLinica);
 		
-		JMenu mmCON = new JMenu("Consultar");
+		mmCON = new JMenu("Consultar");
 		menuBar.add(mmCON);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
+		mntmNewMenuItem = new JMenuItem("New menu item");
 		mmCON.add(mntmNewMenuItem);
 		
-		JMenu mmREL = new JMenu("Relatorio");
+		mmREL = new JMenu("Relatorio");
 		menuBar.add(mmREL);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("New menu item");
+		mntmNewMenuItem_1 = new JMenuItem("New menu item");
 		mmREL.add(mntmNewMenuItem_1);
 		
-		JMenu mmATE = new JMenu("Atendimento");
+		mmATE = new JMenu("Atendimento");
 		menuBar.add(mmATE);
 		
-		JMenuItem miLogout = new JMenuItem("Logout");
+		miLogout = new JMenuItem("Logout");
 		miLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VLoginClinicaCON l = new VLoginClinicaCON();
@@ -170,10 +185,14 @@ public class VMenu extends JFrame {
 		});
 		mmATE.add(miLogout);
 		
-		edDescricao = new JTextField();
-		edDescricao.setEnabled(false);
-		contentPane.add(edDescricao, BorderLayout.SOUTH);
-		edDescricao.setColumns(10);
+		descricao = new JLabel("New label");
+		descricao.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar.add(Box.createHorizontalGlue()); // adiciona espaçamento elástico para empurrar a descrição para a direita
+		menuBar.add(descricao);
+		
+	
+		
+	
 	}
 
 }
