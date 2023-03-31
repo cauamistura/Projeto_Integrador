@@ -67,15 +67,17 @@ public class DAOTUser extends MTUser{
 	public Boolean deletar(DAOTUser prDAO) {
 		Connection c = prDAO.append();
 		try {
-			wSql = "DELETE FROM `dbpi`.`tuser` WHERE BDIDUSER = ?;";
+			wSql = "DELETE FROM dbpi.tuser WHERE BDIDUSER = ? AND bdidclinica = ?";
 			PreparedStatement stm = c.prepareStatement(wSql);
 			stm.setLong(1, prDAO.getBDIDUSER());
+			stm.setInt (2, VMenu.FIDClinica);
 			stm.execute();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			prDAO.post();
 		}
-		prDAO.post();
 		return false;
 	}
 		

@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TDadosUser` (
   CONSTRAINT `fk_TDadosUser_TUser1`
     FOREIGN KEY (`BDIDUSER`, `BDIDCLINICA`)
     REFERENCES `DBPI`.`TUser` (`BDIDUSER`, `BDIDCLINICA`)
-    ON DELETE NO ACTION
+    ON DELETE cascade
     ON UPDATE NO ACTION);
 
 -- -----------------------------------------------------
@@ -208,12 +208,12 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TPETS_TUSER` (
   CONSTRAINT `fk_TPets_has_TUser_TPets1`
     FOREIGN KEY (`BDIDPET`)
     REFERENCES `DBPI`.`TPets` (`BDIDPET`)
-    ON DELETE NO ACTION
+    ON DELETE cascade
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_TPets_has_TUser_TUser1`
     FOREIGN KEY (`BDIDUSER`, `BDIDCLINICA`)
     REFERENCES `DBPI`.`TUser` (`BDIDUSER`, `BDIDCLINICA`)
-    ON DELETE NO ACTION
+    ON DELETE cascade
     ON UPDATE NO ACTION);
 
 -- -----------------------------------------------------
@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Entrada` (
   CONSTRAINT `fk_TAtendimento_Entrada_TPets1`
     FOREIGN KEY (`BDIDPET`)
     REFERENCES `DBPI`.`TPets` (`BDIDPET`)
-    ON DELETE NO ACTION
+    ON DELETE cascade
     ON UPDATE NO ACTION);
 
 -- -----------------------------------------------------
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Saida` (
   CONSTRAINT `fk_TAtendimento_Saida_TAtendimento_Entrada1`
     FOREIGN KEY (`BDIDENTRADA`, `BDIDPET`)
     REFERENCES `DBPI`.`TAtendimento_Entrada` (`BDIDENTRADA`, `BDIDPET`)
-    ON DELETE NO ACTION
+    ON DELETE cascade
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_TAtendimento_Saida_TReceita1`
     FOREIGN KEY (`BDIDRECEITA`)

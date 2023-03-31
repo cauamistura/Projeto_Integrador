@@ -371,6 +371,17 @@ public class VUserCad extends JFrame {
 		RoundButton btnExcluir = new RoundButton("EXCLUIR");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
+					int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja excluir? Todos os dados vinculados a este usuário serão excluídos.", "Confirmação", JOptionPane.YES_NO_OPTION);
+					if (resposta == JOptionPane.YES_OPTION) {
+						FDAOTUser.setBDIDUSER(1);
+						FDAOTUser.deletar(FDAOTUser);
+						JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+						limpaCampos(true);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Cpf não é valido ou não existe");
+				}
 			}
 		});
 		btnExcluir.setBounds(529, 437, 89, 23);
@@ -432,5 +443,6 @@ public class VUserCad extends JFrame {
 		edCep.setText("");
 		edBairro.setText("");
 		edCidade.setText("");
+		edCpf.requestFocus();
 	}
 }
