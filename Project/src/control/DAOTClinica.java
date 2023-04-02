@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class DAOTClinica extends MTClinica {
 	public Boolean inserir(DAOTClinica prDAO) {
 		Connection c = prDAO.append();
 		try {
-			wSql = "INSERT INTO `DBPI`.`TClinica`(`BDIDCLINICA`,`BDIDCEP`,`BDCNPJ`,`BDNOME`,`BDNOMEFANTASIA`,`BDSENHA`)VALUES(?,?,?,?,?,?);";
+			wSql = "INSERT INTO `dbpi`.`tclinica`(`BDIDCLINICA`,`BDIDCEP`,`BDCNPJ`,`BDNOME`,`BDNOMEFANTASIA`,`BDSENHA`)VALUES(?,?,?,?,?,?);";
 			PreparedStatement stm = c.prepareStatement(wSql);
 			
 			stm.setInt   (1, prDAO.getBDIDCLINICA());
@@ -40,10 +41,14 @@ public class DAOTClinica extends MTClinica {
 	
 	// UPDATE
 	public Boolean alterar(DAOTClinica prDAO) {
-		Connection c = prDAO.append();
+		Connection c = null;
+	    PreparedStatement stm = null;
 		try {
+			c = prDAO.append();
+			
 			wSql = "UPDATE `dbpi`.`tclinica` SET `BDIDCEP` = ?, `BDCNPJ` = ?, `BDNOME` = ?, `BDNOMEFANTASIA` = ?, `BDSENHA` = ? WHERE `BDIDCLINICA` = ?;";
-			PreparedStatement stm = c.prepareStatement(wSql);
+			
+			stm = c.prepareStatement(wSql);
 			
 			stm.setInt(1, prDAO.getBDIDCEP());
 			stm.setString(2, prDAO.getBDCNPJ());
@@ -52,13 +57,17 @@ public class DAOTClinica extends MTClinica {
 			stm.setString(5, prDAO.getBDSENHA());
 			stm.setInt   (6, prDAO.getBDIDCLINICA());
 			
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
+			 int rowsUpdated = stm.executeUpdate();
+		        return rowsUpdated > 0;
+		    } catch (Exception e) {
+		        // Print the stack trace for any exceptions that occur
+		        e.printStackTrace();
+		    } finally {
+		        try { if (stm != null) stm.close(); } catch (SQLException e) { }
+		        try { if (c != null) c.close(); } catch (SQLException e) { }
+		    }
+		    return false;
 		}
-		prDAO.post();
-		return false;
-	}
 	
 	// DELETE
 	public Boolean deletar(DAOTClinica prDAO) {
@@ -105,5 +114,4 @@ public class DAOTClinica extends MTClinica {
 		prDAO.post();
 		return ListTaClinica;
 	}
-
 }

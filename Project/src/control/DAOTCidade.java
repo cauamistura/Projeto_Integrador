@@ -34,7 +34,7 @@ public class DAOTCidade extends MTCidade{
 		return false;	
 	}
 	// Update
-		public Boolean alterar(DAOTEndereco prDAO) {
+		public Boolean alterar(DAOTCidade prDAO) {
 			Connection c = prDAO.append();
 			try {
 				wSQL = "UPDATE `dbpi`.`tcidades`SET`BDIDCIDADE` = ?,`BDNOMECID` = ?,`BDDESCCID` = ?,`BDIDUF` = ?WHERE `BDIDCIDADE` = ?;";
@@ -54,7 +54,7 @@ public class DAOTCidade extends MTCidade{
 		}
 
 		// Delete
-		public Boolean deletar(DAOTEndereco prDAO) {
+		public Boolean deletar(DAOTCidade prDAO) {
 			Connection c = prDAO.append();
 			try {
 				wSQL = "DELETE FROM `dbpi`.`tcidades`WHERE BDIDCIDADE;";
@@ -88,6 +88,7 @@ public class DAOTCidade extends MTCidade{
 					MTCidade lc = new MTCidade();
 					
 					lc.setBDIDCIDADE(rs.getInt   ("BDIDCIDADE"));
+					lc.setBDDESCCID(rs.getString("BDDESCCID"));
 					lc.setBDIDUF	(rs.getInt   ("BDIDUF"));
 					lc.setBDNOMECID (rs.getString("BDNOMECID"));
 					
