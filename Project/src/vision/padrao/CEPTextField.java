@@ -44,7 +44,7 @@ public class CEPTextField extends RoundJFormattedTextField{
         return cep.length() == 8 ? cep : null; // retorna o CEP ou null se não tiver 8 dígitos
     }
     
-		public Boolean getCEPExiste(int prCEP, JTextField edBairro, JTextField edCidade, JComboBox cbUF) {
+		public Boolean getCEPExiste(int prCEP, JTextField edBairro, JTextField edCidade,JTextField edDescricao, JComboBox cbUF) {
 		// Valida se existe CEP
 		ArrayList<MTEndereco> lEndereco = new ArrayList<>();
 		ArrayList<MTEstado> TListEstado = new ArrayList<>();
@@ -61,6 +61,7 @@ public class CEPTextField extends RoundJFormattedTextField{
 				for (MTCidade lc : lCidade) {
 					if (l.getBDIDCIDADE() == lc.getBDIDCIDADE()) {
 						edCidade.setText(lc.getBDNOMECID());
+						edDescricao.setText(lc.getBDDESCCID());
 
 						// Procura Estado vinculado
 						for (MTEstado le : TListEstado) {

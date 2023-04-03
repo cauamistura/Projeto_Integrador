@@ -18,11 +18,15 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTCidade;
@@ -46,6 +50,8 @@ import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Window;
 
 public class VClinicaCad extends JFrame {
 
@@ -61,7 +67,7 @@ public class VClinicaCad extends JFrame {
 	ArrayList<MTEstado> TListEstado = new ArrayList<>();
 	ArrayList<MTEndereco> TListEndereco = new ArrayList<>();
 	ArrayList<MTCidade> TListCidade = new ArrayList<>();
-	Boolean alterar = false;
+	boolean alterar;
 	private JPanel contentPane;
 	private JTextField edCidade;
 	private CNPJTextFiel edCnpj;
@@ -73,6 +79,10 @@ public class VClinicaCad extends JFrame {
 	private JTextField edSenha;
 	private JComboBox cbUF;
 	private JLabel lbStatus;
+	private RoundButton btnLimp;
+	private RoundButton btnDelet;
+	private RoundButton btnAlter;
+	private RoundButton btnConf;
 
 	/**
 	 * Create the frame.
@@ -183,8 +193,12 @@ public class VClinicaCad extends JFrame {
 				public void focusLost(FocusEvent e) {
 				
 					if (edCep.getCEP() != null) {
-						if(edCep.getCEPExiste(Integer.valueOf(edCep.getCEP()), edBairro, edCidade, cbUF) ) {
+						if(edCep.getCEPExiste(Integer.valueOf(edCep.getCEP()), edBairro, edCidade, edDescricao, cbUF) ) {
 
+							edDescricao.setEditable(false);
+					        edBairro.setEditable(false);
+					        edCidade.setEditable(false);
+					        cbUF.setEnabled(false);
 						}
 						else {
 							edBairro.setText("");
@@ -199,7 +213,7 @@ public class VClinicaCad extends JFrame {
 						}
 					} else {
 						JOptionPane.showMessageDialog(null, "Cep invalido");
-						edCep.requestFocus();
+					
 					}
 				}
 			});
@@ -264,11 +278,11 @@ public class VClinicaCad extends JFrame {
 		panel_3.add(panel_5, "cell 1 1,grow");
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnConf = new RoundButton("Confirmar");
+		btnConf = new RoundButton("Confirmar");
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (!edCep.getCEPExiste(Integer.valueOf(edCep.getCEP()), edBairro, edCidade, cbUF)){
+				if (!edCep.getCEPExiste(Integer.valueOf(edCep.getCEP()), edBairro, edCidade,edDescricao, cbUF)){
 						
 					//validação do cep com o componente,
 					FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("tcidades", "BDIDCIDADE"));
@@ -308,34 +322,36 @@ public class VClinicaCad extends JFrame {
 					FDAOTClinica.inserir(FDAOTClinica);
 				}
 					
-					JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+				JOptionPane.showMessageDialog(null, "Salvo com sucesso");
 			}		
 		
 		});
 		panel_3.add(btnConf, "cell 1 3,growx");
 		btnConf.setBackground((new Color(255, 199, 0)));
 		
-		RoundButton btnAlter = new RoundButton("Alterar");
+		btnAlter = new RoundButton("Alterar");
 		btnAlter.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 			 
 				edNomeFan.setEditable(true);
 				edNome.setEditable(true);
 				edCep.setEditable(true);
 				edSenha.setEditable(true);
-				
-				alterar = true;
-			
+	
+				btnLimp.setEnabled(true);
+				btnDelet.setEnabled(true);
+				btnConf.setEnabled(true);
+
 			}
 		});
 		btnAlter.setBackground(new Color(255, 199, 0));
 		panel_3.add(btnAlter, "cell 1 4,growx");
 		
-		RoundButton btnLimp = new RoundButton("Limpar");
+		btnLimp = new RoundButton("Limpar");
 		btnLimp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-			if (alterar == true) {
+		
 			    edNome.setText("");
 		        edNomeFan.setText("");
 		        edDescricao.setText("");
@@ -344,18 +360,14 @@ public class VClinicaCad extends JFrame {
 		        edCidade.setText("");
 		        edSenha.setText("");
 		        cbUF.setSelectedItem("");
-			}
-			else{
-				JOptionPane.showMessageDialog(null,"Se deseja alterar alguma informaço, clique em 'ALTERAR'");
-			}
-		
+
 			}
 		});
 		
 		btnLimp.setBackground(new Color(255, 199, 0));
 		panel_3.add(btnLimp, "cell 1 5,growx");
 		
-		RoundButton btnDelet = new RoundButton("Alterar");
+		btnDelet = new RoundButton("Alterar");
 		btnDelet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -380,34 +392,68 @@ public class VClinicaCad extends JFrame {
 	public void preencheCampos() {
 		TListClinica = FDAOTClinica.ListTClinica(FDAOTClinica);
 		TListEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
+
 		for (MTClinica mtClinica : TListClinica) {
-			edCnpj.setText(mtClinica.getBDCNPJ());
-			edNome.setText(mtClinica.getBDNOME());
-			edNomeFan.setText(mtClinica.getBDNOMEFANTASIA());
-			edSenha.setText(mtClinica.getBDSENHA());
-			edCep.setText(String.valueOf(mtClinica.getBDIDCEP()));
-			
-			for (MTEndereco mtEndereco : TListEndereco) {
-				edBairro.setText(mtEndereco.getBDBAIRRO());
+			 
+			if(!TListClinica.isEmpty()){
+				
+				JOptionPane optionPane = new JOptionPane("Clinica já cadastrada", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+	            JDialog dialog = optionPane.createDialog("Aviso");
 
-				TListCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
-				for (MTCidade mtCidade : TListCidade ) {
-					if (mtEndereco.getBDIDCIDADE() == mtCidade.getBDIDCIDADE()) {
-						edCidade.setText(mtCidade.getBDNOMECID());
-						edDescricao.setText(mtCidade.getBDDESCCID());
+	            Timer timer = new Timer(3000, new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    dialog.dispose();
+	                }
+	            });
+	            timer.setRepeats(false);
+	            timer.start();
 
-						// Procura Estado vinculado
-						for (MTEstado mtEstado: TListEstado) {
-							if (mtCidade.getBDIDUF() == mtEstado.getBDIDUF()) {
-								cbUF.setSelectedIndex(mtEstado.getBDIDUF());
+	            dialog.setVisible(true);
+				btnLimp.setEnabled(false);
+				btnDelet.setEnabled(false);
+				btnConf.setEnabled(false);
+				
+				edCnpj.setText(mtClinica.getBDCNPJ());
+				edNome.setText(mtClinica.getBDNOME());
+				edNomeFan.setText(mtClinica.getBDNOMEFANTASIA());
+				edSenha.setText(mtClinica.getBDSENHA());
+				edCep.setText(String.valueOf(mtClinica.getBDIDCEP()));
+				
+				for (MTEndereco mtEndereco : TListEndereco) {
+					edBairro.setText(mtEndereco.getBDBAIRRO());
+
+					TListCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
+					for (MTCidade mtCidade : TListCidade ) {
+						if (mtEndereco.getBDIDCIDADE() == mtCidade.getBDIDCIDADE()) {
+							edCidade.setText(mtCidade.getBDNOMECID());
+							edDescricao.setText(mtCidade.getBDDESCCID());
+
+							// Procura Estado vinculado
+							for (MTEstado mtEstado: TListEstado) {
+								if (mtCidade.getBDIDUF() == mtEstado.getBDIDUF()) {
+									cbUF.setSelectedIndex(mtEstado.getBDIDUF());
+								}
 							}
 						}
+						
 					}
-					
 				}
+			}	
+			else {
+				JOptionPane.showMessageDialog(null, "Cadastre um clinica");
+				
+				edNomeFan.setEditable(true);
+				edNome.setEditable(true);
+				edCep.setEditable(true);
+				edSenha.setEditable(true);
+				edCnpj.setEditable(true);
+				
 			}
-		}		
+		}
+			
 	}
+
 
 	public Integer achaIdUf() {
 		

@@ -100,7 +100,7 @@ public class VMenu extends JFrame {
 		panel_2.add(lblNewLabel_2, "cell 0 0,alignx center");
 		
 		panel_1 = new JPanel();
-		panel.add(panel_1, "cell 1 0,growx,aligny center");
+		panel.add(panel_1, "cell 1 0,growx,aligny top");
 		panel_1.setLayout(new MigLayout("", "[grow]", "[59.00][grow]"));
 		
 		panel_3 = new JPanel();
