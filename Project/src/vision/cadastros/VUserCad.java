@@ -291,7 +291,12 @@ public class VUserCad extends JFrame {
 		RoundButton btnExcluir = new RoundButton("EXCLUIR");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				if(edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
+					FDAOTUser.setBDCPF(edCpf.getText());
+					exluiUser(FDAOTUser.getIDUser(FDAOTUser));
+				} else {
+					JOptionPane.showMessageDialog(null, "Cpf não cadastrado");
+				}
 			}
 		});
 		btnExcluir.setBounds(542, 335, 89, 23);
