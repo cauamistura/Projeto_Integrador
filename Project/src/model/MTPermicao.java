@@ -26,4 +26,8 @@ public class MTPermicao extends ObjectDAO {
 		BDDESCRISSAO = bDDESCRISSAO;
 	}
 
+	@Override
+	public String toString() {
+		return this.BDPERMICAO;
+	}
 }
