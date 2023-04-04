@@ -5,17 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,18 +18,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.MaskFormatter;
 
 import control.DAOTCidade;
 import control.DAOTDadosUser;
 import control.DAOTEndereco;
 import control.DAOTEstado;
+import control.DAOTPermicao;
 import control.DAOTUser;
-import model.MTCidade;
 import model.MTDadosUser;
 import model.MTEndereco;
 import model.MTEstado;
-import model.MTUser;
+import model.MTPermicao;
 import vision.VMenu;
 import vision.consultas.VUserCON;
 import vision.padrao.CEPTextField;
@@ -64,7 +58,8 @@ public class VUserCad extends JFrame {
 	private TelefoneTextField edTelefone;
 
 	private JComboBox<MTEstado> cbUF;
-	private JComboBox<String>   cbGenero;
+	private JComboBox<MTPermicao> cbPermissao;
+	private JComboBox<String> cbGenero;
 
 	// Declarações dos Objetos
 	private DAOTUser FDAOTUser = new DAOTUser();
@@ -74,6 +69,7 @@ public class VUserCad extends JFrame {
 	private DAOTEndereco FDAOTEndereco = new DAOTEndereco();
 	private DAOTCidade FDAOTCidade = new DAOTCidade();
 	private DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
+	private DAOTPermicao FDAOTPermicao = new DAOTPermicao();
 
 	/**
 	 * Create the frame.
@@ -82,7 +78,7 @@ public class VUserCad extends JFrame {
 		setBackground(new Color(255, 255, 255));
 		setTitle("Cadastro de Usuário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 714, 561);
+		setBounds(100, 100, 714, 415);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -92,7 +88,7 @@ public class VUserCad extends JFrame {
 		JPanel Endereco = new JPanel();
 		Endereco.setLayout(null);
 		Endereco.setBorder(new EmptyBorder(5, 5, 5, 5));
-		Endereco.setBounds(31, 266, 640, 116);
+		Endereco.setBounds(13, 174, 640, 116);
 		contentPane.add(Endereco);
 
 		edCep = new CEPTextField();
@@ -139,7 +135,7 @@ public class VUserCad extends JFrame {
 		for (MTEstado mtEstado : ListEstado) {
 			cbUF.addItem(mtEstado);
 		}
-
+		
 		JLabel lbCidade = new JLabel("Cidade:");
 		lbCidade.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbCidade.setBounds(48, 39, 46, 14);
@@ -158,11 +154,11 @@ public class VUserCad extends JFrame {
 		JPanel User = new JPanel();
 		User.setLayout(null);
 		User.setBorder(new EmptyBorder(5, 5, 5, 5));
-		User.setBounds(13, 11, 354, 233);
+		User.setBounds(13, 11, 354, 152);
 		contentPane.add(User);
-		
+
 		JLabel lbStatus = new JLabel("Status: Aguardando");
-		lbStatus.setBounds(13, 498, 110, 14);
+		lbStatus.setBounds(13, 351, 110, 14);
 		contentPane.add(lbStatus);
 
 		edCpf = new CPFTextField();
@@ -176,16 +172,14 @@ public class VUserCad extends JFrame {
 				}
 			}
 		});
-		
+
 		VUserCad local = this;
 		edCpf.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_F9) {;
-			        List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);			   
-			        VUserCON frame = new VUserCON(lista, local);
-			        frame.setVisible(true);
-		        }
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					abreConsulta(local);
+				}
 			}
 		});
 		edCpf.setColumns(10);
@@ -210,11 +204,16 @@ public class VUserCad extends JFrame {
 		edSenha.setColumns(10);
 		edSenha.setBounds(104, 70, 156, 20);
 		User.add(edSenha);
-
-		JComboBox<String> cbPermissao = new JComboBox<String>();
+		
+		cbPermissao = new JComboBox<>();
 		cbPermissao.setBounds(104, 101, 156, 22);
+		ArrayList<MTPermicao> listPermicao = new ArrayList<>();
+		listPermicao = FDAOTPermicao.ListTEstado(FDAOTPermicao);
+		for (MTPermicao mtPermicao : listPermicao) {
+			cbPermissao.addItem(mtPermicao);
+		}
 		User.add(cbPermissao);
-
+		
 		JLabel lbMail = new JLabel("Email:");
 		lbMail.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbMail.setBounds(48, 39, 46, 14);
@@ -231,7 +230,7 @@ public class VUserCad extends JFrame {
 		User.add(lbPermissao);
 
 		JPanel DadosUser = new JPanel();
-		DadosUser.setBounds(377, 11, 311, 233);
+		DadosUser.setBounds(377, 11, 311, 152);
 		contentPane.add(DadosUser);
 		DadosUser.setLayout(null);
 		DadosUser.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -280,7 +279,38 @@ public class VUserCad extends JFrame {
 		lbGenero.setBounds(22, 102, 72, 14);
 		DadosUser.add(lbGenero);
 
+		RoundButton btnLimpar = new RoundButton("LIMPAR");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpaCampos(true);
+			}
+		});
+		btnLimpar.setBounds(542, 301, 89, 23);
+		contentPane.add(btnLimpar);
+
+		RoundButton btnExcluir = new RoundButton("EXCLUIR");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		btnExcluir.setBounds(542, 335, 89, 23);
+		contentPane.add(btnExcluir);
+
+		RoundButton btnConsulta = new RoundButton("CONFIRMAR");
+		btnConsulta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abreConsulta(local);
+			}
+		});
+		btnConsulta.setText("Consultar");
+		btnConsulta.setBackground(Color.WHITE);
+		btnConsulta.setBounds(377, 335, 132, 23);
+		contentPane.add(btnConsulta);
+
 		JButton btnCAD = new RoundButton("CONFIRMAR");
+		btnCAD.setBounds(379, 301, 132, 23);
+		contentPane.add(btnCAD);
 		btnCAD.setBackground(new Color(255, 255, 255));
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -301,15 +331,16 @@ public class VUserCad extends JFrame {
 
 				try {
 					Boolean existeCpf = edCpf.existeCpfUsuario(FDAOTUser);
-					
+
 					FDAOTUser.setBDCPF(edCpf.getText());
 					if (existeCpf) {
-						FDAOTUser.setBDIDUSER(edCpf.getIDUser(FDAOTUser));
+						FDAOTUser.setBDIDUSER(FDAOTUser.getIDUser(FDAOTUser));
 					} else {
 						FDAOTUser.setBDIDUSER(FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
 					}
 					FDAOTUser.setBDIDCLINICA(VMenu.FIDClinica);
-					FDAOTUser.setBDIDPERMICAO(1);
+					MTPermicao selectedItemP = (MTPermicao) cbPermissao.getSelectedItem();
+					FDAOTUser.setBDIDPERMICAO(selectedItemP.getBDIDPERMICAO());
 					FDAOTUser.setBDMAIL(edEmail.getText());
 					FDAOTUser.setBDSENHA(edSenha.getText());
 
@@ -348,52 +379,26 @@ public class VUserCad extends JFrame {
 					} else {
 						FDAOTDadosUser.inserir(FDAOTDadosUser);
 					}
-					JOptionPane.showMessageDialog(null, "Salvo com sucesso");
 					edCpf.requestFocus();
-					limpaCampos(false);
+					int resposta = JOptionPane.showConfirmDialog(null, "Salvo com sucesso!\nDeseja limpar os campos?",
+							"Confirmação", JOptionPane.YES_NO_OPTION);
+					if (resposta == JOptionPane.YES_OPTION) {
+						limpaCampos(false);
+					}
+
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Erro ao salvar");
 				}
 			}
 		});
-		btnCAD.setBounds(288, 437, 132, 23);
-		contentPane.add(btnCAD);
-		
-		RoundButton btnLimpar = new RoundButton("LIMPAR");
-		btnLimpar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpaCampos(true);
-			}
-		});
-		btnLimpar.setBounds(430, 437, 89, 23);
-		contentPane.add(btnLimpar);
-		
-		RoundButton btnExcluir = new RoundButton("EXCLUIR");
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
-					int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja excluir? Todos os dados vinculados a este usuário serão excluídos.", "Confirmação", JOptionPane.YES_NO_OPTION);
-					if (resposta == JOptionPane.YES_OPTION) {
-						FDAOTUser.setBDIDUSER(1);
-						FDAOTUser.deletar(FDAOTUser);
-						JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
-						limpaCampos(true);
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Cpf não é valido ou não existe");
-				}
-			}
-		});
-		btnExcluir.setBounds(529, 437, 89, 23);
-		contentPane.add(btnExcluir);
-		
+
 	}
 
 	private Boolean getCEPExiste(int prCEP) {
 		// Valida se existe CEP
 		ArrayList<MTEndereco> lEndereco = new ArrayList<>();
 		lEndereco = FDAOTEndereco.ListTEnderecoCON(FDAOTEndereco);
-		
+
 		for (MTEndereco lista : lEndereco) {
 			if (lista.getBDCEP().equals(prCEP)) {
 				try {
@@ -408,18 +413,19 @@ public class VUserCad extends JFrame {
 		}
 		return false;
 	}
-	
+
 	public void preencheCampos(MTDadosUser prDadosUser) {
-		if(prDadosUser != null) {
+		if (prDadosUser != null) {
 			edCpf.setText(prDadosUser.getBDCPF());
 			edEmail.setText(prDadosUser.getBDMAIL());
 			edSenha.setText(prDadosUser.getBDSENHA());
+			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO());
 			edNome.setText(prDadosUser.getBDNOME());
 			edTelefone.setText(prDadosUser.getBDTELEFONE());
-			
+
 			DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
 			edDataNascimento.setText(prDadosUser.getBDDATANASCIMENTO().format(FOMATTER));
-			
+
 			if (prDadosUser.getBDGENERO().equalsIgnoreCase("Masculino")) {
 				cbGenero.setSelectedIndex(0);
 			} else {
@@ -429,9 +435,9 @@ public class VUserCad extends JFrame {
 			getCEPExiste(prDadosUser.getBDCEP());
 		}
 	}
-	
+
 	public void limpaCampos(Boolean prLimpaCPF) {
-		if(prLimpaCPF) {
+		if (prLimpaCPF) {
 			edCpf.setText("");
 		}
 		edEmail.setText("");
@@ -444,5 +450,28 @@ public class VUserCad extends JFrame {
 		edBairro.setText("");
 		edCidade.setText("");
 		edCpf.requestFocus();
+	}
+
+	private void abreConsulta(VUserCad prSelf) {
+		if (FDAOTDadosUser != null) {
+			List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);
+			VUserCON frame = new VUserCON(lista, prSelf);
+			frame.setVisible(true);
+		} else {
+
+		}
+	}
+
+	public void exluiUser(Integer prIDUSER) {
+		int resposta = JOptionPane.showConfirmDialog(null,
+				"Você realmente deseja excluir? Todos os dados vinculados a este usuário serão excluídos.",
+				"Confirmação", JOptionPane.YES_NO_OPTION);
+
+		if (resposta == JOptionPane.YES_OPTION) {
+			FDAOTUser.deletar(prIDUSER);
+			JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+			limpaCampos(true);
+		}
+
 	}
 }

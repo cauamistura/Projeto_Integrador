@@ -43,40 +43,45 @@ public class DAOTDadosUser extends MTDadosUser {
 	
 
 		// SELECT CONSULTA
-		public ArrayList<MTDadosUser> ListConsulta(DAOTDadosUser prDAO) {
-			ArrayList<MTDadosUser> ListaDadosUser = new ArrayList<>();
-			    
-			Connection c = prDAO.append();
-			try {
-				Statement stm = c.createStatement();
-				wSql = "SELECT u.BDIDUSER,u.BDIDPERMICAO, u.BDMAIL, u.BDCPF, u.BDSENHA, "
-						+ "	   du.BDNOME, du.BDCEP, du.BDGENERO, du.BDTELEFONE, du.BDDATANASCIMENTO FROM `dbpi`.`tuser` u "
-						+ "inner join `dbpi`.`tdadosuser` du on (u.BDIDUSER = du.BDIDUSER and u.BDIDCLINICA = du.BDIDCLINICA)"
-					 + "where u.BDIDCLINICA = " + String.valueOf(VMenu.FIDClinica)+"";
-				ResultSet rs =  stm.executeQuery(wSql);
-				
-				MTDadosUser lc = new MTDadosUser();
-				while (rs.next()) {
-					
-					lc.setBDIDUSER(rs.getInt("BDIDUSER"));
-					lc.setBDIDPERMICAO(rs.getInt("BDIDPERMICAO"));
-					lc.setBDMAIL(rs.getString("BDMAIL"));
-					lc.setBDSENHA(rs.getString("BDSENHA"));
-					lc.setBDCPF (rs.getString("BDCPF"));
-					lc.setBDNOME(rs.getString("BDNOME"));
-					lc.setBDCEP(rs.getInt("BDCEP"));
-					lc.setBDGENERO(rs.getString("BDGENERO"));
-					lc.setBDTELEFONE(rs.getString("BDTELEFONE"));
-					lc.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
-					
-					ListaDadosUser.add(lc);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			prDAO.post();
-			return ListaDadosUser;
-		}
+	public ArrayList<MTDadosUser> ListConsulta(DAOTDadosUser prDAO) {
+	    ArrayList<MTDadosUser> ListaDadosUser = new ArrayList<>();
+	    
+	    Connection c = prDAO.append();
+	    try {
+	        wSql = "SELECT u.BDIDUSER, u.BDIDPERMICAO, u.BDMAIL, u.BDCPF, u.BDSENHA, "
+	             + "du.BDNOME, du.BDCEP, du.BDGENERO, du.BDTELEFONE, du.BDDATANASCIMENTO "
+	             + "FROM `dbpi`.`tuser` u "
+	             + "INNER JOIN `dbpi`.`tdadosuser` du ON (u.BDIDUSER = du.BDIDUSER AND u.BDIDCLINICA = du.BDIDCLINICA) "
+	             + "WHERE u.BDIDCLINICA = " + String.valueOf(VMenu.FIDClinica);
+	        Statement stm = c.createStatement();
+	        ResultSet rs = stm.executeQuery(wSql);
+	        
+	        while (rs.next()) {
+	            MTDadosUser lc = new MTDadosUser();
+	            lc.setBDIDUSER(rs.getInt("BDIDUSER"));
+	            lc.setBDIDPERMICAO(rs.getInt("BDIDPERMICAO"));
+	            lc.setBDMAIL(rs.getString("BDMAIL"));
+	            lc.setBDSENHA(rs.getString("BDSENHA"));
+	            lc.setBDCPF(rs.getString("BDCPF"));
+	            lc.setBDNOME(rs.getString("BDNOME"));
+	            lc.setBDCEP(rs.getInt("BDCEP"));
+	            lc.setBDGENERO(rs.getString("BDGENERO"));
+	            lc.setBDTELEFONE(rs.getString("BDTELEFONE"));
+	            lc.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
+	            
+	            ListaDadosUser.add(lc);
+	        }
+	        rs.close();
+	        stm.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        prDAO.post();
+	    }
+	    
+	    return ListaDadosUser;
+	}
+
 		
 		// SELECT  
 		public ArrayList<MTDadosUser> ListTDadosUser(DAOTDadosUser prDAO) {

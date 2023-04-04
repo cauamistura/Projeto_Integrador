@@ -26,7 +26,6 @@ INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (25,'SP', 'São 
 INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (26,'SE', 'Sergipe');
 INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (27,'TO', 'Tocantins');
 
-
 INSERT INTO `dbpi`.`tcidades`
 (`BDIDCIDADE`,
 `BDNOMECID`,
@@ -40,7 +39,7 @@ INSERT INTO `dbpi`.`tendereco`
 `BDIDCIDADE`,
 `BDBAIRRO`)
 VALUES
-(1, 1, 'Bela vista');
+(11111111, 1, 'Bela vista');
 
 INSERT INTO `dbpi`.`tclinica`
 (`BDIDCLINICA`,
@@ -50,15 +49,16 @@ INSERT INTO `dbpi`.`tclinica`
 `BDNOMEFANTASIA`,
 `BDSENHA`)
 VALUES
-(1, 1, '11.111.111/1111-11', 'nome clinica', 'nome fantasia', '1');
+(1, 11111111, '11.111.111/1111-11', 'nome clinica', 'nome fantasia', '1');
 
 INSERT INTO `dbpi`.`tpermicao`
 (`BDIDPERMICAO`,
 `BDPERMICAO`,
 `BDDESCRISSAO`)
 VALUES
-(1, 'Funcionario', 'descricao'),
-(2, 'Cliente', 'descricao');
+(1, 'Admin', 'descricao'),
+(2, 'Funcionario', 'descricao'),
+(3, 'Cliente', 'descricao');
 
 INSERT INTO `dbpi`.`tuser`
 (`BDIDUSER`,
@@ -68,7 +68,10 @@ INSERT INTO `dbpi`.`tuser`
 `BDSENHA`,
 `BDIDPERMICAO`)
 VALUES
-(1, 1, '111.111.111-11', 'user@gmail.com', '1', 1);
+(1, 1, '123.456.789-10', 'joao@gmail.com', 'senha123', 1),
+(2, 1, '987.654.321-00', 'enzo@gmail.com', 'senha456', 1),
+(3, 1, '111.222.333-44', 'vini@gmail.com', 'senha789', 1),
+(4, 1, '555.444.333-22', 'ana@gmail.com', 'senhaABC', 1);
 
 INSERT INTO `dbpi`.`tdadosuser`
 (`BDCEP`,
@@ -79,7 +82,11 @@ INSERT INTO `dbpi`.`tdadosuser`
 `BDIDUSER`,
 `BDIDCLINICA`)
 VALUES
-(1, 'Joao Pikas', 'm', '3333-3333', '2004-05-21', 1, 1);
+('11111111', 'Joao Bolinhas', 'Masculino', '(11) 98765-4321', '1995-08-15', 1, 1),
+('11111111', 'Enzo', 'Feminino', '(21) 99999-8888', '1980-03-10', 2, 1),
+('11111111', 'Vini', 'Feminino', '(31) 55555-4444', '1999-12-01', 3, 1),
+('11111111', 'Ana Flavia', 'Feminino', '(48) 77777-6666', '2004-11-19', 4, 1);
+
 
 -- Tabela tespecie
 INSERT INTO `dbpi`.`tespecie`

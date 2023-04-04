@@ -90,25 +90,5 @@ public class CPFTextField extends RoundJFormattedTextField{
 		prDAOUser.post();
 		return false;
 	}
-    
-	public Integer getIDUser(DAOTUser prDAOUser) {
-		Connection c = prDAOUser.append();
-		try {
-			Statement stm = c.createStatement();
-
-			String wSql = "SELECT BDIDUSER FROM `dbpi`.`tuser` where BDCPF = '"+prDAOUser.getBDCPF()+"' and BDIDCLINICA =" + String.valueOf(VMenu.FIDClinica);
-
-			ResultSet rs = stm.executeQuery(wSql);
-
-			if (rs.next()) {
-				return rs.getInt("BDIDUSER");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		prDAOUser.post();
-		return null;
-	}
     	
 }

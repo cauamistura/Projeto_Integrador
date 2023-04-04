@@ -1,10 +1,8 @@
 package vision.consultas;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +21,7 @@ public class VUserCON extends JFrame {
     private JTable table;
     private DefaultTableModel model;
     private JButton btnConfirmar;
-    private List<MTDadosUser> dados;
+    private JButton btnExcluir;
 
     public VUserCON(List<MTDadosUser> dados, VUserCad local) {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -34,8 +32,6 @@ public class VUserCON extends JFrame {
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         setContentPane(contentPane);
-
-        this.dados = dados;
 
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -68,6 +64,24 @@ public class VUserCON extends JFrame {
                 }
             }
         });
-        contentPane.add(btnConfirmar, BorderLayout.SOUTH);
+
+        btnExcluir = new JButton("Excluir");
+        btnExcluir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = table.getSelectedRows();
+                for (int i = 0; i < selectedRows.length; i++) {
+                    int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
+                    MTDadosUser dado = dados.get(modelIndex);
+                    local.exluiUser(dado.getBDIDUSER());
+                    dispose();
+                }
+            }
+        });
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.add(btnConfirmar);
+        buttonsPanel.add(btnExcluir);
+        contentPane.add(buttonsPanel, BorderLayout.SOUTH);
     }
 }

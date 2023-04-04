@@ -14,6 +14,7 @@ import vision.VMenu;
 public class DAOTUser extends MTUser{
 	
 	private String wSql;
+	private Conexao FConexao;
 	
 	//Insert
 	public Boolean inserir(DAOTUser prDAO) {
@@ -64,19 +65,22 @@ public class DAOTUser extends MTUser{
 
 	
 	// DELETE
-	public Boolean deletar(DAOTUser prDAO) {
-		Connection c = prDAO.append();
+	public Boolean deletar(Integer prIDUSER) {
+		// Instacia coenexão
+		FConexao = Conexao.getInstacia();
+		// Conecta
+		Connection c = Conexao.conectar();
 		try {
 			wSql = "DELETE FROM dbpi.tuser WHERE BDIDUSER = ? AND bdidclinica = ?";
 			PreparedStatement stm = c.prepareStatement(wSql);
-			stm.setLong(1, prDAO.getBDIDUSER());
+			stm.setLong(1, prIDUSER);
 			stm.setInt (2, VMenu.FIDClinica);
 			stm.execute();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			prDAO.post();
+			FConexao.fecharConnection();
 		}
 		return false;
 	}
@@ -109,6 +113,26 @@ public class DAOTUser extends MTUser{
 		}
 		prDAO.post();
 		return ListaUser;
+	}
+	
+	public Integer getIDUser(DAOTUser prDAO) {
+		Connection c = prDAO.append();
+		try {
+			Statement stm = c.createStatement();
+
+			String wSql = "SELECT BDIDUSER FROM `dbpi`.`tuser` where BDCPF = '"+prDAO.getBDCPF()+"' and BDIDCLINICA =" + String.valueOf(VMenu.FIDClinica);
+
+			ResultSet rs = stm.executeQuery(wSql);
+
+			if (rs.next()) {
+				return rs.getInt("BDIDUSER");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		prDAO.post();
+		return null;
 	}
 	
 }
