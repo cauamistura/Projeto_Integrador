@@ -1,3 +1,4 @@
+
 package vision.cadastros;
 
 import java.awt.event.ActionEvent; 
@@ -38,6 +39,7 @@ import model.MTClinica;
 import model.MTDadosUser;
 import model.MTEndereco;
 import model.MTEstado;
+import vision.VLogin;
 import vision.consultas.VUserCON;
 import vision.padrao.CEPTextField;
 import vision.padrao.CNPJTextFiel;
@@ -138,7 +140,6 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbNomeFan, "flowy,cell 1 2");
 		
 		edNomeFan = new RoundJTextField();
-		edNomeFan.setEditable(false);
 		edNomeFan.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edNomeFan, "cell 1 2,growx");
 		edNomeFan.setColumns(10);
@@ -147,7 +148,6 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbDesc, "flowy,cell 2 2");
 		
 		edDescricao = new RoundJTextField();
-		edDescricao.setEditable(false);
 		edDescricao.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edDescricao, "cell 2 2,growx");
 		edDescricao.setColumns(10);
@@ -156,7 +156,6 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbNome, "flowy,cell 1 3");
 		
 		edNome = new RoundJTextField();
-		edNome.setEditable(false);
 		edNome.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edNome, "cell 1 3,growx");
 		edNome.setColumns(10);
@@ -165,7 +164,6 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbCnpj, "flowy,cell 2 3");
 		
 		edCnpj = new CNPJTextFiel();
-		edCnpj.setEditable(false);
 		edCnpj.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -187,7 +185,6 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbUf, "flowx,cell 2 5");
 		
 		edCep = new CEPTextField();
-		edCep.setEditable(false);
 		edCep.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(FocusEvent e) {
@@ -227,14 +224,12 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbBairro, "flowy,cell 1 7,alignx left");
 		
 		edBairro = new RoundJTextField();
-		edBairro.setEditable(false);
 		edBairro.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edBairro, "cell 1 7,growx");
 		edBairro.setColumns(10);
 
 		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
 		cbUF = new JComboBox<MTEstado>();
-		cbUF.setEnabled(false);
 		cbUF.addItem("");
 		for (MTEstado mtEstado : TListEstado) {
 			cbUF.addItem(mtEstado);
@@ -243,7 +238,6 @@ public class VClinicaCad extends JFrame {
 		
 		
 		edCidade = new RoundJTextField();
-		edCidade.setEditable(false);
 		edCidade.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edCidade, "cell 2 6,growx");
 		edCidade.setColumns(10);
@@ -255,7 +249,6 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbSenha, "flowy,cell 2 7");
 		
 		edSenha = new RoundJTextField();
-		edSenha.setEditable(false);
 		edSenha.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edSenha, "cell 2 7,growx");
 		edSenha.setColumns(10);
@@ -323,6 +316,14 @@ public class VClinicaCad extends JFrame {
 				}
 					
 				JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+				
+				if(!edCnpj.existeCnpjClinica(FDAOTClinica)) {
+					
+					VLogin clinica= new VLogin();
+					clinica.setVisible(true);
+					dispose();
+				}
+				
 			}		
 		
 		});
@@ -330,6 +331,7 @@ public class VClinicaCad extends JFrame {
 		btnConf.setBackground((new Color(255, 199, 0)));
 		
 		btnAlter = new RoundButton("Alterar");
+		btnAlter.setEnabled(false);
 		btnAlter.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -367,16 +369,15 @@ public class VClinicaCad extends JFrame {
 		btnLimp.setBackground(new Color(255, 199, 0));
 		panel_3.add(btnLimp, "cell 1 5,growx");
 		
-		btnDelet = new RoundButton("Alterar");
+		btnDelet = new RoundButton("Deletar");
+		btnDelet.setEnabled(false);
 		btnDelet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				FDAOTClinica.setBDIDCLINICA(edCnpj.IdClinica());
-				
 				FDAOTClinica.deletar(FDAOTClinica);
 			}
 		});
-		btnDelet.setText("Deletar");
 		btnDelet.setBackground(new Color(255, 199, 0));
 		panel_3.add(btnDelet, "cell 1 6,growx");
 	
@@ -413,6 +414,13 @@ public class VClinicaCad extends JFrame {
 				btnLimp.setEnabled(false);
 				btnDelet.setEnabled(false);
 				btnConf.setEnabled(false);
+				btnAlter.setEnabled(true);
+				
+				edNomeFan.setEditable(false);
+				edNome.setEditable(false);
+				edCep.setEditable(false);
+				edSenha.setEditable(false);
+				edCnpj.setEditable(false);
 				
 				edCnpj.setText(mtClinica.getBDCNPJ());
 				edNome.setText(mtClinica.getBDNOME());
@@ -442,13 +450,6 @@ public class VClinicaCad extends JFrame {
 			}	
 			else {
 				JOptionPane.showMessageDialog(null, "Cadastre um clinica");
-				
-				edNomeFan.setEditable(true);
-				edNome.setEditable(true);
-				edCep.setEditable(true);
-				edSenha.setEditable(true);
-				edCnpj.setEditable(true);
-				
 			}
 		}
 			

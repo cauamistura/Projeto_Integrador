@@ -47,6 +47,7 @@ public class VMenu extends JFrame {
 	private JLabel descricao;
 	private JLabel lblNewLabel;
 	private JMenuItem miLogout;
+	private JMenuItem Clinica;
 
 	/**
 	 * 
@@ -131,6 +132,16 @@ public class VMenu extends JFrame {
 			}
 		});
 		menuBar.add(miLogout);
+		
+		Clinica = new JMenuItem("clinica");
+		Clinica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VClinicaCad clinica = new VClinicaCad();
+				clinica.setVisible(true);
+				dispose();
+			}
+		});
+		menuBar.add(Clinica);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
