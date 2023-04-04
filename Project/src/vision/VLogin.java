@@ -20,24 +20,29 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
+import control.DAOTDadosUser;
+import control.DAOTUser;
 import model.MTClinica;
+import model.MTDadosUser;
+import model.MTUser;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.CNPJTextFiel;
+import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 
-public class VLoginClinicaCON extends JFrame {
+public class VLogin extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private DAOTClinica FDAOTClinica = new DAOTClinica();
+	private DAOTDadosUser FDAODadosUser = new DAOTDadosUser();
 	private VMenu menu;
 	private JTextField edSenha;
-	private CNPJTextFiel edCNPJ;
+	private CPFTextField edCNPJ;
 	/**
 	 * Launch the application.
 	 */
@@ -45,7 +50,7 @@ public class VLoginClinicaCON extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VLoginClinicaCON frame = new VLoginClinicaCON();
+					VLogin frame = new VLogin();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -58,7 +63,7 @@ public class VLoginClinicaCON extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VLoginClinicaCON() {
+	public VLogin() {
 		
 		BufferedImage bg = null;
 		;
@@ -99,14 +104,14 @@ public class VLoginClinicaCON extends JFrame {
 		panel_3.setLayout(new MigLayout("", "[50px][50px][50px]", "[25px][25px][25px]"));
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/images/Group (2).png")));
+		lblNewLabel_2.setIcon(new ImageIcon(VLogin.class.getResource("/vision/images/Group (2).png")));
 		panel_3.add(lblNewLabel_2, "cell 1 1,alignx center");
 		
-		JLabel lbCnpj = new JLabel("CNPJ:");
+		JLabel lbCnpj = new JLabel("CPF:");
 		panel_2.add(lbCnpj, "flowy,cell 1 1");
 		
-		edCNPJ = new CNPJTextFiel();
-		edCNPJ.setText("11.111.111/1111-11");
+		edCNPJ = new CPFTextField();
+		edCNPJ.setText("123.456.789-10");
 		edCNPJ.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		panel_2.add(edCNPJ, "cell 1 1,growx");
 		edCNPJ.setColumns(10);
@@ -115,7 +120,7 @@ public class VLoginClinicaCON extends JFrame {
 		panel_2.add(lbSenha, "flowy,cell 1 2");
 		
 		edSenha = new RoundJTextField();
-		edSenha.setText("1");
+		edSenha.setText("senha123");
 		edSenha.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edSenha, "cell 1 2,growx");
 		edSenha.setColumns(10);
@@ -127,34 +132,30 @@ public class VLoginClinicaCON extends JFrame {
 		btnLogin.setBackground((new Color(255, 199, 0)));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<MTClinica> TListClinica = new ArrayList<>();
-				TListClinica = FDAOTClinica.ListTClinica(FDAOTClinica);
-				if (getExiste(TListClinica)) {
+				ArrayList<MTDadosUser> TListClinica = new ArrayList<>();
+				TListClinica = FDAODadosUser.listLogin(FDAODadosUser);
+				if (validaUser(TListClinica)) {
 					menu.setVisible(true);
 					dispose();
 				} else {
-					lbAlerta.setText("CNPJ ou senha incorreto!");
+					lbAlerta.setText("CPF ou senha incorreto!");
 				}
 			}
-				
-				
-			
 		});
 		panel_2.add(btnLogin, "cell 1 3,growx");
-		
-		
-		
-		
 	}
-	private Boolean getExiste(ArrayList<MTClinica> prList) {
+	private Boolean validaUser(ArrayList<MTDadosUser> prList) {
 		Boolean wValida = false;
-		for (MTClinica l : prList) {
-			if(l.getBDCNPJ().equals(edCNPJ.getText()) && l.getBDSENHA().equalsIgnoreCase(edSenha.getText())) {
+		for (MTDadosUser l : prList) {
+			if(l.getBDCPF().equals(edCNPJ.getText()) && l.getBDSENHA().equalsIgnoreCase(edSenha.getText())) {
 				wValida = true;
 				menu = new VMenu();
 				VMenu.FIDClinica  = l.getBDIDCLINICA();
 				VMenu.FNOMEClinica= l.getBDNOME();
 				VMenu.FCNPJClinica= l.getBDCNPJ();
+				VMenu.FIDUSER     = l.getBDIDUSER();
+				VMenu.FNomeUser   = l.getBDNOMEUSER();
+				VMenu.FPERMICAO   = l.getBDIDPERMICAO();
 				break;
 			}
 		}

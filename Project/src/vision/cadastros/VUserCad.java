@@ -291,7 +291,12 @@ public class VUserCad extends JFrame {
 		RoundButton btnExcluir = new RoundButton("EXCLUIR");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				if(edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
+					FDAOTUser.setBDCPF(edCpf.getText());
+					exluiUser(FDAOTUser.getIDUser(FDAOTUser));
+				} else {
+					JOptionPane.showMessageDialog(null, "Cpf não cadastrado");
+				}
 			}
 		});
 		btnExcluir.setBounds(542, 335, 89, 23);
@@ -369,7 +374,7 @@ public class VUserCad extends JFrame {
 					FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
 					FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
 					FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
-					FDAOTDadosUser.setBDNOME(edNome.getText());
+					FDAOTDadosUser.setBDNOMEUSER(edNome.getText());
 					FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
 					FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
 					FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
@@ -419,8 +424,8 @@ public class VUserCad extends JFrame {
 			edCpf.setText(prDadosUser.getBDCPF());
 			edEmail.setText(prDadosUser.getBDMAIL());
 			edSenha.setText(prDadosUser.getBDSENHA());
-			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO());
-			edNome.setText(prDadosUser.getBDNOME());
+			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO()-1);
+			edNome.setText(prDadosUser.getBDNOMEUSER());
 			edTelefone.setText(prDadosUser.getBDTELEFONE());
 
 			DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
@@ -475,3 +480,4 @@ public class VUserCad extends JFrame {
 
 	}
 }
+

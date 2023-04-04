@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import model.MTClinica;
 import model.MTUser;
+import net.miginfocom.layout.LC;
 import vision.VMenu;
 
 public class DAOTUser extends MTUser{
@@ -134,6 +135,5 @@ public class DAOTUser extends MTUser{
 		prDAO.post();
 		return null;
 	}
-	
 }
 

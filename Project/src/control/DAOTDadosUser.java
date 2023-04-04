@@ -25,7 +25,7 @@ public class DAOTDadosUser extends MTDadosUser {
 			PreparedStatement stm = c.prepareStatement(wSql);
 			
 			stm.setInt	 (1, prDAO.getBDCEP());
-			stm.setString(2, prDAO.getBDNOME());
+			stm.setString(2, prDAO.getBDNOMEUSER());
 			stm.setString(3, prDAO.getBDGENERO());
 			stm.setString(4, prDAO.getBDTELEFONE());
 			stm.setDate	 (5, Date.valueOf(prDAO.getBDDATANASCIMENTO()));
@@ -63,7 +63,7 @@ public class DAOTDadosUser extends MTDadosUser {
 	            lc.setBDMAIL(rs.getString("BDMAIL"));
 	            lc.setBDSENHA(rs.getString("BDSENHA"));
 	            lc.setBDCPF(rs.getString("BDCPF"));
-	            lc.setBDNOME(rs.getString("BDNOME"));
+	            lc.setBDNOMEUSER(rs.getString("BDNOME"));
 	            lc.setBDCEP(rs.getInt("BDCEP"));
 	            lc.setBDGENERO(rs.getString("BDGENERO"));
 	            lc.setBDTELEFONE(rs.getString("BDTELEFONE"));
@@ -96,7 +96,7 @@ public class DAOTDadosUser extends MTDadosUser {
 				while (rs.next()) {
 					MTDadosUser lc = new MTDadosUser();
 					
-					lc.setBDNOME(rs.getString("BDNOME"));
+					lc.setBDNOMEUSER(rs.getString("BDNOME"));;
 					lc.setBDIDUSER(rs.getInt("BDIDUSER"));
 					
 					ListaDadosUser.add(lc);
@@ -119,7 +119,7 @@ public class DAOTDadosUser extends MTDadosUser {
 		        stm = c.prepareStatement(wSql);
 		        
 		        stm.setInt(1, prDAO.getBDCEP());
-		        stm.setString(2, prDAO.getBDNOME());
+		        stm.setString(2, prDAO.getBDNOMEUSER());
 		        stm.setString(3, prDAO.getBDGENERO());
 		        stm.setString(4, prDAO.getBDTELEFONE());
 		        stm.setString(5, String.valueOf(prDAO.getBDDATANASCIMENTO()));
@@ -136,5 +136,40 @@ public class DAOTDadosUser extends MTDadosUser {
 		    }
 		    return false;
 		}
+		
+		public ArrayList<MTDadosUser> listLogin(DAOTDadosUser prDAO){
+			ArrayList<MTDadosUser> listaLogin = new ArrayList<>();
+		    
+			Connection c = prDAO.append();
+			try {
+				Statement stm = c.createStatement();
+				wSql = " SELECT u.*, c.*, d.BDNOME as NOMEUSER FROM tuser u "
+						+ "inner join tclinica c on (u.bdidclinica = c.bdidclinica) "
+						+ "inner join tdadosuser d on (u.bdiduser = d.bdiduser)";
+				ResultSet rs =  stm.executeQuery(wSql);
+				
+				while (rs.next()) {
+					MTDadosUser lc = new MTDadosUser();
+					
+					lc.setBDIDUSER(rs.getInt("BDIDUSER"));
+					lc.setBDIDCLINICA(rs.getInt("BDIDCLINICA"));
+					lc.setBDIDCEP(rs.getInt("BDIDCEP"));
+					lc.setBDIDPERMICAO(rs.getInt("BDIDPERMICAO"));
+					
+					lc.setBDCNPJ(rs.getString("BDCNPJ"));
+					lc.setBDCPF(rs.getString("BDCPF"));
+					lc.setBDMAIL(rs.getString("BDMAIL"));
+					lc.setBDNOME(rs.getString("BDNOME"));
+					lc.setBDSENHA(rs.getString("BDSENHA"));
+					lc.setBDNOMEUSER(rs.getString("NOMEUSER"));
+					
+					listaLogin.add(lc);
+				}
 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			prDAO.post();
+			return listaLogin;
+		}
 }
