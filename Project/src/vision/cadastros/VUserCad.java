@@ -424,7 +424,7 @@ public class VUserCad extends JFrame {
 			edCpf.setText(prDadosUser.getBDCPF());
 			edEmail.setText(prDadosUser.getBDMAIL());
 			edSenha.setText(prDadosUser.getBDSENHA());
-			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO());
+			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO()-1);
 			edNome.setText(prDadosUser.getBDNOME());
 			edTelefone.setText(prDadosUser.getBDTELEFONE());
 
@@ -480,3 +480,4 @@ public class VUserCad extends JFrame {
 
 	}
 }
+

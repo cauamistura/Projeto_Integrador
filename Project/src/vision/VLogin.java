@@ -27,7 +27,7 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 
-public class VLoginClinicaCON extends JFrame {
+public class VLogin extends JFrame {
 
 	/**
 	 * 
@@ -45,7 +45,7 @@ public class VLoginClinicaCON extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VLoginClinicaCON frame = new VLoginClinicaCON();
+					VLogin frame = new VLogin();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -58,7 +58,7 @@ public class VLoginClinicaCON extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VLoginClinicaCON() {
+	public VLogin() {
 		
 		BufferedImage bg = null;
 		;
@@ -99,7 +99,7 @@ public class VLoginClinicaCON extends JFrame {
 		panel_3.setLayout(new MigLayout("", "[50px][50px][50px]", "[25px][25px][25px]"));
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(VLoginClinicaCON.class.getResource("/vision/images/Group (2).png")));
+		lblNewLabel_2.setIcon(new ImageIcon(VLogin.class.getResource("/vision/images/Group (2).png")));
 		panel_3.add(lblNewLabel_2, "cell 1 1,alignx center");
 		
 		JLabel lbCnpj = new JLabel("CNPJ:");
@@ -136,15 +136,8 @@ public class VLoginClinicaCON extends JFrame {
 					lbAlerta.setText("CNPJ ou senha incorreto!");
 				}
 			}
-				
-				
-			
 		});
 		panel_2.add(btnLogin, "cell 1 3,growx");
-		
-		
-		
-		
 	}
 	private Boolean getExiste(ArrayList<MTClinica> prList) {
 		Boolean wValida = false;
