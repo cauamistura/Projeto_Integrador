@@ -374,7 +374,7 @@ public class VUserCad extends JFrame {
 					FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
 					FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
 					FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
-					FDAOTDadosUser.setBDNOME(edNome.getText());
+					FDAOTDadosUser.setBDNOMEUSER(edNome.getText());
 					FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
 					FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
 					FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
@@ -425,7 +425,7 @@ public class VUserCad extends JFrame {
 			edEmail.setText(prDadosUser.getBDMAIL());
 			edSenha.setText(prDadosUser.getBDSENHA());
 			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO()-1);
-			edNome.setText(prDadosUser.getBDNOME());
+			edNome.setText(prDadosUser.getBDNOMEUSER());
 			edTelefone.setText(prDadosUser.getBDTELEFONE());
 
 			DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");

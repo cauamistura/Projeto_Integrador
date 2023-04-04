@@ -49,7 +49,7 @@ INSERT INTO `dbpi`.`tclinica`
 `BDNOMEFANTASIA`,
 `BDSENHA`)
 VALUES
-(1, 11111111, '11.111.111/1111-11', 'nome clinica', 'nome fantasia', '1');
+(1, 11111111, '11.111.111/1111-11', 'Clinica Teste', 'nome fantasia', '1');
 
 INSERT INTO `dbpi`.`tpermicao`
 (`BDIDPERMICAO`,

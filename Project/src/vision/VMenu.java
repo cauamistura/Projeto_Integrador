@@ -25,9 +25,16 @@ public class VMenu extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	//Informações globais da Clinica
 	public static Integer FIDClinica;
 	public static String FNOMEClinica;
 	public static String FCNPJClinica;
+	
+	//Informações Globais do Uuario
+	public static Integer FPERMICAO;
+	public static Integer FIDUSER;
+	public static String  FNomeUser;
+	
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu mmCad;
@@ -47,15 +54,9 @@ public class VMenu extends JFrame {
 
 	public VMenu() {
 
-		setExtendedState(MAXIMIZED_BOTH);
+//		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Menu");
-		
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-				descricao.setText("Clinica: "+ FNOMEClinica +" - "+FCNPJClinica);
-			}
-		});
+	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 771, 300);
 
@@ -66,6 +67,7 @@ public class VMenu extends JFrame {
 		setJMenuBar(menuBar);
 
 		mmCad = new JMenu("Cadastrar");
+		mmCad.setEnabled(false);
 		mmCad.setBackground(new Color(255, 255, 255));
 		menuBar.add(mmCad);
 
@@ -103,12 +105,15 @@ public class VMenu extends JFrame {
 		mmCad.add(miRaca);
 
 		mmCON = new JMenu("Consultar");
+		mmCON.setEnabled(false);
 		menuBar.add(mmCON);
 
 		mmREL = new JMenu("Relatorio");
+		mmREL.setEnabled(false);
 		menuBar.add(mmREL);
 
 		mmATE = new JMenu("Atendimento");
+		mmATE.setEnabled(false);
 		menuBar.add(mmATE);
 		
 		miLogout = new JMenuItem("Logout...");
@@ -139,7 +144,23 @@ public class VMenu extends JFrame {
 
 		lblNewLabel = new JLabel("");
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				descricao.setText("Usuario: "+ FNomeUser+ " | " + "Clinica: "+ FNOMEClinica);
+				habilitaCampos(FPERMICAO);
+			}
 
+			private void habilitaCampos(Integer prPERMICAO) {
+				if(prPERMICAO == 1) {
+					mmCad.setEnabled(true); 
+					mmCON.setEnabled(true);
+					mmREL.setEnabled(true);
+					mmATE.setEnabled(true);
+				}
+				
+			}
+		});
 	}
-
 }
