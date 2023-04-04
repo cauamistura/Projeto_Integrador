@@ -56,6 +56,6 @@ public class MTDadosUser extends MTUser{
 	
 	@Override
 	public String toString() {
-		return this.BDIDUSER + " - " + this.BDNOME;
+		return this.BDNOME;
 	}
 }

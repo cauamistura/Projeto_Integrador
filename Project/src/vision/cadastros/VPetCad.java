@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,8 +21,12 @@ import control.DAOTUser;
 import model.MTDadosUser;
 import model.MTEspecie;
 import model.MTEstado;
+import model.MTPet;
 import model.MTRaca;
 import model.MTUser;
+import vision.consultas.VPetCON;
+import vision.consultas.VUserCON;
+import vision.padrao.DateTextField;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,6 +41,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ItemEvent;
 
 public class VPetCad extends JFrame {
@@ -44,20 +51,27 @@ public class VPetCad extends JFrame {
 	 * 
 	 */
 
+	private static final long serialVersionUID = 1L;
+	
 	public DAOTPet FDAOTPet = new DAOTPet();
 	public DAOTUser FDAOTUser = new DAOTUser();
+	public DAOTEspecie FDAOTEspecie = new DAOTEspecie();
 	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	public DAOTRaca FDAOTRaca = new DAOTRaca();
+	
 	private JTextField txtApelidoPet;
 	private JTextField txtNomePet;
-	private JTextField txtDataNasc;
-	public DAOTEspecie FDAOTEspecie = new DAOTEspecie();
-	public DAOTRaca FDAOTRaca = new DAOTRaca();
+	private DateTextField txtDataNasc;
+	
+	private JPanel contentPane;
+	
 	JComboBox<MTEspecie> especieCb = new JComboBox<MTEspecie>();
 	JComboBox<MTRaca> racaCb = new JComboBox<MTRaca>();
+	JComboBox<MTDadosUser> userCb = new JComboBox<MTDadosUser>();
+	
 	ArrayList<MTRaca> TListRaca = new ArrayList<>();
 	ArrayList<MTEspecie> TListEspecie = new ArrayList<>();
+	ArrayList<MTDadosUser> TListUser = new ArrayList<>();
 
 	/**
 	 * Create the frame.
@@ -66,7 +80,7 @@ public class VPetCad extends JFrame {
 		setTitle("Cadastro de pets");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 319, 341);
+		setBounds(100, 100, 319, 360);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,12 +98,8 @@ public class VPetCad extends JFrame {
 		txtApelidoPet.setColumns(10);
 		txtApelidoPet.setColumns(10);
 
-		try {
-			txtDataNasc = new JFormattedTextField(new MaskFormatter("##/##/####"));
-		} catch (ParseException e2) {
-			JOptionPane.showMessageDialog(null, "Data inválida");
-			e2.printStackTrace();
-		}
+		
+		txtDataNasc = new DateTextField();
 		txtDataNasc.setBounds(162, 177, 86, 20);
 		contentPane.add(txtDataNasc);
 		txtDataNasc.setColumns(10);
@@ -109,19 +119,23 @@ public class VPetCad extends JFrame {
 		lblDataDeNasc.setBounds(52, 180, 100, 14);
 		contentPane.add(lblDataDeNasc);
 
+		VPetCad local = this;
+		txtNomePet.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					abreConsulta(local);
+				}
+			}
+		});
+		
 		JButton btnNewButton = new JButton("Cadastrar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 				if (txtNomePet.getText().isEmpty() || txtNomePet.getText() == null) {
 					JOptionPane.showMessageDialog(null, "Campo vazio: Nome");
-					return;
-				}
-
-				if (txtApelidoPet.getText().isEmpty() || txtApelidoPet.getText() == null) {
-					JOptionPane.showMessageDialog(null, "Campo vazio: Apelido");
 					return;
 				}
 
@@ -129,16 +143,14 @@ public class VPetCad extends JFrame {
 					JOptionPane.showMessageDialog(null, "Campo vazio: Data de nascimento");
 					return;
 				}
-
+				
+				FDAOTPet.setBDDATANASCIMENTO(txtDataNasc.getDate());
 				FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("TPets", "BDIDPET"));
 				FDAOTPet.setBDIDRACA(achaIdRaca());
 				FDAOTPet.setBDNOMEPET(txtNomePet.getText());
 				FDAOTPet.setBDAPELIDO(txtApelidoPet.getText());
 
-				try {
-					FDAOTPet.setBDDATANASCIMENTO(LocalDate.parse(txtDataNasc.getText(), formatter));
-				} catch (Exception e2) {
-					e2.printStackTrace();
+				if(!txtDataNasc.validaDate()) {
 					JOptionPane.showMessageDialog(null, "Data inválida. Tente novamente.");
 					return;
 				}
@@ -173,7 +185,7 @@ public class VPetCad extends JFrame {
 			}
 		});
 
-		especieCb.setBounds(162, 33, 87, 22);
+		especieCb.setBounds(164, 6, 87, 22);
 		contentPane.add(especieCb);
 
 		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
@@ -182,23 +194,47 @@ public class VPetCad extends JFrame {
 			especieCb.addItem(mtEspecie);
 		}
 		contentPane.add(especieCb);
+		
+		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
+
+		for (MTDadosUser mtUser : TListUser) {
+			userCb.addItem(mtUser);
+		}
+		contentPane.add(especieCb);
 
 		JLabel lblNewLabel_1 = new JLabel("Espécie:");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setBounds(24, 37, 128, 14);
+		lblNewLabel_1.setBounds(26, 10, 128, 14);
 		contentPane.add(lblNewLabel_1);
 
 		///////////////////////////////////////////////////
 
-		racaCb.setBounds(162, 75, 86, 22);
+		racaCb.setBounds(164, 48, 86, 22);
 		contentPane.add(racaCb);
 
 		contentPane.add(racaCb);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Raça:");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setBounds(24, 79, 128, 14);
+		lblNewLabel_1_1.setBounds(26, 52, 128, 14);
 		contentPane.add(lblNewLabel_1_1);
+		
+		JButton btnNewButton_1 = new JButton("Consultar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<MTPet> lista = FDAOTPet.ListTPet(FDAOTPet);
+				VPetCad prSelf = new VPetCad();
+				VPetCON frame = new VPetCON(lista, prSelf);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(72, 276, 176, 23);
+		contentPane.add(btnNewButton_1);
+		
+		
+		userCb.setBounds(162, 81, 86, 22);
+		contentPane.add(userCb);
 
 	}
 
@@ -219,7 +255,7 @@ public class VPetCad extends JFrame {
 		return idEspecie;
 	}
 	
-	public Integer achaIdRaca() {
+	private Integer achaIdRaca() {
 		Integer idRaca = 0;
 		ArrayList<MTRaca> TListRaca = new ArrayList<>();
 		TListRaca = FDAOTRaca.ListTRaca(FDAOTRaca, 0);
@@ -235,5 +271,15 @@ public class VPetCad extends JFrame {
 
 		return idRaca;
 	}
+	
+	private void abreConsulta(VPetCad prSelf) {
+		if (FDAOTPet != null) {
+			List<MTPet> lista = FDAOTPet.ListTPet(FDAOTPet);
+			VPetCON frame = new VPetCON(lista, prSelf);
+			frame.setLocationRelativeTo(null);
+			frame.setVisible(true);
+		} else {
 
+		}
+	}
 }

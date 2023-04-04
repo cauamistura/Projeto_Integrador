@@ -81,7 +81,7 @@ public class DAOTPet extends MTPet {
 		}
 		
 		// SELECT
-		public ArrayList<MTPet> ListTEndereco (DAOTPet prDAO) {
+		public ArrayList<MTPet> ListTPet (DAOTPet prDAO) {
 			
 			ArrayList<MTPet> ListaTePet = new ArrayList<>();
 			Connection c = prDAO.append();
@@ -97,7 +97,7 @@ public class DAOTPet extends MTPet {
 					le.setBDIDRACA(rs.getInt("BDIDRACA"));
 					le.setBDNOMEPET(rs.getString("BDNOMEPET"));
 					le.setBDAPELIDO(rs.getString("BDAPELIDO"));
-					le.setBDDATANASCIMENTO(LocalDate.parse((CharSequence) rs.getDate("BDDATANASCIMENTO")));
+					le.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
 					
 					ListaTePet.add(le);
 				}
