@@ -56,7 +56,7 @@ public class VMenu extends JFrame {
 
 	public VMenu() {
 
-		setExtendedState(MAXIMIZED_BOTH);
+//		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Menu");
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,6 +69,7 @@ public class VMenu extends JFrame {
 		setJMenuBar(menuBar);
 		
 		mmConfiguracao = new JMenu("Configurações");
+		mmConfiguracao.setEnabled(false);
 		menuBar.add(mmConfiguracao);
 		
 		Clinica = new JMenuItem("Clinica...");
@@ -127,6 +128,7 @@ public class VMenu extends JFrame {
 		menuBar.add(mmATE);
 		
 		mmSair = new JMenu("Sair");
+		mmSair.setEnabled(false);
 		menuBar.add(mmSair);
 		
 		miLogout = new JMenuItem("Logout...");
@@ -170,6 +172,10 @@ public class VMenu extends JFrame {
 					mmCad.setEnabled(true); 
 					mmCON.setEnabled(true);
 					mmATE.setEnabled(true);
+					mmConfiguracao.setEnabled(true);
+					mmSair.setEnabled(true);
+				} else {
+					mmConfiguracao.setVisible(false);
 				}
 				
 			}
