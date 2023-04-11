@@ -42,11 +42,13 @@ public class VMenu extends JFrame {
 	private JMenuItem miPet;
 	private JMenuItem miRaca;
 	private JMenu mmCON;
-	private JMenu mmREL;
 	private JMenu mmATE;
 	private JLabel descricao;
 	private JLabel lblNewLabel;
 	private JMenuItem miLogout;
+	private JMenuItem Clinica;
+	private JMenu mmConfiguracao;
+	private JMenu mmSair;
 
 	/**
 	 * 
@@ -54,7 +56,7 @@ public class VMenu extends JFrame {
 
 	public VMenu() {
 
-//		setExtendedState(MAXIMIZED_BOTH);
+		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Menu");
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,6 +67,18 @@ public class VMenu extends JFrame {
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		
+		mmConfiguracao = new JMenu("Configurações");
+		menuBar.add(mmConfiguracao);
+		
+		Clinica = new JMenuItem("Clinica...");
+		mmConfiguracao.add(Clinica);
+		Clinica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VClinicaCad clinica = new VClinicaCad();
+				clinica.setVisible(true);
+			}
+		});
 
 		mmCad = new JMenu("Cadastrar");
 		mmCad.setEnabled(false);
@@ -108,15 +122,15 @@ public class VMenu extends JFrame {
 		mmCON.setEnabled(false);
 		menuBar.add(mmCON);
 
-		mmREL = new JMenu("Relatorio");
-		mmREL.setEnabled(false);
-		menuBar.add(mmREL);
-
 		mmATE = new JMenu("Atendimento");
 		mmATE.setEnabled(false);
 		menuBar.add(mmATE);
 		
+		mmSair = new JMenu("Sair");
+		menuBar.add(mmSair);
+		
 		miLogout = new JMenuItem("Logout...");
+		mmSair.add(miLogout);
 		miLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int resposta = JOptionPane.showConfirmDialog(null,
@@ -130,7 +144,6 @@ public class VMenu extends JFrame {
 				}
 			}
 		});
-		menuBar.add(miLogout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -148,7 +161,7 @@ public class VMenu extends JFrame {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				descricao.setText("Usuario: "+ FNomeUser+ " | " + "Clinica: "+ FNOMEClinica);
+				descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica);
 				habilitaCampos(FPERMICAO);
 			}
 
@@ -156,7 +169,6 @@ public class VMenu extends JFrame {
 				if(prPERMICAO == 1) {
 					mmCad.setEnabled(true); 
 					mmCON.setEnabled(true);
-					mmREL.setEnabled(true);
 					mmATE.setEnabled(true);
 				}
 				

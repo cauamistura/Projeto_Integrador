@@ -152,12 +152,19 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TPets` (
   `BDNOMEPET` VARCHAR(45) NOT NULL,
   `BDAPELIDO` VARCHAR(20) NULL,
   `BDDATANASCIMENTO` DATE NOT NULL,
-  PRIMARY KEY (`BDIDPET`, `BDIDRACA`),
-  INDEX `fk_TPets_TRaca1_idx` (`BDIDRACA` ASC),
+  `BDIDUSER` INT NOT NULL,
+  PRIMARY KEY (`BDIDPET`, `BDIDRACA`, `BDIDUSER`),
+  INDEX `fk_TPets_TRaca1_idx` (`BDIDRACA` ASC) ,
+  INDEX `fk_TPets_TUser1_idx` (`BDIDUSER` ASC) ,
   CONSTRAINT `fk_TPets_TRaca1`
     FOREIGN KEY (`BDIDRACA`)
     REFERENCES `DBPI`.`TRaca` (`BDIDRACA`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_TPets_TUser1`
+    FOREIGN KEY (`BDIDUSER`)
+    REFERENCES `DBPI`.`TUser` (`BDIDUSER`)
+    ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
 -- -----------------------------------------------------
@@ -193,27 +200,6 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TReceita` (
     FOREIGN KEY (`BDIDMEDICACAO`)
     REFERENCES `DBPI`.`TMedicacao` (`BDIDMEDICACAO`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-
--- -----------------------------------------------------
--- Table `DBPI`.`TPETS_TUSER`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DBPI`.`TPETS_TUSER` (
-  `BDIDPET` INT NOT NULL,
-  `BDIDUSER` INT NOT NULL,
-  `BDIDCLINICA` INT NOT NULL,
-  PRIMARY KEY (`BDIDPET`, `BDIDUSER`, `BDIDCLINICA`),
-  INDEX `fk_TPets_has_TUser_TUser1_idx` (`BDIDUSER` ASC, `BDIDCLINICA` ASC),
-  INDEX `fk_TPets_has_TUser_TPets1_idx` (`BDIDPET` ASC),
-  CONSTRAINT `fk_TPets_has_TUser_TPets1`
-    FOREIGN KEY (`BDIDPET`)
-    REFERENCES `DBPI`.`TPets` (`BDIDPET`)
-    ON DELETE cascade
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TPets_has_TUser_TUser1`
-    FOREIGN KEY (`BDIDUSER`, `BDIDCLINICA`)
-    REFERENCES `DBPI`.`TUser` (`BDIDUSER`, `BDIDCLINICA`)
-    ON DELETE cascade
     ON UPDATE NO ACTION);
 
 -- -----------------------------------------------------
