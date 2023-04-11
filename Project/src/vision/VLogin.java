@@ -136,6 +136,7 @@ public class VLogin extends JFrame {
 				TListClinica = FDAODadosUser.listLogin(FDAODadosUser);
 				if (validaUser(TListClinica)) {
 					menu.setVisible(true);
+					menu.setLocationRelativeTo(null);
 					dispose();
 				} else {
 					lbAlerta.setText("CPF ou senha incorreto!");

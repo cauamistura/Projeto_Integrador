@@ -144,6 +144,16 @@ public class VPetCad extends JFrame {
 					return;
 				}
 				
+				if (especieCb.getSelectedItem() == null) {
+					JOptionPane.showMessageDialog(null, "Campo vazio: Espécie");
+					return;
+				}
+				
+				if (racaCb.getSelectedItem() == null) {
+					JOptionPane.showMessageDialog(null, "Campo vazio: Raça");
+					return;
+				}
+				
 				FDAOTPet.setBDDATANASCIMENTO(txtDataNasc.getDate());
 				FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("TPets", "BDIDPET"));
 				FDAOTPet.setBDIDRACA(achaIdRaca());
@@ -160,6 +170,8 @@ public class VPetCad extends JFrame {
 					txtNomePet.setText("");
 					txtApelidoPet.setText("");
 					txtDataNasc.setText("");
+					especieCb.setSelectedIndex(0);
+					racaCb.setSelectedIndex(0);
 					JOptionPane.showMessageDialog(null, "Seu pet foi cadastrado com sucesso!");
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -173,6 +185,8 @@ public class VPetCad extends JFrame {
 		especieCb.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				racaCb.removeAllItems();
+				
+				racaCb.addItem(null);
 				
 				if (e.getStateChange() == ItemEvent.SELECTED) {
                     
@@ -190,6 +204,8 @@ public class VPetCad extends JFrame {
 
 		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
 
+		especieCb.addItem(null);
+		
 		for (MTEspecie mtEspecie : TListEspecie) {
 			especieCb.addItem(mtEspecie);
 		}
@@ -206,8 +222,6 @@ public class VPetCad extends JFrame {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setBounds(26, 10, 128, 14);
 		contentPane.add(lblNewLabel_1);
-
-		///////////////////////////////////////////////////
 
 		racaCb.setBounds(164, 48, 86, 22);
 		contentPane.add(racaCb);
@@ -233,8 +247,13 @@ public class VPetCad extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		
-		userCb.setBounds(162, 81, 86, 22);
+		userCb.setBounds(162, 75, 86, 22);
 		contentPane.add(userCb);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("Dono(a):");
+		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_1_1_1.setBounds(26, 77, 128, 14);
+		contentPane.add(lblNewLabel_1_1_1);
 
 	}
 
@@ -278,8 +297,6 @@ public class VPetCad extends JFrame {
 			VPetCON frame = new VPetCON(lista, prSelf);
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
-		} else {
-
 		}
 	}
 }
