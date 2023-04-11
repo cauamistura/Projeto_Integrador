@@ -42,7 +42,6 @@ public class VMenu extends JFrame {
 	private JMenuItem miPet;
 	private JMenuItem miRaca;
 	private JMenu mmCON;
-	private JMenu mmREL;
 	private JMenu mmATE;
 	private JLabel descricao;
 	private JLabel lblNewLabel;
@@ -123,16 +122,11 @@ public class VMenu extends JFrame {
 		mmCON.setEnabled(false);
 		menuBar.add(mmCON);
 
-		mmREL = new JMenu("Relatorio");
-		mmREL.setEnabled(false);
-		menuBar.add(mmREL);
-
 		mmATE = new JMenu("Atendimento");
 		mmATE.setEnabled(false);
 		menuBar.add(mmATE);
 		
 		mmSair = new JMenu("Sair");
-		mmSair.setEnabled(false);
 		menuBar.add(mmSair);
 		
 		miLogout = new JMenuItem("Logout...");
@@ -167,7 +161,7 @@ public class VMenu extends JFrame {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				descricao.setText("Usuario: "+ FNomeUser+ " | " + "Clinica: "+ FNOMEClinica);
+				descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica);
 				habilitaCampos(FPERMICAO);
 			}
 
@@ -175,7 +169,6 @@ public class VMenu extends JFrame {
 				if(prPERMICAO == 1) {
 					mmCad.setEnabled(true); 
 					mmCON.setEnabled(true);
-					mmREL.setEnabled(true);
 					mmATE.setEnabled(true);
 				}
 				
