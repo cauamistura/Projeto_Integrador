@@ -30,13 +30,6 @@ public class RoundJTextField extends JTextField {
         setOpaque(false); // As suggested by @AVD in comment.
     }
     
-    public RoundJTextField (Color color, int radii) {
-    	super();
-    	this.radii = radii;
-    	this.color = color;
-        setOpaque(false); // As suggested by @AVD in comment.
-    }
-    
     protected void paintComponent(Graphics g) {
          g.setColor(getBackground());
          g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, radii, radii);

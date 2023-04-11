@@ -54,7 +54,6 @@ public class VUserCad extends JFrame {
 	 * 
 	 */
 
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel pnImg;
@@ -81,7 +80,6 @@ public class VUserCad extends JFrame {
 	private DAOTCidade FDAOTCidade = new DAOTCidade();
 	private DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private DAOTPermicao FDAOTPermicao = new DAOTPermicao();
-
 
 	/**
 	 * Create the frame.
@@ -131,73 +129,20 @@ public class VUserCad extends JFrame {
 		pnContent.setBackground(new Color(125, 137, 245));
 		pnCard.add(pnContent, "cell 1 1,grow");
 		pnContent.setLayout(
-				new MigLayout("", "[50px][150px,grow][50px][150px,grow][50px]", "[][][][][][][][][25px][][30px]"));
-
-		JLabel lblNewLabel_1 = new JLabel("Nome:");
-		pnContent.add(lblNewLabel_1, "flowy,cell 1 2");
-
-		edNome = new RoundJTextField();
-		edNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		edNome.setColumns(10);
-		pnContent.add(edNome, "cell 1 2,growx");
-
-		JLabel lblNewLabel_7 = new JLabel("Email:");
-		pnContent.add(lblNewLabel_7, "flowy,cell 3 2");
-
-		edEmail = new RoundJTextField();
-		edEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		edEmail.setColumns(10);
-		pnContent.add(edEmail, "cell 3 2,growx");
-
-		JLabel lblNewLabel_2 = new JLabel("Telefone:");
-		pnContent.add(lblNewLabel_2, "flowy,cell 1 3");
-
-		edTelefone = new TelefoneTextField();
-		edTelefone.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		edTelefone.setColumns(10);
-		pnContent.add(edTelefone, "cell 1 3,growx");
-
-		JLabel lblNewLabel_8 = new JLabel("CEP:");
-		pnContent.add(lblNewLabel_8, "flowy,cell 3 3");
-
-		edCep = new CEPTextField();
-		edCep.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		edCep.setColumns(10);
-		pnContent.add(edCep, "cell 3 3,growx");
-
-		JLabel lblNewLabel_3 = new JLabel("Senha:");
-		pnContent.add(lblNewLabel_3, "flowy,cell 1 4");
-
-		edSenha = new RoundJTextField();
-		edSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		edSenha.setColumns(10);
-		pnContent.add(edSenha, "cell 1 4,growx");
-
-		JLabel lblNewLabel_9 = new JLabel("Bairro:");
-		pnContent.add(lblNewLabel_9, "flowy,cell 3 4");
-
-		edBairro = new RoundJTextField();
-		edBairro.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		edBairro.setColumns(10);
-		pnContent.add(edBairro, "cell 3 4,growx");
-
-		JLabel lblNewLabel_4 = new JLabel("Data de Nascimento:");
-		pnContent.add(lblNewLabel_4, "flowy,cell 1 5");
-
-		edDataNascimento = new DateTextField();
-		edDataNascimento.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		edDataNascimento.setColumns(10);
-		pnContent.add(edDataNascimento, "cell 1 5");
-
-		JLabel lblNewLabel_10 = new JLabel("CPF:");
-		pnContent.add(lblNewLabel_10, "flowy,cell 3 5");
-
+				new MigLayout("", "[50px][150px,grow][50px][150px,grow][50px]", "[][][][][][][][][][25px][][30px]"));
+		
+		//Instacia da Tela
+		VUserCad local = this;
+		
 		JLabel lbStatus = new JLabel("Status: Aguardando");
-		pnContent.add(lbStatus, "cell 1 10");
+		pnContent.add(lbStatus, "cell 1 11");
+		
+		JLabel lbCPF = new JLabel("CPF:");
+		pnContent.add(lbCPF, "flowy,cell 1 3");
 		edCpf = new CPFTextField();
 		edCpf.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCpf.setColumns(10);
-		pnContent.add(edCpf, "cell 3 5,growx");
+		pnContent.add(edCpf, "cell 1 3,growx");
 		edCpf.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -208,8 +153,6 @@ public class VUserCad extends JFrame {
 				}
 			}
 		});
-
-		VUserCad local = this;
 		edCpf.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -219,40 +162,101 @@ public class VUserCad extends JFrame {
 			}
 		});
 
-		JLabel lblNewLabel_5 = new JLabel("Sexo:");
-		pnContent.add(lblNewLabel_5, "flowy,cell 1 6");
+		JLabel lbNome = new JLabel("Nome:");
+		pnContent.add(lbNome, "flowy,cell 3 3");
 
-		JComboBox<String> cbGenero = new JComboBox();
-		cbGenero.addItem("Masculino");
-		cbGenero.addItem("Feminino");
-		pnContent.add(cbGenero, "cell 1 6");
+		edNome = new RoundJTextField();
+		edNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edNome.setColumns(10);
+		pnContent.add(edNome, "cell 3 3,growx");
 
-		JLabel lblNewLabel_11 = new JLabel("Cidade:");
-		pnContent.add(lblNewLabel_11, "flowy,cell 3 6");
+		JLabel lblNewLabel_7 = new JLabel("Email:");
+		pnContent.add(lblNewLabel_7, "flowy,cell 1 4");
+
+		edEmail = new RoundJTextField();
+		edEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edEmail.setColumns(10);
+		pnContent.add(edEmail, "cell 1 4,growx");
+
+		JLabel lbTelefone = new JLabel("Telefone:");
+		pnContent.add(lbTelefone, "flowy,cell 3 4");
+
+		edTelefone = new TelefoneTextField();
+		edTelefone.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edTelefone.setColumns(10);
+		pnContent.add(edTelefone, "cell 3 4,growx");
+
+		JLabel lbSenha = new JLabel("Senha:");
+		pnContent.add(lbSenha, "flowy,cell 1 5");
+
+		edSenha = new RoundJTextField();
+		edSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edSenha.setColumns(10);
+		pnContent.add(edSenha, "cell 1 5,growx");
+
+		JLabel lbCep = new JLabel("CEP:");
+		pnContent.add(lbCep, "flowy,cell 3 5");
+
+		edCep = new CEPTextField();
+		edCep.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edCep.setColumns(10);
+		pnContent.add(edCep, "cell 3 5,growx");
+
+		JLabel lblNewLabel_4 = new JLabel("Data de Nascimento:");
+		pnContent.add(lblNewLabel_4, "flowy,cell 1 6");
+
+		edDataNascimento = new DateTextField();
+		edDataNascimento.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edDataNascimento.setColumns(10);
+		pnContent.add(edDataNascimento, "cell 1 6");
+
+		JLabel lbCidade = new JLabel("Cidade:");
+		pnContent.add(lbCidade, "flowy,cell 3 6");
 
 		edCidade = new RoundJTextField();
 		edCidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCidade.setColumns(10);
 		pnContent.add(edCidade, "cell 3 6,growx");
 
-		JLabel lblNewLabel_6 = new JLabel("Permissão:");
-		pnContent.add(lblNewLabel_6, "flowy,cell 1 7");
+		JLabel lbBairro = new JLabel("Bairro:");
+		pnContent.add(lbBairro, "flowy,cell 3 7");
 
-		JComboBox cbPermissao = new JComboBox();
-		pnContent.add(cbPermissao, "cell 1 7");
+		edBairro = new RoundJTextField();
+		edBairro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edBairro.setColumns(10);
+		pnContent.add(edBairro, "cell 3 7,growx");
 
-		JLabel lblNewLabel_12 = new JLabel("UF:");
-		pnContent.add(lblNewLabel_12, "flowy,cell 3 7");
+		JLabel lbSexo = new JLabel("Sexo:");
+		pnContent.add(lbSexo, "flowy,cell 1 7");
 
-		JComboBox cbUF = new JComboBox();
-		pnContent.add(cbUF, "cell 3 7");
+		cbGenero = new JComboBox<String>();
+		cbGenero.addItem("Masculino");
+		cbGenero.addItem("Feminino");
+		pnContent.add(cbGenero, "cell 1 7");
+
+		JLabel lbPermissao = new JLabel("Permissão:");
+		pnContent.add(lbPermissao, "flowy,cell 1 8");
+
+		cbPermissao = new JComboBox<MTPermicao>();
+		ArrayList<MTPermicao> listPermicao = new ArrayList<>();
+		listPermicao = FDAOTPermicao.ListTEstado(FDAOTPermicao);
+		for (MTPermicao mtPermicao : listPermicao) {
+			cbPermissao.addItem(mtPermicao);
+		}
+		pnContent.add(cbPermissao, "cell 1 8");
+
+		JLabel lbUf = new JLabel("UF:");
+		pnContent.add(lbUf, "flowy,cell 3 8");
+
+		JComboBox<MTEstado> cbUF = new JComboBox<MTEstado>();
+		pnContent.add(cbUF, "cell 3 8");
 
 		JButton btnExcluir = new RoundButton("Excluir");
 		btnExcluir.setBackground((new Color(255, 199, 0)));
 
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
+				if (edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
 					FDAOTUser.setBDCPF(edCpf.getText());
 					exluiUser(FDAOTUser.getIDUser(FDAOTUser));
 				} else {
@@ -260,7 +264,7 @@ public class VUserCad extends JFrame {
 				}
 			}
 		});
-		pnContent.add(btnExcluir, "flowx,cell 1 9,growx");
+		pnContent.add(btnExcluir, "flowx,cell 1 10,growx");
 
 		JButton btnConsulta = new RoundButton("Login");
 		btnConsulta.addActionListener(new ActionListener() {
@@ -271,7 +275,7 @@ public class VUserCad extends JFrame {
 		btnConsulta.setText("Consultar");
 		btnConsulta.setBackground((new Color(255, 199, 0)));
 
-		pnContent.add(btnConsulta, "flowx,cell 3 9,growx");
+		pnContent.add(btnConsulta, "flowx,cell 3 10,growx");
 
 		JButton btnLimpar = new RoundButton("Login");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -282,32 +286,32 @@ public class VUserCad extends JFrame {
 		btnLimpar.setText("Limpar");
 		btnLimpar.setBackground((new Color(255, 199, 0)));
 
-		pnContent.add(btnLimpar, "cell 1 9,growx");
+		pnContent.add(btnLimpar, "cell 1 10,growx");
 
 		JButton btnCAD = new RoundButton("Login");
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			{
+				{
 
 					if (!edCpf.validaCPF()) {
-				JOptionPane.showMessageDialog(null, "Cpf Invalido");
-				edCpf.setText("");
-					edCpf.requestFocus();
+						JOptionPane.showMessageDialog(null, "Cpf Invalido");
+						edCpf.setText("");
+						edCpf.requestFocus();
 						return;
 					}
 
 					if (!edDataNascimento.validaDate()) {
 						JOptionPane.showMessageDialog(null, "Data Invalida");
 						edDataNascimento.setText("");
-					edDataNascimento.requestFocus();
+						edDataNascimento.requestFocus();
 						return;
-				}
+					}
 
 					try {
 						Boolean existeCpf = edCpf.existeCpfUsuario(FDAOTUser);
 
-					FDAOTUser.setBDCPF(edCpf.getText());
-					if (existeCpf) {
+						FDAOTUser.setBDCPF(edCpf.getText());
+						if (existeCpf) {
 							FDAOTUser.setBDIDUSER(FDAOTUser.getIDUser(FDAOTUser));
 						} else {
 							FDAOTUser.setBDIDUSER(FDAOTUser.getChaveID("TUSER", "BDIDUSER"));
@@ -335,18 +339,18 @@ public class VUserCad extends JFrame {
 
 							FDAOTEndereco.setBDCEP(Integer.valueOf(edCep.getCEP()));
 							FDAOTEndereco.setBDIDCIDADE(FDAOTCidade.getBDIDCIDADE());
-						FDAOTEndereco.setBDBAIRRO(edBairro.getText());
+							FDAOTEndereco.setBDBAIRRO(edBairro.getText());
 
 							FDAOTEndereco.inserir(FDAOTEndereco);
 						}
 
-					FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
-					FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
-					FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
-					FDAOTDadosUser.setBDNOMEUSER(edNome.getText());
-					FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
-					FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
-					FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
+						FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
+						FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
+						FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
+						FDAOTDadosUser.setBDNOMEUSER(edNome.getText());
+						FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
+						FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
+						FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
 
 						if (existeCpf) {
 							FDAOTDadosUser.alterar(FDAOTDadosUser);
@@ -372,12 +376,10 @@ public class VUserCad extends JFrame {
 		;
 		btnCAD.setBackground((new Color(255, 199, 0)));
 
-		pnContent.add(btnCAD, "cell 3 9,growx");
-		
-		
-		
+		pnContent.add(btnCAD, "cell 3 10,growx");
+
 		ListEstado = new ArrayList<>();
-		ListEstado = FDAOUF.ListTEstado(FDAOUF); 
+		ListEstado = FDAOUF.ListTEstado(FDAOUF);
 		for (MTEstado mtEstado : ListEstado) {
 			cbUF.addItem(mtEstado);
 		}
@@ -409,7 +411,7 @@ public class VUserCad extends JFrame {
 			edCpf.setText(prDadosUser.getBDCPF());
 			edEmail.setText(prDadosUser.getBDMAIL());
 			edSenha.setText(prDadosUser.getBDSENHA());
-			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO()-1);
+			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO() - 1);
 			edNome.setText(prDadosUser.getBDNOMEUSER());
 			edTelefone.setText(prDadosUser.getBDTELEFONE());
 
@@ -465,4 +467,3 @@ public class VUserCad extends JFrame {
 
 	}
 }
-
