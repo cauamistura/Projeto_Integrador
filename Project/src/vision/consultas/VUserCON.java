@@ -45,7 +45,7 @@ public class VUserCON extends JFrame {
         model.addColumn("Email");
 
         for (MTDadosUser dado : dados) {
-            Object[] rowData = { dado.getBDCPF(), dado.getBDNOME(), dado.getBDMAIL() };
+            Object[] rowData = { dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDMAIL() };
             model.addRow(rowData);
         }
 

@@ -8,10 +8,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ObjectDAO {
-
-	public Integer FIDEMPRESA;
-	public String  FNOMEEMPRESA;
-	public String  FCNPJEMPRESA;
 	private Conexao FConexao;
 
 	public Connection append(){

@@ -7,11 +7,12 @@ public class MTDadosUser extends MTUser{
 	Integer   BDCEP,
 		 	  BDIDUSER,
 			  BDIDCLINICA;
-	String	  BDNOME,
+	String	  BDNOMEUSER,
 		 	  BDGENERO,
 			  BDTELEFONE;
 	LocalDate BDDATANASCIMENTO;
 	public Integer getBDCEP() {
+		
 		return BDCEP;
 	}
 	public void setBDCEP(Integer bDCEP) {
@@ -29,11 +30,11 @@ public class MTDadosUser extends MTUser{
 	public void setBDIDCLINICA(Integer bDIDCLINICA) {
 		BDIDCLINICA = bDIDCLINICA;
 	}
-	public String getBDNOME() {
-		return BDNOME;
+	public String getBDNOMEUSER() {
+		return BDNOMEUSER;
 	}
-	public void setBDNOME(String bDNOME) {
-		BDNOME = bDNOME;
+	public void setBDNOMEUSER(String bDNOMEUSER) {
+		BDNOMEUSER = bDNOMEUSER;
 	}
 	public String getBDGENERO() {
 		return BDGENERO;

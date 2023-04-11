@@ -240,7 +240,12 @@ public class VUserCad extends JFrame {
 
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				if(edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
+					FDAOTUser.setBDCPF(edCpf.getText());
+					exluiUser(FDAOTUser.getIDUser(FDAOTUser));
+				} else {
+					JOptionPane.showMessageDialog(null, "Cpf não cadastrado");
+				}
 			}
 		});
 		panel_3.add(btnExcluir, "flowx,cell 1 9,growx");
@@ -323,13 +328,13 @@ public class VUserCad extends JFrame {
 							FDAOTEndereco.inserir(FDAOTEndereco);
 						}
 
-						FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
-						FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
-						FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
-						FDAOTDadosUser.setBDNOME(edNome.getText());
-						FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
-						FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
-						FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
+					FDAOTDadosUser.setBDIDUSER(FDAOTUser.getBDIDUSER());
+					FDAOTDadosUser.setBDIDCLINICA(FDAOTUser.getBDIDCLINICA());
+					FDAOTDadosUser.setBDCEP(Integer.valueOf(edCep.getCEP()));
+					FDAOTDadosUser.setBDNOMEUSER(edNome.getText());
+					FDAOTDadosUser.setBDGENERO(cbGenero.getSelectedItem().toString());
+					FDAOTDadosUser.setBDDATANASCIMENTO(edDataNascimento.getDate());
+					FDAOTDadosUser.setBDTELEFONE(edTelefone.getText());
 
 						if (existeCpf) {
 							FDAOTDadosUser.alterar(FDAOTDadosUser);
@@ -392,8 +397,8 @@ public class VUserCad extends JFrame {
 			edCpf.setText(prDadosUser.getBDCPF());
 			edEmail.setText(prDadosUser.getBDMAIL());
 			edSenha.setText(prDadosUser.getBDSENHA());
-			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO());
-			edNome.setText(prDadosUser.getBDNOME());
+			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO()-1);
+			edNome.setText(prDadosUser.getBDNOMEUSER());
 			edTelefone.setText(prDadosUser.getBDTELEFONE());
 
 			DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
@@ -448,3 +453,4 @@ public class VUserCad extends JFrame {
 
 	}
 }
+
