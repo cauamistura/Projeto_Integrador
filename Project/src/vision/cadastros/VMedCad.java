@@ -22,6 +22,7 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class VMedCad extends JFrame {
 
@@ -66,9 +67,15 @@ public class VMedCad extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new MigLayout("", "[grow]", "[][][][][grow]"));
 		
+		JLabel lblNomeMed = new JLabel("         Medicamento:");
+		panel.add(lblNomeMed, "flowx,cell 0 1,alignx right");
+		
 		edNomeMed = new JTextField();
 		panel.add(edNomeMed, "cell 0 1,growx");
 		edNomeMed.setColumns(10);
+		
+		JLabel lblDesMedicamento = new JLabel("Des. Medicamento: ");
+		panel.add(lblDesMedicamento, "flowx,cell 0 2");
 		
 		edDescMed = new JTextField();
 		panel.add(edDescMed, "cell 0 2,growx");
@@ -77,6 +84,18 @@ public class VMedCad extends JFrame {
 		RoundButton btnConf = new RoundButton("Confirmar");
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				FDAOTMedicacao.setBDIDMEDICACAO(FDAOTMedicacao.getChaveID("tmedicacao", "BDIDMEDICACAO"));
+				FDAOTMedicacao.setBDNOMEMEDICACAO(edNomeMed.getText());
+				FDAOTMedicacao.setBDDESCRICAO(edDescMed.getText());
+				
+				if() {
+					FDAOTMedicacao.inserir(FDAOTMedicacao);
+				}
+				else {
+					FDAOTMedicacao.alterar(FDAOTMedicacao);
+				}
+			
 			}
 		});
 		btnConf.setBackground(new Color(255, 255, 255));

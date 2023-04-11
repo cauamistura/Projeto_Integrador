@@ -107,5 +107,35 @@ import model.MTMedicacao;
 			prDAO.post();
 			return ListTaMedicacao;
 		}
+		
+		public ArrayList<MTMedicacao> idMedicacao(DAOTMedicacao prDAO) {
+			ArrayList<MTMedicacao> ListTaMedicacao = new ArrayList<>();
+			    
+			Connection c = prDAO.append();
+			try {
+				wSql = "SELECT * FROM tclinica";
+				Statement stm = c.createStatement();
+				ResultSet rs =  stm.executeQuery(wSql);
+				
+				while (rs.next()) {
+
+					
+					MTMedicacao lc = new MTMedicacao();
+					
+					lc.setBDIDMEDICACAO(rs.getInt(getBDIDMEDICACAO()));
+					lc.setBDDESCRICAO(rs.getString(getBDDESCRICAO()));
+					lc.setBDNOMEMEDICACAO(rs.getString(getBDNOMEMEDICACAO()));
+				
+					
+
+					ListTaMedicacao.add(lc);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			prDAO.post();
+			return ListTaMedicacao;
+		}
 	}
 
