@@ -111,12 +111,19 @@ VALUES
 (5, 'holandês', 3),
 (6, 'sírio', 4);
 
-INSERT INTO `dbpi`.`tpets` (`BDIDPET`, `BDIDRACA`, `BDNOMEPET`, `BDAPELIDO`, `BDDATANASCIMENTO`)
-VALUES 
-(1, 1, 'Bolinha', 'Bolinha', '2018-01-01'),
-(2, 2, 'Rex', 'Rex', '2016-05-20'),
-(3, 3, 'Mel', 'Melzinha', '2020-03-10'),
-(4, 4, 'Mia', 'Mia', '2019-11-12');
+INSERT INTO `dbpi`.`tpets`
+(`BDIDPET`,
+`BDIDRACA`,
+`BDNOMEPET`,
+`BDAPELIDO`,
+`BDDATANASCIMENTO`,
+`BDIDUSER`)
+VALUES
+(1, 1, 'Bolinha', 'Bolinha', '2018-01-01',1),
+(2, 2, 'Rex', 'Rex', '2016-05-20',1),
+(3, 3, 'Mel', 'Melzinha', '2020-03-10',1),
+(4, 4, 'Mia', 'Mia', '2019-11-12',1);
+
 
 INSERT INTO `dbpi`.`tcomorbidade`
 (`BDIDCOMORBIDADE`,
@@ -163,12 +170,6 @@ INSERT INTO `dbpi`.`tatendimento_saida`
 VALUES
 (1, 1, 1, 1, '2023-03-28', 'Alta após tratamento de infecção');
 
-INSERT INTO `dbpi`.`tpets_tuser`
-(`BDIDPET`,
-`BDIDUSER`,
-`BDIDCLINICA`)
-VALUES
-(1, 1, 1);
 
 
 
