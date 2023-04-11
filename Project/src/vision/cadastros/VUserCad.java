@@ -46,6 +46,7 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TelefoneTextField;
+import java.awt.Font;
 
 public class VUserCad extends JFrame {
 
@@ -56,7 +57,7 @@ public class VUserCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JPanel panel_2;
+	private JPanel pnImg;
 	private DateTextField edDataNascimento;
 	private JTextField edSenha;
 	private TelefoneTextField edTelefone;
@@ -106,89 +107,97 @@ public class VUserCad extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(158, 174, 255));
-		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[150px][500px,grow][150px]", "[100px][600px,grow][100px]"));
+		JPanel pnMain = new JPanel();
+		pnMain.setBackground(new Color(158, 174, 255));
+		contentPane.add(pnMain, BorderLayout.CENTER);
+		pnMain.setLayout(new MigLayout("", "[150px][500px,grow][150px]", "[100px][600px,grow][100px]"));
 
-		JPanel panel_1 = new PanelComBackgroundImage(bg);
-		panel_1.setBackground(new Color(158, 174, 255));
-		panel.add(panel_1, "cell 1 1,alignx center");
-		panel_1.setLayout(new MigLayout("", "[50.00px][500.00,grow][50px,grow]", "[grow][400px,grow]"));
+		JPanel pnCard = new PanelComBackgroundImage(bg);
+		pnCard.setBackground(new Color(158, 174, 255));
+		pnMain.add(pnCard, "cell 1 1,alignx center");
+		pnCard.setLayout(new MigLayout("", "[50.00px][500.00,grow][50px,grow]", "[grow][400px,grow]"));
 
-		panel_2 = new JPanel();
-		panel_2.setBackground(new Color(125, 137, 245));
+		pnImg = new JPanel();
+		pnImg.setBackground(new Color(125, 137, 245));
 
-		panel_1.add(panel_2, "cell 1 0,alignx center");
-		panel_2.setLayout(new MigLayout("", "[][][][][][][][][]", "[]"));
+		pnCard.add(pnImg, "cell 1 0,alignx center");
+		pnImg.setLayout(new MigLayout("", "[][][][][][][][][]", "[]"));
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(VUserCad.class.getResource("/vision/images/person.png")));
-		panel_2.add(lblNewLabel, "cell 5 0,alignx center");
+		pnImg.add(lblNewLabel, "cell 5 0,alignx center");
 
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(125, 137, 245));
-		panel_1.add(panel_3, "cell 1 1,grow");
-		panel_3.setLayout(
+		JPanel pnContent = new JPanel();
+		pnContent.setBackground(new Color(125, 137, 245));
+		pnCard.add(pnContent, "cell 1 1,grow");
+		pnContent.setLayout(
 				new MigLayout("", "[50px][150px,grow][50px][150px,grow][50px]", "[][][][][][][][][25px][][30px]"));
 
 		JLabel lblNewLabel_1 = new JLabel("Nome:");
-		panel_3.add(lblNewLabel_1, "flowy,cell 1 2");
+		pnContent.add(lblNewLabel_1, "flowy,cell 1 2");
 
 		edNome = new RoundJTextField();
+		edNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edNome.setColumns(10);
-		panel_3.add(edNome, "cell 1 2,growx");
+		pnContent.add(edNome, "cell 1 2,growx");
 
 		JLabel lblNewLabel_7 = new JLabel("Email:");
-		panel_3.add(lblNewLabel_7, "flowy,cell 3 2");
+		pnContent.add(lblNewLabel_7, "flowy,cell 3 2");
 
 		edEmail = new RoundJTextField();
+		edEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edEmail.setColumns(10);
-		panel_3.add(edEmail, "cell 3 2,growx");
+		pnContent.add(edEmail, "cell 3 2,growx");
 
 		JLabel lblNewLabel_2 = new JLabel("Telefone:");
-		panel_3.add(lblNewLabel_2, "flowy,cell 1 3");
+		pnContent.add(lblNewLabel_2, "flowy,cell 1 3");
 
 		edTelefone = new TelefoneTextField();
+		edTelefone.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edTelefone.setColumns(10);
-		panel_3.add(edTelefone, "cell 1 3,growx");
+		pnContent.add(edTelefone, "cell 1 3,growx");
 
 		JLabel lblNewLabel_8 = new JLabel("CEP:");
-		panel_3.add(lblNewLabel_8, "flowy,cell 3 3");
+		pnContent.add(lblNewLabel_8, "flowy,cell 3 3");
 
 		edCep = new CEPTextField();
+		edCep.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCep.setColumns(10);
-		panel_3.add(edCep, "cell 3 3,growx");
+		pnContent.add(edCep, "cell 3 3,growx");
 
 		JLabel lblNewLabel_3 = new JLabel("Senha:");
-		panel_3.add(lblNewLabel_3, "flowy,cell 1 4");
+		pnContent.add(lblNewLabel_3, "flowy,cell 1 4");
 
 		edSenha = new RoundJTextField();
+		edSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edSenha.setColumns(10);
-		panel_3.add(edSenha, "cell 1 4,growx");
+		pnContent.add(edSenha, "cell 1 4,growx");
 
 		JLabel lblNewLabel_9 = new JLabel("Bairro:");
-		panel_3.add(lblNewLabel_9, "flowy,cell 3 4");
+		pnContent.add(lblNewLabel_9, "flowy,cell 3 4");
 
 		edBairro = new RoundJTextField();
+		edBairro.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edBairro.setColumns(10);
-		panel_3.add(edBairro, "cell 3 4,growx");
+		pnContent.add(edBairro, "cell 3 4,growx");
 
 		JLabel lblNewLabel_4 = new JLabel("Data de Nascimento:");
-		panel_3.add(lblNewLabel_4, "flowy,cell 1 5");
+		pnContent.add(lblNewLabel_4, "flowy,cell 1 5");
 
 		edDataNascimento = new DateTextField();
+		edDataNascimento.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edDataNascimento.setColumns(10);
-		panel_3.add(edDataNascimento, "cell 1 5");
+		pnContent.add(edDataNascimento, "cell 1 5");
 
 		JLabel lblNewLabel_10 = new JLabel("CPF:");
-		panel_3.add(lblNewLabel_10, "flowy,cell 3 5");
+		pnContent.add(lblNewLabel_10, "flowy,cell 3 5");
 
-		JLabel lbStatus = new JLabel("  Status: Aguardando");
-		panel_3.add(lbStatus, "cell 1 10");
+		JLabel lbStatus = new JLabel("Status: Aguardando");
+		pnContent.add(lbStatus, "cell 1 10");
 		edCpf = new CPFTextField();
+		edCpf.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCpf.setColumns(10);
-		panel_3.add(edCpf, "cell 3 5,growx");
+		pnContent.add(edCpf, "cell 3 5,growx");
 		edCpf.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -211,29 +220,32 @@ public class VUserCad extends JFrame {
 		});
 
 		JLabel lblNewLabel_5 = new JLabel("Sexo:");
-		panel_3.add(lblNewLabel_5, "flowy,cell 1 6");
+		pnContent.add(lblNewLabel_5, "flowy,cell 1 6");
 
-		JComboBox cbGenero = new JComboBox();
-		panel_3.add(cbGenero, "cell 1 6");
+		JComboBox<String> cbGenero = new JComboBox();
+		cbGenero.addItem("Masculino");
+		cbGenero.addItem("Feminino");
+		pnContent.add(cbGenero, "cell 1 6");
 
 		JLabel lblNewLabel_11 = new JLabel("Cidade:");
-		panel_3.add(lblNewLabel_11, "flowy,cell 3 6");
+		pnContent.add(lblNewLabel_11, "flowy,cell 3 6");
 
 		edCidade = new RoundJTextField();
+		edCidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCidade.setColumns(10);
-		panel_3.add(edCidade, "cell 3 6,growx");
+		pnContent.add(edCidade, "cell 3 6,growx");
 
 		JLabel lblNewLabel_6 = new JLabel("Permissão:");
-		panel_3.add(lblNewLabel_6, "flowy,cell 1 7");
+		pnContent.add(lblNewLabel_6, "flowy,cell 1 7");
 
 		JComboBox cbPermissao = new JComboBox();
-		panel_3.add(cbPermissao, "cell 1 7");
+		pnContent.add(cbPermissao, "cell 1 7");
 
 		JLabel lblNewLabel_12 = new JLabel("UF:");
-		panel_3.add(lblNewLabel_12, "flowy,cell 3 7");
+		pnContent.add(lblNewLabel_12, "flowy,cell 3 7");
 
 		JComboBox cbUF = new JComboBox();
-		panel_3.add(cbUF, "cell 3 7");
+		pnContent.add(cbUF, "cell 3 7");
 
 		JButton btnExcluir = new RoundButton("Excluir");
 		btnExcluir.setBackground((new Color(255, 199, 0)));
@@ -248,7 +260,7 @@ public class VUserCad extends JFrame {
 				}
 			}
 		});
-		panel_3.add(btnExcluir, "flowx,cell 1 9,growx");
+		pnContent.add(btnExcluir, "flowx,cell 1 9,growx");
 
 		JButton btnConsulta = new RoundButton("Login");
 		btnConsulta.addActionListener(new ActionListener() {
@@ -259,7 +271,7 @@ public class VUserCad extends JFrame {
 		btnConsulta.setText("Consultar");
 		btnConsulta.setBackground((new Color(255, 199, 0)));
 
-		panel_3.add(btnConsulta, "flowx,cell 3 9,growx");
+		pnContent.add(btnConsulta, "flowx,cell 3 9,growx");
 
 		JButton btnLimpar = new RoundButton("Login");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -270,7 +282,7 @@ public class VUserCad extends JFrame {
 		btnLimpar.setText("Limpar");
 		btnLimpar.setBackground((new Color(255, 199, 0)));
 
-		panel_3.add(btnLimpar, "cell 1 9,growx");
+		pnContent.add(btnLimpar, "cell 1 9,growx");
 
 		JButton btnCAD = new RoundButton("Login");
 		btnCAD.addActionListener(new ActionListener() {
@@ -360,7 +372,7 @@ public class VUserCad extends JFrame {
 		;
 		btnCAD.setBackground((new Color(255, 199, 0)));
 
-		panel_3.add(btnCAD, "cell 3 9,growx");
+		pnContent.add(btnCAD, "cell 3 9,growx");
 		
 		
 		
