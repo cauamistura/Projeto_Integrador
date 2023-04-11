@@ -98,7 +98,7 @@ public class VUserCad extends JFrame {
 		setBackground(new Color(255, 255, 255));
 		setTitle("Cadastro de Usuário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 873, 855);
+		setBounds(100, 100, 678, 693);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -396,7 +396,7 @@ public class VUserCad extends JFrame {
 				try {
 					edCidade.setText(lista.getBDNOMECID());
 					edBairro.setText(lista.getBDBAIRRO());
-					cbUF.setSelectedIndex(lista.getBDIDUF() - 1);
+//					cbUF.setSelectedIndex(lista.getBDIDUF() - 1);
 					return true;
 				} catch (Exception e) {
 					return false;

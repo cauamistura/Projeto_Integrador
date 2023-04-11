@@ -97,8 +97,8 @@ public class VClinicaCad extends JFrame {
 				preencheCampos();
 			}
 		});
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 771, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 848, 524);
 		
 		BufferedImage bg = null;
 		;
@@ -110,10 +110,9 @@ public class VClinicaCad extends JFrame {
 			e.printStackTrace();
 		} 
 		
-		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Cadastro Clinica");
 		setBounds(100, 100, 900, 592);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(158, 174, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
