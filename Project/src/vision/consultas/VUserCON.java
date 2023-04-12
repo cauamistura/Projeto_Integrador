@@ -6,12 +6,14 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTDadosUser;
+import vision.VMenu;
 import vision.cadastros.VUserCad;
 
 public class VUserCON extends JFrame {
@@ -73,6 +75,10 @@ public class VUserCON extends JFrame {
                 for (int i = 0; i < selectedRows.length; i++) {
                     int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
                     MTDadosUser dado = dados.get(modelIndex);
+                    if(dado.getBDCPF().equals(VMenu.FCPFUSER)) {
+                    	JOptionPane.showInternalMessageDialog(null, "Este usuário não pode ser excluido!\nEsta logado no sistema");
+                    	return;
+                    }
                     local.exluiUser(dado.getBDIDUSER());
                     dispose();
                 }
@@ -83,5 +89,12 @@ public class VUserCON extends JFrame {
         buttonsPanel.add(btnConfirmar);
         buttonsPanel.add(btnExcluir);
         contentPane.add(buttonsPanel, BorderLayout.SOUTH);
+    }
+    public void desabilitaBotoes() {
+    	btnConfirmar.setEnabled(false);
+    	btnConfirmar.setVisible(false);
+    	
+    	btnExcluir.setEnabled(false);
+    	btnExcluir.setVisible(false);
     }
 }

@@ -5,7 +5,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
+
+import control.DAOTDadosUser;
+import model.MTDadosUser;
 import vision.cadastros.*;
+import vision.consultas.VUserCON;
+
 import java.awt.BorderLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -17,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
 
 public class VMenu extends JFrame {
@@ -34,6 +42,7 @@ public class VMenu extends JFrame {
 	public static Integer FPERMICAO;
 	public static Integer FIDUSER;
 	public static String  FNomeUser;
+	public static String  FCPFUSER;
 	
 	private JPanel contentPane;
 	private JMenuBar menuBar;
@@ -46,9 +55,11 @@ public class VMenu extends JFrame {
 	private JLabel descricao;
 	private JLabel lblNewLabel;
 	private JMenuItem miLogout;
-	private JMenuItem Clinica;
-	private JMenu mmConfiguracao;
+	private JMenuItem mmClinicaDados;
+	private JMenu mmDados;
 	private JMenu mmSair;
+	private JMenuItem mmUserCons;
+	private JMenuItem mmUserDados;
 
 	/**
 	 * 
@@ -68,13 +79,30 @@ public class VMenu extends JFrame {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		mmConfiguracao = new JMenu("Configurações");
-		mmConfiguracao.setEnabled(false);
-		menuBar.add(mmConfiguracao);
+		mmDados = new JMenu("Dados");
+		mmDados.setEnabled(false);
+		menuBar.add(mmDados);
 		
-		Clinica = new JMenuItem("Clinica...");
-		mmConfiguracao.add(Clinica);
-		Clinica.addActionListener(new ActionListener() {
+		mmClinicaDados = new JMenuItem("Clinica...");
+		mmDados.add(mmClinicaDados);
+		
+		mmUserDados = new JMenuItem("Usuário...");
+		mmUserDados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOTDadosUser DAO = new DAOTDadosUser();
+				VUserCad tela = new VUserCad();
+				
+				MTDadosUser lista = new MTDadosUser();
+				
+				lista = DAO.ListConsultaUserLOG(DAO);
+				
+				tela.preencheCampos(lista);
+				tela.desabilitaBotoes(true);
+				tela.setVisible(true);
+			}
+		});
+		mmDados.add(mmUserDados);
+		mmClinicaDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VClinicaCad clinica = new VClinicaCad();
 				clinica.setVisible(true);
@@ -122,6 +150,21 @@ public class VMenu extends JFrame {
 		mmCON = new JMenu("Consultar");
 		mmCON.setEnabled(false);
 		menuBar.add(mmCON);
+		
+		mmUserCons = new JMenuItem("Usuário...");
+		mmUserCons.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOTDadosUser DAO = new DAOTDadosUser();
+				VUserCad vision = new VUserCad();
+				ArrayList<MTDadosUser> list = new ArrayList<>();
+				list = DAO.ListConsulta(DAO);
+				
+				VUserCON v = new VUserCON(list, vision);
+				v.desabilitaBotoes();
+				v.setVisible(true);
+			}
+		});
+		mmCON.add(mmUserCons);
 
 		mmATE = new JMenu("Atendimento");
 		mmATE.setEnabled(false);
@@ -172,10 +215,10 @@ public class VMenu extends JFrame {
 					mmCad.setEnabled(true); 
 					mmCON.setEnabled(true);
 					mmATE.setEnabled(true);
-					mmConfiguracao.setEnabled(true);
+					mmDados.setEnabled(true);
 					mmSair.setEnabled(true);
 				} else {
-					mmConfiguracao.setVisible(false);
+					mmDados.setVisible(false);
 				}
 				
 			}
