@@ -172,4 +172,40 @@ public class DAOTDadosUser extends MTDadosUser {
 			prDAO.post();
 			return listaLogin;
 		}
+		
+		// SELECT CONSULTA
+	public MTDadosUser ListConsultaUserLOG(DAOTDadosUser prDAO) { 
+	    Connection c = prDAO.append();
+	    MTDadosUser lc = new MTDadosUser();
+	    try {
+	        wSql = "SELECT u.BDIDUSER, u.BDIDPERMICAO, u.BDMAIL, u.BDCPF, u.BDSENHA, "
+	             + "du.BDNOME, du.BDCEP, du.BDGENERO, du.BDTELEFONE, du.BDDATANASCIMENTO "
+	             + "FROM `dbpi`.`tuser` u "
+	             + "INNER JOIN `dbpi`.`tdadosuser` du ON (u.BDIDUSER = du.BDIDUSER AND u.BDIDCLINICA = du.BDIDCLINICA) "
+	             + "WHERE u.BDIDCLINICA = " + String.valueOf(VMenu.FIDClinica)
+	             + " and u.bdiduser = " + String.valueOf(VMenu.FIDUSER);
+	        Statement stm = c.createStatement();
+	        ResultSet rs = stm.executeQuery(wSql);
+	        
+	        while (rs.next()) {
+	            lc.setBDIDUSER(rs.getInt("BDIDUSER"));
+	            lc.setBDIDPERMICAO(rs.getInt("BDIDPERMICAO"));
+	            lc.setBDMAIL(rs.getString("BDMAIL"));
+	            lc.setBDSENHA(rs.getString("BDSENHA"));
+	            lc.setBDCPF(rs.getString("BDCPF"));
+	            lc.setBDNOMEUSER(rs.getString("BDNOME"));
+	            lc.setBDCEP(rs.getInt("BDCEP"));
+	            lc.setBDGENERO(rs.getString("BDGENERO"));
+	            lc.setBDTELEFONE(rs.getString("BDTELEFONE"));
+	            lc.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
+	        }
+	        rs.close();
+	        stm.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        prDAO.post();
+	    }
+	    return lc;
+	}
 }

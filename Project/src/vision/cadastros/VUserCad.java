@@ -80,6 +80,11 @@ public class VUserCad extends JFrame {
 	private DAOTCidade FDAOTCidade = new DAOTCidade();
 	private DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private DAOTPermicao FDAOTPermicao = new DAOTPermicao();
+	
+	private RoundButton btnExcluir;
+	private RoundButton btnLimpar;
+	private RoundButton btnConsulta;
+	private RoundButton btnCAD;
 
 	/**
 	 * Create the frame.
@@ -94,7 +99,7 @@ public class VUserCad extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		setBackground(new Color(255, 255, 255));
 		setTitle("Cadastro de Usuário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -147,9 +152,21 @@ public class VUserCad extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (edCpf.existeCpfUsuario(FDAOTUser)) {
-					lbStatus.setText("Status: Alterando");
+					if (edCpf.getText().equals(VMenu.FCPFUSER)) {
+						desabilitaBotoes(false);
+						lbStatus.setText("Status: Usuario Logado");
+					} else {
+						lbStatus.setText("Status: Alterando");
+					}
 				} else {
 					lbStatus.setText("Status: Inserindo");
+				}
+			}
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (edCpf.getText().equals(VMenu.FCPFUSER)) {
+					desabilitaBotoes(false);
+					lbStatus.setText("Status: Usuario Logado");
 				}
 			}
 		});
@@ -251,7 +268,7 @@ public class VUserCad extends JFrame {
 		JComboBox<MTEstado> cbUF = new JComboBox<MTEstado>();
 		pnContent.add(cbUF, "cell 3 8");
 
-		JButton btnExcluir = new RoundButton("Excluir");
+		btnExcluir = new RoundButton("Excluir");
 		btnExcluir.setBackground((new Color(255, 199, 0)));
 
 		btnExcluir.addActionListener(new ActionListener() {
@@ -266,7 +283,7 @@ public class VUserCad extends JFrame {
 		});
 		pnContent.add(btnExcluir, "flowx,cell 1 10,growx");
 
-		JButton btnConsulta = new RoundButton("Login");
+		btnConsulta = new RoundButton("Login");
 		btnConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				abreConsulta(local);
@@ -277,7 +294,7 @@ public class VUserCad extends JFrame {
 
 		pnContent.add(btnConsulta, "flowx,cell 3 10,growx");
 
-		JButton btnLimpar = new RoundButton("Login");
+		btnLimpar = new RoundButton("Login");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpaCampos(true);
@@ -288,7 +305,7 @@ public class VUserCad extends JFrame {
 
 		pnContent.add(btnLimpar, "cell 1 10,growx");
 
-		JButton btnCAD = new RoundButton("Login");
+		btnCAD = new RoundButton("Login");
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				{
@@ -406,25 +423,25 @@ public class VUserCad extends JFrame {
 		return false;
 	}
 
-	public void preencheCampos(MTDadosUser prDadosUser) {
-		if (prDadosUser != null) {
-			edCpf.setText(prDadosUser.getBDCPF());
-			edEmail.setText(prDadosUser.getBDMAIL());
-			edSenha.setText(prDadosUser.getBDSENHA());
-			cbPermissao.setSelectedItem(prDadosUser.getBDIDPERMICAO() - 1);
-			edNome.setText(prDadosUser.getBDNOMEUSER());
-			edTelefone.setText(prDadosUser.getBDTELEFONE());
+	public void preencheCampos(MTDadosUser list) {
+		if (list != null) {
+			edCpf.setText(list.getBDCPF());
+			edEmail.setText(list.getBDMAIL());
+			edSenha.setText(list.getBDSENHA());
+			cbPermissao.setSelectedItem(list.getBDIDPERMICAO() - 1);
+			edNome.setText(list.getBDNOMEUSER());
+			edTelefone.setText(list.getBDTELEFONE());
 
 			DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
-			edDataNascimento.setText(prDadosUser.getBDDATANASCIMENTO().format(FOMATTER));
+			edDataNascimento.setText(list.getBDDATANASCIMENTO().format(FOMATTER));
 
-			if (prDadosUser.getBDGENERO().equalsIgnoreCase("Masculino")) {
+			if (list.getBDGENERO().equalsIgnoreCase("Masculino")) {
 				cbGenero.setSelectedIndex(0);
 			} else {
 				cbGenero.setSelectedIndex(1);
 			}
-			edCep.setText(prDadosUser.getBDCEP().toString());
-			getCEPExiste(prDadosUser.getBDCEP());
+			edCep.setText(list.getBDCEP().toString());
+			getCEPExiste(list.getBDCEP());
 		}
 	}
 
@@ -455,6 +472,7 @@ public class VUserCad extends JFrame {
 	}
 
 	public void exluiUser(Integer prIDUSER) {
+		
 		int resposta = JOptionPane.showConfirmDialog(null,
 				"Você realmente deseja excluir? Todos os dados vinculados a este usuário serão excluídos.",
 				"Confirmação", JOptionPane.YES_NO_OPTION);
@@ -465,5 +483,20 @@ public class VUserCad extends JFrame {
 			limpaCampos(true);
 		}
 
+	}
+	
+	public void desabilitaBotoes(Boolean prConsulta) {
+		if(prConsulta) {
+			btnConsulta.setEnabled(false);
+			btnConsulta.setVisible(false);
+		}
+		btnExcluir.setEnabled(false);
+		btnLimpar.setEnabled(false);
+		
+		btnExcluir.setVisible(false);
+		btnLimpar.setVisible(false);
+		
+		edCpf.setEnabled(false);
+		cbPermissao.setEnabled(false);
 	}
 }

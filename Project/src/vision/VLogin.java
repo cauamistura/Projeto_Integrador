@@ -157,6 +157,7 @@ public class VLogin extends JFrame {
 				VMenu.FIDUSER     = l.getBDIDUSER();
 				VMenu.FNomeUser   = l.getBDNOMEUSER();
 				VMenu.FPERMICAO   = l.getBDIDPERMICAO();
+				VMenu.FCPFUSER    = l.getBDCPF();
 				break;
 			}
 		}
