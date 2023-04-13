@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import control.DAOTDadosUser;
 import control.DAOTRaca;
 import model.MTDadosUser;
 import model.MTPet;
@@ -25,6 +26,7 @@ public class VPetCON extends JFrame {
 	private JTable table;
 	private DefaultTableModel model;
 	private DAOTRaca FDAOTRaca = new DAOTRaca();
+	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 
 	/**
 	 * Create the frame.
@@ -46,12 +48,13 @@ public class VPetCON extends JFrame {
 		scrollPane.setViewportView(table);
 
 		model = new DefaultTableModel();
+		model.addColumn("Dono(a)");
 		model.addColumn("Raça");
 		model.addColumn("Nome");
 		model.addColumn("Apelido");
 
 		for (MTPet dado : dados) {
-			Object[] rowData = { achaRaca(dado.getBDIDRACA()), dado.getBDNOMEPET(), achaApelido(dado.getBDAPELIDO()) };
+			Object[] rowData = { achaUser(dado.getBDIDUSER()), achaRaca(dado.getBDIDRACA()), dado.getBDNOMEPET(), achaApelido(dado.getBDAPELIDO()) };
 			model.addRow(rowData);
 		}
 
@@ -84,5 +87,21 @@ public class VPetCON extends JFrame {
 
 		return apelido;
 
+	}
+	
+	private String achaUser(int userId) {
+		String userName = "";
+		ArrayList<MTDadosUser> TListUser = new ArrayList<>();
+		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
+
+		for (MTDadosUser mtUser : TListUser) {
+
+			if (mtUser.getBDIDUSER().equals(userId)) {
+				userName = mtUser.getBDNOMEUSER();
+			}
+
+		}
+
+		return userName;
 	}
 }

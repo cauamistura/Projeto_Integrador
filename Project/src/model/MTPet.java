@@ -7,8 +7,17 @@ import control.ObjectDAO;
 public class MTPet extends ObjectDAO {
 	
 	Integer BDIDPET,
-			BDIDRACA;
+			BDIDRACA,
+			BDIDUSER;
 	
+	public Integer getBDIDUSER() {
+		return BDIDUSER;
+	}
+
+	public void setBDIDUSER(Integer bDIDUSER) {
+		BDIDUSER = bDIDUSER;
+	}
+
 	String BDNOMEPET,
 		   BDAPELIDO;
 	

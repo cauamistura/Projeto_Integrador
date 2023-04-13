@@ -80,7 +80,7 @@ public class VPetCad extends JFrame {
 		setTitle("Cadastro de pets");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 319, 360);
+		setBounds(100, 100, 319, 512);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -154,11 +154,17 @@ public class VPetCad extends JFrame {
 					return;
 				}
 				
+				if (userCb.getSelectedItem() == null) {
+					JOptionPane.showMessageDialog(null, "Campo vazio: Dono");
+					return;
+				}
+				
 				FDAOTPet.setBDDATANASCIMENTO(txtDataNasc.getDate());
 				FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("TPets", "BDIDPET"));
 				FDAOTPet.setBDIDRACA(achaIdRaca());
 				FDAOTPet.setBDNOMEPET(txtNomePet.getText());
 				FDAOTPet.setBDAPELIDO(txtApelidoPet.getText());
+				FDAOTPet.setBDIDUSER(achaIdUser());
 
 				if(!txtDataNasc.validaDate()) {
 					JOptionPane.showMessageDialog(null, "Data inválida. Tente novamente.");
@@ -172,6 +178,7 @@ public class VPetCad extends JFrame {
 					txtDataNasc.setText("");
 					especieCb.setSelectedIndex(0);
 					racaCb.setSelectedIndex(0);
+					userCb.setSelectedIndex(0);
 					JOptionPane.showMessageDialog(null, "Seu pet foi cadastrado com sucesso!");
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -213,6 +220,8 @@ public class VPetCad extends JFrame {
 		
 		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
 
+		userCb.addItem(null);
+		
 		for (MTDadosUser mtUser : TListUser) {
 			userCb.addItem(mtUser);
 		}
@@ -254,6 +263,21 @@ public class VPetCad extends JFrame {
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1_1_1.setBounds(26, 77, 128, 14);
 		contentPane.add(lblNewLabel_1_1_1);
+		
+		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtApelidoPet.setText("");
+				txtDataNasc.setText("");
+				txtNomePet.setText("");
+				
+				racaCb.setSelectedIndex(0);
+				especieCb.setSelectedIndex(0);
+				userCb.setSelectedIndex(0);
+			}
+		});
+		btnLimpar.setBounds(82, 310, 166, 23);
+		contentPane.add(btnLimpar);
 
 	}
 
@@ -289,6 +313,23 @@ public class VPetCad extends JFrame {
 		}
 
 		return idRaca;
+	}
+	
+	private Integer achaIdUser() {
+		Integer idUser = 0;
+		ArrayList<MTDadosUser> TListUser = new ArrayList<>();
+		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
+
+		for (MTDadosUser mtUser : TListUser) {
+
+			if (mtUser.getBDNOMEUSER().equals(userCb.getSelectedItem().toString())) {
+				idUser = mtUser.getBDIDUSER();
+
+			}
+
+		}
+
+		return idUser;
 	}
 	
 	private void abreConsulta(VPetCad prSelf) {

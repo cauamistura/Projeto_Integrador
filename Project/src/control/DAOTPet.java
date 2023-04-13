@@ -18,7 +18,7 @@ public class DAOTPet extends MTPet {
 		public Boolean inserir(DAOTPet prDAO) {
 			Connection c = prDAO.append();
 			try {
-				wSql = "INSERT INTO `DBPI`.`TPets`(`BDIDPET`, `BDIDRACA`, `BDNOMEPET`, `BDAPELIDO`, `BDDATANASCIMENTO`)VALUES(?,?,?,?,?);";
+				wSql = "INSERT INTO `DBPI`.`TPets`(`BDIDPET`, `BDIDRACA`, `BDNOMEPET`, `BDAPELIDO`, `BDDATANASCIMENTO`, `BDIDUSER`)VALUES(?,?,?,?,?,?);";
 				PreparedStatement stm = c.prepareStatement(wSql);
 				
 				stm.setInt(1, prDAO.getBDIDPET());
@@ -26,6 +26,7 @@ public class DAOTPet extends MTPet {
 				stm.setString(3, prDAO.getBDNOMEPET());
 				stm.setString(4, prDAO.getBDAPELIDO());
 				stm.setDate	 (5, Date.valueOf(prDAO.getBDDATANASCIMENTO()));
+				stm.setInt(6, prDAO.getBDIDUSER());
 				
 				stm.executeUpdate();
 				return true;
@@ -41,7 +42,7 @@ public class DAOTPet extends MTPet {
 		public Boolean alterar(DAOTPet prDAO) {
 			Connection c = prDAO.append();
 			try {
-				wSql = "UPDATE `dbpi`.`tpets` SET `BDIDPET` = ?, `BDIDRACA` = ?, `BDNOMEPET` = ?, `BDAPELIDO` = ?, `BDDATANASCIMENTO` = ? WHERE `BDIDPET` = ?;";
+				wSql = "UPDATE `dbpi`.`tpets` SET `BDIDPET` = ?, `BDIDRACA` = ?, `BDNOMEPET` = ?, `BDAPELIDO` = ?, `BDDATANASCIMENTO` = ?, `BDIDUSER` = ? WHERE `BDIDPET` = ?;";
 				PreparedStatement stm = c.prepareStatement(wSql);
 				
 				stm.setInt(1, prDAO.getBDIDPET());
@@ -49,6 +50,7 @@ public class DAOTPet extends MTPet {
 				stm.setString(3, prDAO.getBDNOMEPET());
 				stm.setString(4, prDAO.getBDAPELIDO());
 				stm.setDate	 (5, Date.valueOf(prDAO.getBDDATANASCIMENTO()));
+				stm.setInt(6, prDAO.getBDIDUSER());
 		
 				return true;	
 			} catch (Exception e) {
@@ -70,6 +72,7 @@ public class DAOTPet extends MTPet {
 				stm.setString(3, prDAO.getBDNOMEPET());
 				stm.setString(4, prDAO.getBDAPELIDO());
 				stm.setDate	 (5, Date.valueOf(prDAO.getBDDATANASCIMENTO()));
+				stm.setInt(6, prDAO.getBDIDUSER());
 		
 				stm.execute();
 				return true;
@@ -98,6 +101,7 @@ public class DAOTPet extends MTPet {
 					le.setBDNOMEPET(rs.getString("BDNOMEPET"));
 					le.setBDAPELIDO(rs.getString("BDAPELIDO"));
 					le.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
+					le.setBDIDUSER(rs.getInt("BDIDUSER"));
 					
 					ListaTePet.add(le);
 				}

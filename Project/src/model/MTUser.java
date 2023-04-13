@@ -47,4 +47,9 @@ public class MTUser extends MTClinica {
 	public void setBDIDPERMICAO(Integer bDIDPERMICAO) {
 		BDIDPERMICAO = bDIDPERMICAO;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

@@ -10,8 +10,10 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -19,12 +21,15 @@ import javax.swing.border.EmptyBorder;
 import control.DAOTEspecie;
 import control.DAOTRaca;
 import model.MTEspecie;
+import model.MTRaca;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VRacaCad extends JFrame {
 
@@ -35,11 +40,11 @@ public class VRacaCad extends JFrame {
 	private JPanel panel;
 	private JPanel panel_1;
 	private JTextField txtNomeRaca;
-	private JTextField especieCb;
 	private JButton btnNewButton;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
+	private JComboBox especieCb = new JComboBox<MTEspecie>();
 
 	public VRacaCad() {
 		BufferedImage bg = null;
@@ -69,37 +74,67 @@ public class VRacaCad extends JFrame {
 		panel_1 = new PanelComBackgroundImage(bg);
 		panel_1.setBackground(new Color(158, 174, 255));
 		panel.add(panel_1, "cell 1 1,alignx center,aligny center");
-		panel_1.setLayout(new MigLayout("", "[60px][200px,grow][60px]", "[25px][50px][50px][50px][50px][25px]"));
+		panel_1.setLayout(new MigLayout("", "[60px][200px,grow][60px]", "[25px][50px][50px][50px][][50px][25px]"));
 		
 		lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(VRacaCad.class.getResource("/vision/images/gatoAbo.png")));
 		panel_1.add(lblNewLabel_2, "cell 1 1,alignx center");
 		
+		btnNewButton = new RoundButton("Login");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (especieCb.getSelectedItem() == null) {
+					JOptionPane.showMessageDialog(null, "Campo vazio: Espécie");
+					return;
+				}
+				
+				if (txtNomeRaca.getText().isEmpty() || txtNomeRaca.getText() == null) {
+					JOptionPane.showMessageDialog(null, "Campo vazio: Nome");
+					return;
+				}
+
+				FDAOTRaca.setBDIDRACA(FDAOTRaca.getChaveID("TRaca", "BDIDRACA"));
+				FDAOTRaca.setBDNOMERACA(txtNomeRaca.getText());
+				FDAOTRaca.setBDIDESPECIE(verificaRacas());
+
+				if (achaIdRaca()) {
+					try {
+						FDAOTRaca.inserir(FDAOTRaca);
+						txtNomeRaca.setText("");
+						especieCb.setSelectedIndex(0);
+						JOptionPane.showMessageDialog(null, "Raça cadastrada com sucesso!");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Não foi possível cadastrar a raça.");
+					}
+				}
+			}
+		});
+		
 		lblNewLabel_1 = new JLabel("Nome:");
-		panel_1.add(lblNewLabel_1, "flowy,cell 1 2,alignx left");
+		panel_1.add(lblNewLabel_1, "flowy,cell 1 3,alignx left");
+		btnNewButton.setText("Cadastrar");
+		btnNewButton.setBackground((new Color(255, 199, 0)));
+		panel_1.add(btnNewButton, "cell 1 5,growx");
 		
 		txtNomeRaca =  new RoundJTextField();
-		panel_1.add(txtNomeRaca, "cell 1 2,growx");
+		panel_1.add(txtNomeRaca, "cell 1 3,growx");
 		txtNomeRaca.setColumns(10);
 		
 		lblNewLabel = new JLabel("Espécie:");
-		panel_1.add(lblNewLabel, "flowy,cell 1 3");
+		panel_1.add(lblNewLabel, "flowy,cell 1 2");
 		
-		especieCb =  new RoundJTextField();
-		panel_1.add(especieCb, "cell 1 3,growx");
-		especieCb.setColumns(10);
+		especieCb = new JComboBox();
+		panel_1.add(especieCb, "cell 1 2,growx");
 		
-		btnNewButton = new RoundButton("Login");
-		btnNewButton.setText("Cadastrar");
-		btnNewButton.setBackground((new Color(255, 199, 0)));
-		panel_1.add(btnNewButton, "cell 1 4,growx");
-		
+		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
+
 		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
 
 		especieCb.addItem(null);
 
 		for (MTEspecie mtEspecie : TListEspecie) {
-			//especieCb.addItem(mtEspecie);
+			especieCb.addItem(mtEspecie);
 		}
 	}
 
@@ -110,11 +145,11 @@ public class VRacaCad extends JFrame {
 
 		for (MTEspecie mtEspecie : TListEspecie) {
 
-			//if (mtEspecie.getBDNOMEESPECIE().equals(especieCb.getSelectedItem().toString())) {
+			if (mtEspecie.getBDNOMEESPECIE().equals(especieCb.getSelectedItem().toString())) {
 				idEspecie = mtEspecie.getBDIDESPECIE();
 			}
 
-		//}
+		}
 
 		return idEspecie;
 	}
