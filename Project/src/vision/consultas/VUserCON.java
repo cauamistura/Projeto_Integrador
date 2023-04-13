@@ -61,6 +61,13 @@ public class VUserCON extends JFrame {
                 for (int i = 0; i < selectedRows.length; i++) {
                     int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
                     MTDadosUser dado = dados.get(modelIndex);
+                    
+                    if(dado.getBDCPF().equals(VMenu.FCPFUSER)) {
+                    	local.desabilitaBotoes(false);
+                    } else {
+                    	local.habilitaBotoes(false);
+                    }
+                    
                     local.preencheCampos(dado);
                     dispose();
                 }
