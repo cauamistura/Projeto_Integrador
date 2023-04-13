@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 
-public class VMenu extends JFrame {
+public class VMenu extends JFrame{
 
 	/**
 	 * 
@@ -202,6 +202,7 @@ public class VMenu extends JFrame {
 			@Override
 			public void componentShown(ComponentEvent e) {
 				habilitaCampos(FPERMICAO);
+				
 			}
 
 			private void habilitaCampos(Integer prPERMICAO) {
@@ -222,4 +223,16 @@ public class VMenu extends JFrame {
 			}
 		});
 	}
+	
+	public void AtualizaDadosLogin(String nomeuser, String nomeClinica) {
+		if(nomeClinica != "") {
+			FNOMEClinica = nomeClinica;
+		}
+		if (nomeuser != "") {
+			FNomeUser = nomeuser;
+		}
+		
+		
+	}
 }
+

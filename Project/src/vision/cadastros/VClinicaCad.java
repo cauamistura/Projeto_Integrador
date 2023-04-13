@@ -1,7 +1,7 @@
 
 package vision.cadastros;
 
-import java.awt.event.ActionEvent; 
+import java.awt.event.ActionEvent;  
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -32,8 +32,10 @@ import javax.swing.border.EmptyBorder;
 
 import control.DAOTCidade;
 import control.DAOTClinica;
+import control.DAOTDadosUser;
 import control.DAOTEndereco;
 import control.DAOTEstado;
+import control.DAOTUser;
 import model.MTCidade;
 import model.MTClinica;
 import model.MTDadosUser;
@@ -56,6 +58,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Menu;
 import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class VClinicaCad extends JFrame {
 
@@ -67,10 +71,12 @@ public class VClinicaCad extends JFrame {
 	public DAOTEndereco FDAOTEndereco = new DAOTEndereco();
 	public DAOTEstado FDAOTEstado = new DAOTEstado();
 	public DAOTCidade FDAOTCidade = new DAOTCidade();
+	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	ArrayList<MTClinica> TListClinica = new ArrayList<>();
 	ArrayList<MTEstado> TListEstado = new ArrayList<>();
 	ArrayList<MTEndereco> TListEndereco = new ArrayList<>();
 	ArrayList<MTCidade> TListCidade = new ArrayList<>();
+	private VMenu menu = new VMenu();
 	private JPanel contentPane;
 	private JTextField edCidade;
 	private CNPJTextFiel edCnpj;
@@ -83,16 +89,28 @@ public class VClinicaCad extends JFrame {
 	private JComboBox cbUF;
 	private RoundButton btnDelet;
 	private RoundButton btnConf;
-
+	private JOptionPane optionPane;
+	private  JDialog dialog;
+	private Timer timer;
+	
 	/**
 	 * Create the frame.
 	 */
 	public VClinicaCad() {
-		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+					menu.AtualizaDadosLogin("", edNome.getText());
+					menu.dispose();
+					menu.setVisible(true);
+					dispose();
+			}
+		});
+	
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				preencheCampos();
+					preencheCampos();
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -267,7 +285,7 @@ public class VClinicaCad extends JFrame {
 					FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("tcidades", "BDIDCIDADE"));
 					FDAOTCidade.setBDNOMECID(edCidade.getText());
 					FDAOTCidade.setBDDESCCID(edDescricao.getText());
-					FDAOTCidade.setBDIDUF(achaIdUf());
+					FDAOTCidade.setBDIDUF(edCep.achaIdUf(cbUF));
 						
 					FDAOTCidade.inserir(FDAOTCidade);
 						
@@ -296,16 +314,41 @@ public class VClinicaCad extends JFrame {
 				if(edCnpj.existeCnpjClinica(FDAOTClinica)) {
 					FDAOTClinica.alterar(FDAOTClinica);
 					
-					VMenu menu = new VMenu();
-					
-					menu.FNOMEClinica = FDAOTClinica.getBDNOME();
-					menu.FCNPJClinica = FDAOTClinica.getBDCNPJ();
+					menu.AtualizaDadosLogin("", edNome.getText());
 				}
 				else {
 					FDAOTClinica.inserir(FDAOTClinica);
-				}
 					
-				JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+					
+					try {
+						FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
+						
+					} catch (Exception e2) {
+						int resposta = JOptionPane.showConfirmDialog(null,
+								"Nenhuma Usuario cadastrado\nDeseja Cadastrar um?", "ATENÇÃO!!",
+								JOptionPane.YES_NO_OPTION);
+						if (resposta == JOptionPane.YES_OPTION) {
+							VUserCad user = new VUserCad();
+							user.setVisible(true);
+							dispose();	
+						}
+					}
+					
+				}
+				
+				optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+	            dialog = optionPane.createDialog("");
+
+	            timer = new Timer(800, new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    dialog.dispose();
+	                }
+	            });
+	            timer.setRepeats(false);
+	            timer.start();
+
+	            dialog.setVisible(true);
 				
 				if(!edCnpj.existeCnpjClinica(FDAOTClinica)) {
 					
@@ -314,8 +357,8 @@ public class VClinicaCad extends JFrame {
 					dispose();
 				}
 				
-			}		
-		
+			}
+			
 		});
 		panel_3.add(btnConf, "cell 1 3,growx");
 		btnConf.setBackground((new Color(255, 199, 0)));
@@ -325,16 +368,50 @@ public class VClinicaCad extends JFrame {
 		btnDelet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				FDAOTClinica.setBDIDCLINICA(edCnpj.IdClinica());
-				FDAOTClinica.deletar(FDAOTClinica);
+				int resposta = JOptionPane.showConfirmDialog(null,
+						"Ao deletar a clinica, todos os Dados que estão ligadas a ela serão Excluidas\nDeseja confirmar essa ação?", "ATENÇÃO!!",
+						JOptionPane.YES_NO_OPTION);
+				if (resposta == JOptionPane.YES_OPTION) {
+					FDAOTClinica.setBDIDCLINICA(edCnpj.IdClinica());
+					FDAOTClinica.deletar(FDAOTClinica);
+					
+					optionPane = new JOptionPane("A Clinica foi Deletada", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+		            dialog = optionPane.createDialog("");
+
+		            timer = new Timer(800, new ActionListener() {
+		                @Override
+		                public void actionPerformed(ActionEvent e) {
+		                    dialog.dispose();
+		                }
+		            });
+		            timer.setRepeats(false);
+		            timer.start();
+
+		            dialog.setVisible(true);
+				}else {
+					optionPane = new JOptionPane("A Clinica não foi Deletada", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+		            dialog = optionPane.createDialog("");
+
+		            timer = new Timer(800, new ActionListener() {
+		                @Override
+		                public void actionPerformed(ActionEvent e) {
+		                    dialog.dispose();
+		                }
+		            });
+		            timer.setRepeats(false);
+		            timer.start();
+
+		            dialog.setVisible(true);
+				}
+				
 			}
 		});
 		btnDelet.setBackground(new Color(255, 199, 0));
 		panel_3.add(btnDelet, "cell 1 6,growx");
-		
-		
-		
+	
 	}
+	
+	
 	
 	
 	
@@ -346,20 +423,6 @@ public class VClinicaCad extends JFrame {
 			 
 			if(!TListClinica.isEmpty()){
 				
-				JOptionPane optionPane = new JOptionPane("Clinica já cadastrada", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-	            JDialog dialog = optionPane.createDialog("Aviso");
-
-	            Timer timer = new Timer(800, new ActionListener() {
-	                @Override
-	                public void actionPerformed(ActionEvent e) {
-	                    dialog.dispose();
-	                }
-	            });
-	            timer.setRepeats(false);
-	            timer.start();
-
-	            dialog.setVisible(true);
-			
 				edCnpj.setEditable(false);
 				
 				edCnpj.setText(mtClinica.getBDCNPJ());
@@ -379,23 +442,4 @@ public class VClinicaCad extends JFrame {
 			}
 		}
 	}
-
-
-	public Integer achaIdUf() {
-		
-		Integer idUf = 0; 
-		ArrayList<MTEstado> TListEstado = new ArrayList<>();
-		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
-
-		for (MTEstado mtEstado : TListEstado) {
-			
-		if (mtEstado.getBDSIGLAUF().equals(cbUF.getSelectedItem().toString())) {
-			idUf = mtEstado.getBDIDUF();
-			
-		}		
-		      
-		}
-		return idUf;
-	}
-	
 }
