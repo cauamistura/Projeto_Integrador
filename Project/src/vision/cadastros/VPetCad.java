@@ -15,7 +15,6 @@ import javax.swing.text.MaskFormatter;
 import control.DAOTDadosUser;
 import control.DAOTEspecie;
 import control.DAOTPet;
-import control.DAOTPetUser;
 import control.DAOTRaca;
 import control.DAOTUser;
 import model.MTDadosUser;

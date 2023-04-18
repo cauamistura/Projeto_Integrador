@@ -1,10 +1,13 @@
 package vision.consultas;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -14,11 +17,13 @@ import control.DAOTRaca;
 import model.MTDadosUser;
 import model.MTPet;
 import model.MTRaca;
+import vision.VMenu;
 import vision.cadastros.VPetCad;
 import vision.cadastros.VUserCad;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import vision.padrao.RoundButton;
 
 public class VPetCON extends JFrame {
 
@@ -27,6 +32,8 @@ public class VPetCON extends JFrame {
 	private DefaultTableModel model;
 	private DAOTRaca FDAOTRaca = new DAOTRaca();
 	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
+	private RoundButton btnConfirmar;
+	private RoundButton btnExcluir;
 
 	/**
 	 * Create the frame.
@@ -41,7 +48,7 @@ public class VPetCON extends JFrame {
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 414, 239);
+		scrollPane.setBounds(10, 11, 414, 215);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
@@ -59,6 +66,32 @@ public class VPetCON extends JFrame {
 		}
 
 		table.setModel(model);
+		
+		btnConfirmar = new RoundButton("Confirmar");
+		btnConfirmar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+
+		btnExcluir = new RoundButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		JPanel botoes = new JPanel();
+		botoes.setBounds(-27, 226, 484, 33);
+		contentPane.add(botoes);
+		
+		RoundButton btnConfirmar = new RoundButton("Confirmar");
+		botoes.add(btnConfirmar);
+		
+		RoundButton btnExcluir = new RoundButton("Excluir");
+		botoes.add(btnExcluir);
 	}
 
 	private String achaRaca(Integer id) {
@@ -79,6 +112,8 @@ public class VPetCON extends JFrame {
 		return raca;
 	}
 
+	
+	
 	private String achaApelido(String apelido) {
 
 		if (apelido == null || apelido.length() == 0) {

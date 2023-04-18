@@ -179,6 +179,7 @@ public class VMenu extends JFrame{
 				
 				VPetCON v = new VPetCON(list, vision);
 				///v.desabilitaBotoes();
+				v.setLocationRelativeTo(null);
 				v.setVisible(true);
 			}
 		});
