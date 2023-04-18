@@ -2,7 +2,7 @@ package model;
 
 import control.ObjectDAO;
 
-public class MTEspecie extends ObjectDAO {
+public class MTEspecie extends MTRaca {
 
 	Integer BDIDESPECIE;
 
