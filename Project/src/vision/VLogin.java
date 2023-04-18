@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +27,8 @@ import model.MTClinica;
 import model.MTDadosUser;
 import model.MTUser;
 import net.miginfocom.swing.MigLayout;
+import vision.cadastros.VClinicaCad;
+import vision.cadastros.VUserCad;
 import vision.padrao.CNPJTextFiel;
 import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
@@ -40,6 +43,7 @@ public class VLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DAOTDadosUser FDAODadosUser = new DAOTDadosUser();
+	private DAOTClinica FDAOTClinica = new DAOTClinica();
 	private VMenu menu;
 	private JTextField edSenha;
 	private CPFTextField edCNPJ;
@@ -134,12 +138,38 @@ public class VLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<MTDadosUser> TListClinica = new ArrayList<>();
 				TListClinica = FDAODadosUser.listLogin(FDAODadosUser);
-				if (validaUser(TListClinica)) {
-					menu.setVisible(true);
-					menu.setLocationRelativeTo(null);
-					dispose();
-				} else {
-					lbAlerta.setText("CPF ou senha incorreto!");
+				
+				try {
+					FDAOTClinica.ListTClinica(FDAOTClinica);
+					if (validaUser(TListClinica)) {
+						menu.setVisible(true);
+						dispose();
+					} else {
+						TListClinica = FDAODadosUser.ListTDadosUser(FDAODadosUser);
+						
+						if(TListClinica.isEmpty()) {
+							int resposta = JOptionPane.showConfirmDialog(null,
+									"Nenhuma Usuario cadastrado\nDeseja Cadastrar um?", "ATENÇÃO!!",
+									JOptionPane.YES_NO_OPTION);
+							if (resposta == JOptionPane.YES_OPTION) {
+								VUserCad user = new VUserCad();
+								user.setVisible(true);
+								dispose();
+							}
+						}else {
+							lbAlerta.setText("CPF ou senha incorreto!");
+						}
+						
+					}
+				} catch (Exception e2) {
+					int resposta = JOptionPane.showConfirmDialog(null,
+							"Nenhuma Clinica cadastrada\nDeseja Cadastrar uma?", "ATENÇÃO!!",
+							JOptionPane.YES_NO_OPTION);
+					if (resposta == JOptionPane.YES_OPTION) {
+						VClinicaCad clinica = new VClinicaCad();
+						clinica.setVisible(true);
+						dispose();	
+					}
 				}
 			}
 		});
@@ -152,12 +182,14 @@ public class VLogin extends JFrame {
 				wValida = true;
 				menu = new VMenu();
 				VMenu.FIDClinica  = l.getBDIDCLINICA();
-				VMenu.FNOMEClinica= l.getBDNOME();
 				VMenu.FCNPJClinica= l.getBDCNPJ();
 				VMenu.FIDUSER     = l.getBDIDUSER();
-				VMenu.FNomeUser   = l.getBDNOMEUSER();
 				VMenu.FPERMICAO   = l.getBDIDPERMICAO();
 				VMenu.FCPFUSER    = l.getBDCPF();
+				
+				
+				menu.AtualizaDadosLogin(l.getBDNOMEUSER(), l.getBDNOME());
+				
 				break;
 			}
 		}

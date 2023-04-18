@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 
-public class VMenu extends JFrame {
+public class VMenu extends JFrame{
 
 	/**
 	 * 
@@ -55,11 +55,11 @@ public class VMenu extends JFrame {
 	private JLabel descricao;
 	private JLabel lblNewLabel;
 	private JMenuItem miLogout;
-	private JMenuItem mmClinicaDados;
+	private JMenuItem miClinicaDados;
 	private JMenu mmDados;
 	private JMenu mmSair;
-	private JMenuItem mmUserCons;
-	private JMenuItem mmUserDados;
+	private JMenuItem miUserCons;
+	private JMenuItem miUserDados;
 
 	/**
 	 * 
@@ -80,14 +80,13 @@ public class VMenu extends JFrame {
 		setJMenuBar(menuBar);
 		
 		mmDados = new JMenu("Dados");
-		mmDados.setEnabled(false);
 		menuBar.add(mmDados);
 		
-		mmClinicaDados = new JMenuItem("Clinica...");
-		mmDados.add(mmClinicaDados);
+		miClinicaDados = new JMenuItem("Clinica...");
+		mmDados.add(miClinicaDados);
 		
-		mmUserDados = new JMenuItem("Usuário...");
-		mmUserDados.addActionListener(new ActionListener() {
+		miUserDados = new JMenuItem("Usuário...");
+		miUserDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTDadosUser DAO = new DAOTDadosUser();
 				VUserCad tela = new VUserCad();
@@ -101,8 +100,8 @@ public class VMenu extends JFrame {
 				tela.setVisible(true);
 			}
 		});
-		mmDados.add(mmUserDados);
-		mmClinicaDados.addActionListener(new ActionListener() {
+		mmDados.add(miUserDados);
+		miClinicaDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VClinicaCad clinica = new VClinicaCad();
 				clinica.setVisible(true);
@@ -110,7 +109,6 @@ public class VMenu extends JFrame {
 		});
 
 		mmCad = new JMenu("Cadastrar");
-		mmCad.setEnabled(false);
 		mmCad.setBackground(new Color(255, 255, 255));
 		menuBar.add(mmCad);
 
@@ -148,11 +146,10 @@ public class VMenu extends JFrame {
 		mmCad.add(miRaca);
 
 		mmCON = new JMenu("Consultar");
-		mmCON.setEnabled(false);
 		menuBar.add(mmCON);
 		
-		mmUserCons = new JMenuItem("Usuário...");
-		mmUserCons.addActionListener(new ActionListener() {
+		miUserCons = new JMenuItem("Usuário...");
+		miUserCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTDadosUser DAO = new DAOTDadosUser();
 				VUserCad vision = new VUserCad();
@@ -164,14 +161,12 @@ public class VMenu extends JFrame {
 				v.setVisible(true);
 			}
 		});
-		mmCON.add(mmUserCons);
+		mmCON.add(miUserCons);
 
 		mmATE = new JMenu("Atendimento");
-		mmATE.setEnabled(false);
 		menuBar.add(mmATE);
 		
 		mmSair = new JMenu("Sair");
-		mmSair.setEnabled(false);
 		menuBar.add(mmSair);
 		
 		miLogout = new JMenuItem("Logout...");
@@ -206,22 +201,38 @@ public class VMenu extends JFrame {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica);
 				habilitaCampos(FPERMICAO);
+				
 			}
 
 			private void habilitaCampos(Integer prPERMICAO) {
+				miClinicaDados.setVisible(false);
 				if(prPERMICAO == 1) {
-					mmCad.setEnabled(true); 
-					mmCON.setEnabled(true);
-					mmATE.setEnabled(true);
-					mmDados.setEnabled(true);
-					mmSair.setEnabled(true);
-				} else {
-					mmDados.setVisible(false);
+					miClinicaDados.setVisible(true);
+					descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica + " | Admin ");
+				} 
+				else if (prPERMICAO == 2) {
+					descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica + " | Funcionario ");
 				}
-				
+				else if (prPERMICAO == 3) {
+					mmATE.setVisible(false);
+					mmCad.setVisible(false);
+					miUserCons.setVisible(false);
+					descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica);
+				}
 			}
 		});
 	}
+	
+	public void AtualizaDadosLogin(String nomeuser, String nomeClinica) {
+		if(nomeClinica != "") {
+			FNOMEClinica = nomeClinica;
+		}
+		if (nomeuser != "") {
+			FNomeUser = nomeuser;
+		}
+		
+		
+	}
 }
+

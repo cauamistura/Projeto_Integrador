@@ -21,6 +21,7 @@ import net.miginfocom.swing.MigLayout;
 import vision.padrao.RoundButton;
 
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -34,6 +35,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.nio.file.FileAlreadyExistsException;
+
 import javax.swing.JTable;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -46,7 +49,6 @@ public class VMedCad extends JFrame {
 	private JPanel contentPane;
 	private JTextField edNomeMed;
 	private JTextField edDescMed;
-	private RoundButton btnConsultar;
 	private RoundButton btnlimpar;
 	private RoundButton btnConf;
 	private RoundButton btnDelete;
@@ -54,8 +56,6 @@ public class VMedCad extends JFrame {
 	private JScrollPane scrollPane;
 	private JTable table;
     private DefaultTableModel model;
-    private String id;
-
 	/**
 	 * Launch the application.
 	 */
@@ -91,6 +91,37 @@ public class VMedCad extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new MigLayout("", "[grow]", "[][][][][][grow]"));
 		
+		JScrollPane scrollPane = new JScrollPane();
+		panel.add(scrollPane, "cell 0 5,grow");
+		
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Id","Medicamento","Descrição"});
+		for (MTMedicacao mtMed: TListMedicacao) {
+			 Object[] rowData = { mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO()};
+	            model.addRow(rowData);
+	    }
+		
+		table.setModel(model);
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int row = table.getSelectedRow();
+		        if (row >= 0) {
+		            // Preencha os campos correspondentes com os dados da linha selecionada
+		            String nome = table.getValueAt(row, 1).toString();
+		            String desc = table.getValueAt(row, 2).toString();
+		            edNomeMed.setText(nome);
+		            edDescMed.setText(desc); 
+		            FDAOTMedicacao.setBDIDMEDICACAO(Integer.valueOf(table.getValueAt(row, 0).toString())); 
+		        }
+			}
+		});
+		scrollPane.setViewportView(table);
+		
+		
+
 		edNomeMed = new JTextField();
 		panel.add(edNomeMed, "cell 0 1,growx");
 		edNomeMed.setColumns(10);
@@ -102,6 +133,19 @@ public class VMedCad extends JFrame {
 		btnConf = new RoundButton("Confirmar");
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+		
+		
+				if(FDAOTMedicacao.existeMedicamento(FDAOTMedicacao.getBDIDMEDICACAO())){
+					JOptionPane.showMessageDialog(null, "Ta Cadastrado seu Burro");
+				}
+				else {
+					FDAOTMedicacao.setBDIDMEDICACAO(FDAOTMedicacao.getChaveID("tmedicacao", "BDIDMEDICACAO"));
+					FDAOTMedicacao.setBDDESCRICAO(edDescMed.getText());
+					FDAOTMedicacao.setBDNOMEMEDICACAO(edNomeMed.getText());
+					FDAOTMedicacao.inserir(FDAOTMedicacao);
+				}
+				Object[] rowData = { FDAOTMedicacao.getBDIDMEDICACAO(), FDAOTMedicacao.getBDNOMEMEDICACAO(), FDAOTMedicacao.getBDDESCRICAO()};
+	            model.addRow(rowData);
 			}
 		});
 		btnConf.setBackground(new Color(255, 255, 255));
@@ -121,19 +165,22 @@ public class VMedCad extends JFrame {
 		btnAlterar = new RoundButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(FDAOTMedicacao.existeMedicamento(FDAOTMedicacao.getBDIDMEDICACAO()))  {
+					FDAOTMedicacao.setBDIDMEDICACAO(FDAOTMedicacao.getBDIDMEDICACAO()) ;
+					FDAOTMedicacao.setBDDESCRICAO(edDescMed.getText());
+					FDAOTMedicacao.setBDNOMEMEDICACAO(edNomeMed.getText());
+					FDAOTMedicacao.alterar(FDAOTMedicacao);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "N ta Cadastrado seu Burro");
+				}
+				Object[] rowData = { FDAOTMedicacao.getBDIDMEDICACAO(), FDAOTMedicacao.getBDNOMEMEDICACAO(), FDAOTMedicacao.getBDDESCRICAO()};
+	            model.addRow(rowData);
 			}
 		});
 		btnAlterar.setBackground(Color.WHITE);
 		panel.add(btnAlterar, "cell 0 4");
-		
-	
-		btnConsultar = new RoundButton("Consultar");
-		btnConsultar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnConsultar.setBackground(Color.WHITE);
-		panel.add(btnConsultar, "cell 0 4");
 		
 		btnDelete = new RoundButton("Deletar");
 		btnDelete.addActionListener(new ActionListener() {
@@ -142,46 +189,6 @@ public class VMedCad extends JFrame {
 		});
 		btnDelete.setBackground(new Color(255, 255, 255));
 		panel.add(btnDelete, "cell 0 4");
-		
-		JScrollPane scrollPane = new JScrollPane();
-		panel.add(scrollPane, "cell 0 5,grow");
 
-		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("Id");
-		model.addColumn("Medicamento");
-		model.addColumn("Descrição");
-
-		
-		for (MTMedicacao mtMed: TListMedicacao) {
-			 Object[] rowData = { mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO()};
-	            model.addRow(rowData);
-	    }
-		
-		table = new JTable(model);
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				int row = table.getSelectedRow();
-		        if (row >= 0) {
-		            // Preencha os campos correspondentes com os dados da linha selecionada
-		            String nome = table.getValueAt(row, 1).toString();
-		            String desc = table.getValueAt(row, 2).toString();
-		            id = table.getValueAt(row, 0).toString();
-		            edNomeMed.setText(nome);
-		            edDescMed.setText(desc);
-		            FDAOTMedicacao.setBDIDMEDICACAO(Integer.valueOf(id)) ;
-					 
-		            
-		            
-		        }
-				
-			}
-		});
-		
-		scrollPane.setViewportView(table);
-
-	
 	}
-
 }

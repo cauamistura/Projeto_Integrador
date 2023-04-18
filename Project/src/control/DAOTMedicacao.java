@@ -112,23 +112,25 @@ public class DAOTMedicacao extends MTMedicacao{
         return ListTaMedicacao;
     }
     
-		public boolean existeMedicamento(MTMedicacao prDAO) {
-    	    Connection c = prDAO.append();
-    	    Boolean existe = false;
+		public boolean existeMedicamento(Integer id) {
+    	    Connection c = append();
+    	    Boolean existe = null;
     	    try {
     	        Statement stm = c.createStatement();
-    	        String wSql = "SELECT BDIDMEDICACAO FROM `dbpi`.`tmedicacao` WHERE BDIDMEDICACAO ='" +prDAO.getBDIDMEDICACAO()+"'";
+    	        String wSql = "SELECT BDIDMEDICACAO FROM `dbpi`.`tmedicacao` where BDIDMEDICACAO = "+id;
     	        ResultSet rs =  stm.executeQuery(wSql);
 
+    	     
     	        if(rs.next()) {
-    	            if(rs.getString("BDIDMEDICACAO").equals(prDAO.getBDIDMEDICACAO())) {
-    	                existe = true;
-    	            }
+    	        	existe = true;
+    	        }else {
+    	        	existe = false;
     	        }
+	    	   
     	    } catch (Exception e) {
     	        e.printStackTrace();
     	    } finally {
-    	        prDAO.post();
+    	        post();
     	    }
     	    return existe;
     	}

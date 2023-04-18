@@ -21,6 +21,9 @@ public class CEPTextField extends RoundJFormattedTextField {
 	public DAOTEndereco FDAOTEndereco = new DAOTEndereco();
 	public DAOTEstado FDAOTEstado = new DAOTEstado();
 	public DAOTCidade FDAOTCidade = new DAOTCidade();
+	ArrayList<MTEndereco> lEndereco = new ArrayList<>();
+	ArrayList<MTEstado> TListEstado = new ArrayList<>();
+	ArrayList<MTCidade> lCidade = new ArrayList<>();
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,40 +48,29 @@ public class CEPTextField extends RoundJFormattedTextField {
 		return cep.length() == 8 ? cep : null; // retorna o CEP ou null se não tiver 8 dígitos
 	}
 
-	public Boolean getCEPExiste(int prCEP, JTextField edBairro, JTextField edCidade, JTextField edDescricao,
-			JComboBox cbUF) {
+	public Boolean getCEPExiste(int prCEP, JTextField edBairro, JTextField edCidade, JTextField edDescricao, JComboBox cbUF) {
 		// Valida se existe CEP
-		ArrayList<MTEndereco> lEndereco = new ArrayList<>();
-		ArrayList<MTEstado> TListEstado = new ArrayList<>();
+		
 		lEndereco = FDAOTEndereco.ListTEndereco(FDAOTEndereco);
+		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
+		lCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
 
-		System.out.println("1");
 		for (MTEndereco l : lEndereco) {
-			System.out.println("12");
 
 			if (l.getBDCEP() == prCEP) {
 				edBairro.setText(l.getBDBAIRRO());
-				System.out.println("13");
-
 				// Procura Cidade Vinculada
-				ArrayList<MTCidade> lCidade = new ArrayList<>();
-				lCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
 				for (MTCidade lc : lCidade) {
-					System.out.println("14");
 
 					if (l.getBDIDCIDADE() == lc.getBDIDCIDADE()) {
-						System.out.println("15");
 
 						edCidade.setText(lc.getBDNOMECID());
 						edDescricao.setText(lc.getBDDESCCID());
-						System.out.println(TListEstado.size());
+						
 						// Procura Estado vinculado
 						for (MTEstado le : TListEstado) {
-							System.out.println(le.getBDIDUF());
-							System.out.println(lc.getBDIDUF());
 							if (lc.getBDIDUF() == le.getBDIDUF()) {
-								System.out.println(lc.getBDSIGLAUF());
-								cbUF.setSelectedItem(lc.getBDSIGLAUF());
+								cbUF.setSelectedIndex(lc.getBDIDUF());
 							}
 						}
 					}
@@ -87,5 +79,22 @@ public class CEPTextField extends RoundJFormattedTextField {
 			}
 		}
 		return false;
+	}
+	
+	public Integer achaIdUf(JComboBox cbUF) {
+		
+		Integer idUf = 0; 
+		ArrayList<MTEstado> TListEstado = new ArrayList<>();
+		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
+
+		for (MTEstado mtEstado : TListEstado) {
+			
+		if (mtEstado.getBDSIGLAUF().equals(cbUF.getSelectedItem().toString())) {
+			idUf = mtEstado.getBDIDUF();
+			
+		}		
+		      
+		}
+		return idUf;
 	}
 }

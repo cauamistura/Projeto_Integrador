@@ -66,6 +66,7 @@ public class VUserCad extends JFrame {
 	private JTextField edBairro;
 	private CEPTextField edCep;
 	private JTextField edEmail;
+	private JLabel lbStatus;
 
 	private JComboBox<MTEstado> cbUF;
 	private JComboBox<MTPermicao> cbPermissao;
@@ -80,7 +81,7 @@ public class VUserCad extends JFrame {
 	private DAOTCidade FDAOTCidade = new DAOTCidade();
 	private DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private DAOTPermicao FDAOTPermicao = new DAOTPermicao();
-	
+
 	private RoundButton btnExcluir;
 	private RoundButton btnLimpar;
 	private RoundButton btnConsulta;
@@ -99,7 +100,7 @@ public class VUserCad extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		setBackground(new Color(255, 255, 255));
 		setTitle("Cadastro de Usuário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -135,13 +136,13 @@ public class VUserCad extends JFrame {
 		pnCard.add(pnContent, "cell 1 1,grow");
 		pnContent.setLayout(
 				new MigLayout("", "[50px][150px,grow][50px][150px,grow][50px]", "[][][][][][][][][][25px][][30px]"));
-		
-		//Instacia da Tela
+
+		// Instacia da Tela
 		VUserCad local = this;
-		
-		JLabel lbStatus = new JLabel("Status: Aguardando");
+
+		lbStatus = new JLabel("Status: Aguardando");
 		pnContent.add(lbStatus, "cell 1 11");
-		
+
 		JLabel lbCPF = new JLabel("CPF:");
 		pnContent.add(lbCPF, "flowy,cell 1 3");
 		edCpf = new CPFTextField();
@@ -154,19 +155,12 @@ public class VUserCad extends JFrame {
 				if (edCpf.existeCpfUsuario(FDAOTUser)) {
 					if (edCpf.getText().equals(VMenu.FCPFUSER)) {
 						desabilitaBotoes(false);
-						lbStatus.setText("Status: Usuario Logado");
 					} else {
-						lbStatus.setText("Status: Alterando");
+						habilitaBotoes(false);
 					}
 				} else {
 					lbStatus.setText("Status: Inserindo");
-				}
-			}
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (edCpf.getText().equals(VMenu.FCPFUSER)) {
-					desabilitaBotoes(false);
-					lbStatus.setText("Status: Usuario Logado");
+					habilitaBotoes(false);
 				}
 			}
 		});
@@ -323,6 +317,15 @@ public class VUserCad extends JFrame {
 						edDataNascimento.requestFocus();
 						return;
 					}
+					
+					if (VMenu.FPERMICAO == 0) {
+						MTPermicao select = (MTPermicao) cbPermissao.getSelectedItem();
+						if (select.getBDIDPERMICAO() == 0) {
+							JOptionPane.showMessageDialog(null, "Você não tem permição para cadastrar um admin!");
+							cbPermissao.requestFocus();
+							return;
+						}
+					}
 
 					try {
 						Boolean existeCpf = edCpf.existeCpfUsuario(FDAOTUser);
@@ -472,7 +475,7 @@ public class VUserCad extends JFrame {
 	}
 
 	public void exluiUser(Integer prIDUSER) {
-		
+
 		int resposta = JOptionPane.showConfirmDialog(null,
 				"Você realmente deseja excluir? Todos os dados vinculados a este usuário serão excluídos.",
 				"Confirmação", JOptionPane.YES_NO_OPTION);
@@ -484,19 +487,38 @@ public class VUserCad extends JFrame {
 		}
 
 	}
-	
+
 	public void desabilitaBotoes(Boolean prConsulta) {
-		if(prConsulta) {
+		if (prConsulta) {
 			btnConsulta.setEnabled(false);
 			btnConsulta.setVisible(false);
 		}
 		btnExcluir.setEnabled(false);
 		btnLimpar.setEnabled(false);
-		
+
 		btnExcluir.setVisible(false);
 		btnLimpar.setVisible(false);
-		
+
 		edCpf.setEnabled(false);
 		cbPermissao.setEnabled(false);
+		
+		lbStatus.setText("Status: Usuario Logado");
+	}
+
+	public void habilitaBotoes(Boolean prConsulta) {
+		if (prConsulta) {
+			btnConsulta.setEnabled(true);
+			btnConsulta.setVisible(true);
+		}
+		btnExcluir.setEnabled(true);
+		btnLimpar.setEnabled(true);
+
+		btnExcluir.setVisible(true);
+		btnLimpar.setVisible(true);
+
+		edCpf.setEnabled(true);
+		cbPermissao.setEnabled(true);
+		
+		lbStatus.setText("Status: Alterando");
 	}
 }
