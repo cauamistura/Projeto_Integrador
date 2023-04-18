@@ -1,0 +1,27 @@
+package model;
+
+import control.ObjectDAO;
+
+public class MTComorbidade extends ObjectDAO {
+	private int BDIDCOMORBIDADE;
+	private String BDNOMECOMORBIDADE, BDDESCCOMORBIDADE;
+	
+	public int getBDIDCOMORBIDADE() {
+		return BDIDCOMORBIDADE;
+	}
+	public void setBDIDCOMORBIDADE(int bDIDCOMORBIDADE) {
+		BDIDCOMORBIDADE = bDIDCOMORBIDADE;
+	}
+	public String getBDNOMECOMORBIDADE() {
+		return BDNOMECOMORBIDADE;
+	}
+	public void setBDNOMECOMORBIDADE(String bDNOMECOMORBIDADE) {
+		BDNOMECOMORBIDADE = bDNOMECOMORBIDADE;
+	}
+	public String getBDDESCCOMORBIDADE() {
+		return BDDESCCOMORBIDADE;
+	}
+	public void setBDDESCCOMORBIDADE(String bDDESCCOMORBIDADE) {
+		BDDESCCOMORBIDADE = bDDESCCOMORBIDADE;
+	}
+}
