@@ -1,6 +1,8 @@
 package vision.cadastros;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Menu;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,11 +20,15 @@ import model.MTMedicacao;
 
 import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
+import vision.VMenu;
 import vision.padrao.RoundButton;
 
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -35,6 +41,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.nio.file.FileAlreadyExistsException;
 
 import javax.swing.JTable;
@@ -45,41 +53,28 @@ public class VMedCad extends JFrame {
 
 	
 	public DAOTMedicacao FDAOTMedicacao = new DAOTMedicacao(); 
-	ArrayList<MTMedicacao> TListMedicacao = new ArrayList<>();
+	private ArrayList<MTMedicacao> TListMedicacao = new ArrayList<>();
+	private VMenu menu = new VMenu();
 	private JPanel contentPane;
 	private JTextField edNomeMed;
 	private JTextField edDescMed;
 	private RoundButton btnlimpar;
 	private RoundButton btnConf;
 	private RoundButton btnDelete;
-	private RoundButton btnAlterar;
 	private JScrollPane scrollPane;
 	private JTable table;
     private DefaultTableModel model;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VMedCad frame = new VMedCad();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private boolean registroCadastro = true;
+    private int row;
+	private JOptionPane optionPane;
+	private  JDialog dialog;
+	private Timer timer;
+	private JLabel lbStatus;
 
-	/**
-	 * Create the frame.
-	 */
-	public VMedCad() {
-		
+	public VMedCad() {	
 		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,32 +84,37 @@ public class VMedCad extends JFrame {
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[grow]", "[][][][][][grow]"));
+		panel.setLayout(new MigLayout("", "[grow]", "[][-26.00][][][grow][][-58.00]"));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		panel.add(scrollPane, "cell 0 5,grow");
+		panel.add(scrollPane, "cell 0 4,grow");
 		
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Id","Medicamento","Descrição"});
-		for (MTMedicacao mtMed: TListMedicacao) {
-			 Object[] rowData = { mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO()};
-	            model.addRow(rowData);
-	    }
 		
-		table.setModel(model);
+		
+		atualizatabela();
+		
+		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				int row = table.getSelectedRow();
+				row = table.getSelectedRow();
 		        if (row >= 0) {
+		        	
+		        	
 		            // Preencha os campos correspondentes com os dados da linha selecionada
 		            String nome = table.getValueAt(row, 1).toString();
 		            String desc = table.getValueAt(row, 2).toString();
 		            edNomeMed.setText(nome);
 		            edDescMed.setText(desc); 
+		            
+		            registroCadastro = false;
+		 
 		            FDAOTMedicacao.setBDIDMEDICACAO(Integer.valueOf(table.getValueAt(row, 0).toString())); 
+		            
+		            lbStatus.setText("Status: Alterando medicamento");
 		        }
 			}
 		});
@@ -123,72 +123,133 @@ public class VMedCad extends JFrame {
 		
 
 		edNomeMed = new JTextField();
-		panel.add(edNomeMed, "cell 0 1,growx");
+		panel.add(edNomeMed, "cell 0 0,growx");
 		edNomeMed.setColumns(10);
 		
 		edDescMed = new JTextField();
-		panel.add(edDescMed, "cell 0 3,growx");
+		panel.add(edDescMed, "cell 0 2,growx");
 		edDescMed.setColumns(10);
 		
 		btnConf = new RoundButton("Confirmar");
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		
-		
-				if(FDAOTMedicacao.existeMedicamento(FDAOTMedicacao.getBDIDMEDICACAO())){
-					JOptionPane.showMessageDialog(null, "Ta Cadastrado seu Burro");
-				}
-				else {
+				if(registroCadastro == true){
 					FDAOTMedicacao.setBDIDMEDICACAO(FDAOTMedicacao.getChaveID("tmedicacao", "BDIDMEDICACAO"));
 					FDAOTMedicacao.setBDDESCRICAO(edDescMed.getText());
 					FDAOTMedicacao.setBDNOMEMEDICACAO(edNomeMed.getText());
 					FDAOTMedicacao.inserir(FDAOTMedicacao);
+					
+					
+					atualizatabela();
+					//Object[] rowData = { FDAOTMedicacao.getBDIDMEDICACAO(), FDAOTMedicacao.getBDNOMEMEDICACAO(), FDAOTMedicacao.getBDDESCRICAO()};
+		            //model.addRow(rowData);
+		            
+		            limparDados();
 				}
-				Object[] rowData = { FDAOTMedicacao.getBDIDMEDICACAO(), FDAOTMedicacao.getBDNOMEMEDICACAO(), FDAOTMedicacao.getBDDESCRICAO()};
-	            model.addRow(rowData);
+				else {
+					FDAOTMedicacao.setBDIDMEDICACAO(FDAOTMedicacao.getBDIDMEDICACAO()) ;
+					FDAOTMedicacao.setBDDESCRICAO(edDescMed.getText());
+					FDAOTMedicacao.setBDNOMEMEDICACAO(edNomeMed.getText());
+					FDAOTMedicacao.alterar(FDAOTMedicacao);
+	
+					atualizatabela();
+					/*
+					model.setValueAt(FDAOTMedicacao.getBDIDMEDICACAO(), row, 0); // atualiza o valor da célula na linha 0 e coluna 0
+					model.setValueAt(FDAOTMedicacao.getBDNOMEMEDICACAO(), row, 1); // atualiza o valor da célula na linha 0 e coluna 1
+					model.setValueAt(FDAOTMedicacao.getBDDESCRICAO(), row, 2); // atualiza o valor da célula na linha 0 e coluna 2
+					*/
+					
+					limparDados();
+				}
+				
 			}
 		});
 		btnConf.setBackground(new Color(255, 255, 255));
-		panel.add(btnConf, "flowx,cell 0 4");
+		panel.add(btnConf, "flowx,cell 0 3");
 		
 		btnlimpar = new RoundButton("Limpar");
 		btnlimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				edDescMed.setText("");
-				edNomeMed.setText("");
+				limparDados();
 			}
 		});
 		btnlimpar.setBackground(new Color(255, 255, 255));
-		panel.add(btnlimpar, "cell 0 4");
-		
-		btnAlterar = new RoundButton("Alterar");
-		btnAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				if(FDAOTMedicacao.existeMedicamento(FDAOTMedicacao.getBDIDMEDICACAO()))  {
-					FDAOTMedicacao.setBDIDMEDICACAO(FDAOTMedicacao.getBDIDMEDICACAO()) ;
-					FDAOTMedicacao.setBDDESCRICAO(edDescMed.getText());
-					FDAOTMedicacao.setBDNOMEMEDICACAO(edNomeMed.getText());
-					FDAOTMedicacao.alterar(FDAOTMedicacao);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "N ta Cadastrado seu Burro");
-				}
-				Object[] rowData = { FDAOTMedicacao.getBDIDMEDICACAO(), FDAOTMedicacao.getBDNOMEMEDICACAO(), FDAOTMedicacao.getBDDESCRICAO()};
-	            model.addRow(rowData);
-			}
-		});
-		btnAlterar.setBackground(Color.WHITE);
-		panel.add(btnAlterar, "cell 0 4");
+		panel.add(btnlimpar, "cell 0 3");
 		
 		btnDelete = new RoundButton("Deletar");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int resposta = JOptionPane.showConfirmDialog(null,
+						"ao Deletar esse medicamento, você não vai mais pode utiliza-lo em nenhuma receita, e todas as receitas ligadas e ele serão perdidass","ATENÇÂO!!",
+						JOptionPane.YES_NO_OPTION);
+				if(resposta == JOptionPane.YES_NO_OPTION) {
+					
+					FDAOTMedicacao.deletar(FDAOTMedicacao);
+					
+					atualizatabela();
+					limparDados();
+					
+					optionPane = new JOptionPane("O medicamento foi Deletada", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+		            dialog = optionPane.createDialog("");
+
+		            timer = new Timer(800, new ActionListener() {
+		                @Override
+		                public void actionPerformed(ActionEvent e) {
+		                    dialog.dispose();
+		                }
+		            });
+		            timer.setRepeats(false);
+		            timer.start();
+
+		            dialog.setVisible(true);
+				}else {
+					optionPane = new JOptionPane("O medicamento não foi Deletada", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+		            dialog = optionPane.createDialog("");
+
+		            timer = new Timer(800, new ActionListener() {
+		                @Override
+		                public void actionPerformed(ActionEvent e) {
+		                    dialog.dispose();
+		                }
+		            });
+		            timer.setRepeats(false);
+		            timer.start();
+
+		            dialog.setVisible(true);
+	
+				}
 			}
 		});
 		btnDelete.setBackground(new Color(255, 255, 255));
-		panel.add(btnDelete, "cell 0 4");
+		panel.add(btnDelete, "cell 0 3");
+		
+		lbStatus = new JLabel("Status: Inserindo medicamento");
+		panel.add(lbStatus, "cell 0 5");
 
+	}private void atualizatabela() {
+		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
+		
+		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Id","Medicamento","Descrição"});
+		for (MTMedicacao mtMed: TListMedicacao) {
+			 Object[] rowData = { mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO()};
+	            model.addRow(rowData);
+		}
+		table.setModel(model);
+		
 	}
+
+	public void limparDados() {
+		edDescMed.setText("");
+		edNomeMed.setText("");
+		
+		registroCadastro = true;
+		
+		edNomeMed.requestFocus();
+		
+		lbStatus.setText("Status: Inserindo medicamento");
+	}
+	
+	
 }

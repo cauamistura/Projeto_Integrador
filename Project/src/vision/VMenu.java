@@ -60,6 +60,7 @@ public class VMenu extends JFrame{
 	private JMenu mmSair;
 	private JMenuItem miUserCons;
 	private JMenuItem miUserDados;
+	private JMenuItem miMedicamento;
 
 	/**
 	 * 
@@ -144,6 +145,17 @@ public class VMenu extends JFrame{
 		});
 		miRaca.setBackground(new Color(255, 255, 255));
 		mmCad.add(miRaca);
+		
+		miMedicamento = new JMenuItem("Medicamento...");
+		miMedicamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VMedCad uc = new VMedCad();
+				uc.setLocationRelativeTo(null);
+				uc.setVisible(true);
+			}
+		});
+		miMedicamento.setBackground(new Color(255, 255, 255));
+		mmCad.add(miMedicamento);
 
 		mmCON = new JMenu("Consultar");
 		menuBar.add(mmCON);
