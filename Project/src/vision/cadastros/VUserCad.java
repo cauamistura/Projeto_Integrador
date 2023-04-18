@@ -317,6 +317,15 @@ public class VUserCad extends JFrame {
 						edDataNascimento.requestFocus();
 						return;
 					}
+					
+					if (VMenu.FPERMICAO == 0) {
+						MTPermicao select = (MTPermicao) cbPermissao.getSelectedItem();
+						if (select.getBDIDPERMICAO() == 0) {
+							JOptionPane.showMessageDialog(null, "Você não tem permição para cadastrar um admin!");
+							cbPermissao.requestFocus();
+							return;
+						}
+					}
 
 					try {
 						Boolean existeCpf = edCpf.existeCpfUsuario(FDAOTUser);
