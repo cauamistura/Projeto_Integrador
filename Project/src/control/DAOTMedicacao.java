@@ -1,6 +1,6 @@
 package control;
 
-import java.sql.Connection;  
+import java.sql.Connection;   
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -98,10 +98,6 @@ public class DAOTMedicacao extends MTMedicacao{
             
                 ListTaMedicacao.add(lc); // Adiciona objeto à lista
             }
-
-            rs.close();
-            stm.close();
-            c.close(); // Fecha conexões
 
         } catch (Exception e) {
             e.printStackTrace();
