@@ -30,23 +30,23 @@ import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 
-public class VMenu extends JFrame{
+public class VMenu extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//Informações globais da Clinica
+	// Informações globais da Clinica
 	public static Integer FIDClinica;
 	public static String FNOMEClinica;
 	public static String FCNPJClinica;
-	
-	//Informações Globais do Uuario
+
+	// Informações Globais do Uuario
 	public static Integer FPERMICAO;
 	public static Integer FIDUSER;
-	public static String  FNomeUser;
-	public static String  FCPFUSER;
-	
+	public static String FNomeUser;
+	public static String FCPFUSER;
+
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu mmCad;
@@ -67,6 +67,7 @@ public class VMenu extends JFrame{
 	private JMenuItem mmUserCons;
 	private JMenuItem mmUserDados;
 	private JMenuItem mmPetCons;
+	private JMenuItem miComorbidade;
 
 	/**
 	 * 
@@ -76,7 +77,7 @@ public class VMenu extends JFrame{
 
 //		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Menu");
-	
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 771, 300);
 
@@ -85,23 +86,23 @@ public class VMenu extends JFrame{
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		mmDados = new JMenu("Dados");
 		menuBar.add(mmDados);
-		
+
 		miClinicaDados = new JMenuItem("Clinica...");
 		mmDados.add(miClinicaDados);
-		
+
 		miUserDados = new JMenuItem("Usuário...");
 		miUserDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTDadosUser DAO = new DAOTDadosUser();
 				VUserCad tela = new VUserCad();
-				
+
 				MTDadosUser lista = new MTDadosUser();
-				
+
 				lista = DAO.ListConsultaUserLOG(DAO);
-				
+
 				tela.preencheCampos(lista);
 				tela.desabilitaBotoes(true);
 				tela.setVisible(true);
@@ -151,7 +152,7 @@ public class VMenu extends JFrame{
 		});
 		miRaca.setBackground(new Color(255, 255, 255));
 		mmCad.add(miRaca);
-		
+
 		miMedicamento = new JMenuItem("Medicamento...");
 		miMedicamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,9 +164,19 @@ public class VMenu extends JFrame{
 		miMedicamento.setBackground(new Color(255, 255, 255));
 		mmCad.add(miMedicamento);
 
+		miComorbidade = new JMenuItem("Comorbidade...");
+		miComorbidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VComorbidadeCad v = new VComorbidadeCad();
+				v.setLocationRelativeTo(null);
+				v.setVisible(true);
+			}
+		});
+		mmCad.add(miComorbidade);
+
 		mmCON = new JMenu("Consultar");
 		menuBar.add(mmCON);
-		
+
 		miUserCons = new JMenuItem("Usuário...");
 		miUserCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -173,7 +184,7 @@ public class VMenu extends JFrame{
 				VUserCad vision = new VUserCad();
 				ArrayList<MTDadosUser> list = new ArrayList<>();
 				list = DAO.ListConsulta(DAO);
-				
+
 				VUserCON v = new VUserCON(list, vision);
 				v.desabilitaBotoes();
 				v.setVisible(true);
@@ -188,21 +199,21 @@ public class VMenu extends JFrame{
 				VPetCad vision = new VPetCad();
 				ArrayList<MTPet> list = new ArrayList<>();
 				list = DAO.ListTPet(DAO);
-				
+
 				VPetCON v = new VPetCON(list, vision);
-				///v.desabilitaBotoes();
+				/// v.desabilitaBotoes();
 				v.setLocationRelativeTo(null);
 				v.setVisible(true);
 			}
 		});
 		mmCON.add(mmPetCons);
-		
+
 		mmATE = new JMenu("Atendimento");
 		menuBar.add(mmATE);
-		
+
 		mmSair = new JMenu("Sair");
 		menuBar.add(mmSair);
-		
+
 		miLogout = new JMenuItem("Logout...");
 		mmSair.add(miLogout);
 		miLogout.addActionListener(new ActionListener() {
@@ -231,42 +242,38 @@ public class VMenu extends JFrame{
 
 		lblNewLabel = new JLabel("");
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
-		
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
 				habilitaCampos(FPERMICAO);
-				
+
 			}
 
 			private void habilitaCampos(Integer prPERMICAO) {
 				miClinicaDados.setVisible(false);
-				if(prPERMICAO == 1) {
+				if (prPERMICAO == 1) {
 					miClinicaDados.setVisible(true);
-					descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica + " | Admin ");
-				} 
-				else if (prPERMICAO == 2) {
-					descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica + " | Funcionario ");
-				}
-				else if (prPERMICAO == 3) {
+					descricao.setText("Usuario: " + FNomeUser + " | " + "Clinica: " + FNOMEClinica + " | Admin ");
+				} else if (prPERMICAO == 2) {
+					descricao.setText("Usuario: " + FNomeUser + " | " + "Clinica: " + FNOMEClinica + " | Funcionario ");
+				} else if (prPERMICAO == 3) {
 					mmATE.setVisible(false);
 					mmCad.setVisible(false);
 					miUserCons.setVisible(false);
-					descricao.setText("Usuario: "+ FNomeUser +" | " + "Clinica: "+ FNOMEClinica);
+					descricao.setText("Usuario: " + FNomeUser + " | " + "Clinica: " + FNOMEClinica);
 				}
 			}
 		});
 	}
-	
+
 	public void AtualizaDadosLogin(String nomeuser, String nomeClinica) {
-		if(nomeClinica != "") {
+		if (nomeClinica != "") {
 			FNOMEClinica = nomeClinica;
 		}
 		if (nomeuser != "") {
 			FNomeUser = nomeuser;
 		}
-		
-		
+
 	}
 }
-
