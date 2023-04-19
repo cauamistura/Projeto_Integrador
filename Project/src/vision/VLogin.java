@@ -72,7 +72,7 @@ public class VLogin extends JFrame {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src/vision/images/BG.png"));
+			bg = ImageIO.read(new File("src/vision/images/BGLogin.png"));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -4,11 +4,20 @@ import java.time.LocalDate;
 
 import control.ObjectDAO;
 
-public class MTPet extends ObjectDAO {
+public class MTPet extends MTEspecie {
 	
 	Integer BDIDPET,
-			BDIDRACA;
+			BDIDRACA,
+			BDIDUSER;
 	
+	public Integer getBDIDUSER() {
+		return BDIDUSER;
+	}
+
+	public void setBDIDUSER(Integer bDIDUSER) {
+		BDIDUSER = bDIDUSER;
+	}
+
 	String BDNOMEPET,
 		   BDAPELIDO;
 	

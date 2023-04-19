@@ -8,9 +8,12 @@ import javax.swing.border.EmptyBorder;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 import control.DAOTDadosUser;
+import control.DAOTPet;
 import model.MTDadosUser;
+import model.MTPet;
 import vision.cadastros.*;
 import vision.consultas.VUserCON;
+import vision.consultas.VPetCON;
 
 import java.awt.BorderLayout;
 import javax.swing.JMenuBar;
@@ -61,6 +64,9 @@ public class VMenu extends JFrame{
 	private JMenuItem miUserCons;
 	private JMenuItem miUserDados;
 	private JMenuItem miMedicamento;
+	private JMenuItem mmUserCons;
+	private JMenuItem mmUserDados;
+	private JMenuItem mmPetCons;
 
 	/**
 	 * 
@@ -175,6 +181,22 @@ public class VMenu extends JFrame{
 		});
 		mmCON.add(miUserCons);
 
+		mmPetCons = new JMenuItem("Pet...");
+		mmPetCons.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOTPet DAO = new DAOTPet();
+				VPetCad vision = new VPetCad();
+				ArrayList<MTPet> list = new ArrayList<>();
+				list = DAO.ListTPet(DAO);
+				
+				VPetCON v = new VPetCON(list, vision);
+				///v.desabilitaBotoes();
+				v.setLocationRelativeTo(null);
+				v.setVisible(true);
+			}
+		});
+		mmCON.add(mmPetCons);
+		
 		mmATE = new JMenu("Atendimento");
 		menuBar.add(mmATE);
 		
