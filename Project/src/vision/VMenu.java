@@ -26,6 +26,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
@@ -74,16 +76,13 @@ public class VMenu extends JFrame {
 	 */
 
 	public VMenu() {
-
+	
 //		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Menu");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 771, 300);
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-
+		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -243,10 +242,9 @@ public class VMenu extends JFrame {
 		lblNewLabel = new JLabel("");
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-				habilitaCampos(FPERMICAO);
+		 addWindowListener(new WindowAdapter() {
+	            public void windowActivated(WindowEvent e) {
+	            	habilitaCampos(FPERMICAO);
 
 			}
 

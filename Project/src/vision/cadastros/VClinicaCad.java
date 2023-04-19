@@ -97,29 +97,23 @@ public class VClinicaCad extends JFrame {
 	 * Create the frame.
 	 */
 	public VClinicaCad() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-					menu.AtualizaDadosLogin("", edNome.getText());
-					menu.dispose();
-					menu.setVisible(true);
-					dispose();
-			}
-		});
-	
+		
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
 					preencheCampos();
 			}
 		});
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 848, 524);
+		
+		
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src/vision/images/BG.png"));
+			bg = ImageIO.read(new File("src/vision/images/BGuser.png"));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -315,6 +309,7 @@ public class VClinicaCad extends JFrame {
 					FDAOTClinica.alterar(FDAOTClinica);
 					
 					menu.AtualizaDadosLogin("", edNome.getText());
+					
 				}
 				else {
 					FDAOTClinica.inserir(FDAOTClinica);
