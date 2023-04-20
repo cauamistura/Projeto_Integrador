@@ -1,6 +1,6 @@
 package vision.cadastros;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,21 +12,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.RoundButton;
+import vision.padrao.TableSimples;
 
 public class VMedCad extends JFrame {
 	
@@ -39,7 +36,7 @@ public class VMedCad extends JFrame {
 	private RoundButton btnlimpar;
 	private RoundButton btnConf;
 	private RoundButton btnDelete;
-	private JTable table;
+	private TableSimples table;
 	private boolean registroCadastro = true;
 	private int row;
 	private JOptionPane optionPane;
@@ -68,7 +65,7 @@ public class VMedCad extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, "cell 0 4,grow");
 
-		table = new JTable();
+		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		atualizatabela();
@@ -114,6 +111,7 @@ public class VMedCad extends JFrame {
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventConfirmar();
+				table.clearSelection();
 			}
 		});
 		btnConf.setBackground(new Color(255, 255, 255));
@@ -123,6 +121,7 @@ public class VMedCad extends JFrame {
 		btnlimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limparDados();
+				table.clearSelection();
 			}
 		});
 		btnlimpar.setBackground(new Color(255, 255, 255));
@@ -132,6 +131,7 @@ public class VMedCad extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventDeletar();
+				table.clearSelection();
 			}
 		});
 		btnDelete.setBackground(new Color(255, 255, 255));
@@ -142,21 +142,13 @@ public class VMedCad extends JFrame {
 
 	}
 
-	private void atualizatabela() {
+	private void atualizatabela(){
 		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
-
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
-				new String[] { "Id", "Medicamento", "Descrição" });
-		for (MTMedicacao mtMed : TListMedicacao) {
-			Object[] rowData = { mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO() };
-			model.addRow(rowData);
-		}
-		table.setModel(model);
 		
-		TableColumnModel columnModel = table.getColumnModel();
-	    TableColumn idColumn = columnModel.getColumn(0);
-	    idColumn.setPreferredWidth(10);
-
+		for (MTMedicacao mtMed : TListMedicacao) {
+			Object[][] rowData = {{ mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO() }};
+			table.preencherTabela(rowData);	
+		}		
 	}
 
 	public void limparDados() {
@@ -171,6 +163,13 @@ public class VMedCad extends JFrame {
 	}
 	
 	public void eventConfirmar() {
+		
+		if (edNomeMed.getText() == null || edDescMed.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Campo vazio: Medicamento", "Atenção", 0);
+			edNomeMed.requestFocus();
+			return;
+		}
+		
 		FDAOTMedicacao.setBDDESCRICAO(edDescMed.getText());
 		FDAOTMedicacao.setBDNOMEMEDICACAO(edNomeMed.getText());
 		
@@ -182,6 +181,7 @@ public class VMedCad extends JFrame {
 			FDAOTMedicacao.setBDIDMEDICACAO(FDAOTMedicacao.getBDIDMEDICACAO());
 			FDAOTMedicacao.alterar(FDAOTMedicacao);
 		}
+		table.limparTabela();
 		atualizatabela();
 		limparDados();
 	}
@@ -193,7 +193,7 @@ public class VMedCad extends JFrame {
 		if (resposta == JOptionPane.YES_NO_OPTION) {
 
 			FDAOTMedicacao.deletar(FDAOTMedicacao);
-
+			table.limparTabela();
 			atualizatabela();
 			limparDados();
 

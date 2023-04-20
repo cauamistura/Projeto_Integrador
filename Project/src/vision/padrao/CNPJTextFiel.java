@@ -1,6 +1,6 @@
 package vision.padrao;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.ParseException;
@@ -10,8 +10,6 @@ import javax.swing.text.MaskFormatter;
 
 import control.DAOTClinica;
 import model.MTClinica;
-import model.MTEstado;
-import vision.VMenu;
 
 public class CNPJTextFiel extends RoundJFormattedTextField {
 	/**

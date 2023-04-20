@@ -1,11 +1,10 @@
 package vision.padrao;
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.Graphics;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 

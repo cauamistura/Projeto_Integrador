@@ -1,6 +1,5 @@
 package vision.padrao;
 
-import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

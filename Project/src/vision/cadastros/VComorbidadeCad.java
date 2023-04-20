@@ -1,6 +1,6 @@
 package vision.cadastros;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,18 +11,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 
 import control.DAOTComorbidade;
 import model.MTComorbidade;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.RoundButton;
+import vision.padrao.TableSimples;
 
 public class VComorbidadeCad extends JFrame {
 	/**
@@ -35,10 +34,10 @@ public class VComorbidadeCad extends JFrame {
 
 	private boolean registroCadastro = true;
 	private int row;
-	private JTextField edNomeMed;
-	private JTextField edDescMed;
+	private JTextField edNomeCom;
+	private JTextField edDescCom;
 	private JPanel contentPane;
-	private JTable table;
+	private TableSimples table;
 	private RoundButton btnlimpar;
 	private RoundButton btnConf;
 	private RoundButton btnDelete;
@@ -68,7 +67,7 @@ public class VComorbidadeCad extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, "cell 0 4,grow");
 
-		table = new JTable();
+		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Comorbidade", "Descrição" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		atualizatabela();
@@ -80,8 +79,8 @@ public class VComorbidadeCad extends JFrame {
 				if (row >= 0) {
 					String nome = table.getValueAt(row, 1).toString();
 					String desc = table.getValueAt(row, 2).toString();
-					edNomeMed.setText(nome);
-					edDescMed.setText(desc);
+					edNomeCom.setText(nome);
+					edDescCom.setText(desc);
 
 					registroCadastro = false;
 
@@ -96,21 +95,22 @@ public class VComorbidadeCad extends JFrame {
 		lbNome = new JLabel("Nome: ");
 		panel.add(lbNome, "flowx,cell 0 0");
 
-		edNomeMed = new JTextField();
-		panel.add(edNomeMed, "cell 0 0,growx");
-		edNomeMed.setColumns(10);
+		edNomeCom = new JTextField();
+		panel.add(edNomeCom, "cell 0 0,growx");
+		edNomeCom.setColumns(10);
 
 		lbDescricao = new JLabel("Descrição: ");
 		panel.add(lbDescricao, "flowx,cell 0 2");
 
-		edDescMed = new JTextField();
-		panel.add(edDescMed, "cell 0 2,growx");
-		edDescMed.setColumns(10);
+		edDescCom = new JTextField();
+		panel.add(edDescCom, "cell 0 2,growx");
+		edDescCom.setColumns(10);
 
 		btnConf = new RoundButton("Confirmar");
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventConfirmar();
+				table.clearSelection();
 			}
 		});
 		btnConf.setBackground(new Color(255, 255, 255));
@@ -120,6 +120,7 @@ public class VComorbidadeCad extends JFrame {
 		btnlimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limparDados();
+				table.clearSelection();
 			}
 		});
 		btnlimpar.setBackground(new Color(255, 255, 255));
@@ -130,6 +131,7 @@ public class VComorbidadeCad extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int id = FDAOTComorbidade.getBDIDCOMORBIDADE();
 				eventExcluir(id);
+				table.clearSelection();
 			}
 		});
 		btnDelete.setBackground(new Color(255, 255, 255));
@@ -142,29 +144,34 @@ public class VComorbidadeCad extends JFrame {
 	private void atualizatabela() {
 		TListComorbidade = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
-				new String[] { "Id", "Medicamento", "Descrição" });
 		for (MTComorbidade com : TListComorbidade) {
-			Object[] rowData = { com.getBDIDCOMORBIDADE(), com.getBDNOMECOMORBIDADE(), com.getBDDESCCOMORBIDADE() };
-			model.addRow(rowData);
-		}
-		table.setModel(model);
+			Object[][] rowData = {{com.getBDIDCOMORBIDADE(), com.getBDNOMECOMORBIDADE(), com.getBDDESCCOMORBIDADE() }};
+			((TableSimples) table).preencherTabela(rowData);	
+		}	
+
 
 	}
 
 	private void limparDados() {
-		edDescMed.setText("");
-		edNomeMed.setText("");
+		edDescCom.setText("");
+		edNomeCom.setText("");
 
 		registroCadastro = true;
 
-		edNomeMed.requestFocus();
+		edNomeCom.requestFocus();
 		lbStatus.setText("Status: Inserindo medicamento");
 	}
 
 	public void eventConfirmar() {
-		FDAOTComorbidade.setBDDESCCOMORBIDADE(edDescMed.getText());
-		FDAOTComorbidade.setBDNOMECOMORBIDADE(edNomeMed.getText());
+		
+		if (edNomeCom.getText() == null || edDescCom.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Campo vazio: Comobirdade", "Atenção", 0);
+			edNomeCom.requestFocus();
+			return;
+		}
+		
+		FDAOTComorbidade.setBDDESCCOMORBIDADE(edDescCom.getText());
+		FDAOTComorbidade.setBDNOMECOMORBIDADE(edNomeCom.getText());
 
 		if (registroCadastro == true) {
 			FDAOTComorbidade.setBDIDCOMORBIDADE(FDAOTComorbidade.getChaveID("tcomorbidade", "BDIDCOMORBIDADE"));
@@ -173,7 +180,7 @@ public class VComorbidadeCad extends JFrame {
 			FDAOTComorbidade.setBDIDCOMORBIDADE(FDAOTComorbidade.getBDIDCOMORBIDADE());
 			FDAOTComorbidade.alterar(FDAOTComorbidade);
 		}
-
+		table.limparTabela();
 		atualizatabela();
 		limparDados();
 	}
@@ -186,6 +193,7 @@ public class VComorbidadeCad extends JFrame {
 		if (resposta == JOptionPane.YES_NO_OPTION) {
 			FDAOTComorbidade.deletar(prID);
 
+			table.limparTabela();
 			atualizatabela();
 			limparDados();
 

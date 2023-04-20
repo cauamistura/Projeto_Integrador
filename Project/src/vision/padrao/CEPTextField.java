@@ -1,9 +1,8 @@
 package vision.padrao;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
