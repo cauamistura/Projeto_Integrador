@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 
 import control.DAOTDadosUser;
 import model.MTDadosUser;
+import model.interfaces.InterfaceConsUser;
 import vision.cadastros.VUserCad;
 import vision.consultas.VUserCON;
 import vision.padrao.*;
@@ -19,7 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class VEntradaATE extends JFrame {
+public class VEntradaATE extends JFrame implements InterfaceConsUser{
 
 	/**
 	 * 
@@ -87,12 +88,37 @@ public class VEntradaATE extends JFrame {
 		ArrayList<MTDadosUser> list = new ArrayList<>();
 		list = FDAOUser.ListConsulta(FDAOUser);
 		
-		FVUserCON = new VUserCON(list, FVUserCad, this);
+		FVUserCON = new VUserCON(list, this);
+		FVUserCON.desabilitaExcluir();
 		FVUserCON.setVisible(true);
 	}
 	
 	public void preencheUser(MTDadosUser list) {
 		edCpf.setText(list.getBDCPF());
 		edNomeUser.setText(list.getBDNOMEUSER());
+	}
+
+	@Override
+	public void preencheUserCad(MTDadosUser listUser) {
+		preencheUser(listUser);
+		
+	}
+
+	@Override
+	public void desabilitaBotoes(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void habilitaBotoes(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exluiUser(Integer bdiduser) {
+		// TODO Auto-generated method stub
+		
 	}
 }

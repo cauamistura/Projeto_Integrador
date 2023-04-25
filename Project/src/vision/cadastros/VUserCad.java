@@ -35,6 +35,7 @@ import model.MTDadosUser;
 import model.MTEndereco;
 import model.MTEstado;
 import model.MTPermicao;
+import model.interfaces.InterfaceConsUser;
 import net.miginfocom.swing.MigLayout;
 import vision.VMenu;
 import vision.atendimentos.VEntradaATE;
@@ -48,7 +49,7 @@ import vision.padrao.RoundJTextField;
 import vision.padrao.TelefoneTextField;
 import java.awt.Font;
 
-public class VUserCad extends JFrame {
+public class VUserCad extends JFrame implements InterfaceConsUser {
 
 	/**
 	 * 
@@ -463,14 +464,14 @@ public class VUserCad extends JFrame {
 	private void abreConsulta(VUserCad prSelf) {
 		if (FDAOTDadosUser != null) {
 			List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);
-			VUserCON frame = new VUserCON(lista, prSelf, atendimento);
+			VUserCON frame = new VUserCON(lista, this);
 			frame.setVisible(true);
 		} else {
 
 		}
 	}
 
-	public void exluiUser(Integer prIDUSER) {
+	public void exluirUser(Integer prIDUSER) {
 
 		int resposta = JOptionPane.showConfirmDialog(null,
 				"Você realmente deseja excluir? Todos os dados vinculados a este usuário serão excluídos.",
@@ -516,5 +517,27 @@ public class VUserCad extends JFrame {
 		cbPermissao.setEnabled(true);
 		
 		lbStatus.setText("Status: Alterando");
+	}
+
+	@Override
+	public void preencheUserCad(MTDadosUser listaUser) {
+		preencheCampos(listaUser);
+	}
+
+	@Override
+	public void desabilitaBotoes(boolean b) {
+		habilitaBotoes(b);
+		
+	}
+
+	@Override
+	public void habilitaBotoes(boolean b) {
+		habilitaBotoes(b);
+		
+	}
+	
+	@Override
+	public void exluiUser(Integer bdiduser) {
+		exluirUser(bdiduser);
 	}
 }

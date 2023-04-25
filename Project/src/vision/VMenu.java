@@ -9,6 +9,8 @@ import control.DAOTDadosUser;
 import control.DAOTPet;
 import model.MTDadosUser;
 import model.MTPet;
+import model.interfaces.InterfaceConsPet;
+import model.interfaces.InterfaceConsUser;
 import vision.atendimentos.VEntradaATE;
 import vision.cadastros.*;
 import vision.consultas.VUserCON;
@@ -30,7 +32,7 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Font;
 
-public class VMenu extends JFrame {
+public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet{
 
 	/**
 	 * 
@@ -64,8 +66,6 @@ public class VMenu extends JFrame {
 	private JMenuItem miUserCons;
 	private JMenuItem miUserDados;
 	private JMenuItem miMedicamento;
-	private JMenuItem mmUserCons;
-	private JMenuItem mmUserDados;
 	private JMenuItem mmPetCons;
 	private JMenuItem miComorbidade;
 	private JMenuItem miEntrada;
@@ -77,6 +77,7 @@ public class VMenu extends JFrame {
 	public VMenu() {
 
 //		setExtendedState(MAXIMIZED_BOTH);
+		VMenu local = this;
 		setTitle("Menu");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -179,18 +180,16 @@ public class VMenu extends JFrame {
 		mmCON = new JMenu("Consultar");
 		mmCON.setFont(new Font("Dialog", Font.BOLD, 18));
 		menuBar.add(mmCON);
-
+		
 		miUserCons = new JMenuItem("Usuário...");
 		miUserCons.setFont(new Font("Dialog", Font.BOLD, 18));
 		miUserCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VEntradaATE ent = null;
 				DAOTDadosUser DAO = new DAOTDadosUser();
-				VUserCad vision = new VUserCad();
 				ArrayList<MTDadosUser> list = new ArrayList<>();
 				list = DAO.ListConsulta(DAO);
 
-				VUserCON v = new VUserCON(list, vision, ent);
+				VUserCON v = new VUserCON(list, local);
 				v.desabilitaBotoes();
 				v.setVisible(true);
 			}
@@ -202,11 +201,10 @@ public class VMenu extends JFrame {
 		mmPetCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTPet DAO = new DAOTPet();
-				VPetCad vision = new VPetCad();
 				ArrayList<MTPet> list = new ArrayList<>();
 				list = DAO.ListTPet(DAO);
 
-				VPetCON v = new VPetCON(list, vision);
+				VPetCON v = new VPetCON(list, local);
 				/// v.desabilitaBotoes();
 				v.setLocationRelativeTo(null);
 				v.setVisible(true);
@@ -295,5 +293,41 @@ public class VMenu extends JFrame {
 			FNomeUser = nomeuser;
 		}
 
+	}
+
+	@Override
+	public void preencheUserCad(MTDadosUser listUser) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void desabilitaBotoes(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void habilitaBotoes(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exluiUser(Integer bdiduser) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void preencheDadosPet(MTPet listPet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exluiPet(Integer IdPet) {
+		// TODO Auto-generated method stub
+		
 	}
 }
