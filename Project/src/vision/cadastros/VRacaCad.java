@@ -112,8 +112,8 @@ public class VRacaCad extends JFrame {
 		
 		lblNewLabel_1 = new JLabel("Nome:");
 		panel_1.add(lblNewLabel_1, "flowy,cell 1 3,alignx left");
+		
 		btnNewButton.setText("Cadastrar");
-		btnNewButton.setBackground((new Color(255, 199, 0)));
 		panel_1.add(btnNewButton, "cell 1 5,growx");
 		
 		txtNomeRaca =  new RoundJTextField();

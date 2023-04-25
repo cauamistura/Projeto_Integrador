@@ -130,7 +130,6 @@ public class VLogin extends JFrame {
 		panel_2.add(lbAlerta, "cell 1 5,alignx center");
 
 		JButton btnLogin = new RoundButton("Login");
-		btnLogin.setBackground((new Color(255, 199, 0)));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<MTDadosUser> TListClinica = new ArrayList<>();

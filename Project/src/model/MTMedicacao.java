@@ -42,6 +42,12 @@ public class MTMedicacao extends ObjectDAO {
 	public void setBDDESCRICAO(String bDDESCRICAO) {
 		BDDESCRICAO = bDDESCRICAO;
 	}
+
+	@Override
+	public String toString() {
+		return BDNOMEMEDICACAO;
+	}
+	
 	
 	
 }

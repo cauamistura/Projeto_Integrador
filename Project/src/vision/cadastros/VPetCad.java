@@ -226,9 +226,6 @@ public class VPetCad extends JFrame {
 				
 			}
 		});
-		
-		btnNewButton.setBackground((new Color(255, 199, 0)));
-
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_2.add(btnNewButton, "cell 1 3,growx");
 		
@@ -277,7 +274,6 @@ public class VPetCad extends JFrame {
 					FDAOTPet.inserir(FDAOTPet);
 					txtNomePet.setText("");
 					txtApelidoPet.setText("");
-					lblNasc.setText("");
 					especieCb.setSelectedIndex(0);
 					racaCb.setSelectedIndex(0);
 					userCb.setSelectedIndex(0);

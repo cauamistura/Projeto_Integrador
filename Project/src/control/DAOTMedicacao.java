@@ -107,27 +107,25 @@ public class DAOTMedicacao extends MTMedicacao{
         return ListTaMedicacao;
     }
     
-		public boolean existeMedicamento(Integer id) {
-    	    Connection c = append();
-    	    Boolean existe = null;
-    	    try {
-    	        Statement stm = c.createStatement();
-    	        String wSql = "SELECT BDIDMEDICACAO FROM `dbpi`.`tmedicacao` where BDIDMEDICACAO = "+id;
-    	        ResultSet rs =  stm.executeQuery(wSql);
+    public Integer existeMedicamento(String nome, DAOTMedicacao prDAO) {
+        Connection c = append();
+        int idMedicacao = -1; // valor padrão caso não seja encontrado
 
-    	     
-    	        if(rs.next()) {
-    	        	existe = true;
-    	        }else {
-    	        	existe = false;
-    	        }
-	    	   
-    	    } catch (Exception e) {
-    	        e.printStackTrace();
-    	    } finally {
-    	        post();
-    	    }
-    	    return existe;
-    	}
+        try {
+            Statement stm = c.createStatement();
+            String wSql = "SELECT BDIDMEDICACAO FROM `dbpi`.`tmedicacao` where BDNOMEMEDICACAO = '"+nome+"'";;
+            ResultSet rs =  stm.executeQuery(wSql);
+
+            if (rs.next()) { // se há resultados
+                idMedicacao = rs.getInt("BDIDMEDICACAO"); // pegar o valor do ID
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            prDAO.post();
+        }
+
+        return idMedicacao;
+    }
     	   
 }

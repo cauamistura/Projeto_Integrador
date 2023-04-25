@@ -340,7 +340,6 @@ public class VClinicaCad extends JFrame {
 			
 		});
 		panel_3.add(btnConf, "cell 1 3,growx");
-		btnConf.setBackground((new Color(255, 199, 0)));
 		
 
 		btnDelet = new RoundButton("Deletar");
@@ -385,14 +384,9 @@ public class VClinicaCad extends JFrame {
 				
 			}
 		});
-		btnDelet.setBackground(new Color(255, 199, 0));
 		panel_3.add(btnDelet, "cell 1 6,growx");
 	
 	}
-	
-	
-	
-	
 	
 	public void preencheCampos() {
 		TListClinica = FDAOTClinica.ListTClinica(FDAOTClinica);
