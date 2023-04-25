@@ -20,6 +20,9 @@ import vision.cadastros.VPetCad;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import vision.padrao.RoundButton;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class VPetCON extends JFrame {
 
@@ -30,6 +33,7 @@ public class VPetCON extends JFrame {
 	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private RoundButton btnConfirmar;
 	private RoundButton btnExcluir;
+	private JTextField edFiltro;
 
 	/**
 	 * Create the frame.
@@ -44,7 +48,7 @@ public class VPetCON extends JFrame {
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 414, 215);
+		scrollPane.setBounds(0, 0, 434, 212);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
@@ -63,6 +67,29 @@ public class VPetCON extends JFrame {
 
 		table.setModel(model);
 		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 210, 434, 51);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Nome");
+		panel.add(lblNewLabel);
+		
+		edFiltro = new JTextField();
+		panel.add(edFiltro);
+		edFiltro.setColumns(10);
+		
+		JButton btnFiltro = new JButton("Filtrar");
+		btnFiltro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (edFiltro.getText().isEmpty()) {
+					atualizarTabela(dados, false);
+				} else {
+					atualizarTabela(dados, true);
+				}
+			}
+		});
+		panel.add(btnFiltro);
+		
 		btnConfirmar = new RoundButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			@Override
@@ -78,16 +105,6 @@ public class VPetCON extends JFrame {
 				
 			}
 		});
-		
-		JPanel botoes = new JPanel();
-		botoes.setBounds(-27, 226, 484, 33);
-		contentPane.add(botoes);
-		
-		RoundButton btnConfirmar = new RoundButton("Confirmar");
-		botoes.add(btnConfirmar);
-		
-		RoundButton btnExcluir = new RoundButton("Excluir");
-		botoes.add(btnExcluir);
 	}
 
 	private String achaRaca(Integer id) {
@@ -119,6 +136,19 @@ public class VPetCON extends JFrame {
 		return apelido;
 
 	}
+	
+	public void atualizarTabela(List<MTPet> pets, Boolean prFiltro) {
+	    model.setRowCount(0);
+
+	    for (MTPet pet : pets) {
+	        if (prFiltro && !achaUser(pet.getBDIDUSER()).toLowerCase().contains(edFiltro.getText().toLowerCase())) {
+	            continue; 
+	        }
+	        Object[] linha = { achaUser(pet.getBDIDUSER()), achaRaca(pet.getBDIDRACA()), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) };
+	        model.addRow(linha);
+	    }
+	}
+	
 	
 	private String achaUser(int userId) {
 		String userName = "";
