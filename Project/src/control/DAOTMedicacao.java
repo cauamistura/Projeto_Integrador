@@ -55,8 +55,7 @@ public class DAOTMedicacao extends MTMedicacao{
             // Print the stack trace for any exceptions that occur
             e.printStackTrace();
         } finally {
-            try { if (stm != null) stm.close(); } catch (SQLException e) { }
-            try { if (c != null) c.close(); } catch (SQLException e) { }
+        	prDAO.post();
         }
         return false;
     }

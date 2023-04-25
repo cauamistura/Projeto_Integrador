@@ -1,11 +1,9 @@
 package vision;
 
-import javax.swing.JFrame;
+import javax.swing.JFrame; 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 import control.DAOTDadosUser;
 import control.DAOTPet;
@@ -21,11 +19,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
@@ -74,16 +71,13 @@ public class VMenu extends JFrame {
 	 */
 
 	public VMenu() {
-
+	
 //		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Menu");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 771, 300);
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-
+		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -117,7 +111,6 @@ public class VMenu extends JFrame {
 		});
 
 		mmCad = new JMenu("Cadastrar");
-		mmCad.setBackground(new Color(255, 255, 255));
 		menuBar.add(mmCad);
 
 		miUser = new JMenuItem("Usuário...");
@@ -128,7 +121,6 @@ public class VMenu extends JFrame {
 				uc.setVisible(true);
 			}
 		});
-		miUser.setBackground(new Color(255, 255, 255));
 		mmCad.add(miUser);
 
 		miPet = new JMenuItem("Pet...");
@@ -139,7 +131,6 @@ public class VMenu extends JFrame {
 				uc.setVisible(true);
 			}
 		});
-		miPet.setBackground(new Color(255, 255, 255));
 		mmCad.add(miPet);
 
 		miRaca = new JMenuItem("Raça...");
@@ -150,7 +141,6 @@ public class VMenu extends JFrame {
 				uc.setVisible(true);
 			}
 		});
-		miRaca.setBackground(new Color(255, 255, 255));
 		mmCad.add(miRaca);
 
 		miMedicamento = new JMenuItem("Medicamento...");
@@ -161,7 +151,6 @@ public class VMenu extends JFrame {
 				uc.setVisible(true);
 			}
 		});
-		miMedicamento.setBackground(new Color(255, 255, 255));
 		mmCad.add(miMedicamento);
 
 		miComorbidade = new JMenuItem("Comorbidade...");
@@ -243,10 +232,9 @@ public class VMenu extends JFrame {
 		lblNewLabel = new JLabel("");
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-				habilitaCampos(FPERMICAO);
+		 addWindowListener(new WindowAdapter() {
+	            public void windowActivated(WindowEvent e) {
+	            	habilitaCampos(FPERMICAO);
 
 			}
 

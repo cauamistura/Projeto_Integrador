@@ -1,6 +1,6 @@
 package vision.cadastros;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -10,10 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.sql.Date;
-
 
 
 import javax.imageio.ImageIO;
@@ -42,6 +38,10 @@ import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class VPetCad extends JFrame {
 
@@ -126,28 +126,53 @@ public class VPetCad extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Espécie:");
 		panel_3.add(lblNewLabel_1, "flowy,cell 1 1");
 		
-		JComboBox especieCb = new JComboBox();
+		especieCb = new JComboBox();
+		especieCb.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				racaCb.removeAllItems();
+
+				racaCb.addItem(null);
+
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+
+                    TListRaca = FDAOTRaca.ListTRaca(FDAOTRaca, achaIdEspecie());
+
+            		for (MTRaca mtRaca : TListRaca) {
+            			racaCb.addItem(mtRaca);
+            		}
+                }
+			}
+		});
 		panel_3.add(especieCb, "cell 1 1,growx");
 		especieCb.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JLabel lblNewLabel_2 = new JLabel("Raça:");
 		panel_3.add(lblNewLabel_2, "flowy,cell 1 2");
 		
-		JComboBox racaCb = new JComboBox();
+		racaCb = new JComboBox();
 		panel_3.add(racaCb, "cell 1 2,growx");
 		racaCb.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JLabel lblNewLabel_3 = new JLabel("Dono:");
 		panel_3.add(lblNewLabel_3, "flowy,cell 1 3");
 		
-		JComboBox uerCb = new JComboBox();
-		uerCb.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_3.add(uerCb, "cell 1 3,growx");
+		userCb = new JComboBox();
+		userCb.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_3.add(userCb, "cell 1 3,growx");
 		
 		JLabel l = new JLabel("Nome:");
 		panel_3.add(l, "flowy,cell 1 4");
 		
+		VPetCad local = this;
 		txtNomePet = new RoundJTextField();
+		txtNomePet.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					abreConsulta(local);
+				}
+			}
+		});
 		txtNomePet.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_3.add(txtNomePet, "cell 1 4,growx");
 		txtNomePet.setColumns(10);
@@ -237,7 +262,7 @@ public class VPetCad extends JFrame {
 				}
 				
 				FDAOTPet.setBDDATANASCIMENTO(txtDataNasc.getDate());
-				FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("TPets", "BDIDPET"));
+				FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("tpets", "BDIDPET"));
 				FDAOTPet.setBDIDRACA(achaIdRaca());
 				FDAOTPet.setBDNOMEPET(txtNomePet.getText());
 				FDAOTPet.setBDAPELIDO(txtApelidoPet.getText());
@@ -268,7 +293,6 @@ public class VPetCad extends JFrame {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_2.add(btnNewButton_1, "flowx,cell 3 3,growx");
 
-		VPetCad local = this;
 
 		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
 		
@@ -281,7 +305,7 @@ public class VPetCad extends JFrame {
 		for (MTDadosUser mtUser : TListUser) {
 			userCb.addItem(mtUser);
 		}
-
+		
 	}
 
 	public Integer achaIdEspecie() {

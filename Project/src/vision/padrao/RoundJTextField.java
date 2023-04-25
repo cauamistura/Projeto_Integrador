@@ -1,14 +1,6 @@
-
-/*
- * Link dessa classe foi pega no link: 
- * https://www.guj.com.br/t/resolvido-arredondar-borda-de-um-textfield-java/342996/2
- * 
- * Essa classe tem como função fodificar os parametros do TextField
- * */
-
 package  vision.padrao;
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.Graphics; 
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
