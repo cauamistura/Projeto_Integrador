@@ -145,6 +145,7 @@ public class VUserCad extends JFrame {
 		JLabel lbCPF = new JLabel("CPF:");
 		pnContent.add(lbCPF, "flowy,cell 1 3");
 		edCpf = new CPFTextField();
+		edCpf.setToolTipText("Aperte F9 para consultar.");
 		edCpf.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCpf.setColumns(10);
 		pnContent.add(edCpf, "cell 1 3,growx");
