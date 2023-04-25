@@ -26,6 +26,8 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Font;
 
 public class VMenu extends JFrame {
 
@@ -82,12 +84,15 @@ public class VMenu extends JFrame {
 		setJMenuBar(menuBar);
 
 		mmDados = new JMenu("Dados");
+		mmDados.setFont(new Font("Dialog", Font.BOLD, 18));
 		menuBar.add(mmDados);
 
 		miClinicaDados = new JMenuItem("Clinica...");
+		miClinicaDados.setFont(new Font("Dialog", Font.BOLD, 18));
 		mmDados.add(miClinicaDados);
 
 		miUserDados = new JMenuItem("Usuário...");
+		miUserDados.setFont(new Font("Dialog", Font.BOLD, 18));
 		miUserDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTDadosUser DAO = new DAOTDadosUser();
@@ -111,9 +116,11 @@ public class VMenu extends JFrame {
 		});
 
 		mmCad = new JMenu("Cadastrar");
+		mmCad.setFont(new Font("Dialog", Font.BOLD, 18));
 		menuBar.add(mmCad);
 
 		miUser = new JMenuItem("Usuário...");
+		miUser.setFont(new Font("Dialog", Font.BOLD, 18));
 		miUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VUserCad uc = new VUserCad();
@@ -124,6 +131,7 @@ public class VMenu extends JFrame {
 		mmCad.add(miUser);
 
 		miPet = new JMenuItem("Pet...");
+		miPet.setFont(new Font("Dialog", Font.BOLD, 18));
 		miPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VPetCad uc = new VPetCad();
@@ -134,6 +142,7 @@ public class VMenu extends JFrame {
 		mmCad.add(miPet);
 
 		miRaca = new JMenuItem("Raça...");
+		miRaca.setFont(new Font("Dialog", Font.BOLD, 18));
 		miRaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VRacaCad uc = new VRacaCad();
@@ -144,6 +153,7 @@ public class VMenu extends JFrame {
 		mmCad.add(miRaca);
 
 		miMedicamento = new JMenuItem("Medicamento...");
+		miMedicamento.setFont(new Font("Dialog", Font.BOLD, 18));
 		miMedicamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VMedCad uc = new VMedCad();
@@ -154,6 +164,7 @@ public class VMenu extends JFrame {
 		mmCad.add(miMedicamento);
 
 		miComorbidade = new JMenuItem("Comorbidade...");
+		miComorbidade.setFont(new Font("Dialog", Font.BOLD, 18));
 		miComorbidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VComorbidadeCad v = new VComorbidadeCad();
@@ -164,9 +175,11 @@ public class VMenu extends JFrame {
 		mmCad.add(miComorbidade);
 
 		mmCON = new JMenu("Consultar");
+		mmCON.setFont(new Font("Dialog", Font.BOLD, 18));
 		menuBar.add(mmCON);
 
 		miUserCons = new JMenuItem("Usuário...");
+		miUserCons.setFont(new Font("Dialog", Font.BOLD, 18));
 		miUserCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTDadosUser DAO = new DAOTDadosUser();
@@ -182,6 +195,7 @@ public class VMenu extends JFrame {
 		mmCON.add(miUserCons);
 
 		mmPetCons = new JMenuItem("Pet...");
+		mmPetCons.setFont(new Font("Dialog", Font.BOLD, 18));
 		mmPetCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTPet DAO = new DAOTPet();
@@ -198,12 +212,15 @@ public class VMenu extends JFrame {
 		mmCON.add(mmPetCons);
 
 		mmATE = new JMenu("Atendimento");
+		mmATE.setFont(new Font("Dialog", Font.BOLD, 18));
 		menuBar.add(mmATE);
 
 		mmSair = new JMenu("Sair");
+		mmSair.setFont(new Font("Dialog", Font.BOLD, 18));
 		menuBar.add(mmSair);
 
 		miLogout = new JMenuItem("Logout...");
+		miLogout.setFont(new Font("Dialog", Font.BOLD, 18));
 		mmSair.add(miLogout);
 		miLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -225,6 +242,9 @@ public class VMenu extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		descricao = new JLabel("New label");
+		descricao.setForeground(new Color(0, 0, 0));
+		descricao.setFont(new Font("Dialog", Font.BOLD, 18));
+		descricao.setBackground(new Color(0, 0, 0));
 		descricao.setEnabled(false);
 		descricao.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(descricao, BorderLayout.SOUTH);

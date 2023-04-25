@@ -113,7 +113,6 @@ public class VComorbidadeCad extends JFrame {
 				table.clearSelection();
 			}
 		});
-		btnConf.setBackground(new Color(255, 255, 255));
 		panel.add(btnConf, "flowx,cell 0 3");
 
 		btnlimpar = new RoundButton("Limpar");
@@ -123,7 +122,6 @@ public class VComorbidadeCad extends JFrame {
 				table.clearSelection();
 			}
 		});
-		btnlimpar.setBackground(new Color(255, 255, 255));
 		panel.add(btnlimpar, "cell 0 3");
 
 		btnDelete = new RoundButton("Deletar");
@@ -134,7 +132,6 @@ public class VComorbidadeCad extends JFrame {
 				table.clearSelection();
 			}
 		});
-		btnDelete.setBackground(new Color(255, 255, 255));
 		panel.add(btnDelete, "cell 0 3");
 
 		lbStatus = new JLabel("Status: Inserindo comorbidade");

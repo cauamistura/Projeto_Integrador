@@ -262,8 +262,6 @@ public class VUserCad extends JFrame {
 		pnContent.add(cbUF, "cell 3 8");
 
 		btnExcluir = new RoundButton("Excluir");
-		btnExcluir.setBackground((new Color(255, 199, 0)));
-
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
@@ -283,7 +281,6 @@ public class VUserCad extends JFrame {
 			}
 		});
 		btnConsulta.setText("Consultar");
-		btnConsulta.setBackground((new Color(255, 199, 0)));
 
 		pnContent.add(btnConsulta, "flowx,cell 3 10,growx");
 
@@ -294,7 +291,6 @@ public class VUserCad extends JFrame {
 			}
 		});
 		btnLimpar.setText("Limpar");
-		btnLimpar.setBackground((new Color(255, 199, 0)));
 
 		pnContent.add(btnLimpar, "cell 1 10,growx");
 
@@ -393,8 +389,6 @@ public class VUserCad extends JFrame {
 		});
 		btnCAD.setText("COMFIRMAR");
 		;
-		btnCAD.setBackground((new Color(255, 199, 0)));
-
 		pnContent.add(btnCAD, "cell 3 10,growx");
 
 		ListEstado = new ArrayList<>();

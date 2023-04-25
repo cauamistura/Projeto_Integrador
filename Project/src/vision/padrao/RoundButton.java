@@ -1,5 +1,6 @@
 package vision.padrao;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
@@ -13,8 +14,12 @@ public class RoundButton extends JButton
 	  public RoundButton(String label) {
 	    super(label);
 	    setOpaque(false);
+	    
+	    setBackground(new Color(255, 199, 0));
+	    
+	    setForeground(Color.BLACK);
 	  }
-
+	  
 	  protected void paintComponent(Graphics g) {
 	         g.setColor(getBackground());
 	         g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
