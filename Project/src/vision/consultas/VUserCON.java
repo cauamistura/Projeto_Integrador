@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTDadosUser;
+import model.interfaces.InterfaceConsUser;
 import vision.VMenu;
 import vision.atendimentos.VEntradaATE;
 import vision.cadastros.VUserCad;
@@ -34,7 +35,7 @@ public class VUserCON extends JFrame {
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 
-	public VUserCON(List<MTDadosUser> dados, VUserCad Usercad, VEntradaATE AteEntrada) {
+	public VUserCON(List<MTDadosUser> dados, InterfaceConsUser event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		setTitle("Consulta de Usuario");
@@ -78,12 +79,12 @@ public class VUserCON extends JFrame {
 					MTDadosUser dado = dados.get(modelIndex);
 
 					if (dado.getBDCPF().equals(VMenu.FCPFUSER)) {
-						Usercad.desabilitaBotoes(false);
+						event.desabilitaBotoes(false);
 					} else {
-						Usercad.habilitaBotoes(false);
+						event.habilitaBotoes(false);
 					}
 
-					Usercad.preencheCampos(dado);
+					event.preencheUserCad(dado);
 					dispose();
 				}
 			}
@@ -102,7 +103,7 @@ public class VUserCON extends JFrame {
 								"Este usuário não pode ser excluido!\nEsta logado no sistema");
 						return;
 					}
-					Usercad.exluiUser(dado.getBDIDUSER());
+					event.exluiUser(dado.getBDIDUSER());
 					dispose();
 				}
 			}
@@ -168,6 +169,10 @@ public class VUserCON extends JFrame {
 			Object[] linha = { usuario.getBDCPF(), usuario.getBDNOMEUSER(), usuario.getBDMAIL() };
 			model.addRow(linha);
 		}
+	}
+	
+	public void desabilitaExcluir() {
+		btnExcluir.setVisible(false);
 	}
 
 }

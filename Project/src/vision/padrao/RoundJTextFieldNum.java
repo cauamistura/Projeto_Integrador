@@ -9,7 +9,7 @@ public class RoundJTextFieldNum extends RoundJTextField{
 	
 	private int maxCharacters;
 
-    public RoundJTextFieldNum(int columns, int maxCharacters) {
+    public RoundJTextFieldNum(int maxCharacters) {
         super();
         this.maxCharacters = maxCharacters;
         setDocument(new NumerosOnlyDocument());
