@@ -35,8 +35,10 @@ import model.MTDadosUser;
 import model.MTEndereco;
 import model.MTEstado;
 import model.MTPermicao;
+import model.interfaces.InterfaceConsUser;
 import net.miginfocom.swing.MigLayout;
 import vision.VMenu;
+import vision.atendimentos.VEntradaATE;
 import vision.consultas.VUserCON;
 import vision.padrao.CEPTextField;
 import vision.padrao.CPFTextField;
@@ -47,7 +49,7 @@ import vision.padrao.RoundJTextField;
 import vision.padrao.TelefoneTextField;
 import java.awt.Font;
 
-public class VUserCad extends JFrame {
+public class VUserCad extends JFrame implements InterfaceConsUser {
 
 	/**
 	 * 
@@ -66,7 +68,11 @@ public class VUserCad extends JFrame {
 	private CEPTextField edCep;
 	private JTextField edEmail;
 	private JLabel lbStatus;
-
+	private RoundButton btnExcluir;
+	private RoundButton btnLimpar;
+	private RoundButton btnConsulta;
+	private RoundButton btnCAD;
+	
 	private JComboBox<MTEstado> cbUF;
 	private JComboBox<MTPermicao> cbPermissao;
 	private JComboBox<String> cbGenero;
@@ -80,11 +86,8 @@ public class VUserCad extends JFrame {
 	private DAOTCidade FDAOTCidade = new DAOTCidade();
 	private DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private DAOTPermicao FDAOTPermicao = new DAOTPermicao();
+	private VEntradaATE atendimento = null;
 
-	private RoundButton btnExcluir;
-	private RoundButton btnLimpar;
-	private RoundButton btnConsulta;
-	private RoundButton btnCAD;
 
 	/**
 	 * Create the frame.
@@ -145,6 +148,7 @@ public class VUserCad extends JFrame {
 		JLabel lbCPF = new JLabel("CPF:");
 		pnContent.add(lbCPF, "flowy,cell 1 3");
 		edCpf = new CPFTextField();
+		edCpf.setToolTipText("Aperte F9 para consultar.");
 		edCpf.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCpf.setColumns(10);
 		pnContent.add(edCpf, "cell 1 3,growx");
@@ -460,14 +464,14 @@ public class VUserCad extends JFrame {
 	private void abreConsulta(VUserCad prSelf) {
 		if (FDAOTDadosUser != null) {
 			List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);
-			VUserCON frame = new VUserCON(lista, prSelf);
+			VUserCON frame = new VUserCON(lista, this);
 			frame.setVisible(true);
 		} else {
 
 		}
 	}
 
-	public void exluiUser(Integer prIDUSER) {
+	public void exluirUser(Integer prIDUSER) {
 
 		int resposta = JOptionPane.showConfirmDialog(null,
 				"Você realmente deseja excluir? Todos os dados vinculados a este usuário serão excluídos.",
@@ -513,5 +517,27 @@ public class VUserCad extends JFrame {
 		cbPermissao.setEnabled(true);
 		
 		lbStatus.setText("Status: Alterando");
+	}
+
+	@Override
+	public void preencheUserCad(MTDadosUser listaUser) {
+		preencheCampos(listaUser);
+	}
+
+	@Override
+	public void desabilitaBotoes(boolean b) {
+		habilitaBotoes(b);
+		
+	}
+
+	@Override
+	public void habilitaBotoes(boolean b) {
+		habilitaBotoes(b);
+		
+	}
+	
+	@Override
+	public void exluiUser(Integer bdiduser) {
+		exluirUser(bdiduser);
 	}
 }

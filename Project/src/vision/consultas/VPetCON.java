@@ -1,5 +1,6 @@
 package vision.consultas;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import control.DAOTRaca;
 import model.MTDadosUser;
 import model.MTPet;
 import model.MTRaca;
+import model.interfaces.InterfaceConsPet;
 import vision.cadastros.VPetCad;
 
 import javax.swing.JTable;
@@ -33,12 +35,15 @@ public class VPetCON extends JFrame {
 	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private RoundButton btnConfirmar;
 	private RoundButton btnExcluir;
+	private RoundButton btnFiltro;
 	private JTextField edFiltro;
+	private JButton btnConf;
+	private JButton bnExc;
 
 	/**
 	 * Create the frame.
 	 */
-	public VPetCON(List<MTPet> dados, VPetCad local) {
+	public VPetCON(List<MTPet> dados, InterfaceConsPet event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -78,7 +83,7 @@ public class VPetCON extends JFrame {
 		panel.add(edFiltro);
 		edFiltro.setColumns(10);
 		
-		JButton btnFiltro = new JButton("Filtrar");
+		btnFiltro = new RoundButton("Filtrar");
 		btnFiltro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (edFiltro.getText().isEmpty()) {
@@ -90,11 +95,16 @@ public class VPetCON extends JFrame {
 		});
 		panel.add(btnFiltro);
 		
+		btnConf = new JButton("Confirmar");
+		panel.add(btnConf);
+		
+		bnExc = new JButton("Excluir");
+		panel.add(bnExc);
+		
 		btnConfirmar = new RoundButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 			}
 		});
 
@@ -102,9 +112,9 @@ public class VPetCON extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 			}
 		});
+		
 	}
 
 	private String achaRaca(Integer id) {
@@ -114,27 +124,19 @@ public class VPetCON extends JFrame {
 		TListRaca = FDAOTRaca.ListTRaca(FDAOTRaca, 0);
 
 		for (MTRaca mtRaca : TListRaca) {
-
 			if (mtRaca.getBDIDRACA().equals(id)) {
 				raca = mtRaca.getBDNOMERACA();
-
 			}
-
 		}
-
 		return raca;
 	}
 
 	
-	
 	private String achaApelido(String apelido) {
-
 		if (apelido == null || apelido.length() == 0) {
 			return "(Sem apelido)";
 		}
-
 		return apelido;
-
 	}
 	
 	public void atualizarTabela(List<MTPet> pets, Boolean prFiltro) {
@@ -149,20 +151,16 @@ public class VPetCON extends JFrame {
 	    }
 	}
 	
-	
 	private String achaUser(int userId) {
 		String userName = "";
 		ArrayList<MTDadosUser> TListUser = new ArrayList<>();
 		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
 
 		for (MTDadosUser mtUser : TListUser) {
-
 			if (mtUser.getBDIDUSER().equals(userId)) {
 				userName = mtUser.getBDNOMEUSER();
 			}
-
 		}
-
 		return userName;
 	}
 }

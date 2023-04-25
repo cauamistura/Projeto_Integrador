@@ -32,6 +32,7 @@ import model.MTDadosUser;
 import model.MTEspecie;
 import model.MTPet;
 import model.MTRaca;
+import model.interfaces.InterfaceConsPet;
 import net.miginfocom.swing.MigLayout;
 import vision.consultas.VPetCON;
 import vision.padrao.DateTextField;
@@ -43,7 +44,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-public class VPetCad extends JFrame {
+public class VPetCad extends JFrame implements InterfaceConsPet {
 
 	/**
 	 * 
@@ -126,7 +127,7 @@ public class VPetCad extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Espécie:");
 		panel_3.add(lblNewLabel_1, "flowy,cell 1 1");
 		
-		especieCb = new JComboBox();
+		especieCb = new JComboBox<MTEspecie>();
 		especieCb.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				racaCb.removeAllItems();
@@ -149,14 +150,14 @@ public class VPetCad extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("Raça:");
 		panel_3.add(lblNewLabel_2, "flowy,cell 1 2");
 		
-		racaCb = new JComboBox();
+		racaCb = new JComboBox<MTRaca>();
 		panel_3.add(racaCb, "cell 1 2,growx");
 		racaCb.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JLabel lblNewLabel_3 = new JLabel("Dono:");
 		panel_3.add(lblNewLabel_3, "flowy,cell 1 3");
 		
-		userCb = new JComboBox();
+		userCb = new JComboBox<MTDadosUser>();
 		userCb.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_3.add(userCb, "cell 1 3,growx");
 		
@@ -209,7 +210,6 @@ public class VPetCad extends JFrame {
 				racaCb.setSelectedIndex(0);
 				especieCb.setSelectedIndex(0);
 				userCb.setSelectedIndex(0);
-				
 			}
 		});
 		btnLimpar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -223,7 +223,6 @@ public class VPetCad extends JFrame {
 				VPetCON frame = new VPetCON(lista, prSelf);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
-				
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -269,7 +268,6 @@ public class VPetCad extends JFrame {
 					JOptionPane.showMessageDialog(null, "Data inválida. Tente novamente.");
 					return;
 				}
-
 				try {
 					FDAOTPet.inserir(FDAOTPet);
 					txtNomePet.setText("");
@@ -282,9 +280,7 @@ public class VPetCad extends JFrame {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o pet");
 				}
-
 			}
-			
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_2.add(btnNewButton_1, "flowx,cell 3 3,growx");
@@ -310,14 +306,10 @@ public class VPetCad extends JFrame {
 		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);
 
 		for (MTEspecie mtEspecie : TListEspecie) {
-
 			if (mtEspecie.getBDNOMEESPECIE().equals(especieCb.getSelectedItem().toString())) {
 				idEspecie = mtEspecie.getBDIDESPECIE();
-
 			}
-
 		}
-
 		return idEspecie;
 	}
 	
@@ -325,16 +317,12 @@ public class VPetCad extends JFrame {
 		Integer idRaca = 0;
 		ArrayList<MTRaca> TListRaca = new ArrayList<>();
 		TListRaca = FDAOTRaca.ListTRaca(FDAOTRaca, 0);
-
+		
 		for (MTRaca mtRaca : TListRaca) {
-
 			if (mtRaca.getBDNOMERACA().equals(racaCb.getSelectedItem().toString())) {
 				idRaca = mtRaca.getBDIDRACA();
-
 			}
-
 		}
-
 		return idRaca;
 	}
 	
@@ -344,14 +332,10 @@ public class VPetCad extends JFrame {
 		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
 
 		for (MTDadosUser mtUser : TListUser) {
-
 			if (mtUser.getBDNOMEUSER().equals(userCb.getSelectedItem().toString())) {
 				idUser = mtUser.getBDIDUSER();
-
 			}
-
 		}
-
 		return idUser;
 	}
 	
@@ -362,5 +346,16 @@ public class VPetCad extends JFrame {
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 		}
+	}
+
+	@Override
+	public void preencheDadosPet(MTPet listPet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exluiPet(Integer IdPet) {
+		// TODO Auto-generated method stub
 	}
 }
