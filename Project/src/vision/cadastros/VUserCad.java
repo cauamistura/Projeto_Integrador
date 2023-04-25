@@ -37,6 +37,7 @@ import model.MTEstado;
 import model.MTPermicao;
 import net.miginfocom.swing.MigLayout;
 import vision.VMenu;
+import vision.atendimentos.VEntradaATE;
 import vision.consultas.VUserCON;
 import vision.padrao.CEPTextField;
 import vision.padrao.CPFTextField;
@@ -66,7 +67,11 @@ public class VUserCad extends JFrame {
 	private CEPTextField edCep;
 	private JTextField edEmail;
 	private JLabel lbStatus;
-
+	private RoundButton btnExcluir;
+	private RoundButton btnLimpar;
+	private RoundButton btnConsulta;
+	private RoundButton btnCAD;
+	
 	private JComboBox<MTEstado> cbUF;
 	private JComboBox<MTPermicao> cbPermissao;
 	private JComboBox<String> cbGenero;
@@ -80,11 +85,8 @@ public class VUserCad extends JFrame {
 	private DAOTCidade FDAOTCidade = new DAOTCidade();
 	private DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private DAOTPermicao FDAOTPermicao = new DAOTPermicao();
+	private VEntradaATE atendimento = null;
 
-	private RoundButton btnExcluir;
-	private RoundButton btnLimpar;
-	private RoundButton btnConsulta;
-	private RoundButton btnCAD;
 
 	/**
 	 * Create the frame.
@@ -467,7 +469,7 @@ public class VUserCad extends JFrame {
 	private void abreConsulta(VUserCad prSelf) {
 		if (FDAOTDadosUser != null) {
 			List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);
-			VUserCON frame = new VUserCON(lista, prSelf);
+			VUserCON frame = new VUserCON(lista, prSelf, atendimento);
 			frame.setVisible(true);
 		} else {
 

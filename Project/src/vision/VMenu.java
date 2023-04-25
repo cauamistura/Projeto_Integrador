@@ -1,6 +1,6 @@
 package vision;
 
-import javax.swing.JFrame; 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,6 +9,7 @@ import control.DAOTDadosUser;
 import control.DAOTPet;
 import model.MTDadosUser;
 import model.MTPet;
+import vision.atendimentos.VEntradaATE;
 import vision.cadastros.*;
 import vision.consultas.VUserCON;
 import vision.consultas.VPetCON;
@@ -65,19 +66,20 @@ public class VMenu extends JFrame {
 	private JMenuItem mmUserDados;
 	private JMenuItem mmPetCons;
 	private JMenuItem miComorbidade;
+	private JMenuItem miEntrada;
 
 	/**
 	 * 
 	 */
 
 	public VMenu() {
-	
+
 //		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Menu");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 501, 300);
-		
+
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -169,12 +171,13 @@ public class VMenu extends JFrame {
 		miUserCons = new JMenuItem("Usuário...");
 		miUserCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				VEntradaATE ent = null;
 				DAOTDadosUser DAO = new DAOTDadosUser();
 				VUserCad vision = new VUserCad();
 				ArrayList<MTDadosUser> list = new ArrayList<>();
 				list = DAO.ListConsulta(DAO);
 
-				VUserCON v = new VUserCON(list, vision);
+				VUserCON v = new VUserCON(list, vision, ent);
 				v.desabilitaBotoes();
 				v.setVisible(true);
 			}
@@ -199,6 +202,16 @@ public class VMenu extends JFrame {
 
 		mmATE = new JMenu("Atendimento");
 		menuBar.add(mmATE);
+
+		miEntrada = new JMenuItem("Entrada...");
+		miEntrada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VEntradaATE v = new VEntradaATE();
+				v.setLocationRelativeTo(null);
+				v.setVisible(true);
+			}
+		});
+		mmATE.add(miEntrada);
 
 		mmSair = new JMenu("Sair");
 		menuBar.add(mmSair);
@@ -232,10 +245,9 @@ public class VMenu extends JFrame {
 		lblNewLabel = new JLabel("");
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
 
-		 addWindowListener(new WindowAdapter() {
-	            public void windowActivated(WindowEvent e) {
-	            	habilitaCampos(FPERMICAO);
-
+		addWindowListener(new WindowAdapter() {
+			public void windowActivated(WindowEvent e) {
+				habilitaCampos(FPERMICAO);
 			}
 
 			private void habilitaCampos(Integer prPERMICAO) {
