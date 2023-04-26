@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.JDialog;
@@ -21,9 +23,11 @@ import javax.swing.event.ListSelectionListener;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
+import model.interfaces.InterfaceConsMed;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.RoundButton;
 import vision.padrao.TableSimples;
+import javax.swing.JButton;
 
 public class VMedCad extends JFrame {
 	
@@ -46,8 +50,27 @@ public class VMedCad extends JFrame {
 	private JLabel lbStatus;
 	private JLabel lbNome;
 	private JLabel lbDesc;
+	private RoundButton btnReceita;
+	private String nome;
+	private String desc;
+	private Integer id;
+	
 
-	public VMedCad() {
+	public VMedCad(Boolean consulta, InterfaceConsMed event) {
+				
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+					if (consulta == true){
+						btnDelete.setVisible(false);
+						btnlimpar.setVisible(false);
+					}else {
+						
+					}
+			}
+		});
+		setBounds(100, 100, 848, 524);
 		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -79,16 +102,19 @@ public class VMedCad extends JFrame {
 				if (row >= 0) {
 
 					// Preencha os campos correspondentes com os dados da linha selecionada
-					String nome = table.getValueAt(row, 1).toString();
-					String desc = table.getValueAt(row, 2).toString();
+					nome = table.getValueAt(row, 1).toString();
+					desc = table.getValueAt(row, 2).toString();
+					id = Integer.valueOf(table.getValueAt(row, 0).toString());
 					edNomeMed.setText(nome);
 					edDescMed.setText(desc);
 
 					registroCadastro = false;
 
-					FDAOTMedicacao.setBDIDMEDICACAO(Integer.valueOf(table.getValueAt(row, 0).toString()));
-
+					FDAOTMedicacao.setBDIDMEDICACAO(id);
+					
 					lbStatus.setText("Status: Alterando medicamento");
+					
+					
 				}
 			}
 		});
@@ -111,8 +137,13 @@ public class VMedCad extends JFrame {
 		btnConf = new RoundButton("Confirmar");
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventConfirmar();
 				table.clearSelection();
+				if(consulta == true) {
+					event.idUser(id,nome,desc);
+					dispose();
+				}else {
+					eventConfirmar();
+				}
 			}
 		});
 		panel.add(btnConf, "flowx,cell 0 3");
@@ -137,7 +168,7 @@ public class VMedCad extends JFrame {
 
 		lbStatus = new JLabel("Status: Inserindo medicamento");
 		panel.add(lbStatus, "cell 0 5");
-
+	
 	}
 
 	private void atualizatabela(){
@@ -179,6 +210,7 @@ public class VMedCad extends JFrame {
 			FDAOTMedicacao.setBDIDMEDICACAO(FDAOTMedicacao.getBDIDMEDICACAO());
 			FDAOTMedicacao.alterar(FDAOTMedicacao);
 		}
+	
 		table.limparTabela();
 		atualizatabela();
 		limparDados();
