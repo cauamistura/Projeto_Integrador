@@ -1,10 +1,19 @@
 package model;
 
+import java.time.LocalDate;
+
 public class MTAtendimenoEntrada extends MTPet{
 	
 	private Integer BDIDENTRADA, BDIDPET, BDCOMORBIDADE;
-	private String BDDATAENT, BDDESC;
+	private String  BDDESC;
+	private LocalDate BDDATAENT;
 	
+	public LocalDate getBDDATAENT() {
+		return BDDATAENT;
+	}
+	public void setBDDATAENT(LocalDate bDDATAENT) {
+		BDDATAENT = bDDATAENT;
+	}
 	public Integer getBDIDENTRADA() {
 		return BDIDENTRADA;
 	}
@@ -22,12 +31,6 @@ public class MTAtendimenoEntrada extends MTPet{
 	}
 	public void setBDCOMORBIDADE(Integer bDCOMORBIDADE) {
 		BDCOMORBIDADE = bDCOMORBIDADE;
-	}
-	public String getBDDATAENT() {
-		return BDDATAENT;
-	}
-	public void setBDDATAENT(String bDDATAENT) {
-		BDDATAENT = bDDATAENT;
 	}
 	public String getBDDESC() {
 		return BDDESC;
