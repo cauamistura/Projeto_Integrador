@@ -56,21 +56,8 @@ public class VMedicamentoCad extends JFrame {
 	private Integer id;
 	
 
-	public VMedicamentoCad(Boolean consulta, InterfaceConsMed event) {
+	public VMedicamentoCad(ArrayList<MTMedicacao> dados, InterfaceConsMed event) {
 				
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-					if (consulta == true){
-						btnDelete.setVisible(false);
-						btnlimpar.setVisible(false);
-					}else {
-						
-					}
-			}
-		});
-		setBounds(100, 100, 848, 524);
 		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -138,12 +125,7 @@ public class VMedicamentoCad extends JFrame {
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				table.clearSelection();
-				if(consulta == true) {
-					event.preencheMedicamento(id,nome,desc);
-					dispose();
-				}else {
-					eventConfirmar();
-				}
+				eventConfirmar();
 			}
 		});
 		panel.add(btnConf, "flowx,cell 0 3");

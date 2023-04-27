@@ -1,32 +1,35 @@
 package vision.cadastros;
 
+
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
+import control.DAOTMedicacao;
 import control.DAOTReceita;
+import model.MTMedicacao;
 import model.MTReceita;
 import model.interfaces.InterfaceConsMed;
+import vision.consultas.VMedCON;
 import vision.padrao.DateTextField;
 import vision.padrao.RoundButton;
 import vision.padrao.lupaButton;
-
-import javax.swing.JTextPane;
-import javax.swing.Timer;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
 
 public class VReceitaCad extends JFrame implements InterfaceConsMed{
 
 	
 	private DAOTReceita FDAOTReceita = new DAOTReceita();
+	private DAOTMedicacao FDAOTMedicacao = new DAOTMedicacao();
 	private ArrayList<MTReceita> TListReceita = new ArrayList<>();
 	private JPanel contentPane;
 	private DateTextField edDataFinal;
@@ -82,6 +85,12 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 		edDataFinal.setColumns(10);
 		
 		btnDelete = new RoundButton("Deletar");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventDeletar();
+				limparDados();
+			}
+		});
 		btnDelete.setBounds(49, 143, 117, 25);
 		contentPane.add(btnDelete);
 		
@@ -115,6 +124,11 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 		contentPane.add(lblDesc);
 		
 		btnLimpar = new RoundButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limparDados();
+			}
+		});
 		btnLimpar.setBounds(49, 180, 117, 25);
 		contentPane.add(btnLimpar);
 		
@@ -122,6 +136,7 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventConfirmar();
+				limparDados();
 			}	
 		});
 		btnConf.setBounds(49, 106, 117, 25);
@@ -162,7 +177,7 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 		optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
         dialog = optionPane.createDialog("");
 
-        timer = new Timer(800, new ActionListener() {
+        timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
@@ -181,25 +196,39 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 	}
 	private void abreConsulta(VReceitaCad rec) {
 		if (FDAOTReceita != null) {
-			mudaReceita = true;
-			VMedicamentoCad frame = new VMedicamentoCad(mudaReceita,this);
+			VMedCON frame = new VMedCON(FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao), rec);
 			frame.setVisible(true);
 		} else {
 
 		}
 	}
-	public void med(Integer id, String nomeMed,String desc) {
+	public void med(MTMedicacao med) {
 		
-		idmedicamento = id;
-		lblmedicamento.setText(nomeMed);
-		textPane.setText("\nDescrição do medicamento:\n - "+desc);
+		idmedicamento = med.getBDIDMEDICACAO();
+		lblmedicamento.setText(med.getBDNOMEMEDICACAO());
+		textPane.setText("\nDescrição do medicamento:\n - "+med.getBDDESCRICAO());
 		
+	}
+	
+	public void limparDados() {
+		edDataFinal.setText("");
+		edDataInicio.setText("");
+
+		textPane.setText("");
+
+		FDAOTReceita.setBDIDRECEITA(null);
+		lblmedicamento.setText("");
+		lblStatus.setText("Status: Inserindo Receita");
 	}
 
 	@Override
-	public void preencheMedicamento(Integer id, String nomeMed, String desc) {
-		med(id,nomeMed,desc);
-	
+	public void preencheMedicamento(MTMedicacao dados) {
+		med(dados);
+		
+
 	}
+	
+	
+
 
 }
