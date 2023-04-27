@@ -117,20 +117,20 @@ public class VComorbidadeCad extends JFrame {
 		panel_5.setLayout(new MigLayout("", "[grow]", "[][][][][][50px]"));
 		
 		lbNome = new JLabel("Nome:");
-		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 13));
+		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		panel_5.add(lbNome, "flowy,cell 0 1");
 		
 		edNomeCom = new RoundJTextField();
-		edNomeCom.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		edNomeCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edNomeCom.setColumns(10);
 		panel_5.add(edNomeCom, "cell 0 1,growx");
 		
 		lbDescricao = new JLabel("Descrição:");
-		lbDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 13));
+		lbDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		panel_5.add(lbDescricao, "flowy,cell 0 3");
 		
 		edDescCom = new RoundJTextField();
-		edDescCom.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		edDescCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edDescCom.setColumns(10);
 		panel_5.add(edDescCom, "cell 0 3,growx");
 		
