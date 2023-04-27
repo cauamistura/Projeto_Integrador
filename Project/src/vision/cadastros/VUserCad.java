@@ -38,7 +38,6 @@ import model.MTPermicao;
 import model.interfaces.InterfaceConsUser;
 import net.miginfocom.swing.MigLayout;
 import vision.VMenu;
-import vision.atendimentos.VEntradaATE;
 import vision.consultas.VUserCON;
 import vision.padrao.CEPTextField;
 import vision.padrao.CPFTextField;
@@ -48,6 +47,8 @@ import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TelefoneTextField;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class VUserCad extends JFrame implements InterfaceConsUser {
 
@@ -86,7 +87,6 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 	private DAOTCidade FDAOTCidade = new DAOTCidade();
 	private DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private DAOTPermicao FDAOTPermicao = new DAOTPermicao();
-	private VEntradaATE atendimento = null;
 
 
 	/**
@@ -136,11 +136,7 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 		JPanel pnContent = new JPanel();
 		pnContent.setBackground(new Color(125, 137, 245));
 		pnCard.add(pnContent, "cell 1 1,grow");
-		pnContent.setLayout(
-				new MigLayout("", "[50px][150px,grow][50px][150px,grow][50px]", "[][][][][][][][][][25px][][30px]"));
-
-		// Instacia da Tela
-		VUserCad local = this;
+		pnContent.setLayout(new MigLayout("", "[50px][150px,grow][50px][150px,grow][50px]", "[][][][][][][][][][25px][][30px]"));
 
 		lbStatus = new JLabel("Status: Aguardando");
 		pnContent.add(lbStatus, "cell 1 11");
@@ -152,26 +148,11 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 		edCpf.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCpf.setColumns(10);
 		pnContent.add(edCpf, "cell 1 3,growx");
-		edCpf.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (edCpf.existeCpfUsuario(FDAOTUser)) {
-					if (edCpf.getText().equals(VMenu.FCPFUSER)) {
-						desabilitaBotoes(false);
-					} else {
-						habilitaBotoes(false);
-					}
-				} else {
-					lbStatus.setText("Status: Inserindo");
-					habilitaBotoes(false);
-				}
-			}
-		});
 		edCpf.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_F9) {
-					abreConsulta(local);
+					abreConsulta();
 				}
 			}
 		});
@@ -281,7 +262,7 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 		btnConsulta = new RoundButton("Login");
 		btnConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				abreConsulta(local);
+				abreConsulta();
 			}
 		});
 		btnConsulta.setText("Consultar");
@@ -461,18 +442,18 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 		edCpf.requestFocus();
 	}
 
-	private void abreConsulta(VUserCad prSelf) {
-		if (FDAOTDadosUser != null) {
-			List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);
-			VUserCON frame = new VUserCON(lista, this);
-			frame.setVisible(true);
-		} else {
-
-		}
+	private void abreConsulta() {
+		List<MTDadosUser> lista = FDAOTDadosUser.ListConsulta(FDAOTDadosUser);
+		VUserCON frame = new VUserCON(lista, this);
+		frame.setVisible(true);
 	}
 
 	public void exluirUser(Integer prIDUSER) {
-
+		if (prIDUSER == VMenu.FIDUSER) {
+			JOptionPane.showMessageDialog(null, "Não é possivel excluir "+VMenu.FNomeUser+"!\nUsuário logado no sistema.");
+			return;
+		}
+		
 		int resposta = JOptionPane.showConfirmDialog(null,
 				"Você realmente deseja excluir? Todos os dados vinculados a este usuário serão excluídos.",
 				"Confirmação", JOptionPane.YES_NO_OPTION);
@@ -520,24 +501,13 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 	}
 
 	@Override
-	public void preencheUserCad(MTDadosUser listaUser) {
-		preencheCampos(listaUser);
+	public void preencheDadosUser(MTDadosUser listUser) {
+		preencheCampos(listUser);
 	}
 
-	@Override
-	public void desabilitaBotoes(boolean b) {
-		habilitaBotoes(b);
-		
-	}
-
-	@Override
-	public void habilitaBotoes(boolean b) {
-		habilitaBotoes(b);
-		
-	}
-	
 	@Override
 	public void exluiUser(Integer bdiduser) {
 		exluirUser(bdiduser);
 	}
+
 }

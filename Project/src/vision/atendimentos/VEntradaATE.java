@@ -140,18 +140,8 @@ public class VEntradaATE extends JFrame implements InterfaceConsUser, InterfaceC
 	}
 
 	@Override
-	public void preencheUserCad(MTDadosUser listUser) {
+	public void preencheDadosUser(MTDadosUser listUser) {
 		preencheUser(listUser);
-	}
-
-	@Override
-	public void desabilitaBotoes(boolean b) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void habilitaBotoes(boolean b) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
