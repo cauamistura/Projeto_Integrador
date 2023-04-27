@@ -87,7 +87,10 @@ public class DAOTPet extends MTPet {
 			ArrayList<MTPet> ListaTePet = new ArrayList<>();
 			Connection c = prDAO.append();
 			try {
-				wSql = "SELECT * FROM TPets";
+				wSql =    "SELECT p.*, d.bdnome as BDNOMEUSER, r.BDNOMERACA FROM tpets p "
+						+ "inner join traca r on (r.BDIDRACA = p.BDIDRACA) "
+						+ "inner join tdadosuser d on (d.BDIDUSER = p.BDIDUSER) ";
+				
 				Statement stm = c.prepareStatement(wSql);
 				ResultSet rs = stm.executeQuery(wSql);
 				
@@ -100,7 +103,8 @@ public class DAOTPet extends MTPet {
 					le.setBDAPELIDO(rs.getString("BDAPELIDO"));
 					le.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
 					le.setBDIDUSER(rs.getInt("BDIDUSER"));
-					
+					le.setBDNOMEUSER(rs.getString("BDNOMEUSER"));
+					le.setBDNOMERACA(rs.getString("BDNOMERACA"));
 					ListaTePet.add(le);
 				}
 				
@@ -116,9 +120,13 @@ public class DAOTPet extends MTPet {
 		    ArrayList<MTPet> listaDePets = new ArrayList<>();
 		    Connection conexao = prDAO.append();
 		    try {
-		        String sql = "SELECT `tpets`.* FROM `dbpi`.`tpets` where BDIDUSER = ?";
-		        PreparedStatement stm = conexao.prepareStatement(sql);
+				wSql =    "SELECT p.*, d.bdnome as BDNOMEUSER, r.BDNOMERACA FROM tpets p "
+						+ "inner join traca r on (r.BDIDRACA = p.BDIDRACA) "
+						+ "inner join tdadosuser d on (d.BDIDUSER = p.BDIDUSER) "
+						+ "where p.BDIDUSER = ?";
+		        PreparedStatement stm = conexao.prepareStatement(wSql);
 		        stm.setInt(1, prDAO.getBDIDUSER());
+		        
 		        ResultSet rs = stm.executeQuery();
 		        while (rs.next()) {
 		            MTPet pet = new MTPet();
@@ -128,6 +136,8 @@ public class DAOTPet extends MTPet {
 		            pet.setBDAPELIDO(rs.getString("BDAPELIDO"));
 		            pet.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
 		            pet.setBDIDUSER(rs.getInt("BDIDUSER"));
+		            pet.setBDNOMEUSER(rs.getString("BDNOMEUSER"));
+					pet.setBDNOMERACA(rs.getString("BDNOMERACA"));
 		            listaDePets.add(pet);
 		        }
 		    } catch (Exception e) {
