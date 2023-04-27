@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.MTPet;
@@ -112,4 +111,31 @@ public class DAOTPet extends MTPet {
 			prDAO.post();
 			return ListaTePet;
 		}
+		
+		// SELECT FILTRADO
+		public ArrayList<MTPet> listTPetFiltradoUser(DAOTPet prDAO) {
+		    ArrayList<MTPet> listaDePets = new ArrayList<>();
+		    Connection conexao = prDAO.append();
+		    try {
+		        String sql = "SELECT `tpets`.* FROM `dbpi`.`tpets` where BDIDUSER = ?";
+		        PreparedStatement stm = conexao.prepareStatement(sql);
+		        stm.setInt(1, prDAO.getBDIDUSER());
+		        ResultSet rs = stm.executeQuery();
+		        while (rs.next()) {
+		            MTPet pet = new MTPet();
+		            pet.setBDIDPET(rs.getInt("BDIDPET"));
+		            pet.setBDIDRACA(rs.getInt("BDIDRACA"));
+		            pet.setBDNOMEPET(rs.getString("BDNOMEPET"));
+		            pet.setBDAPELIDO(rs.getString("BDAPELIDO"));
+		            pet.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
+		            pet.setBDIDUSER(rs.getInt("BDIDUSER"));
+		            listaDePets.add(pet);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    prDAO.post(); // Este método fecha a conexão com o banco de dados
+		    return listaDePets;
+		}
+
 }
