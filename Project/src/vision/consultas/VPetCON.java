@@ -1,6 +1,5 @@
 package vision.consultas;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import model.MTDadosUser;
 import model.MTPet;
 import model.MTRaca;
 import model.interfaces.InterfaceConsPet;
-import vision.cadastros.VPetCad;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -28,13 +26,15 @@ import javax.swing.JLabel;
 
 public class VPetCON extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel model;
 	private DAOTRaca FDAOTRaca = new DAOTRaca();
 	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
-	private RoundButton btnConfirmar;
-	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 	private JTextField edFiltro;
 	private JButton btnConf;
@@ -43,7 +43,7 @@ public class VPetCON extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VPetCON(List<MTPet> dados, InterfaceConsPet event) {
+	public VPetCON(List<MTPet> dados, InterfaceConsPet ev) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -96,24 +96,36 @@ public class VPetCON extends JFrame {
 		panel.add(btnFiltro);
 		
 		btnConf = new JButton("Confirmar");
+		btnConf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int[] selectedRows = table.getSelectedRows();
+				for (int i = 0; i < selectedRows.length; i++) {
+					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
+					MTPet dado = dados.get(modelIndex);
+					ev.preencheDadosPet(dado);
+					dispose();
+				}
+			}
+		});
 		panel.add(btnConf);
 		
 		bnExc = new JButton("Excluir");
+		bnExc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int[] selectedRows = table.getSelectedRows();
+				for (int i = 0; i < selectedRows.length; i++) {
+					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
+					MTPet dado = dados.get(modelIndex);
+					ev.exluiPet(dado.getBDIDPET());
+					dispose();
+				}
+				
+			}
+		});
 		panel.add(bnExc);
 		
-		btnConfirmar = new RoundButton("Confirmar");
-		btnConfirmar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-
-		btnExcluir = new RoundButton("Excluir");
-		btnExcluir.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+	
 		
 	}
 
