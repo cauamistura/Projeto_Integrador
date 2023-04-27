@@ -483,23 +483,6 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 		lbStatus.setText("Status: Usuario Logado");
 	}
 
-	public void habilitaBotoes(Boolean prConsulta) {
-		if (prConsulta) {
-			btnConsulta.setEnabled(true);
-			btnConsulta.setVisible(true);
-		}
-		btnExcluir.setEnabled(true);
-		btnLimpar.setEnabled(true);
-
-		btnExcluir.setVisible(true);
-		btnLimpar.setVisible(true);
-
-		edCpf.setEnabled(true);
-		cbPermissao.setEnabled(true);
-		
-		lbStatus.setText("Status: Alterando");
-	}
-
 	@Override
 	public void preencheDadosUser(MTDadosUser listUser) {
 		preencheCampos(listUser);

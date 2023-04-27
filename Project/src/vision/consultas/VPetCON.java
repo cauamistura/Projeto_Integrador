@@ -48,7 +48,8 @@ public class VPetCON extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -174,5 +175,9 @@ public class VPetCON extends JFrame {
 			}
 		}
 		return userName;
+	}
+	
+	public void desabilitaExcluir() {
+		bnExc.setVisible(false);
 	}
 }
