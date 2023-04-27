@@ -29,7 +29,7 @@ import vision.padrao.RoundButton;
 import vision.padrao.TableSimples;
 import javax.swing.JButton;
 
-public class VMedCad extends JFrame {
+public class VMedicamentoCad extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	public DAOTMedicacao FDAOTMedicacao = new DAOTMedicacao();
@@ -56,7 +56,7 @@ public class VMedCad extends JFrame {
 	private Integer id;
 	
 
-	public VMedCad(Boolean consulta, InterfaceConsMed event) {
+	public VMedicamentoCad(Boolean consulta, InterfaceConsMed event) {
 				
 
 		addComponentListener(new ComponentAdapter() {
@@ -139,7 +139,7 @@ public class VMedCad extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				table.clearSelection();
 				if(consulta == true) {
-					event.idUser(id,nome,desc);
+					event.preencheMedicamento(id,nome,desc);
 					dispose();
 				}else {
 					eventConfirmar();

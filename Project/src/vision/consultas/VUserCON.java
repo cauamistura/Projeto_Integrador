@@ -4,12 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,9 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 import model.MTDadosUser;
 import model.interfaces.InterfaceConsUser;
-import vision.VMenu;
-import vision.atendimentos.VEntradaATE;
-import vision.cadastros.VUserCad;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 
@@ -35,7 +29,7 @@ public class VUserCON extends JFrame {
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 
-	public VUserCON(List<MTDadosUser> dados, InterfaceConsUser event) {
+	public VUserCON(List<MTDadosUser> dados, InterfaceConsUser inter) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		setTitle("Consulta de Usuario");
@@ -43,7 +37,7 @@ public class VUserCON extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
 		setContentPane(contentPane);
-
+		
 		edFiltro = new RoundJTextField();
 		edFiltro.setColumns(10);
 
@@ -77,14 +71,7 @@ public class VUserCON extends JFrame {
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
 					MTDadosUser dado = dados.get(modelIndex);
-
-					if (dado.getBDCPF().equals(VMenu.FCPFUSER)) {
-						event.desabilitaBotoes(false);
-					} else {
-						event.habilitaBotoes(false);
-					}
-
-					event.preencheUserCad(dado);
+					inter.preencheDadosUser(dado);
 					dispose();
 				}
 			}
@@ -98,12 +85,7 @@ public class VUserCON extends JFrame {
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
 					MTDadosUser dado = dados.get(modelIndex);
-					if (dado.getBDCPF().equals(VMenu.FCPFUSER)) {
-						JOptionPane.showInternalMessageDialog(null,
-								"Este usuário não pode ser excluido!\nEsta logado no sistema");
-						return;
-					}
-					event.exluiUser(dado.getBDIDUSER());
+					inter.exluiUser(dado.getBDIDUSER());
 					dispose();
 				}
 			}
@@ -135,23 +117,9 @@ public class VUserCON extends JFrame {
 		buttonsPanel.add(botoes);
 
 		contentPane.add(buttonsPanel, BorderLayout.SOUTH);
-
-		addWindowListener(new WindowAdapter() {
-			public void windowActivated(WindowEvent e) {
-		        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-		        String classeChamadora = stackTraceElements[3].getClassName();
- 
-		        if (classeChamadora.equals("VEntradaATE")) {
-		            System.out.println(classeChamadora);
-		        } else {
-		        	System.out.println(classeChamadora);
-		        }
-			}
-		});
-
 	}
 
-	public void desabilitaBotoes() {
+	public void desBotoes() {
 		btnConfirmar.setEnabled(false);
 		btnConfirmar.setVisible(false);
 

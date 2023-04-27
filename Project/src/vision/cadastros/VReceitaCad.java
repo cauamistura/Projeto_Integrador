@@ -182,7 +182,7 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 	private void abreConsulta(VReceitaCad rec) {
 		if (FDAOTReceita != null) {
 			mudaReceita = true;
-			VMedCad frame = new VMedCad(mudaReceita,this);
+			VMedicamentoCad frame = new VMedicamentoCad(mudaReceita,this);
 			frame.setVisible(true);
 		} else {
 
@@ -197,7 +197,7 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 	}
 
 	@Override
-	public void idUser(Integer id, String nomeMed, String desc) {
+	public void preencheMedicamento(Integer id, String nomeMed, String desc) {
 		med(id,nomeMed,desc);
 	
 	}

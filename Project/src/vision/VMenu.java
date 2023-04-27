@@ -159,7 +159,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		miMedicamento.setFont(new Font("Dialog", Font.BOLD, 18));
 		miMedicamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VMedCad uc = new VMedCad(null,null);
+				VMedicamentoCad uc = new VMedicamentoCad(null,null);
 				uc.setLocationRelativeTo(null);
 				uc.setVisible(true);
 			}
@@ -190,7 +190,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 				list = DAO.ListConsulta(DAO);
 
 				VUserCON v = new VUserCON(list, local);
-				v.desabilitaBotoes();
+				v.desBotoes();
 				v.setVisible(true);
 			}
 		});
@@ -296,19 +296,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 	}
 
 	@Override
-	public void preencheUserCad(MTDadosUser listUser) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void desabilitaBotoes(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void habilitaBotoes(boolean b) {
+	public void preencheDadosUser(MTDadosUser listUser) {
 		// TODO Auto-generated method stub
 		
 	}
