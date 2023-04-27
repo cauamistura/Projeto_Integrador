@@ -61,25 +61,24 @@ public class DAOTPet extends MTPet {
 		}
 		
 		// DELETE
-		public Boolean deletar(DAOTPet prDAO) {
-			Connection c = prDAO.append();
+		public Boolean deletar(Integer idPet) {
+			// Instacia coenexão
+			Conexao.getInstacia();
+			// Conecta
+			Connection c = Conexao.conectar();
 			try {
 				wSql = "DELETE FROM `dbpi`.`tpets` WHERE BDIDPET = ?;";
 				PreparedStatement stm = c.prepareStatement(wSql);
 				
-				stm.setInt(1, prDAO.getBDIDPET());
-				stm.setInt(2, prDAO.getBDIDRACA());
-				stm.setString(3, prDAO.getBDNOMEPET());
-				stm.setString(4, prDAO.getBDAPELIDO());
-				stm.setDate	 (5, Date.valueOf(prDAO.getBDDATANASCIMENTO()));
-				stm.setInt(6, prDAO.getBDIDUSER());
+				stm.setInt(1, idPet);
 		
 				stm.execute();
 				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				Conexao.getInstacia().fecharConnection();
 			}
-			prDAO.post();
 			return false;
 		}
 		

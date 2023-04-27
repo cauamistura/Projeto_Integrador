@@ -34,6 +34,7 @@ import model.MTPet;
 import model.MTRaca;
 import model.interfaces.InterfaceConsPet;
 import net.miginfocom.swing.MigLayout;
+import vision.VMenu;
 import vision.consultas.VPetCON;
 import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
@@ -229,6 +230,7 @@ public class VPetCad extends JFrame implements InterfaceConsPet {
 		panel_2.add(btnNewButton, "cell 1 3,growx");
 		
 		JButton btnNewButton_1 = new RoundButton("Cadastrar");
+		btnNewButton_1.setText("Confirmar");
 		btnNewButton_1.setBackground((new Color(255, 199, 0)));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -275,6 +277,7 @@ public class VPetCad extends JFrame implements InterfaceConsPet {
 					especieCb.setSelectedIndex(0);
 					racaCb.setSelectedIndex(0);
 					userCb.setSelectedIndex(0);
+					txtDataNasc.setText("");
 					JOptionPane.showMessageDialog(null, "Seu pet foi cadastrado com sucesso!");
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -300,6 +303,19 @@ public class VPetCad extends JFrame implements InterfaceConsPet {
 		
 	}
 
+	public void exluirUser(Integer prIDPET) {
+		int resposta = JOptionPane.showConfirmDialog(null,
+				"Você realmente deseja excluir? Todos os dados vinculados a este pet serão excluídos.",
+				"Confirmação", JOptionPane.YES_NO_OPTION);
+
+		if (resposta == JOptionPane.YES_OPTION) {
+			FDAOTPet.deletar(prIDPET);
+			JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+			limpaCampos();
+		}
+
+	}
+	
 	public Integer achaIdEspecie() {
 		Integer idEspecie = 0;
 		ArrayList<MTEspecie> TListEspecie = new ArrayList<>();
@@ -339,6 +355,12 @@ public class VPetCad extends JFrame implements InterfaceConsPet {
 		return idUser;
 	}
 	
+	public void limpaCampos() {
+		txtNomePet.setText("");
+		txtApelidoPet.setText("");
+		txtDataNasc.setText("");
+	}
+	
 	private void abreConsulta(VPetCad prSelf) {
 		if (FDAOTPet != null) {
 			List<MTPet> lista = FDAOTPet.ListTPet(FDAOTPet);
@@ -350,12 +372,12 @@ public class VPetCad extends JFrame implements InterfaceConsPet {
 
 	@Override
 	public void preencheDadosPet(MTPet listPet) {
-		// TODO Auto-generated method stub
+		JOptionPane.showInternalMessageDialog(null, "Preencheuuuuu");
 		
 	}
 
 	@Override
 	public void exluiPet(Integer IdPet) {
-		// TODO Auto-generated method stub
+		exluirUser(IdPet);
 	}
 }
