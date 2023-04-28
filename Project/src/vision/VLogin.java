@@ -115,7 +115,6 @@ public class VLogin extends JFrame {
 
 		edCNPJ = new CPFTextField();
 		edCNPJ.setText("123.456.789-10");
-		edCNPJ.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		panel_2.add(edCNPJ, "cell 1 1,growx");
 		edCNPJ.setColumns(10);
 
@@ -123,6 +122,7 @@ public class VLogin extends JFrame {
 		panel_2.add(lbSenha, "flowy,cell 1 2");
 		
 		edSenha = new RoundJPasswordField();
+		edSenha.setForeground(new Color(0, 0, 0));
 		edSenha.setText("senha123");
 		edSenha.setColumns(10);
 		panel_2.add(edSenha, "cell 1 2,growx");

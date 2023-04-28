@@ -14,12 +14,11 @@ public class RoundJTextField extends JTextField {
 	private static final long serialVersionUID = 1L;
 	private Shape shape;
 	private int radii = 10;
-    Color color;
+    Color color = new Color(45, 45 , 45);
     
    
     public RoundJTextField() {
         super();
-        this.color = new Color(255, 255, 255);
         setDisabledTextColor(getForeground());
         setBackground(getBackground());
         setOpaque(false);
