@@ -20,7 +20,7 @@ import control.DAOTReceita;
 import model.MTMedicacao;
 import model.MTReceita;
 import model.interfaces.InterfaceConsMed;
-import vision.consultas.VMedCON;
+import vision.consultas.VMedicamentoCON;
 import vision.padrao.DateTextField;
 import vision.padrao.RoundButton;
 import vision.padrao.lupaButton;
@@ -47,31 +47,12 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 	private  JDialog dialog;
 	private Timer timer;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VReceitaCad frame = new VReceitaCad();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public VReceitaCad() {
 		
 		VReceitaCad rec = this;
 			
 		setTitle("Cadastro de Receita");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -196,7 +177,7 @@ public class VReceitaCad extends JFrame implements InterfaceConsMed{
 	}
 	private void abreConsulta(VReceitaCad rec) {
 		if (FDAOTReceita != null) {
-			VMedCON frame = new VMedCON(FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao), rec);
+			VMedicamentoCON frame = new VMedicamentoCON(FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao), rec);
 			frame.setVisible(true);
 		} else {
 

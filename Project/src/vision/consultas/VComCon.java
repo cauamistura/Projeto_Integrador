@@ -1,32 +1,40 @@
 package vision.consultas;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout;  
+import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import control.DAOTMedicacao;
-import model.MTMedicacao;
+import control.*;
+import model.*;
+import vision.padrao.*;
+import model.interfaces.InterfaceConsCom;
 import model.interfaces.InterfaceConsMed;
-import vision.padrao.RoundButton;
-import vision.padrao.RoundJTextField;
-import vision.padrao.TableSimples;
+import model.interfaces.InterfaceConsUser;
+import vision.VMenu;
+import vision.cadastros.VReceitaCad;
 
-public class VMedicamentoCON extends JFrame {
+public class VComCon extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public DAOTMedicacao FDAOTMedicacao = new DAOTMedicacao();
-	private ArrayList<MTMedicacao> TListMedicacao = new ArrayList<>();
+	public DAOTComorbidade FDAOTComorbidade = new DAOTComorbidade();
+	private ArrayList<MTComorbidade> TListComorbidade = new ArrayList<>();
 	private DefaultTableModel model;
 	private JPanel contentPane;
 	private TableSimples table;
@@ -36,7 +44,7 @@ public class VMedicamentoCON extends JFrame {
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 
-	public VMedicamentoCON(List<MTMedicacao> dados ,InterfaceConsMed event) {
+	public VComCon(List<MTComorbidade> dados ,InterfaceConsCom event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		setTitle("Consulta de Usuario");
@@ -57,9 +65,9 @@ public class VMedicamentoCON extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 
-		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
-		for (MTMedicacao mtMed : TListMedicacao) {
-			Object[][] rowData = {{ mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO() }};
+		TListComorbidade = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
+		for (MTComorbidade mtCom : TListComorbidade) {
+			Object[][] rowData = {{ mtCom.getBDIDCOMORBIDADE(), mtCom.getBDNOMECOMORBIDADE(), mtCom.getBDDESCCOMORBIDADE() }};
 			table.preencherTabela(rowData);	
 		}		
 
@@ -70,8 +78,8 @@ public class VMedicamentoCON extends JFrame {
 				int[] selectedRows = table.getSelectedRows();
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);	
-					MTMedicacao dado = dados.get(modelIndex);
-					event.preencheMedicamento(dado);
+					MTComorbidade dado = dados.get(modelIndex);
+					event.dadosCom(dado);
 					dispose();
 				}
 				table.setCellSelectionEnabled(true);
@@ -97,7 +105,7 @@ public class VMedicamentoCON extends JFrame {
 					atualizarTabela(dados, true);	
 				}
 
-				
+
 				table.setRowSelectionInterval(0, 0);
 					
 			}	
@@ -121,14 +129,14 @@ public class VMedicamentoCON extends JFrame {
 		contentPane.add(buttonsPanel, BorderLayout.SOUTH);
 
 	}
-	public void atualizarTabela(List<MTMedicacao> med, Boolean prFiltro) {
+	public void atualizarTabela(List<MTComorbidade> com, Boolean prFiltro) {
 		table.limparTabela();
 
-		for (MTMedicacao medicamento : med) {
-			if (prFiltro && !medicamento.getBDNOMEMEDICACAO().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
+		for (MTComorbidade comorbidade: com) {
+			if (prFiltro && !comorbidade.getBDNOMECOMORBIDADE().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 				continue;
 			}
-			Object[][] rowData = {{ medicamento.getBDIDMEDICACAO(), medicamento.getBDNOMEMEDICACAO(), medicamento.getBDDESCRICAO() }};
+			Object[][] rowData = {{ comorbidade.getBDIDCOMORBIDADE(), comorbidade.getBDNOMECOMORBIDADE(), comorbidade.getBDDESCCOMORBIDADE() }};
 			table.preencherTabela(rowData);	
 		}
 	}
