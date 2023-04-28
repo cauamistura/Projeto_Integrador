@@ -1,6 +1,7 @@
 package vision.padrao;
 
-import java.awt.Component; 
+import java.awt.Component;
+import java.awt.Graphics;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -36,21 +37,21 @@ public class TableSimples extends JTable {
 				label.setHorizontalAlignment(JLabel.CENTER); // centraliza o conteúdo da célula
 				return label;
 			}
+			
 		});
+		
 	}
-
+	
 	public void preencherTabela(Object[][] data) {
-		  DefaultTableModel model = (DefaultTableModel) getModel();
-	        for (Object[] rowData : data) {
-	            model.addRow(rowData);
-	        }
+		DefaultTableModel model = (DefaultTableModel) getModel();
+		for (Object[] rowData : data) {
+			model.addRow(rowData);
+		}
 	}
 	
 	public void limparTabela() {
-	    DefaultTableModel model = (DefaultTableModel) getModel();
-	    model.setRowCount(0); // Remove todas as linhas da tabela
+		DefaultTableModel model = (DefaultTableModel) getModel();
+		model.setRowCount(0); // Remove todas as linhas da tabela
 	}
-
 	
 }
-

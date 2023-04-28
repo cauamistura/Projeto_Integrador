@@ -12,6 +12,8 @@ public class DateTextField extends RoundJFormattedTextField {
 
     public DateTextField() {
         super(createFormatter());
+        setDisabledTextColor(getForeground());
+        setBackground(getBackground());
         setColumns(10); // define o tamanho do campo
     }
 

@@ -62,14 +62,14 @@ public class VClinicaCad extends JFrame {
 	ArrayList<MTCidade> TListCidade = new ArrayList<>();
 	private VMenu menu = new VMenu();
 	private JPanel contentPane;
-	private JTextField edCidade;
+	private RoundJTextField edCidade;
 	private CNPJTextFiel edCnpj;
-	private JTextField edDescricao;
-	private JTextField edNomeFan;
-	private JTextField edNome;
+	private RoundJTextField edDescricao;
+	private RoundJTextField edNomeFan;
+	private RoundJTextField edNome;
 	private CEPTextField edCep;
-	private JTextField edBairro;
-	private JTextField edSenha;
+	private RoundJTextField edBairro;
+	private RoundJTextField edSenha;
 	private JComboBox cbUF;
 	private RoundButton btnDelet;
 	private RoundButton btnConf;
@@ -133,7 +133,7 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbNomeFan, "flowy,cell 1 2");
 		
 		edNomeFan = new RoundJTextField();
-		edNomeFan.setBorder(new EmptyBorder(3, 3, 3, 3));
+		edNomeFan.setBackground(new Color(255, 255, 255));
 		panel_2.add(edNomeFan, "cell 1 2,growx");
 		edNomeFan.setColumns(10);
 		
@@ -141,7 +141,7 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbDesc, "flowy,cell 2 2");
 		
 		edDescricao = new RoundJTextField();
-		edDescricao.setBorder(new EmptyBorder(3, 3, 3, 3));
+		edDescricao.setBackground(new Color(255, 255, 255));
 		panel_2.add(edDescricao, "cell 2 2,growx");
 		edDescricao.setColumns(10);
 		
@@ -149,7 +149,7 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbNome, "flowy,cell 1 3");
 		
 		edNome = new RoundJTextField();
-		edNome.setBorder(new EmptyBorder(3, 3, 3, 3));
+		edNome.setBackground(new Color(255, 255, 255));
 		panel_2.add(edNome, "cell 1 3,growx");
 		edNome.setColumns(10);
 		
@@ -157,8 +157,8 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbCnpj, "flowy,cell 2 3");
 		
 		edCnpj = new CNPJTextFiel();
+		edCnpj.setBackground(new Color(255, 255, 255));
 		panel_2.add(edCnpj, "cell 2 3,growx");
-		edCnpj.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		edCnpj.setColumns(10);
 		
 		JLabel lbCep = new JLabel("CEP:");
@@ -168,6 +168,7 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbUf, "flowx,cell 2 5");
 		
 		edCep = new CEPTextField();
+		edCep.setBackground(new Color(255, 255, 255));
 		edCep.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(FocusEvent e) {
@@ -199,14 +200,13 @@ public class VClinicaCad extends JFrame {
 			});
 		edCep.setColumns(10);
 		edCep.setBounds(104, 11, 156, 20);
-		edCep.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		panel_2.add(edCep, "cell 1 6,growx");
-		edCep.setColumns(10);
 		
 		JLabel lbBairro = new JLabel("Bairro:");
 		panel_2.add(lbBairro, "flowy,cell 1 7,alignx left");
 		
 		edBairro = new RoundJTextField();
+		edBairro.setBackground(new Color(255, 255, 255));
 		edBairro.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edBairro, "cell 1 7,growx");
 		edBairro.setColumns(10);
@@ -220,7 +220,7 @@ public class VClinicaCad extends JFrame {
 		
 		
 		edCidade = new RoundJTextField();
-		edCidade.setBorder(new EmptyBorder(3, 3, 3, 3));
+		edCidade.setBackground(new Color(255, 255, 255));
 		panel_2.add(edCidade, "cell 2 6,growx");
 		edCidade.setColumns(10);
 		
@@ -231,6 +231,7 @@ public class VClinicaCad extends JFrame {
 		panel_2.add(lbSenha, "flowy,cell 2 7");
 		
 		edSenha = new RoundJTextField();
+		edSenha.setBackground(new Color(255, 255, 255));
 		edSenha.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edSenha, "cell 2 7,growx");
 		edSenha.setColumns(10);
@@ -292,8 +293,6 @@ public class VClinicaCad extends JFrame {
 				if(edCnpj.existeCnpjClinica(FDAOTClinica)) {
 					FDAOTClinica.alterar(FDAOTClinica);
 					
-					menu.AtualizaDadosLogin("", edNome.getText());
-					
 				}
 				else {
 					FDAOTClinica.inserir(FDAOTClinica);
@@ -314,6 +313,8 @@ public class VClinicaCad extends JFrame {
 					}
 					
 				}
+				
+				menu.AtualizaDadosLogin("", edNome.getText());
 				
 				optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 	            dialog = optionPane.createDialog("");
@@ -353,33 +354,9 @@ public class VClinicaCad extends JFrame {
 					FDAOTClinica.setBDIDCLINICA(edCnpj.IdClinica());
 					FDAOTClinica.deletar(FDAOTClinica);
 					
-					optionPane = new JOptionPane("A Clinica foi Deletada", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-		            dialog = optionPane.createDialog("");
-
-		            timer = new Timer(800, new ActionListener() {
-		                @Override
-		                public void actionPerformed(ActionEvent e) {
-		                    dialog.dispose();
-		                }
-		            });
-		            timer.setRepeats(false);
-		            timer.start();
-
-		            dialog.setVisible(true);
+					JOptionPane.showInternalMessageDialog(null, "Excluido com sucesso!");
 				}else {
-					optionPane = new JOptionPane("A Clinica não foi Deletada", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-		            dialog = optionPane.createDialog("");
-
-		            timer = new Timer(800, new ActionListener() {
-		                @Override
-		                public void actionPerformed(ActionEvent e) {
-		                    dialog.dispose();
-		                }
-		            });
-		            timer.setRepeats(false);
-		            timer.start();
-
-		            dialog.setVisible(true);
+					JOptionPane.showInternalMessageDialog(null, "Clinica não foi Excluida!");
 				}
 				
 			}

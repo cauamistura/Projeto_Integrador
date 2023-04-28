@@ -1,23 +1,21 @@
-package  vision.padrao;
+package vision.padrao;
 
-import java.awt.Color; 
-import java.awt.Graphics; 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
-public class RoundJTextField extends JTextField {
-    /**
-	 * 
-	 */
+public class RoundJPasswordField extends JPasswordField{
+	
 	private static final long serialVersionUID = 1L;
 	private Shape shape;
 	private int radii = 10;
     Color color;
     
    
-    public RoundJTextField() {
+    public RoundJPasswordField() {
         super();
         this.color = new Color(255, 255, 255);
         setDisabledTextColor(getForeground());
@@ -42,3 +40,4 @@ public class RoundJTextField extends JTextField {
          return shape.contains(x, y);
     }
 }
+

@@ -270,6 +270,10 @@ public class VComorbidadeCad extends JFrame {
 			limparDados();
 
 			JOptionPane.showInternalMessageDialog(null, "Excluido com sucesso!");
+		}else {
+			
+			JOptionPane.showInternalMessageDialog(null, "Comorbidade não foi Excluida!");
+			
 		}
 	}
 

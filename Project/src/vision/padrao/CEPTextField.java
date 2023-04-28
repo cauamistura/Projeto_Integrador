@@ -28,6 +28,8 @@ public class CEPTextField extends RoundJFormattedTextField {
 
 	public CEPTextField() {
 		super(createFormatter());
+		setDisabledTextColor(getForeground());
+        setBackground(getBackground());
 		setColumns(9);
 	}
 

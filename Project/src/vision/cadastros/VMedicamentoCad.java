@@ -304,38 +304,15 @@ public class VMedicamentoCad extends JFrame {
 			table.limparTabela();
 			atualizatabela();
 			limparDados();
-
-			optionPane = new JOptionPane("O medicamento foi Deletada", JOptionPane.INFORMATION_MESSAGE,
-					JOptionPane.DEFAULT_OPTION, null, new Object[] {}, null);
-			dialog = optionPane.createDialog("");
-
-			timer = new Timer(800, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					dialog.dispose();
-				}
-			});
-			timer.setRepeats(false);
-			timer.start();
-
-			dialog.setVisible(true);
+			
+			JOptionPane.showInternalMessageDialog(null, "Excluido com sucesso!");
+		
 		} else {
-			optionPane = new JOptionPane("O medicamento foi Deletada", JOptionPane.INFORMATION_MESSAGE,
-					JOptionPane.DEFAULT_OPTION, null, new Object[] {}, null);
-			dialog = optionPane.createDialog("");
-
-			timer = new Timer(800, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					dialog.dispose();
-				}
-			});
-			timer.setRepeats(false);
-			timer.start();
-
-			dialog.setVisible(true);
-
+			
+			JOptionPane.showInternalMessageDialog(null, "Medicamento não foi Excluido!");
+			
 		}
+
 	}
 
 }
