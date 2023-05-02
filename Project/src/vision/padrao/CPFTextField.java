@@ -16,6 +16,8 @@ public class CPFTextField extends RoundJFormattedTextField{
     
     public CPFTextField() {
         super(createFormatter());
+        setDisabledTextColor(getForeground());
+        setBackground(getBackground());
         setColumns(14); // define o tamanho do campo
     }
 

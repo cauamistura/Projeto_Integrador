@@ -1,7 +1,9 @@
 package model.interfaces;
 
+import model.MTMedicacao;
+
 public interface InterfaceConsMed {
 
-	void preencheMedicamento(Integer id, String nomeMed, String desc);
+	void preencheMedicamento(MTMedicacao med);
 
 }

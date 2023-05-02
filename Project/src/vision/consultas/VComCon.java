@@ -1,35 +1,50 @@
 package vision.consultas;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout;  
+import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import model.MTDadosUser;
+import control.*;
+import model.*;
+import vision.padrao.*;
+import model.interfaces.InterfaceConsCom;
+import model.interfaces.InterfaceConsMed;
 import model.interfaces.InterfaceConsUser;
-import vision.padrao.RoundButton;
-import vision.padrao.RoundJTextField;
+import vision.VMenu;
+import vision.cadastros.VReceitaCad;
 
-public class VUserCON extends JFrame {
-
+public class VComCon extends JFrame {
+	
 	private static final long serialVersionUID = 1L;
+	
+	public DAOTComorbidade FDAOTComorbidade = new DAOTComorbidade();
+	private ArrayList<MTComorbidade> TListComorbidade = new ArrayList<>();
 	private DefaultTableModel model;
 	private JPanel contentPane;
-	private JTable table;
+	private TableSimples table;
 	private JLabel lbFiltro;
 	private RoundJTextField edFiltro;
 	private RoundButton btnConfirmar;
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 
-	public VUserCON(List<MTDadosUser> dados, InterfaceConsUser inter) {
+	public VComCon(List<MTComorbidade> dados ,InterfaceConsCom event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		setTitle("Consulta de Usuario");
@@ -37,7 +52,7 @@ public class VUserCON extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
 		setContentPane(contentPane);
-		
+
 		edFiltro = new RoundJTextField();
 		edFiltro.setColumns(10);
 
@@ -46,20 +61,15 @@ public class VUserCON extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
-		table = new JTable();
+		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 
-		model = new DefaultTableModel();
-		model.addColumn("CPF");
-		model.addColumn("Nome");
-		model.addColumn("Email");
-
-		for (MTDadosUser dado : dados) {
-			Object[] rowData = { dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDMAIL() };
-			model.addRow(rowData);
-		}
-
-		table.setModel(model);
+		TListComorbidade = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
+		for (MTComorbidade mtCom : TListComorbidade) {
+			Object[][] rowData = {{ mtCom.getBDIDCOMORBIDADE(), mtCom.getBDNOMECOMORBIDADE(), mtCom.getBDDESCCOMORBIDADE() }};
+			table.preencherTabela(rowData);	
+		}		
 
 		btnConfirmar = new RoundButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
@@ -67,11 +77,12 @@ public class VUserCON extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int[] selectedRows = table.getSelectedRows();
 				for (int i = 0; i < selectedRows.length; i++) {
-					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
-					MTDadosUser dado = dados.get(modelIndex);
-					inter.preencheDadosUser(dado);
+					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);	
+					MTComorbidade dado = dados.get(modelIndex);
+					event.dadosCom(dado);
 					dispose();
 				}
+				table.setCellSelectionEnabled(true);
 			}
 		});
 
@@ -79,27 +90,26 @@ public class VUserCON extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int[] selectedRows = table.getSelectedRows();
-				for (int i = 0; i < selectedRows.length; i++) {
-					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
-					MTDadosUser dado = dados.get(modelIndex);
-					inter.exluiUser(dado.getBDIDUSER());
-					dispose();
-				}
+				
 			}
 		});
+		
 		btnFiltro = new RoundButton("Filtro");
 		btnFiltro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (edFiltro.getText().isEmpty()) {
-					atualizarTabela(dados, false);
-				} else {
-					atualizarTabela(dados, true);
-				}
 				
+				if(edFiltro.getText().isEmpty()) {
+					atualizarTabela(dados, false);
+				}else {
+					atualizarTabela(dados, true);	
+				}
+
+
 				table.setRowSelectionInterval(0, 0);
-			}
+					
+			}	
+			
 		});
 
 		JPanel filterPanel = new JPanel();
@@ -117,27 +127,18 @@ public class VUserCON extends JFrame {
 		buttonsPanel.add(botoes);
 
 		contentPane.add(buttonsPanel, BorderLayout.SOUTH);
+
 	}
+	public void atualizarTabela(List<MTComorbidade> com, Boolean prFiltro) {
+		table.limparTabela();
 
-	public void atualizarTabela(List<MTDadosUser> usuarios, Boolean prFiltro) {
-		model.setRowCount(0);
-
-		for (MTDadosUser usuario : usuarios) {
-			if (prFiltro && !usuario.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
+		for (MTComorbidade comorbidade: com) {
+			if (prFiltro && !comorbidade.getBDNOMECOMORBIDADE().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 				continue;
 			}
-			Object[] linha = { usuario.getBDCPF(), usuario.getBDNOMEUSER(), usuario.getBDMAIL() };
-			model.addRow(linha);
+			Object[][] rowData = {{ comorbidade.getBDIDCOMORBIDADE(), comorbidade.getBDNOMECOMORBIDADE(), comorbidade.getBDDESCCOMORBIDADE() }};
+			table.preencherTabela(rowData);	
 		}
 	}
 	
-	public void desabilitaExcluir() {
-		btnExcluir.setVisible(false);
-	}
-	
-	public void desBotoes() {
-		btnConfirmar.setVisible(false);
-		btnExcluir.setVisible(false);
-	}
-
 }

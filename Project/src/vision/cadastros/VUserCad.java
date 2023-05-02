@@ -74,6 +74,7 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 	private RoundButton btnConsulta;
 	private RoundButton btnCAD;
 	
+	private VMenu menu = new VMenu();
 	private JComboBox<MTEstado> cbUF;
 	private JComboBox<MTPermicao> cbPermissao;
 	private JComboBox<String> cbGenero;
@@ -359,6 +360,9 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 							FDAOTDadosUser.inserir(FDAOTDadosUser);
 						}
 						edCpf.requestFocus();
+						
+						menu.AtualizaDadosLogin(edNome.getText(),"" );
+						
 						int resposta = JOptionPane.showConfirmDialog(null,
 								"Salvo com sucesso!\nDeseja limpar os campos?", "Confirmação",
 								JOptionPane.YES_NO_OPTION);

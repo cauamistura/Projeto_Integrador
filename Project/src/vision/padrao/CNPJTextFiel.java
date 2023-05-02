@@ -20,6 +20,8 @@ public class CNPJTextFiel extends RoundJFormattedTextField {
 	
 	public CNPJTextFiel() {
 		super(createFormatter());
+		setDisabledTextColor(getForeground());
+        setBackground(getBackground());
 	    setColumns(18); // define o tamanho do campo
 	}
 

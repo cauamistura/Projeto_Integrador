@@ -29,7 +29,9 @@ import vision.cadastros.VUserCad;
 import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
+import vision.padrao.RoundJPasswordField;
 import vision.padrao.RoundJTextField;
+import javax.swing.JPasswordField;
 
 public class VLogin extends JFrame {
 
@@ -41,7 +43,7 @@ public class VLogin extends JFrame {
 	private DAOTDadosUser FDAODadosUser = new DAOTDadosUser();
 	private DAOTClinica FDAOTClinica = new DAOTClinica();
 	private VMenu menu;
-	private JTextField edSenha;
+	private RoundJPasswordField edSenha;
 	private CPFTextField edCNPJ;
 
 	/**
@@ -113,18 +115,17 @@ public class VLogin extends JFrame {
 
 		edCNPJ = new CPFTextField();
 		edCNPJ.setText("123.456.789-10");
-		edCNPJ.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		panel_2.add(edCNPJ, "cell 1 1,growx");
 		edCNPJ.setColumns(10);
 
 		JLabel lbSenha = new JLabel("Senha:");
 		panel_2.add(lbSenha, "flowy,cell 1 2");
-
-		edSenha = new RoundJTextField();
+		
+		edSenha = new RoundJPasswordField();
+		edSenha.setForeground(new Color(0, 0, 0));
 		edSenha.setText("senha123");
-		edSenha.setBorder(new EmptyBorder(3, 3, 3, 3));
-		panel_2.add(edSenha, "cell 1 2,growx");
 		edSenha.setColumns(10);
+		panel_2.add(edSenha, "cell 1 2,growx");
 
 		JLabel lbAlerta = new JLabel("<Aguardando>");
 		panel_2.add(lbAlerta, "cell 1 5,alignx center");

@@ -158,9 +158,11 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		miMedicamento.setFont(new Font("Arial", Font.BOLD, 12));
 		miMedicamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VMedicamentoCad uc = new VMedicamentoCad(null,null);
-				uc.setLocationRelativeTo(null);
-				uc.setVisible(true);
+				
+				VMedicamentoCad md = new VMedicamentoCad();
+				md.setLocationRelativeTo(null);
+				md.setVisible(true);
+
 			}
 		});
 		mmCad.add(miMedicamento);
