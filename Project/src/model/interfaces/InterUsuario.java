@@ -2,7 +2,7 @@ package model.interfaces;
 
 import model.MTDadosUser;
 
-public interface InterfaceConsUser {
+public interface InterUsuario {
 	
 	public void preencheDadosUser(MTDadosUser listUser);
 

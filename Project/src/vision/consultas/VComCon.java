@@ -1,33 +1,22 @@
 package vision.consultas;
 
 import java.awt.BorderLayout;  
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import control.*;
 import model.*;
 import vision.padrao.*;
-import model.interfaces.InterfaceConsCom;
-import model.interfaces.InterfaceConsMed;
-import model.interfaces.InterfaceConsUser;
-import vision.VMenu;
-import vision.cadastros.VReceitaCad;
+import model.interfaces.InterComorbidade;
 
 public class VComCon extends JFrame {
 	
@@ -35,7 +24,6 @@ public class VComCon extends JFrame {
 	
 	public DAOTComorbidade FDAOTComorbidade = new DAOTComorbidade();
 	private ArrayList<MTComorbidade> TListComorbidade = new ArrayList<>();
-	private DefaultTableModel model;
 	private JPanel contentPane;
 	private TableSimples table;
 	private JLabel lbFiltro;
@@ -44,7 +32,7 @@ public class VComCon extends JFrame {
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 
-	public VComCon(List<MTComorbidade> dados ,InterfaceConsCom event) {
+	public VComCon(List<MTComorbidade> dados ,InterComorbidade event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		setTitle("Consulta de Usuario");
@@ -79,7 +67,7 @@ public class VComCon extends JFrame {
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);	
 					MTComorbidade dado = dados.get(modelIndex);
-					event.dadosCom(dado);
+					event.preencheCom(dado);
 					dispose();
 				}
 				table.setCellSelectionEnabled(true);
@@ -90,7 +78,7 @@ public class VComCon extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				// Adicionar evento de exclusão
 			}
 		});
 		
@@ -98,16 +86,12 @@ public class VComCon extends JFrame {
 		btnFiltro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				if(edFiltro.getText().isEmpty()) {
 					atualizarTabela(dados, false);
 				}else {
 					atualizarTabela(dados, true);	
 				}
-
-
 				table.setRowSelectionInterval(0, 0);
-					
 			}	
 			
 		});
@@ -127,8 +111,8 @@ public class VComCon extends JFrame {
 		buttonsPanel.add(botoes);
 
 		contentPane.add(buttonsPanel, BorderLayout.SOUTH);
-
 	}
+	
 	public void atualizarTabela(List<MTComorbidade> com, Boolean prFiltro) {
 		table.limparTabela();
 
