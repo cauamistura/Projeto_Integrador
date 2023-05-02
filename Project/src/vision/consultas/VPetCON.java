@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTPet;
-import model.interfaces.InterfaceConsPet;
+import model.interfaces.InterPet;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -36,7 +36,7 @@ public class VPetCON extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VPetCON(List<MTPet> dados, InterfaceConsPet ev) {
+	public VPetCON(List<MTPet> dados, InterPet ev) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

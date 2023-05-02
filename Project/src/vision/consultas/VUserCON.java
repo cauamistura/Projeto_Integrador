@@ -13,7 +13,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTDadosUser;
-import model.interfaces.InterfaceConsUser;
+import model.interfaces.InterUsuario;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 
@@ -29,7 +29,7 @@ public class VUserCON extends JFrame {
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 
-	public VUserCON(List<MTDadosUser> dados, InterfaceConsUser inter) {
+	public VUserCON(List<MTDadosUser> dados, InterUsuario inter) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		setTitle("Consulta de Usuario");

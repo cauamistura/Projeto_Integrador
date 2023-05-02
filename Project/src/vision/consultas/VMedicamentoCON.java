@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
-import model.interfaces.InterfaceConsMed;
+import model.interfaces.InterMedicamento;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
@@ -36,7 +36,7 @@ public class VMedicamentoCON extends JFrame {
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 
-	public VMedicamentoCON(List<MTMedicacao> dados ,InterfaceConsMed event) {
+	public VMedicamentoCON(List<MTMedicacao> dados ,InterMedicamento event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		setTitle("Consulta de Usuario");

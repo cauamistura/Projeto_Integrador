@@ -32,7 +32,7 @@ import model.MTDadosUser;
 import model.MTEspecie;
 import model.MTPet;
 import model.MTRaca;
-import model.interfaces.InterfaceConsPet;
+import model.interfaces.InterPet;
 import net.miginfocom.swing.MigLayout;
 import vision.VMenu;
 import vision.consultas.VPetCON;
@@ -45,7 +45,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-public class VPetCad extends JFrame implements InterfaceConsPet {
+public class VPetCad extends JFrame implements InterPet {
 
 	/**
 	 * 

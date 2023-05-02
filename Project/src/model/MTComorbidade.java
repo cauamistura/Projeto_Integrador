@@ -3,13 +3,14 @@ package model;
 import control.ObjectDAO;
 
 public class MTComorbidade extends ObjectDAO {
-	private int BDIDCOMORBIDADE;
+	private Integer BDIDCOMORBIDADE;
 	private String BDNOMECOMORBIDADE, BDDESCCOMORBIDADE;
 	
-	public int getBDIDCOMORBIDADE() {
+
+	public Integer getBDIDCOMORBIDADE() {
 		return BDIDCOMORBIDADE;
 	}
-	public void setBDIDCOMORBIDADE(int bDIDCOMORBIDADE) {
+	public void setBDIDCOMORBIDADE(Integer bDIDCOMORBIDADE) {
 		BDIDCOMORBIDADE = bDIDCOMORBIDADE;
 	}
 	public String getBDNOMECOMORBIDADE() {

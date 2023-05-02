@@ -19,13 +19,13 @@ import control.DAOTMedicacao;
 import control.DAOTReceita;
 import model.MTMedicacao;
 import model.MTReceita;
-import model.interfaces.InterfaceConsMed;
+import model.interfaces.InterMedicamento;
 import vision.consultas.VMedicamentoCON;
 import vision.padrao.DateTextField;
 import vision.padrao.RoundButton;
 import vision.padrao.lupaButton;
 
-public class VReceitaCad extends JFrame implements InterfaceConsMed{
+public class VReceitaCad extends JFrame implements InterMedicamento{
 
 	
 	private DAOTReceita FDAOTReceita = new DAOTReceita();
