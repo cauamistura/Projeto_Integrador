@@ -35,7 +35,7 @@ import model.MTDadosUser;
 import model.MTEndereco;
 import model.MTEstado;
 import model.MTPermicao;
-import model.interfaces.InterfaceConsUser;
+import model.interfaces.InterUsuario;
 import net.miginfocom.swing.MigLayout;
 import vision.VMenu;
 import vision.consultas.VUserCON;
@@ -50,7 +50,7 @@ import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public class VUserCad extends JFrame implements InterfaceConsUser {
+public class VUserCad extends JFrame implements InterUsuario {
 
 	/**
 	 * 

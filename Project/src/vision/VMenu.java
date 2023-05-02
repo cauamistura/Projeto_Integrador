@@ -9,8 +9,8 @@ import control.DAOTDadosUser;
 import control.DAOTPet;
 import model.MTDadosUser;
 import model.MTPet;
-import model.interfaces.InterfaceConsPet;
-import model.interfaces.InterfaceConsUser;
+import model.interfaces.InterPet;
+import model.interfaces.InterUsuario;
 import vision.atendimentos.VEntradaATE;
 import vision.cadastros.*;
 import vision.consultas.VUserCON;
@@ -32,7 +32,7 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Font;
 
-public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet{
+public class VMenu extends JFrame implements InterUsuario, InterPet{
 
 	/**
 	 * 
@@ -87,15 +87,15 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		setJMenuBar(menuBar);
 
 		mmDados = new JMenu("Dados");
-		mmDados.setFont(new Font("Dialog", Font.BOLD, 12));
+		mmDados.setFont(new Font("Arial", Font.PLAIN, 12));
 		menuBar.add(mmDados);
 
 		miClinicaDados = new JMenuItem("Clinica...");
-		miClinicaDados.setFont(new Font("Arial", Font.BOLD, 12));
+		miClinicaDados.setFont(new Font("Arial", Font.PLAIN, 12));
 		mmDados.add(miClinicaDados);
 
 		miUserDados = new JMenuItem("Usuário...");
-		miUserDados.setFont(new Font("Arial", Font.BOLD, 12));
+		miUserDados.setFont(new Font("Arial", Font.PLAIN, 12));
 		miUserDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTDadosUser DAO = new DAOTDadosUser();
@@ -119,11 +119,11 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		});
 
 		mmCad = new JMenu("Cadastrar");
-		mmCad.setFont(new Font("Dialog", Font.BOLD, 12));
+		mmCad.setFont(new Font("Arial", Font.PLAIN, 13));
 		menuBar.add(mmCad);
 
 		miUser = new JMenuItem("Usuário...");
-		miUser.setFont(new Font("Arial", Font.BOLD, 12));
+		miUser.setFont(new Font("Arial", Font.PLAIN, 13));
 		miUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VUserCad uc = new VUserCad();
@@ -133,7 +133,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		mmCad.add(miUser);
 
 		miPet = new JMenuItem("Pet...");
-		miPet.setFont(new Font("Arial", Font.BOLD, 12));
+		miPet.setFont(new Font("Arial", Font.PLAIN, 13));
 		miPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VPetCad uc = new VPetCad();
@@ -144,7 +144,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		mmCad.add(miPet);
 
 		miRaca = new JMenuItem("Raça...");
-		miRaca.setFont(new Font("Arial", Font.BOLD, 12));
+		miRaca.setFont(new Font("Arial", Font.PLAIN, 13));
 		miRaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VRacaCad uc = new VRacaCad();
@@ -155,7 +155,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		mmCad.add(miRaca);
 
 		miMedicamento = new JMenuItem("Medicamento...");
-		miMedicamento.setFont(new Font("Arial", Font.BOLD, 12));
+		miMedicamento.setFont(new Font("Arial", Font.PLAIN, 13));
 		miMedicamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -168,7 +168,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		mmCad.add(miMedicamento);
 
 		miComorbidade = new JMenuItem("Comorbidade...");
-		miComorbidade.setFont(new Font("Arial", Font.BOLD, 12));
+		miComorbidade.setFont(new Font("Arial", Font.PLAIN, 13));
 		miComorbidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VComorbidadeCad v = new VComorbidadeCad();
@@ -179,11 +179,11 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		mmCad.add(miComorbidade);
 
 		mmCON = new JMenu("Consultar");
-		mmCON.setFont(new Font("Dialog", Font.BOLD, 12));
+		mmCON.setFont(new Font("Arial", Font.PLAIN, 12));
 		menuBar.add(mmCON);
 		
 		miUserCons = new JMenuItem("Usuário...");
-		miUserCons.setFont(new Font("Arial", Font.BOLD, 12));
+		miUserCons.setFont(new Font("Arial", Font.PLAIN, 12));
 		miUserCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTDadosUser DAO = new DAOTDadosUser();
@@ -198,7 +198,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		mmCON.add(miUserCons);
 
 		mmPetCons = new JMenuItem("Pet...");
-		mmPetCons.setFont(new Font("Arial", Font.BOLD, 12));
+		mmPetCons.setFont(new Font("Arial", Font.PLAIN, 12));
 		mmPetCons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOTPet DAO = new DAOTPet();
@@ -214,7 +214,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		mmCON.add(mmPetCons);
 
 		mmATE = new JMenu("Atendimento");
-		mmATE.setFont(new Font("Dialog", Font.BOLD, 12));
+		mmATE.setFont(new Font("Arial", Font.PLAIN, 13));
 		menuBar.add(mmATE);
 
 		miEntrada = new JMenuItem("Entrada...");
@@ -229,7 +229,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 		mmATE.add(miEntrada);
 
 		mmSair = new JMenu("Sair");
-		mmSair.setFont(new Font("Dialog", Font.BOLD, 12));
+		mmSair.setFont(new Font("Arial", Font.PLAIN, 13));
 		menuBar.add(mmSair);
 
 		miLogout = new JMenuItem("Logout...");
@@ -256,7 +256,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 
 		descricao = new JLabel("New label");
 		descricao.setForeground(new Color(0, 0, 0));
-		descricao.setFont(new Font("Arial", Font.BOLD, 13));
+		descricao.setFont(new Font("Arial", Font.BOLD, 12));
 		descricao.setBackground(new Color(0, 0, 0));
 		descricao.setEnabled(false);
 		descricao.setHorizontalAlignment(SwingConstants.CENTER);

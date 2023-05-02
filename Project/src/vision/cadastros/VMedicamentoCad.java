@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
-import model.interfaces.InterfaceConsMed;
+import model.interfaces.InterMedicamento;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -63,7 +63,7 @@ import javax.swing.event.ListSelectionListener;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
-import model.interfaces.InterfaceConsMed;
+import model.interfaces.InterMedicamento;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.RoundButton;
 import vision.padrao.TableSimples;

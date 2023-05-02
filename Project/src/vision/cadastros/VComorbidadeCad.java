@@ -30,6 +30,9 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class VComorbidadeCad extends JFrame {
 	/**
@@ -42,11 +45,10 @@ public class VComorbidadeCad extends JFrame {
 	private boolean registroCadastro = true;
 	private int row;
 	private JPanel contentPane;
-	private JPanel panel;
-	private JPanel panel_1;
-	private JPanel panel_2;
-	private JPanel panel_3;
-	private JPanel panel_4;
+	private JPanel pai;
+	private JPanel area;
+	private JPanel card;
+	private JPanel img;
 	private JPanel panel_5;
 	private JPanel panel_6;
 	private RoundJTextField edDescCom;
@@ -58,7 +60,6 @@ public class VComorbidadeCad extends JFrame {
 	private RoundButton btnConf;
 	private JLabel lblNewLabel_3;
 	private JScrollPane scrollPane;
-	private JLabel lblNewLabel_4;
 	private TableSimples table;
 	private JLabel lbStatus;
 
@@ -80,148 +81,149 @@ public class VComorbidadeCad extends JFrame {
 		TListComorbidade = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1300, 799);
+		setBounds(100, 100, 511, 799);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		panel = new JPanel();
-		panel.setBackground(new Color(158, 174, 255));
-		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[100px][1100px,grow][100px]", "[100px][600px,grow][100px]"));
-		
-		panel_1 = new PanelComBackgroundImage(bg);
-		panel_1.setBackground(new Color(158, 174, 255));
-		panel.add(panel_1, "cell 1 1,alignx center");
-		panel_1.setLayout(new MigLayout("", "[450px,grow][630px,grow]", "[580px,grow]"));
-		
-		panel_2 = new JPanel();
-		panel_2.setBackground(new Color(125, 137, 245));
-		panel_1.add(panel_2, "cell 0 0,grow");
-		panel_2.setLayout(new MigLayout("", "[grow]", "[80px,grow][110px,grow][80px,grow]"));
-		
-		panel_4 = new JPanel();
-		panel_4.setBackground(new Color(125, 137, 245));
-		panel_2.add(panel_4, "cell 0 0,grow");
-		panel_4.setLayout(new MigLayout("", "[100px][100px][100px]", "[10px][100px]"));
-		
-		lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setIcon(new ImageIcon(VComorbidadeCad.class.getResource("/vision/images/simboloV.png")));
-		panel_4.add(lblNewLabel_3, "cell 1 1,alignx center");
-		
-		panel_5 = new JPanel();
-		panel_5.setBackground(new Color(125, 137, 245));
-		panel_2.add(panel_5, "cell 0 1,grow");
-		panel_5.setLayout(new MigLayout("", "[grow]", "[][][][][][50px]"));
-		
-		lbNome = new JLabel("Nome:");
-		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_5.add(lbNome, "flowy,cell 0 1");
-		
-		edNomeCom = new RoundJTextField();
-		edNomeCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		edNomeCom.setColumns(10);
-		panel_5.add(edNomeCom, "cell 0 1,growx");
-		
-		lbDescricao = new JLabel("Descrição:");
-		lbDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_5.add(lbDescricao, "flowy,cell 0 3");
-		
-		edDescCom = new RoundJTextField();
-		edDescCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		edDescCom.setColumns(10);
-		panel_5.add(edDescCom, "cell 0 3,growx");
-		
-		lbStatus = new JLabel("Status: Inserindo Comorbidade");
-		lbStatus.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_5.add(lbStatus, "cell 0 5");
-		
-		panel_6 = new JPanel();
-		panel_6.setBackground(new Color(125, 137, 245));
-		panel_2.add(panel_6, "cell 0 2,grow");
-		panel_6.setLayout(new MigLayout("", "[100px][][100px][100px][100px][100px][100px]", "[][][][]"));
-		
-		btnConf = new RoundButton("Comfirmar"
-				+ "");
-		btnConf.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eventConfirmar();
-				table.clearSelection();
-			}
-		});
-		btnConf.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_6.add(btnConf, "cell 1 1");
-		
-		btnlimpar = new RoundButton("Limpar");
-		btnlimpar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limparDados();
-				table.clearSelection();
-			}
-		});
-		btnlimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_6.add(btnlimpar, "cell 3 1");
-		
-		btnDelete = new RoundButton("Deletar");
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int id = FDAOTComorbidade.getBDIDCOMORBIDADE();
-				eventExcluir(id);
-				table.clearSelection();
-			}
-		});
-		btnDelete.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_6.add(btnDelete, "cell 5 1");
-		
-		panel_3 = new JPanel();
-		panel_3.setBackground(new Color(125, 137, 245));
-		panel_1.add(panel_3, "cell 1 0,grow");
-		panel_3.setLayout(new MigLayout("", "[][][][grow][][][]", "[40px][180px][100px][250px,grow][100px][100px]"));
-		
-		lblNewLabel_4 = new JLabel("Cadastro de Comorbidade");
-		lblNewLabel_4.setForeground(new Color(0, 0, 0));
-		lblNewLabel_4.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 20));
-		panel_3.add(lblNewLabel_4, "cell 3 1,alignx center,aligny top");
-		
-		JScrollPane scrollPane = new JScrollPane();
-		panel_3.add(scrollPane, "cell 3 3,grow");
-		
-		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Comorbidade", "Descrição" });
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		pai = new JPanel();
+		pai.setBackground(new Color(158, 174, 255));
+		contentPane.add(pai, BorderLayout.CENTER);
+		pai.setLayout(new MigLayout("", "[100px]", "[100px][600px,grow][100px]"));
+																																																																																																																																																																																																																																		
+																																																																																																																																																																																																																																				area = new PanelComBackgroundImage(bg);
+																																																																																																																																																																																																																																				area.setBackground(new Color(158, 174, 255));
+																																																																																																																																																																																																																																				pai.add(area, "cell 0 1,alignx center");
+																																																																																																																																																																																																																																				GridBagLayout gbl_area = new GridBagLayout();
+																																																																																																																																																																																																																																				gbl_area.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+																																																																																																																																																																																																																																				gbl_area.rowHeights = new int[] { 562, 0 };
+																																																																																																																																																																																																																																				gbl_area.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+																																																																																																																																																																																																																																				gbl_area.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
+																																																																																																																																																																																																																																				area.setLayout(gbl_area);
+																																																																																																																																																																																																																																				
+																																																																																																																																																																																																																																						card = new JPanel();
+																																																																																																																																																																																																																																						card.setBackground(new Color(125, 137, 245));
+																																																																																																																																																																																																																																						GridBagConstraints gbc_card = new GridBagConstraints();
+																																																																																																																																																																																																																																						gbc_card.insets = new Insets(0, 0, 0, 5);
+																																																																																																																																																																																																																																						gbc_card.fill = GridBagConstraints.VERTICAL;
+																																																																																																																																																																																																																																						gbc_card.gridx = 3;
+																																																																																																																																																																																																																																						gbc_card.gridy = 0;
+																																																																																																																																																																																																																																						area.add(card, gbc_card);
+																																																																																																																																																																																																																																						card.setLayout(new MigLayout("", "[grow]", "[][80px,grow][110px,grow][][80px,grow]"));
+																																																																																																																																																																																																																																						
+																																																																																																																																																																																																																																								img = new JPanel();
+																																																																																																																																																																																																																																								img.setBackground(new Color(125, 137, 245));
+																																																																																																																																																																																																																																								card.add(img, "cell 0 0,grow");
+																																																																																																																																																																																																																																								img.setLayout(new MigLayout("", "[100px][100px][100px]", "[10px][100px]"));
+																																																																																																																																																																																																																																								
+																																																																																																																																																																																																																																										lblNewLabel_3 = new JLabel("");
+																																																																																																																																																																																																																																										lblNewLabel_3.setIcon(new ImageIcon(VComorbidadeCad.class.getResource("/vision/images/simboloV.png")));
+																																																																																																																																																																																																																																										img.add(lblNewLabel_3, "cell 1 1,alignx center");
+																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																												panel_5 = new JPanel();
+																																																																																																																																																																																																																																												panel_5.setBackground(new Color(125, 137, 245));
+																																																																																																																																																																																																																																												card.add(panel_5, "cell 0 2,grow");
+																																																																																																																																																																																																																																												panel_5.setLayout(new MigLayout("", "[grow]", "[][][][][][50px]"));
+																																																																																																																																																																																																																																												
+																																																																																																																																																																																																																																														lbNome = new JLabel("Nome:");
+																																																																																																																																																																																																																																														lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+																																																																																																																																																																																																																																														panel_5.add(lbNome, "flowy,cell 0 1");
+																																																																																																																																																																																																																																														
+																																																																																																																																																																																																																																																edNomeCom = new RoundJTextField();
+																																																																																																																																																																																																																																																edNomeCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+																																																																																																																																																																																																																																																edNomeCom.setColumns(10);
+																																																																																																																																																																																																																																																panel_5.add(edNomeCom, "cell 0 1,growx");
+																																																																																																																																																																																																																																																
+																																																																																																																																																																																																																																																		lbDescricao = new JLabel("Descrição:");
+																																																																																																																																																																																																																																																		lbDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+																																																																																																																																																																																																																																																		panel_5.add(lbDescricao, "flowy,cell 0 3");
+																																																																																																																																																																																																																																																		
+																																																																																																																																																																																																																																																				edDescCom = new RoundJTextField();
+																																																																																																																																																																																																																																																				edDescCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+																																																																																																																																																																																																																																																				edDescCom.setColumns(10);
+																																																																																																																																																																																																																																																				panel_5.add(edDescCom, "cell 0 3,growx");
+																																																																																																																																																																																																																																																				
+																																																																																																																																																																																																																																																						lbStatus = new JLabel("Status: Inserindo Comorbidade");
+																																																																																																																																																																																																																																																						lbStatus.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+																																																																																																																																																																																																																																																						panel_5.add(lbStatus, "cell 0 5");
+																																																																																																																																																																																																																																																						
+																																																																																																																																																																																																																																																								JScrollPane scrollPane_1 = new JScrollPane();
+																																																																																																																																																																																																																																																								card.add(scrollPane_1, "cell 0 3");
+																																																																																																																																																																																																																																																								
+																																																																																																																																																																																																																																																										table = new TableSimples(new Object[][] {}, new String[] { "Id", "Comorbidade", "Descrição" });
+																																																																																																																																																																																																																																																										table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																												table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+																																																																																																																																																																																																																																																													@Override
+																																																																																																																																																																																																																																																													public void valueChanged(ListSelectionEvent e) {
+																																																																																																																																																																																																																																																														row = table.getSelectedRow();
+																																																																																																																																																																																																																																																														if (row >= 0) {
+																																																																																																																																																																																																																																																															String nome = table.getValueAt(row, 1).toString();
+																																																																																																																																																																																																																																																															String desc = table.getValueAt(row, 2).toString();
+																																																																																																																																																																																																																																																															edNomeCom.setText(nome);
+																																																																																																																																																																																																																																																															edDescCom.setText(desc);
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																															registroCadastro = false;
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																															FDAOTComorbidade.setBDIDCOMORBIDADE(Integer.valueOf(table.getValueAt(row, 0).toString()));
+																																																																																																																																																																																																																																																										
+																																																																																																																																																																																																																																																															lbStatus.setText("Status: Alterando comorbidade");
+																																																																																																																																																																																																																																																														}
+																																																																																																																																																																																																																																																													}
+																																																																																																																																																																																																																																																												});
+																																																																																																																																																																																																																																																												scrollPane_1.setViewportView(table);
+																																																																																																																																																																																																																																																												
+																																																																																																																																																																																																																																																														panel_6 = new JPanel();
+																																																																																																																																																																																																																																																														panel_6.setBackground(new Color(125, 137, 245));
+																																																																																																																																																																																																																																																														card.add(panel_6, "cell 0 4,grow");
+																																																																																																																																																																																																																																																														panel_6.setLayout(new MigLayout("", "[100px][][100px][100px][100px][100px][100px]", "[][][][]"));
+																																																																																																																																																																																																																																																														
+																																																																																																																																																																																																																																																																btnConf = new RoundButton("Comfirmar" + "");
+																																																																																																																																																																																																																																																																btnConf.setText("Confirmar");
+																																																																																																																																																																																																																																																																btnConf.addActionListener(new ActionListener() {
+																																																																																																																																																																																																																																																																	public void actionPerformed(ActionEvent e) {
+																																																																																																																																																																																																																																																																		eventConfirmar();
+																																																																																																																																																																																																																																																																		table.clearSelection();
+																																																																																																																																																																																																																																																																	}
+																																																																																																																																																																																																																																																																});
+																																																																																																																																																																																																																																																																btnConf.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+																																																																																																																																																																																																																																																																panel_6.add(btnConf, "cell 1 1");
+																																																																																																																																																																																																																																																																
+																																																																																																																																																																																																																																																																		btnlimpar = new RoundButton("Limpar");
+																																																																																																																																																																																																																																																																		btnlimpar.addActionListener(new ActionListener() {
+																																																																																																																																																																																																																																																																			public void actionPerformed(ActionEvent e) {
+																																																																																																																																																																																																																																																																				limparDados();
+																																																																																																																																																																																																																																																																				table.clearSelection();
+																																																																																																																																																																																																																																																																			}
+																																																																																																																																																																																																																																																																		});
+																																																																																																																																																																																																																																																																		btnlimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+																																																																																																																																																																																																																																																																		panel_6.add(btnlimpar, "cell 3 1");
+																																																																																																																																																																																																																																																																		
+																																																																																																																																																																																																																																																																				btnDelete = new RoundButton("Deletar");
+																																																																																																																																																																																																																																																																				btnDelete.addActionListener(new ActionListener() {
+																																																																																																																																																																																																																																																																					public void actionPerformed(ActionEvent e) {
+																																																																																																																																																																																																																																																																						int id = FDAOTComorbidade.getBDIDCOMORBIDADE();
+																																																																																																																																																																																																																																																																						eventExcluir(id);
+																																																																																																																																																																																																																																																																						table.clearSelection();
+																																																																																																																																																																																																																																																																					}
+																																																																																																																																																																																																																																																																				});
+																																																																																																																																																																																																																																																																				btnDelete.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+																																																																																																																																																																																																																																																																				panel_6.add(btnDelete, "cell 5 1");
 
 		atualizatabela();
-
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				row = table.getSelectedRow();
-				if (row >= 0) {
-					String nome = table.getValueAt(row, 1).toString();
-					String desc = table.getValueAt(row, 2).toString();
-					edNomeCom.setText(nome);
-					edDescCom.setText(desc);
-
-					registroCadastro = false;
-
-					FDAOTComorbidade.setBDIDCOMORBIDADE(Integer.valueOf(table.getValueAt(row, 0).toString()));
-
-					lbStatus.setText("Status: Alterando comorbidade");
-				}
-			}
-		});
-		scrollPane.setViewportView(table);
 	}
 
 	private void atualizatabela() {
 		TListComorbidade = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
 
 		for (MTComorbidade com : TListComorbidade) {
-			Object[][] rowData = {{com.getBDIDCOMORBIDADE(), com.getBDNOMECOMORBIDADE(), com.getBDDESCCOMORBIDADE() }};
-			table.preencherTabela(rowData);	
-		}	
-		
+			Object[][] rowData = {
+					{ com.getBDIDCOMORBIDADE(), com.getBDNOMECOMORBIDADE(), com.getBDDESCCOMORBIDADE() } };
+			table.preencherTabela(rowData);
+		}
+
 	}
 
 	private void limparDados() {
@@ -235,13 +237,13 @@ public class VComorbidadeCad extends JFrame {
 	}
 
 	public void eventConfirmar() {
-		
-		if (edNomeCom.getText() == null || edDescCom.getText().isEmpty()){
+
+		if (edNomeCom.getText() == null || edDescCom.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Campo vazio: Comobirdade", "Atenção", 0);
 			edNomeCom.requestFocus();
 			return;
 		}
-		
+
 		FDAOTComorbidade.setBDDESCCOMORBIDADE(edDescCom.getText());
 		FDAOTComorbidade.setBDNOMECOMORBIDADE(edNomeCom.getText());
 
@@ -259,8 +261,8 @@ public class VComorbidadeCad extends JFrame {
 
 	public void eventExcluir(Integer prID) {
 		int resposta = JOptionPane.showConfirmDialog(null,
-				"Ao Deletar esta comorbidade, você não vai mais pode utiliza-la.",
-				"Atenção!", JOptionPane.YES_NO_OPTION);
+				"Ao Deletar esta comorbidade, você não vai mais pode utiliza-la.", "Atenção!",
+				JOptionPane.YES_NO_OPTION);
 
 		if (resposta == JOptionPane.YES_NO_OPTION) {
 			FDAOTComorbidade.deletar(prID);
@@ -270,10 +272,10 @@ public class VComorbidadeCad extends JFrame {
 			limparDados();
 
 			JOptionPane.showInternalMessageDialog(null, "Excluido com sucesso!");
-		}else {
-			
+		} else {
+
 			JOptionPane.showInternalMessageDialog(null, "Comorbidade não foi Excluida!");
-			
+
 		}
 	}
 

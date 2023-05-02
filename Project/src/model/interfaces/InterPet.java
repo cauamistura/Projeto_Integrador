@@ -2,7 +2,7 @@ package model.interfaces;
 
 import model.MTPet;
 
-public interface InterfaceConsPet  {
+public interface InterPet  {
 	
 	public void preencheDadosPet(MTPet listPet);
 
