@@ -247,7 +247,7 @@ public class VEntradaATE extends JFrame implements InterfaceConsUser, InterfaceC
 		}
 		FVPetCON = new VPetCON(listPet, this);
 		
-		FVPetCON.desBotoes();
+		FVPetCON.desExcluir();
 		FVPetCON.setVisible(true);
 	}
 	

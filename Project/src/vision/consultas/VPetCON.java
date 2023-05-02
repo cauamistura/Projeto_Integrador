@@ -135,6 +135,10 @@ public class VPetCON extends JFrame {
 		bntExc.setVisible(false);
 	}
 	
+	public void desExcluir() {
+		bntExc.setVisible(false);
+	}
+	
 	public void atualizarTabela(List<MTPet> pets, Boolean prFiltro) {
 	    model.setRowCount(0);
 
