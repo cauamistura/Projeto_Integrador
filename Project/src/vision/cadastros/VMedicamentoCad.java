@@ -1,53 +1,17 @@
 package vision.cadastros;
 
-import java.awt.EventQueue; 
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-
-import control.DAOTMedicacao;
-import model.MTMedicacao;
-import model.interfaces.InterfaceConsMed;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-
-import net.miginfocom.swing.MigLayout;
-import vision.padrao.PanelComBackgroundImage;
-import vision.padrao.RoundButton;
-import vision.padrao.RoundJTextField;
-import vision.padrao.TableSimples;
-
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.Timer;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.BorderLayout;  
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -63,11 +27,10 @@ import javax.swing.event.ListSelectionListener;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
-import model.interfaces.InterfaceConsMed;
 import net.miginfocom.swing.MigLayout;
+import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.TableSimples;
-import javax.swing.JButton;
 
 public class VMedicamentoCad extends JFrame {
 
@@ -150,7 +113,7 @@ public class VMedicamentoCad extends JFrame {
 		panel_3.add(panel_5, "cell 0 1,grow");
 		panel_5.setLayout(new MigLayout("", "[grow]", "[][][50px][130px]"));
 
-		atualizatabela();
+		
 		
 		lbNome = new JLabel("Nome: ");
 		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
@@ -205,6 +168,7 @@ public class VMedicamentoCad extends JFrame {
 						}
 					}
 				});
+				atualizatabela();
 				scrollPane.setViewportView(table);
 		
 		JPanel panel_4 = new JPanel();
