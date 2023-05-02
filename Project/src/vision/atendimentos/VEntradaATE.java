@@ -40,6 +40,8 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import javax.swing.JSpinner;
 import javax.swing.JScrollPane;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class VEntradaATE extends JFrame implements InterUsuario, InterPet, InterComorbidade {
 
@@ -56,6 +58,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	private JTextPane txtNomeUser;
 	private JTextPane txtNomeRaca;
 	private JTextPane pnDesc;
+	private JLabel lbStatus;
 
 	// Objetos do Atendimeno
 	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
@@ -73,7 +76,6 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	private VPetCON FVPetCON;
 
 	// Obejtos das Comorbidades
-	private MTComorbidade   listComorbidades = new MTComorbidade();
 	private DAOTComorbidade FDAOTComorbidade = new DAOTComorbidade();
 	private VComorbidadeCad TelaComorbidade;
 	private VComCon FConsultaComorbidade;
@@ -121,6 +123,19 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		contentPane.add(lbNumero);
 
 		edNumEntrada = new RoundJTextFieldNum(8);
+		edNumEntrada.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (!edNumEntrada.getText().isEmpty()) {
+					FDAOEntrada.setBDIDENTRADA(Integer.valueOf(edNumEntrada.getText()));
+				}
+				if (FDAOEntrada.existeAtendimento(FDAOEntrada)) {
+					lbStatus.setText("Status: Alterando");
+				} else {
+					lbStatus.setText("Status: Inserindo");
+				}
+			}
+		});
 		edNumEntrada.setBounds(152, 11, 105, 20);
 		contentPane.add(edNumEntrada);
 		edNumEntrada.setColumns(10);
@@ -249,7 +264,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 				if (e.getKeyCode() == KeyEvent.VK_F4) {
 					if (TelaComorbidade == null) {
 						TelaComorbidade = new VComorbidadeCad();
-					}					
+					}
 					TelaComorbidade.setVisible(true);
 				}
 			}
@@ -267,6 +282,11 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		});
 		btnConComorbidade.setBounds(267, 118, 53, 23);
 		contentPane.add(btnConComorbidade);
+
+		lbStatus = new JLabel("Status: Aguardando");
+		lbStatus.setHorizontalAlignment(SwingConstants.LEFT);
+		lbStatus.setBounds(25, 264, 180, 14);
+		contentPane.add(lbStatus);
 	}
 
 	private void chamaConUser() {
@@ -329,16 +349,47 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 
 	private void acaoConfirma() {
 		if (edNumEntrada.getText().isEmpty()) {
-			JOptionPane.showInternalMessageDialog(null, "");
+			int resposta = JOptionPane.showConfirmDialog(null,
+					"Número do atendimento não informado.\nDeseja prencher automaticamente?", "Confirmação",
+					JOptionPane.YES_NO_OPTION);
+
+			if (resposta == JOptionPane.YES_OPTION) {
+				FDAOEntrada.setBDIDENTRADA(FDAOEntrada.getChaveID("tatendimento_entrada", "BDIDENTRADA"));
+			} else {
+				edNumEntrada.requestFocus();
+				return;
+			}
+		} else {
+			FDAOEntrada.setBDIDENTRADA(Integer.valueOf(edNumEntrada.getText()));
 		}
 
-		FDAOEntrada.setBDIDENTRADA(Integer.valueOf(edNumEntrada.getText()));
-		FDAOEntrada.setBDIDPET(1);
-		FDAOEntrada.setBDCOMORBIDADE(1);
+		if (FDAOTPet.getBDIDPET() == null) {
+			JOptionPane.showInternalMessageDialog(null, "Pet invalido!\nConsulte e tente novamente");
+			edNomePet.requestFocus();
+			return;
+		}
+
+		if (FDAOTComorbidade.getBDIDCOMORBIDADE() == null) {
+			JOptionPane.showInternalMessageDialog(null, "Comorbidade invalida!\nConsulte e tente novamente");
+			edComorbidade.requestFocus();
+			return;
+		}
+
+		FDAOEntrada.setBDIDPET(FDAOTPet.getBDIDPET());
+		FDAOEntrada.setBDCOMORBIDADE(FDAOTComorbidade.getBDIDCOMORBIDADE());
 		FDAOEntrada.setBDDATAENT(edDataEntrada.getDate());
 		FDAOEntrada.setBDDESC(pnDesc.getText());
-
-		FDAOEntrada.inserir(FDAOEntrada);
+		
+		try {
+			if (FDAOEntrada.existeAtendimento(FDAOEntrada)) {
+				FDAOEntrada.alterar(FDAOEntrada);
+			} else {
+				FDAOEntrada.inserir(FDAOEntrada);
+			}
+			JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao salvar!");
+		}
 	}
 
 	@Override
@@ -352,8 +403,9 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	}
 
 	@Override
-	public void preencheDadosPet(MTPet listPet) {
-		preenchePet(listPet);
+	public void preencheDadosPet(MTPet dado) {
+		FDAOTPet.setBDIDPET(dado.getBDIDPET());
+		preenchePet(dado);
 	}
 
 	@Override
@@ -363,7 +415,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 
 	@Override
 	public void preencheCom(MTComorbidade dado) {
-		listComorbidades = dado;
-		edComorbidade.setText(listComorbidades.getBDNOMECOMORBIDADE());
+		FDAOTComorbidade.setBDIDCOMORBIDADE(dado.getBDIDCOMORBIDADE());
+		FDAOTComorbidade.setBDNOMECOMORBIDADE(dado.getBDNOMECOMORBIDADE());
+		edComorbidade.setText(FDAOTComorbidade.getBDNOMECOMORBIDADE());
 	}
 }
