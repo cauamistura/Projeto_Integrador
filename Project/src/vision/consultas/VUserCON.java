@@ -119,14 +119,6 @@ public class VUserCON extends JFrame {
 		contentPane.add(buttonsPanel, BorderLayout.SOUTH);
 	}
 
-	public void desBotoes() {
-		btnConfirmar.setEnabled(false);
-		btnConfirmar.setVisible(false);
-
-		btnExcluir.setEnabled(false);
-		btnExcluir.setVisible(false);
-	}
-
 	public void atualizarTabela(List<MTDadosUser> usuarios, Boolean prFiltro) {
 		model.setRowCount(0);
 
@@ -140,6 +132,11 @@ public class VUserCON extends JFrame {
 	}
 	
 	public void desabilitaExcluir() {
+		btnExcluir.setVisible(false);
+	}
+	
+	public void desBotoes() {
+		btnConfirmar.setVisible(false);
 		btnExcluir.setVisible(false);
 	}
 

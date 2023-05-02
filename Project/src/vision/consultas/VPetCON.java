@@ -2,7 +2,6 @@ package vision.consultas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -10,11 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import control.DAOTDadosUser;
-import control.DAOTRaca;
-import model.MTDadosUser;
 import model.MTPet;
-import model.MTRaca;
 import model.interfaces.InterfaceConsPet;
 
 import javax.swing.JTable;
@@ -33,8 +28,6 @@ public class VPetCON extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel model;
-	private DAOTRaca FDAOTRaca = new DAOTRaca();
-	public DAOTDadosUser FDAOTDadosUser = new DAOTDadosUser();
 	private RoundButton btnFiltro;
 	private JTextField edFiltro;
 	private JButton btnConf;
@@ -48,7 +41,8 @@ public class VPetCON extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -66,7 +60,7 @@ public class VPetCON extends JFrame {
 		model.addColumn("Apelido");
 
 		for (MTPet dado : dados) {
-			Object[] rowData = { achaUser(dado.getBDIDUSER()), achaRaca(dado.getBDIDRACA()), dado.getBDNOMEPET(), achaApelido(dado.getBDAPELIDO()) };
+			Object[] rowData = {dado.getBDNOMEUSER(), dado.getBDNOMERACA(), dado.getBDNOMEPET(), achaApelido(dado.getBDAPELIDO()) };
 			model.addRow(rowData);
 		}
 
@@ -112,7 +106,6 @@ public class VPetCON extends JFrame {
 		bnExc = new JButton("Excluir");
 		bnExc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				int[] selectedRows = table.getSelectedRows();
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
@@ -120,29 +113,11 @@ public class VPetCON extends JFrame {
 					ev.exluiPet(dado.getBDIDPET());
 					dispose();
 				}
-				
 			}
 		});
 		panel.add(bnExc);
 		
-	
-		
 	}
-
-	private String achaRaca(Integer id) {
-		String raca = "";
-
-		ArrayList<MTRaca> TListRaca = new ArrayList<>();
-		TListRaca = FDAOTRaca.ListTRaca(FDAOTRaca, 0);
-
-		for (MTRaca mtRaca : TListRaca) {
-			if (mtRaca.getBDIDRACA().equals(id)) {
-				raca = mtRaca.getBDNOMERACA();
-			}
-		}
-		return raca;
-	}
-
 	
 	private String achaApelido(String apelido) {
 		if (apelido == null || apelido.length() == 0) {
@@ -155,24 +130,15 @@ public class VPetCON extends JFrame {
 	    model.setRowCount(0);
 
 	    for (MTPet pet : pets) {
-	        if (prFiltro && !achaUser(pet.getBDIDUSER()).toLowerCase().contains(edFiltro.getText().toLowerCase())) {
+	        if (prFiltro && !pet.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 	            continue; 
 	        }
-	        Object[] linha = { achaUser(pet.getBDIDUSER()), achaRaca(pet.getBDIDRACA()), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) };
+	        Object[] linha = { pet.getBDNOMEUSER(), pet.getBDNOMERACA(), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) };
 	        model.addRow(linha);
 	    }
 	}
 	
-	private String achaUser(int userId) {
-		String userName = "";
-		ArrayList<MTDadosUser> TListUser = new ArrayList<>();
-		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
-
-		for (MTDadosUser mtUser : TListUser) {
-			if (mtUser.getBDIDUSER().equals(userId)) {
-				userName = mtUser.getBDNOMEUSER();
-			}
-		}
-		return userName;
+	public void desabilitaExcluir() {
+		bnExc.setVisible(false);
 	}
 }

@@ -108,9 +108,10 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 		setTitle("Cadastro de Usuário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 678, 693);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
@@ -376,7 +377,7 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 				}
 			}
 		});
-		btnCAD.setText("COMFIRMAR");
+		btnCAD.setText("Confirmar");
 		;
 		pnContent.add(btnCAD, "cell 3 10,growx");
 
@@ -485,23 +486,6 @@ public class VUserCad extends JFrame implements InterfaceConsUser {
 		cbPermissao.setEnabled(false);
 		
 		lbStatus.setText("Status: Usuario Logado");
-	}
-
-	public void habilitaBotoes(Boolean prConsulta) {
-		if (prConsulta) {
-			btnConsulta.setEnabled(true);
-			btnConsulta.setVisible(true);
-		}
-		btnExcluir.setEnabled(true);
-		btnLimpar.setEnabled(true);
-
-		btnExcluir.setVisible(true);
-		btnLimpar.setVisible(true);
-
-		edCpf.setEnabled(true);
-		cbPermissao.setEnabled(true);
-		
-		lbStatus.setText("Status: Alterando");
 	}
 
 	@Override
