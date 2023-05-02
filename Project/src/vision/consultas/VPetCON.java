@@ -30,8 +30,8 @@ public class VPetCON extends JFrame {
 	private DefaultTableModel model;
 	private RoundButton btnFiltro;
 	private JTextField edFiltro;
-	private JButton btnConf;
-	private JButton bnExc;
+	private RoundButton btnConf;
+	private RoundButton bntExc;
 
 	/**
 	 * Create the frame.
@@ -47,7 +47,7 @@ public class VPetCON extends JFrame {
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 434, 212);
+		scrollPane.setBounds(0, 0, 434, 189);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
@@ -67,7 +67,7 @@ public class VPetCON extends JFrame {
 		table.setModel(model);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 210, 434, 51);
+		panel.setBounds(1, 190, 434, 34);
 		contentPane.add(panel);
 		
 		JLabel lblNewLabel = new JLabel("Nome");
@@ -89,7 +89,26 @@ public class VPetCON extends JFrame {
 		});
 		panel.add(btnFiltro);
 		
-		btnConf = new JButton("Confirmar");
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(0, 223, 436, 41);
+		contentPane.add(panel_1);
+		
+		btnConf = new RoundButton("Confirmar");
+		panel_1.add(btnConf);
+		
+		bntExc = new RoundButton("Excluir");
+		panel_1.add(bntExc);
+		bntExc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int[] selectedRows = table.getSelectedRows();
+				for (int i = 0; i < selectedRows.length; i++) {
+					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
+					MTPet dado = dados.get(modelIndex);
+					ev.exluiPet(dado.getBDIDPET());
+					dispose();
+				}
+			}
+		});
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int[] selectedRows = table.getSelectedRows();
@@ -101,21 +120,6 @@ public class VPetCON extends JFrame {
 				}
 			}
 		});
-		panel.add(btnConf);
-		
-		bnExc = new JButton("Excluir");
-		bnExc.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int[] selectedRows = table.getSelectedRows();
-				for (int i = 0; i < selectedRows.length; i++) {
-					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
-					MTPet dado = dados.get(modelIndex);
-					ev.exluiPet(dado.getBDIDPET());
-					dispose();
-				}
-			}
-		});
-		panel.add(bnExc);
 		
 	}
 	
@@ -124,6 +128,11 @@ public class VPetCON extends JFrame {
 			return "(Sem apelido)";
 		}
 		return apelido;
+	}
+	
+	public void desBotoes() {
+		btnConf.setVisible(false);
+		bntExc.setVisible(false);
 	}
 	
 	public void atualizarTabela(List<MTPet> pets, Boolean prFiltro) {
@@ -136,9 +145,5 @@ public class VPetCON extends JFrame {
 	        Object[] linha = { pet.getBDNOMEUSER(), pet.getBDNOMERACA(), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) };
 	        model.addRow(linha);
 	    }
-	}
-	
-	public void desabilitaExcluir() {
-		bnExc.setVisible(false);
 	}
 }

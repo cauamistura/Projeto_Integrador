@@ -140,6 +140,7 @@ public class VLogin extends JFrame {
 					FDAOTClinica.ListTClinica(FDAOTClinica);
 					if (validaUser(TListClinica)) {
 						menu.setVisible(true);
+						menu.setLocationRelativeTo(null);
 						dispose();
 					} else {
 						TListClinica = FDAODadosUser.ListTDadosUser(FDAODadosUser);

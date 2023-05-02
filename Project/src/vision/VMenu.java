@@ -206,7 +206,7 @@ public class VMenu extends JFrame implements InterfaceConsUser, InterfaceConsPet
 				list = DAO.ListTPet(DAO);
 
 				VPetCON v = new VPetCON(list, local);
-				/// v.desabilitaBotoes();
+				v.desBotoes();
 				v.setLocationRelativeTo(null);
 				v.setVisible(true);
 			}
