@@ -186,6 +186,13 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		contentPane.add(btnConUser);
 
 		RoundButton btnExcluir = new RoundButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!edNumEntrada.getText().isEmpty()) {
+					excluirAtendimento(Integer.valueOf(edNumEntrada.getText()));
+				}
+			}
+		});
 		btnExcluir.setBounds(57, 230, 86, 23);
 		contentPane.add(btnExcluir);
 
@@ -345,6 +352,27 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		txtNomeRaca.setText("");
 		txtNomeUser.setText("");
 		pnDesc.setText("");
+	}
+	
+	private void excluirAtendimento(Integer prID) {
+		if (prID == null) {
+			JOptionPane.showMessageDialog(null, "Número de atendimento invalido!");
+			edNumEntrada.requestFocus();
+			return;
+		}
+		
+		int resposta = JOptionPane.showConfirmDialog(null,
+				"Você realmente deseja excluir?\nTodos os dados vinculados a esta entrada serão excluídos.",
+				"Confirmação", JOptionPane.YES_NO_OPTION);
+
+		if (resposta == JOptionPane.YES_OPTION) {
+			try {
+				FDAOEntrada.deletar(prID);
+				JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Erro ao excluir.");
+			}
+		}
 	}
 
 	private void acaoConfirma() {

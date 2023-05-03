@@ -24,7 +24,6 @@ import javax.swing.event.ListSelectionListener;
 
 import control.DAOTComorbidade;
 import model.MTComorbidade;
-import model.MTMedicacao;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
