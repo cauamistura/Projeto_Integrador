@@ -314,8 +314,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 			return;
 		}
 		FVPetCON = new VPetCON(listPet, this);
-
-		FVPetCON.desabilitaExcluir();
+		
+		FVPetCON.desExcluir();
 		FVPetCON.setVisible(true);
 	}
 
