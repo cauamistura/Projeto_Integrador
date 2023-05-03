@@ -29,7 +29,7 @@ import control.DAOTMedicacao;
 import control.DAOTReceita;
 import model.MTMedicacao;
 import model.MTReceita;
-import model.interfaces.InterfaceConsMed;
+import model.interfaces.InterMedicamento;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
@@ -94,9 +94,6 @@ public class VReceitaCad extends JFrame implements InterMedicamento{
 			e.printStackTrace();
 		}
 		
-		
-		
-		
 		VReceitaCad rec = this;
 			
 		setTitle("Cadastro de Receita");
@@ -144,7 +141,7 @@ public class VReceitaCad extends JFrame implements InterMedicamento{
 		panel_4.setLayout(new MigLayout("", "[100px][][100px]", "[]"));
 		
 		lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon(VReceitaCad.class.getResource("/vision/images/medicine.png")));
+//		lblNewLabel_5.setIcon(new ImageIcon(VReceitaCad.class.getResource("/vision/images/medicine.png")));
 		panel_4.add(lblNewLabel_5, "cell 1 0");
 		
 		panel_3 = new JPanel();
