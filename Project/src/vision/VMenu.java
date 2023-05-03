@@ -12,6 +12,7 @@ import model.MTPet;
 import model.interfaces.InterPet;
 import model.interfaces.InterUsuario;
 import vision.atendimentos.VEntradaATE;
+import vision.atendimentos.VSaidaATE;
 import vision.cadastros.*;
 import vision.consultas.VUserCON;
 import vision.consultas.VPetCON;
@@ -69,6 +70,7 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 	private JMenuItem mmPetCons;
 	private JMenuItem miComorbidade;
 	private JMenuItem miEntrada;
+	private JMenuItem miSaida;
 
 	/**
 	 * 
@@ -227,6 +229,16 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 			}
 		});
 		mmATE.add(miEntrada);
+		
+		miSaida = new JMenuItem("Saida..");
+		miSaida.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VSaidaATE v = new VSaidaATE();
+				v.setLocationRelativeTo(null);
+				v.setVisible(true);
+			}
+		});
+		mmATE.add(miSaida);
 
 		mmSair = new JMenu("Sair");
 		mmSair.setFont(new Font("Arial", Font.PLAIN, 13));

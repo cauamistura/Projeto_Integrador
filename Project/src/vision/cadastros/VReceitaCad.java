@@ -20,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
@@ -29,16 +28,15 @@ import control.DAOTMedicacao;
 import control.DAOTReceita;
 import model.MTMedicacao;
 import model.MTReceita;
-import model.interfaces.InterMedicamento;
+import model.interfaces.InterReceita;
 import net.miginfocom.swing.MigLayout;
 import vision.consultas.VMedicamentoCON;
 import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
-import vision.padrao.RoundJTextField;
 import vision.padrao.lupaButton;
 
-public class VReceitaCad extends JFrame implements InterMedicamento{
+public class VReceitaCad extends JFrame implements InterReceita{
 
 	
 	private DAOTReceita FDAOTReceita = new DAOTReceita();
