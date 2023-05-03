@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +20,18 @@ import javax.swing.table.DefaultTableModel;
 import control.DAOTMedicacao;
 import model.MTMedicacao;
 import model.interfaces.InterMedicamento;
+import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
+import java.awt.Color;
+import net.miginfocom.swing.MigLayout;
+
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.JTable;
 
 public class VMedicamentoCON extends JFrame {
 	
@@ -29,30 +41,58 @@ public class VMedicamentoCON extends JFrame {
 	private ArrayList<MTMedicacao> TListMedicacao = new ArrayList<>();
 	private DefaultTableModel model;
 	private JPanel contentPane;
-	private TableSimples table;
-	private JLabel lbFiltro;
+	private JPanel panelBackground;
+	private JPanel panelBotoes;
+	private JPanel panelTabela;
+	private JPanel panelFiltro;
+	private JLabel lblFiltro;
+	private JButton btnFiltro;
 	private RoundJTextField edFiltro;
-	private RoundButton btnConfirmar;
+	private RoundButton btnComfirmar;
 	private RoundButton btnExcluir;
-	private RoundButton btnFiltro;
+	private JScrollPane scrollPane;
+	private JLabel lblNewLabel_1;
+	private TableSimples table;
 
 	public VMedicamentoCON(List<MTMedicacao> dados ,InterMedicamento event) {
+		BufferedImage bg = null;
+		;
+		try {
+			bg = ImageIO.read(new File("src/vision/images/BGLogin.png"));
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 500, 300);
+		setBounds(100, 100, 600, 400);
 		setTitle("Consulta de Usuario");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
-		contentPane.setLayout(new BorderLayout());
+		contentPane.setBackground(new Color(158, 174, 255));
+		
 		setContentPane(contentPane);
-
-		edFiltro = new RoundJTextField();
-		edFiltro.setColumns(10);
-
-		lbFiltro = new JLabel("Nome: ");
-
+		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][250px,grow][50px]"));
+		
+		panelBackground = new PanelComBackgroundImage(bg);
+		panelBackground.setBackground(new Color(158, 174, 255));
+		contentPane.add(panelBackground, "cell 1 1,alignx center");
+		panelBackground.setLayout(new MigLayout("", "[grow]", "[150px,grow][grow][grow]"));
+		
+		panelTabela = new JPanel();
+		panelTabela.setBackground(new Color(125, 137, 245));
+		panelBackground.add(panelTabela, "cell 0 0,grow");
+		panelTabela.setLayout(new MigLayout("", "[][grow][]", "[][grow]"));
+		
+		lblNewLabel_1 = new JLabel("Consulta Usuario");
+		lblNewLabel_1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		panelTabela.add(lblNewLabel_1, "cell 1 0,alignx center");
+		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.CENTER);
-
+		panelTabela.add(scrollPane, "cell 1 1,grow");
+		
 		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
@@ -61,30 +101,21 @@ public class VMedicamentoCON extends JFrame {
 		for (MTMedicacao mtMed : TListMedicacao) {
 			Object[][] rowData = {{ mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO() }};
 			table.preencherTabela(rowData);	
-		}		
-
-		btnConfirmar = new RoundButton("Confirmar");
-		btnConfirmar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int[] selectedRows = table.getSelectedRows();
-				for (int i = 0; i < selectedRows.length; i++) {
-					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);	
-					MTMedicacao dado = dados.get(modelIndex);
-					event.preencheMedicamento(dado);
-					dispose();
-				}
-				table.setCellSelectionEnabled(true);
-			}
-		});
-
-		btnExcluir = new RoundButton("Excluir");
-		btnExcluir.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+		}
+		
+		panelFiltro = new JPanel();
+		panelFiltro.setBackground(new Color(125, 137, 245));
+		panelBackground.add(panelFiltro, "cell 0 1,grow");
+		panelFiltro.setLayout(new MigLayout("", "[100px][][100px,grow][][][100px]", "[]"));
+		
+		lblFiltro = new JLabel("Nome:");
+		lblFiltro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panelFiltro.add(lblFiltro, "cell 1 0,alignx trailing");
+		
+		edFiltro = new RoundJTextField();
+		edFiltro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+		panelFiltro.add(edFiltro, "cell 2 0,growx");
+		edFiltro.setColumns(10);
 		
 		btnFiltro = new RoundButton("Filtro");
 		btnFiltro.addActionListener(new ActionListener() {
@@ -101,24 +132,41 @@ public class VMedicamentoCON extends JFrame {
 				table.setRowSelectionInterval(0, 0);
 					
 			}	
-			
 		});
+		btnFiltro.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 12));
+		panelFiltro.add(btnFiltro, "cell 4 0");
+		
+		panelBotoes = new JPanel();
+		panelBotoes.setBackground(new Color(125, 137, 245));
+		panelBackground.add(panelBotoes, "cell 0 2,grow");
+		panelBotoes.setLayout(new MigLayout("", "[160px][100px][40px][100px][100px]", "[]"));
+		
+		btnComfirmar = new RoundButton("Confirmar");
+		btnComfirmar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int[] selectedRows = table.getSelectedRows();
+				for (int i = 0; i < selectedRows.length; i++) {
+					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);	
+					MTMedicacao dado = dados.get(modelIndex);
+					event.preencheMedicamento(dado);
+					dispose();
+				}
+				table.setCellSelectionEnabled(true);
+			}
+		});
+		btnComfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+		panelBotoes.add(btnComfirmar, "cell 1 0,growx");
+		
+		btnExcluir = new RoundButton("Excluir");
+		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+		panelBotoes.add(btnExcluir, "cell 3 0,growx");
 
-		JPanel filterPanel = new JPanel();
-		filterPanel.add(lbFiltro);
-		filterPanel.add(edFiltro);
-		filterPanel.add(btnFiltro);
-
-		JPanel botoes = new JPanel();
-		botoes.add(btnConfirmar);
-		botoes.add(btnExcluir);
-
-		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(2, 1));
-		buttonsPanel.add(filterPanel);
-		buttonsPanel.add(botoes);
-
-		contentPane.add(buttonsPanel, BorderLayout.SOUTH);
+		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
+		for (MTMedicacao mtMed : TListMedicacao) {
+			Object[][] rowData = {{ mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO() }};
+			table.preencherTabela(rowData);	
+		}
 
 	}
 	public void atualizarTabela(List<MTMedicacao> med, Boolean prFiltro) {
