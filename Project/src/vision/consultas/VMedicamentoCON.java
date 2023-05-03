@@ -1,7 +1,7 @@
 package vision.consultas;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,19 +21,12 @@ import javax.swing.table.DefaultTableModel;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
-import model.interfaces.InterMedicamento;
+import model.interfaces.InterReceita;
+import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
-import java.awt.Color;
-import net.miginfocom.swing.MigLayout;
-
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import java.awt.Font;
-import javax.swing.JTable;
 
 public class VMedicamentoCON extends JFrame {
 	
@@ -54,7 +49,7 @@ public class VMedicamentoCON extends JFrame {
 	private JLabel lblNewLabel_1;
 	private TableSimples table;
 
-	public VMedicamentoCON(List<MTMedicacao> dados ,InterMedicamento event) {
+	public VMedicamentoCON(List<MTMedicacao> dados ,InterReceita event) {
 		BufferedImage bg = null;
 		;
 		try {
@@ -95,14 +90,9 @@ public class VMedicamentoCON extends JFrame {
 		
 		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		atualizarTabela(dados, false);
 		scrollPane.setViewportView(table);
 
-		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
-		for (MTMedicacao mtMed : TListMedicacao) {
-			Object[][] rowData = {{ mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO() }};
-			table.preencherTabela(rowData);	
-		}
-		
 		panelFiltro = new JPanel();
 		panelFiltro.setBackground(new Color(125, 137, 245));
 		panelBackground.add(panelFiltro, "cell 0 1,grow");
@@ -161,13 +151,6 @@ public class VMedicamentoCON extends JFrame {
 		btnExcluir = new RoundButton("Excluir");
 		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		panelBotoes.add(btnExcluir, "cell 3 0,growx");
-
-		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
-		for (MTMedicacao mtMed : TListMedicacao) {
-			Object[][] rowData = {{ mtMed.getBDIDMEDICACAO(), mtMed.getBDNOMEMEDICACAO(), mtMed.getBDDESCRICAO() }};
-			table.preencherTabela(rowData);	
-		}
-
 	}
 	public void atualizarTabela(List<MTMedicacao> med, Boolean prFiltro) {
 		table.limparTabela();

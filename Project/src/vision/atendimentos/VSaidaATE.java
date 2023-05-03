@@ -51,7 +51,7 @@ public class VSaidaATE extends JFrame {
 			}
 			
 		});
-		btReceita.setBounds(353, -2, 49, 25);
+		btReceita.setBounds(353, 0, 49, 25);
 		contentPane.add(btReceita);
 		
 		btnEntrada = new lupaButton("");
@@ -61,7 +61,7 @@ public class VSaidaATE extends JFrame {
 				JOptionPane.showMessageDialog(null, "Abre a tela de Cosulta de Atendimento Entrada");
 			}
 		});
-		btnEntrada.setBounds(117, -2, 49, 25);
+		btnEntrada.setBounds(117, 0, 49, 25);
 		contentPane.add(btnEntrada);
 		
 		DescSaida = new JTextPane();
@@ -117,11 +117,11 @@ public class VSaidaATE extends JFrame {
 		contentPane.add(lblSaida);
 		
 		JLabel lblReceita = new JLabel("Receita");
-		lblReceita.setBounds(265, -2, 70, 15);
+		lblReceita.setBounds(265, 5, 70, 15);
 		contentPane.add(lblReceita);
 		
 		JLabel lblEntrada = new JLabel("Entrada");
-		lblEntrada.setBounds(29, -2, 70, 15);
+		lblEntrada.setBounds(29, 5, 70, 15);
 		contentPane.add(lblEntrada);
 		
 		edNomeUser = new JTextField();
