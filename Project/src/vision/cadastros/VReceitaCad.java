@@ -39,6 +39,10 @@ import vision.padrao.lupaButton;
 public class VReceitaCad extends JFrame implements InterReceita{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DAOTReceita FDAOTReceita = new DAOTReceita();
 	private DAOTMedicacao FDAOTMedicacao = new DAOTMedicacao();
 	private ArrayList<MTReceita> TListReceita = new ArrayList<>();
