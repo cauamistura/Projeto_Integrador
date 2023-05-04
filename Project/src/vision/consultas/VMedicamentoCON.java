@@ -62,26 +62,26 @@ public class VMedicamentoCON extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
-		setTitle("Consulta de Usuario");
+		setBounds(100, 100, 647, 454);
+		setTitle("Consulta de Medicamento");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(158, 174, 255));
 		
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][250px,grow][50px]"));
+		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][350px,grow][50px]"));
 		
 		panelBackground = new PanelComBackgroundImage(bg);
 		panelBackground.setBackground(new Color(158, 174, 255));
 		contentPane.add(panelBackground, "cell 1 1,alignx center");
-		panelBackground.setLayout(new MigLayout("", "[grow]", "[150px,grow][grow][grow]"));
+		panelBackground.setLayout(new MigLayout("", "[grow]", "[250px,grow][grow][grow]"));
 		
 		panelTabela = new JPanel();
 		panelTabela.setBackground(new Color(125, 137, 245));
 		panelBackground.add(panelTabela, "cell 0 0,grow");
-		panelTabela.setLayout(new MigLayout("", "[][grow][]", "[][grow]"));
+		panelTabela.setLayout(new MigLayout("", "[][grow][]", "[][450px,grow]"));
 		
-		lblNewLabel_1 = new JLabel("Consulta Usuario");
+		lblNewLabel_1 = new JLabel("Consulta Medicamento");
 		lblNewLabel_1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		panelTabela.add(lblNewLabel_1, "cell 1 0,alignx center");
 		

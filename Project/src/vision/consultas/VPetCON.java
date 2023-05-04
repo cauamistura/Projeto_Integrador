@@ -65,7 +65,7 @@ public class VPetCON extends JFrame {
 			e.printStackTrace();
 		}
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 623, 488);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(158, 174, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -58,7 +58,7 @@ public class VUserCON extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 643, 477);
 		setTitle("Consulta de Usuario");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();

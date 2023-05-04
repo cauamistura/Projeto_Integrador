@@ -7,6 +7,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -350,13 +351,34 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		FVPetCON.desExcluir();
 		FVPetCON.setVisible(true);
 	}
-
+	
 	private void chamaConComorbidade() {
 		ArrayList<MTComorbidade> list = new ArrayList<>();
 		list = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
 
 		FConsultaComorbidade = new VComCon(list, this);
 		FConsultaComorbidade.setVisible(true);
+	}
+	
+	private void preencheAtendimeno(MTAtendimenoEntrada dado) {
+		edNumEntrada.setText(String.valueOf(dado.getBDIDENTRADA()));
+		pnDesc.setText(dado.getBDDESC());
+		
+		edComorbidade.setText(achaComorbidade(dado.getBDCOMORBIDADE()));
+		FDAOEntrada.setBDCOMORBIDADE(dado.getBDCOMORBIDADE());
+		
+		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+		edDataEntrada.setText(dado.getBDDATAENT().format(FOMATTER));
+		
+		//Usuario 
+		edCpf.setText(dado.getBDCPF());
+		txtNomeUser.setText(dado.getBDNOMEUSER());
+		FDAOEntrada.setBDIDUSER(dado.getBDIDUSER());
+		
+		//Pet 
+		edNomePet.setText(dado.getBDNOMEPET());
+		txtNomeRaca.setText(dado.getBDNOMERACA());
+		FDAOEntrada.setBDIDPET(dado.getBDIDPET());
 	}
 
 	private void preencheUser(MTDadosUser list) {
@@ -377,6 +399,29 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		txtNomeRaca.setText("");
 		txtNomeUser.setText("");
 		pnDesc.setText("");
+		edComorbidade.setText("");
+		
+		FDAOEntrada.setBDIDENTRADA(null);
+		FDAOEntrada.setBDIDUSER(null);
+		FDAOEntrada.setBDIDPET(null);
+		FDAOEntrada.setBDCOMORBIDADE(null);
+		
+		lbStatus.setText("Status: Aguardando");
+	}
+	
+	private String achaComorbidade(Integer prID) {
+		ArrayList<MTComorbidade> listCom = new ArrayList<>();
+		try {
+			listCom = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
+			for (MTComorbidade com : listCom) {
+				if (com.getBDIDCOMORBIDADE() == prID) {
+					return com.getBDNOMECOMORBIDADE();
+				}
+			}
+		} finally {
+			listCom = null;
+		}
+		return null;
 	}
 	
 	private void excluirAtendimento(Integer prID) {
@@ -427,6 +472,12 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 			edComorbidade.requestFocus();
 			return;
 		}
+		
+		if (!edDataEntrada.validaDate()) {
+			JOptionPane.showInternalMessageDialog(null, "Data invalida.");
+			edDataEntrada.requestFocus();
+			return;
+		}
 
 		FDAOEntrada.setBDIDPET(FDAOTPet.getBDIDPET());
 		FDAOEntrada.setBDCOMORBIDADE(FDAOTComorbidade.getBDIDCOMORBIDADE());
@@ -443,6 +494,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao salvar!");
 		}
+		
+		limpaCampos();
 	}
 
 	@Override
@@ -475,8 +528,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 
 	@Override
 	public void preencheDadosEntrada(MTAtendimenoEntrada listAtendimento) {
-		// TODO Auto-generated method stub
-		
+		preencheAtendimeno(listAtendimento);
 	}
 
 	@Override

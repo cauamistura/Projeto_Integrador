@@ -57,6 +57,7 @@ public class VMedicamentoCad extends JFrame {
 
 
 	public VMedicamentoCad()  {
+		setTitle("Cadastro de Medicamento");
 		BufferedImage bg = null;
 		;
 		try {
