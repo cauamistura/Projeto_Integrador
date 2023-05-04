@@ -64,17 +64,17 @@ public class VUserCON extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(158, 174, 255));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][250px,grow][50px]"));
+		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][350px,grow][50px]"));
 		
 		panelBackgroud = new PanelComBackgroundImage(bg);
 		panelBackgroud.setBackground(new Color(158, 174, 255));
 		contentPane.add(panelBackgroud, "cell 1 1,alignx center");
-		panelBackgroud.setLayout(new MigLayout("", "[480px,grow]", "[200px,grow][grow][]"));
+		panelBackgroud.setLayout(new MigLayout("", "[480px,grow]", "[300px,grow][grow][]"));
 		
 		panelTabela = new JPanel();
 		panelTabela.setBackground(new Color(125, 137, 245));
 		panelBackgroud.add(panelTabela, "cell 0 0,grow");
-		panelTabela.setLayout(new MigLayout("", "[][250px,grow][]", "[][grow]"));
+		panelTabela.setLayout(new MigLayout("", "[][250px,grow][]", "[][200px,grow]"));
 		
 		lblNewLabel_1 = new JLabel("Consulta Usuario");
 		lblNewLabel_1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));

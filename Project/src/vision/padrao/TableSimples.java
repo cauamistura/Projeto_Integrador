@@ -4,37 +4,35 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.Label;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class TableSimples extends JTable {
 	private static final long serialVersionUID = 1L;
 	private DefaultTableCellRenderer headerRenderer;
 
 	public TableSimples(Object[][] data, String[] columnNames) {
-        super(new DefaultTableModel(data, columnNames) {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 0) {
-                    return Integer.class; // a coluna "Id" é do tipo Integer
-                } else {
-                    return super.getColumnClass(columnIndex);
-                }
-            }
-        });
-        
-        // Define a largura das colunas
-        getColumnModel().getColumn(0).setPreferredWidth(500);
-        getColumnModel().getColumn(1).setPreferredWidth(500);
-        getColumnModel().getColumn(2).setPreferredWidth(500);
-        
+		super(new DefaultTableModel(data, columnNames) {});
+		
+		TableColumnModel columnModel = getColumnModel();
+		for (int i = 0; i < columnModel.getColumnCount(); i++) {
+		    TableColumn column = columnModel.getColumn(i);
+		    column.setPreferredWidth(500);
+		}
+		
+		definirLarguraColunas();
+		definirCentralização();
         // Define o alinhamento e o estilo do cabeçalho
         headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -44,21 +42,10 @@ public class TableSimples extends JTable {
         
         setBackground(Color.WHITE);
         
-        // Define o alinhamento do conteúdo das células da primeira coluna
-       getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-           private static final long serialVersionUID = 1L;
+        setDefaultRenderer(Object.class, new InteiroCentralizadoRenderer());
 
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                    boolean hasFocus, int row, int column) {
-               JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-                        column);
-               label.setHorizontalAlignment(JLabel.CENTER); // centraliza o conteúdo da célula
-                return label;
-            }
-
-       });
     }
+	
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -84,5 +71,62 @@ public class TableSimples extends JTable {
 	 public void setHeaderRenderer(DefaultTableCellRenderer renderer) {
 	        getTableHeader().setDefaultRenderer(renderer);
 	    }
-	
-}
+	 
+	 public void definirLarguraColunas() {
+		 TableColumn idColumn = getColumnModel().getColumn(0);
+		 if (idColumn.getHeaderValue().equals("Id")) {
+			 idColumn.setPreferredWidth(50);
+		 }
+	 }
+	 
+	 public void definirCentralização() {
+		 TableColumn idColumn = null;
+		 if (idColumn.getHeaderValue().equals("CPF") || idColumn.getHeaderValue().equals("Data")) {
+	 
+			 getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+		            private static final long serialVersionUID = 1L;
+
+		             @Override
+		             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+		                     boolean hasFocus, int row, int column) {
+		                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+		                         column);
+		                label.setHorizontalAlignment(JLabel.CENTER); // centraliza o conteúdo da célula
+		                 return label;
+		             }
+
+		        });
+		        
+		    }
+	 }
+	 
+	 
+
+	  // Renderer personalizado para centralizar as células que contêm inteiros
+	    
+	 private class InteiroCentralizadoRenderer extends DefaultTableCellRenderer {
+	        
+	        @Override
+	        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+	                                                       boolean hasFocus, int row, int column) {
+	            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+	            if (value instanceof Integer) {
+	                setHorizontalAlignment(SwingConstants.CENTER);
+	            } else {
+	                setHorizontalAlignment(SwingConstants.LEFT);
+	            }
+
+	            return c;
+	        }
+	        
+	        @Override
+	        public void setValue(Object value) {
+	            if (value instanceof Integer) {
+	                setText(value.toString());
+	            } else {
+	                super.setValue(value);
+	            }
+	        }
+	    }
+	}

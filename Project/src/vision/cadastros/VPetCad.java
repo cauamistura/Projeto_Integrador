@@ -10,9 +10,11 @@ import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -72,6 +74,8 @@ public class VPetCad extends JFrame implements InterPet {
 	JComboBox<MTEspecie> especieCb = new JComboBox<MTEspecie>();
 	JComboBox<MTRaca> racaCb = new JComboBox<MTRaca>();
 	JComboBox<MTDadosUser> userCb = new JComboBox<MTDadosUser>();
+
+	Integer idPet = 0;
 
 	/**
 	 * Create the frame.
@@ -133,8 +137,6 @@ public class VPetCad extends JFrame implements InterPet {
 		especieCb.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				racaCb.removeAllItems();
-
-				racaCb.addItem(null);
 
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 
@@ -261,9 +263,16 @@ public class VPetCad extends JFrame implements InterPet {
 					return;
 				}
 
+				
 				FDAOTPet.setBDIDESPECIE(FDAOTPet.getChaveID("tespecie", "BDIDESPECIE"));
+				if (idPet == 0) {
+					FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("tpets", "BDIDPET"));
+				} else {
+					FDAOTPet.setBDIDPET(idPet);
+				}
+
 				FDAOTPet.setBDDATANASCIMENTO(txtDataNasc.getDate());
-				FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("tpets", "BDIDPET"));
+
 				FDAOTPet.setBDIDRACA(achaIdRaca());
 				FDAOTPet.setBDNOMEPET(txtNomePet.getText());
 				FDAOTPet.setBDAPELIDO(txtApelidoPet.getText());
@@ -274,14 +283,24 @@ public class VPetCad extends JFrame implements InterPet {
 					return;
 				}
 				try {
-					FDAOTPet.inserir(FDAOTPet);
+
+					if (FDAOTPet.existePet(FDAOTPet, idPet)) {
+						FDAOTPet.alterar(FDAOTPet);
+						JOptionPane.showMessageDialog(null, "Seu pet foi alterado com sucesso!");
+					} else {
+						FDAOTPet.inserir(FDAOTPet);
+						JOptionPane.showMessageDialog(null, "Seu pet foi cadastrado com sucesso!");
+
+					}
+
 					txtNomePet.setText("");
 					txtApelidoPet.setText("");
 					especieCb.setSelectedIndex(0);
 					racaCb.setSelectedIndex(0);
 					userCb.setSelectedIndex(0);
 					txtDataNasc.setText("");
-					JOptionPane.showMessageDialog(null, "Seu pet foi cadastrado com sucesso!");
+					idPet = 0;
+
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o pet");
@@ -365,15 +384,37 @@ public class VPetCad extends JFrame implements InterPet {
 
 	public void preencheCampos(MTPet list) {
 		if (list != null) {
+			idPet = list.getBDIDPET();
+
 			txtNomePet.setText(list.getBDNOMEPET());
-			System.out.println(txtNomePet.getText());
 			txtApelidoPet.setText(list.getBDAPELIDO());
 
 			DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
 			txtDataNasc.setText(list.getBDDATANASCIMENTO().format(FOMATTER));
 
-			especieCb.setSelectedIndex(list.getBDIDESPECIE() - 1);
+			for (int i = 0; i < especieCb.getItemCount(); i++) {
 
+				if (especieCb.getItemAt(i).getBDNOMEESPECIE().equals(list.getBDNOMEESPECIE())) {
+					especieCb.setSelectedIndex(i);
+					break;
+				}
+			}
+
+			for (int i = 0; i < racaCb.getItemCount(); i++) {
+
+				if (racaCb.getItemAt(i).getBDNOMERACA().equals(list.getBDNOMERACA())) {
+					racaCb.setSelectedIndex(i);
+					break;
+				}
+
+			}
+
+			for (int i = 0; i < userCb.getItemCount(); i++) {
+				if (userCb.getItemAt(i).getBDNOMEUSER().equals(list.getBDNOMEUSER())) {
+					userCb.setSelectedIndex(i);
+					break;
+				}
+			}
 		}
 	}
 

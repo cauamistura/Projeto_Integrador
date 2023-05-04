@@ -49,7 +49,7 @@ public class VComCon extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
-		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
+		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Comorbidade", "Descrição" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		atualizarTabela(dados, false);
 		scrollPane.setViewportView(table);

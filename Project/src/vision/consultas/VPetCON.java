@@ -72,26 +72,27 @@ public class VPetCON extends JFrame {
 		
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][250px,grow][50px]"));
+		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][370px,grow][50px]"));
 		
 		panelBackground = new PanelComBackgroundImage(bg);
 		panelBackground.setBackground(new Color(158, 174, 255));
 		contentPane.add(panelBackground, "cell 1 1,alignx center");
-		panelBackground.setLayout(new MigLayout("", "[grow]", "[200px,grow][grow][grow]"));
+		panelBackground.setLayout(new MigLayout("", "[grow]", "[310px,grow][grow][grow]"));
 		
 		panelTabela = new JPanel();
 		panelTabela.setBackground(new Color(125, 137, 245));
 		panelBackground.add(panelTabela, "cell 0 0,grow");
-		panelTabela.setLayout(new MigLayout("", "[][250px,grow][]", "[][grow]"));
+		panelTabela.setLayout(new MigLayout("", "[][250px,grow][]", "[][250px,grow]"));
 		
 		lblTable = new JLabel("Consulta Pets");
 		lblTable.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		panelTabela.add(lblTable, "cell 1 0,alignx center");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		panelTabela.add(scrollPane, "cell 1 1,grow");
-		
-		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
+		scrollPane.setBounds(0, 0, 434, 189);
+		contentPane.add(scrollPane);
+
+		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Dono(a)", "Raça", "Nome", "Apelido" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		atualizarTabela(dados, false);
 		scrollPane.setViewportView(table);
@@ -136,7 +137,6 @@ public class VPetCON extends JFrame {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
 					MTPet dado = dados.get(modelIndex);
 					ev.exluiPet(dado.getBDIDPET());
-					dispose();
 				}
 			}
 		});
@@ -148,6 +148,7 @@ public class VPetCON extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int[] selectedRows = table.getSelectedRows();
 				for (int i = 0; i < selectedRows.length; i++) {
+					int id = Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString());
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
 					MTPet dado = dados.get(modelIndex);
 					ev.preencheDadosPet(dado);
@@ -183,8 +184,9 @@ public class VPetCON extends JFrame {
 	        if (prFiltro && !pet.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 	            continue; 
 	        }
-	        Object[][] rowData = {{ pet.getBDNOMEUSER(), pet.getBDNOMERACA(), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) }};
+	        Object[][] rowData = {{ pet.getBDIDPET(), pet.getBDNOMEUSER(), pet.getBDNOMERACA(), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) }};
 	        table.preencherTabela(rowData);
 	    }
 	}
+
 }
