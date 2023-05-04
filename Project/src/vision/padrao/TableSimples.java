@@ -31,9 +31,7 @@ public class TableSimples extends JTable {
         });
         
         // Define a largura das colunas
-        getColumnModel().getColumn(0).setPreferredWidth(500);
-        getColumnModel().getColumn(1).setPreferredWidth(500);
-        getColumnModel().getColumn(2).setPreferredWidth(500);
+        getColumnModel().getColumn(0).setPreferredWidth(100);
         
         // Define o alinhamento e o estilo do cabeçalho
         headerRenderer = new DefaultTableCellRenderer();

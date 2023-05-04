@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -40,23 +41,26 @@ public class DAOTPet extends MTPet {
 		// UPDATE
 		public Boolean alterar(DAOTPet prDAO) {
 			Connection c = prDAO.append();
+			boolean success = false;
 			try {
-				wSql = "UPDATE `dbpi`.`tpets` SET `BDIDPET` = ?, `BDIDRACA` = ?, `BDNOMEPET` = ?, `BDAPELIDO` = ?, `BDDATANASCIMENTO` = ?, `BDIDUSER` = ? WHERE `BDIDPET` = ?;";
+				wSql = "UPDATE `dbpi`.`tpets` SET `BDIDRACA` = ?, `BDNOMEPET` = ?, `BDAPELIDO` = ?, `BDDATANASCIMENTO` = ?, `BDIDUSER` = ? WHERE `BDIDPET` = ?;";
 				PreparedStatement stm = c.prepareStatement(wSql);
 				
-				stm.setInt(1, prDAO.getBDIDPET());
-				stm.setInt(2, prDAO.getBDIDRACA());
-				stm.setString(3, prDAO.getBDNOMEPET());
-				stm.setString(4, prDAO.getBDAPELIDO());
-				stm.setDate	 (5, Date.valueOf(prDAO.getBDDATANASCIMENTO()));
-				stm.setInt(6, prDAO.getBDIDUSER());
+				stm.setInt(1, prDAO.getBDIDRACA());
+				stm.setString(2, prDAO.getBDNOMEPET());
+				stm.setString(3, prDAO.getBDAPELIDO());
+				stm.setDate	 (4, Date.valueOf(prDAO.getBDDATANASCIMENTO()));
+				stm.setInt(5, prDAO.getBDIDUSER());
+				stm.setInt(6, prDAO.getBDIDPET());
 		
-				return true;	
-			} catch (Exception e) {
-				e.printStackTrace();
+				int count = stm.executeUpdate();
+				success = (count == 1);
+			} catch (SQLException e) {
+				System.err.println("Error updating user record: " + e.getMessage());
+			} finally {
+				prDAO.post();
 			}
-			prDAO.post();
-			return false;
+			return success;
 		}
 		
 		// DELETE
@@ -87,9 +91,11 @@ public class DAOTPet extends MTPet {
 			ArrayList<MTPet> ListaTePet = new ArrayList<>();
 			Connection c = prDAO.append();
 			try {
-				wSql =    "SELECT p.*, d.bdnome as BDNOMEUSER, r.BDNOMERACA FROM tpets p "
+				wSql =    "SELECT p.*, d.bdnome as BDNOMEUSER, r.*, e.* "
+						+ "FROM tpets p "
 						+ "inner join traca r on (r.BDIDRACA = p.BDIDRACA) "
-						+ "inner join tdadosuser d on (d.BDIDUSER = p.BDIDUSER) ";
+						+ "inner join tdadosuser d on (d.BDIDUSER = p.BDIDUSER) "
+						+ "inner join tespecie e on (e.BDIDESPECIE = r.BDIDESPECIE)  ";
 				
 				Statement stm = c.prepareStatement(wSql);
 				ResultSet rs = stm.executeQuery(wSql);
@@ -105,6 +111,8 @@ public class DAOTPet extends MTPet {
 					le.setBDIDUSER(rs.getInt("BDIDUSER"));
 					le.setBDNOMEUSER(rs.getString("BDNOMEUSER"));
 					le.setBDNOMERACA(rs.getString("BDNOMERACA"));
+					le.setBDIDESPECIE(rs.getInt("BDIDESPECIE"));
+					le.setBDNOMEESPECIE(rs.getString("BDNOMEESPECIE"));
 					ListaTePet.add(le);
 				}
 				
@@ -145,6 +153,28 @@ public class DAOTPet extends MTPet {
 		    }
 		    prDAO.post(); // Este método fecha a conexão com o banco de dados
 		    return listaDePets;
+		}
+		
+		public Boolean existePet(DAOTPet prDAOUser, Integer id) {
+			Connection c = prDAOUser.append();
+			try {
+				Statement stm = c.createStatement();
+				
+				String wSql = "SELECT BDIDPET FROM `dbpi`.`tpets` t where t.BDIDPET = "+id+"";
+				
+				ResultSet rs =  stm.executeQuery(wSql);
+
+		        if(rs.next()){
+		        	if(rs.getInt("BDIDPET") == (id)){
+		        		return true;
+		        	}
+		        }
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			prDAOUser.post();
+			return false;
 		}
 
 }

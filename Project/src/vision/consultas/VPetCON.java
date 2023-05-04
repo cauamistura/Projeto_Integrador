@@ -48,7 +48,7 @@ public class VPetCON extends JFrame {
 		scrollPane.setBounds(0, 0, 434, 189);
 		contentPane.add(scrollPane);
 
-		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
+		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Dono(a)", "Raça", "Nome", "Apelido" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		atualizarTabela(dados, false);
 		scrollPane.setViewportView(table);
@@ -92,7 +92,6 @@ public class VPetCON extends JFrame {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
 					MTPet dado = dados.get(modelIndex);
 					ev.exluiPet(dado.getBDIDPET());
-					dispose();
 				}
 			}
 		});
@@ -100,6 +99,7 @@ public class VPetCON extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int[] selectedRows = table.getSelectedRows();
 				for (int i = 0; i < selectedRows.length; i++) {
+					int id = Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString());
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
 					MTPet dado = dados.get(modelIndex);
 					ev.preencheDadosPet(dado);
@@ -133,8 +133,9 @@ public class VPetCON extends JFrame {
 	        if (prFiltro && !pet.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 	            continue; 
 	        }
-	        Object[][] rowData = {{ pet.getBDNOMEUSER(), pet.getBDNOMERACA(), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) }};
+	        Object[][] rowData = {{ pet.getBDIDPET(), pet.getBDNOMEUSER(), pet.getBDNOMERACA(), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) }};
 	        table.preencherTabela(rowData);
 	    }
 	}
+
 }
