@@ -214,35 +214,43 @@ public class VReceitaCad extends JFrame implements InterReceita{
 	}
 	private void eventConfirmar() {
 		
-		if (edDataInicio.getDate().isBefore(edDataFinal.getDate())) {
-			FDAOTReceita.setBDIDRECEITA(FDAOTReceita.getChaveID("treceita", "BDIDRECEITA"));
-			FDAOTReceita.setBDIDMEDICACAO(2);
-			FDAOTReceita.setBDINICIORECEITA(edDataInicio.getDate());
-			FDAOTReceita.setBDFINALRECEITA(edDataFinal.getDate());
-			FDAOTReceita.setBDDESCRICAO(textPane.getText());
+		try {
+			if (edDataInicio.getDate().isBefore(edDataFinal.getDate()) || edDataFinal.getText().equals(edDataFinal.getText())) {
+				FDAOTReceita.setBDIDRECEITA(FDAOTReceita.getChaveID("treceita", "BDIDRECEITA"));
+				FDAOTReceita.setBDIDMEDICACAO(2);
+				FDAOTReceita.setBDINICIORECEITA(edDataInicio.getDate());
+				FDAOTReceita.setBDFINALRECEITA(edDataFinal.getDate());
+				FDAOTReceita.setBDDESCRICAO(textPane.getText());
+				FDAOTReceita.inserir(FDAOTReceita);
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Data Inicial menor que a Data final");
+	            
+	            edDataFinal.setText("");
+	            edDataInicio.setText(getName());
+			}
+				
 			
-		}else {
-			JOptionPane.showMessageDialog(null, "Data Errada seu otario");
-            
-            edDataFinal.setText("");
-            edDataInicio.setText(getName());
+			
+			optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+	        dialog = optionPane.createDialog("");
+
+	        timer = new Timer(1000, new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                dialog.dispose();
+	            }
+	        });
+	        timer.setRepeats(false);
+	        timer.start();
+
+	        dialog.setVisible(true);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Existem itens em Branco!!\n"
+					+ "Preencha todos os itens e tente novamente.");
 		}
-			
-		FDAOTReceita.inserir(FDAOTReceita);
 		
-		optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-        dialog = optionPane.createDialog("");
-
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
-        timer.setRepeats(false);
-        timer.start();
-
-        dialog.setVisible(true);
+		
 	
 	}
 	private void eventDeletar() {
