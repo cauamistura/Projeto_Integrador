@@ -72,17 +72,17 @@ public class VPetCON extends JFrame {
 		
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][250px,grow][50px]"));
+		contentPane.setLayout(new MigLayout("", "[50px][480px,grow][50px]", "[50px][370px,grow][50px]"));
 		
 		panelBackground = new PanelComBackgroundImage(bg);
 		panelBackground.setBackground(new Color(158, 174, 255));
 		contentPane.add(panelBackground, "cell 1 1,alignx center");
-		panelBackground.setLayout(new MigLayout("", "[grow]", "[200px,grow][grow][grow]"));
+		panelBackground.setLayout(new MigLayout("", "[grow]", "[310px,grow][grow][grow]"));
 		
 		panelTabela = new JPanel();
 		panelTabela.setBackground(new Color(125, 137, 245));
 		panelBackground.add(panelTabela, "cell 0 0,grow");
-		panelTabela.setLayout(new MigLayout("", "[][250px,grow][]", "[][grow]"));
+		panelTabela.setLayout(new MigLayout("", "[][250px,grow][]", "[][250px,grow]"));
 		
 		lblTable = new JLabel("Consulta Pets");
 		lblTable.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
