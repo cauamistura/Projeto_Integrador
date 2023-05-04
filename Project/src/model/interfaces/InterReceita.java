@@ -2,7 +2,7 @@ package model.interfaces;
 
 import model.MTMedicacao;
 
-public interface InterMedicamento {
+public interface InterReceita {
 
 	void preencheMedicamento(MTMedicacao med);
 

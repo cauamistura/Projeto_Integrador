@@ -93,7 +93,7 @@ public class VComorbidadeCad extends JFrame {
 		panel_1 = new PanelComBackgroundImage(bg);
 		panel_1.setBackground(new Color(158, 174, 255));
 		panel.add(panel_1, "cell 1 1,alignx center");
-		panel_1.setLayout(new MigLayout("", "[450px,grow]", "[600px,grow]"));
+		panel_1.setLayout(new MigLayout("", "[350px,grow]", "[600px,grow]"));
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(125, 137, 245));
@@ -103,7 +103,7 @@ public class VComorbidadeCad extends JFrame {
 		lblNewLabel_4 = new JLabel("Cadastro de Comorbidade");
 		panel_2.add(lblNewLabel_4, "cell 0 0,alignx center");
 		lblNewLabel_4.setForeground(new Color(0, 0, 0));
-		lblNewLabel_4.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 20));
+		lblNewLabel_4.setFont(new Font("Dialog", Font.BOLD, 20));
 		
 		panel_4 = new JPanel();
 		panel_4.setBackground(new Color(125, 137, 245));

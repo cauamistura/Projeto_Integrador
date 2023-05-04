@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
@@ -30,6 +29,7 @@ import model.MTMedicacao;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
+import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
 
 public class VMedicamentoCad extends JFrame {
@@ -38,17 +38,14 @@ public class VMedicamentoCad extends JFrame {
 	public DAOTMedicacao FDAOTMedicacao = new DAOTMedicacao();
 	private ArrayList<MTMedicacao> TListMedicacao = new ArrayList<>();
 	private JPanel contentPane;
-	private JTextField edNomeMed;
-	private JTextField edDescMed;
+	private RoundJTextField edNomeMed;
+	private RoundJTextField edDescMed;
 	private RoundButton btnlimpar;
 	private RoundButton btnConf;
 	private RoundButton btnDelete;
 	private TableSimples table;
 	private boolean registroCadastro = true;
 	private int row;
-	private JOptionPane optionPane;
-	private JDialog dialog;
-	private Timer timer;
 	private JLabel lbStatus;
 	private JLabel lbNome;
 	private JLabel lbDesc;
@@ -72,7 +69,7 @@ public class VMedicamentoCad extends JFrame {
 		
 		TListMedicacao = FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 753, 800);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -93,7 +90,7 @@ public class VMedicamentoCad extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(125, 137, 245));
 		panel_1.add(panel_3, "cell 0 0,grow");
-		panel_3.setLayout(new MigLayout("", "[grow]", "[70px,grow][300px,grow][25px,grow]"));
+		panel_3.setLayout(new MigLayout("", "[grow]", "[70px,grow][290px,grow][20px,grow]"));
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(new Color(125, 137, 245));
@@ -102,7 +99,7 @@ public class VMedicamentoCad extends JFrame {
 		
 		title = new JLabel("Cadastro Medicamento");
 		panel_6.add(title, "cell 1 0");
-		title.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 20));
+		title.setFont(new Font("Dialog", Font.BOLD, 20));
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(VMedicamentoCad.class.getResource("/vision/images/med.png")));
@@ -111,10 +108,8 @@ public class VMedicamentoCad extends JFrame {
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(125, 137, 245));
 		panel_3.add(panel_5, "cell 0 1,grow");
-		panel_5.setLayout(new MigLayout("", "[grow]", "[][][50px][130px]"));
+		panel_5.setLayout(new MigLayout("", "[grow]", "[][][][130px][30px]"));
 
-		
-		
 		lbNome = new JLabel("Nome: ");
 		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		panel_5.add(lbNome, "flowy,cell 0 0");
@@ -126,14 +121,14 @@ public class VMedicamentoCad extends JFrame {
 		
 		lbStatus= new JLabel("Status: Inserindo Medicamento");
 		lbStatus.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_5.add(lbStatus, "cell 0 2");
+		panel_5.add(lbStatus, "cell 0 4");
 		
-		edNomeMed = new JTextField();
+		edNomeMed = new RoundJTextField();
 		edNomeMed.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_5.add(edNomeMed, "cell 0 1,growx");
 		edNomeMed.setColumns(10);
 		
-		edDescMed = new JTextField();
+		edDescMed = new RoundJTextField();
 		edDescMed.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edDescMed.setColumns(10);
 		panel_5.add(edDescMed, "cell 0 0,growx");
@@ -273,5 +268,4 @@ public class VMedicamentoCad extends JFrame {
 		}
 
 	}
-
 }
