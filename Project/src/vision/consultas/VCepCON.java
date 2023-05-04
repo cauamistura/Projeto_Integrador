@@ -1,14 +1,15 @@
 package vision.consultas;
 
-import java.util.List; 
+import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTEndereco;
+import vision.padrao.TableSimples;
 
 public class VCepCON extends JFrame {
     /**
@@ -16,7 +17,7 @@ public class VCepCON extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-    private JTable table;
+    private TableSimples table;
     
     private DefaultTableModel model;
     
@@ -34,19 +35,13 @@ public class VCepCON extends JFrame {
         scrollPane.setBounds(10, 11, 464, 239);
         contentPane.add(scrollPane);
 
-        table = new JTable();
+        table = new TableSimples(new Object[][] {}, new String[] { "CEP", "Cidade", "UF" });
         scrollPane.setViewportView(table);
 
-        model = new DefaultTableModel();
-        model.addColumn("CEP");
-        model.addColumn("Cidade");
-        model.addColumn("UF");
-
         for (MTEndereco obj : lista) {
-            Object[] rowData = { obj.getBDCEP(), obj.getBDNOMECID(), obj.getBDSIGLAUF()};
-            model.addRow(rowData);
+            Object[][] rowData = {{ obj.getBDCEP(), obj.getBDNOMECID(), obj.getBDSIGLAUF()}};
+            table.preencherTabela(rowData);
         }
 
-        table.setModel(model);
     }
 }
