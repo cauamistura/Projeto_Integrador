@@ -51,14 +51,9 @@ public class VComCon extends JFrame {
 
 		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		atualizarTabela(dados, false);
 		scrollPane.setViewportView(table);
-
-		TListComorbidade = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
-		for (MTComorbidade mtCom : TListComorbidade) {
-			Object[][] rowData = {{ mtCom.getBDIDCOMORBIDADE(), mtCom.getBDNOMECOMORBIDADE(), mtCom.getBDDESCCOMORBIDADE() }};
-			table.preencherTabela(rowData);	
-		}		
-
+		
 		btnConfirmar = new RoundButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			@Override

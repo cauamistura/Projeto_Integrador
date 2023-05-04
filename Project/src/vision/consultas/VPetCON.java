@@ -5,19 +5,18 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTPet;
 import model.interfaces.InterPet;
-
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
 import vision.padrao.RoundButton;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import vision.padrao.TableSimples;
 
 public class VPetCON extends JFrame {
 
@@ -26,8 +25,7 @@ public class VPetCON extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
-	private DefaultTableModel model;
+	private TableSimples table;
 	private RoundButton btnFiltro;
 	private JTextField edFiltro;
 	private RoundButton btnConf;
@@ -50,22 +48,11 @@ public class VPetCON extends JFrame {
 		scrollPane.setBounds(0, 0, 434, 189);
 		contentPane.add(scrollPane);
 
-		table = new JTable();
+		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		atualizarTabela(dados, false);
 		scrollPane.setViewportView(table);
 
-		model = new DefaultTableModel();
-		model.addColumn("Dono(a)");
-		model.addColumn("Raça");
-		model.addColumn("Nome");
-		model.addColumn("Apelido");
-
-		for (MTPet dado : dados) {
-			Object[] rowData = {dado.getBDNOMEUSER(), dado.getBDNOMERACA(), dado.getBDNOMEPET(), achaApelido(dado.getBDAPELIDO()) };
-			model.addRow(rowData);
-		}
-
-		table.setModel(model);
-		
 		JPanel panel = new JPanel();
 		panel.setBounds(1, 190, 434, 34);
 		contentPane.add(panel);
@@ -140,14 +127,14 @@ public class VPetCON extends JFrame {
 	}
 	
 	public void atualizarTabela(List<MTPet> pets, Boolean prFiltro) {
-	    model.setRowCount(0);
+		table.limparTabela();
 
 	    for (MTPet pet : pets) {
 	        if (prFiltro && !pet.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 	            continue; 
 	        }
-	        Object[] linha = { pet.getBDNOMEUSER(), pet.getBDNOMERACA(), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) };
-	        model.addRow(linha);
+	        Object[][] rowData = {{ pet.getBDNOMEUSER(), pet.getBDNOMERACA(), pet.getBDNOMEPET(), achaApelido(pet.getBDAPELIDO()) }};
+	        table.preencherTabela(rowData);
 	    }
 	}
 }

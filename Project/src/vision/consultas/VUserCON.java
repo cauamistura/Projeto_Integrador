@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTDadosUser;
@@ -21,6 +22,7 @@ import model.interfaces.InterUsuario;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import vision.padrao.TableSimples;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.imageio.ImageIO;
@@ -80,9 +82,13 @@ public class VUserCON extends JFrame {
 		panelTabela.add(lblNewLabel_1, "cell 1 0,alignx center");
 		
 		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+
+		table = new TableSimples(new Object[][] {}, new String[] { "CPF", "Nome", "Email" });
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		atualizarTabela(dados, false);
 		panelTabela.add(scrollPane, "cell 1 1,grow");
 		
-		table = new JTable();
 		scrollPane.setViewportView(table);
 
 		model = new DefaultTableModel();
@@ -176,14 +182,15 @@ public class VUserCON extends JFrame {
 	}
 
 	public void atualizarTabela(List<MTDadosUser> usuarios, Boolean prFiltro) {
-		model.setRowCount(0);
 
+		table.limparTabela();
+		
 		for (MTDadosUser usuario : usuarios) {
 			if (prFiltro && !usuario.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 				continue;
 			}
-			Object[] linha = { usuario.getBDCPF(), usuario.getBDNOMEUSER(), usuario.getBDMAIL() };
-			model.addRow(linha);
+			Object[][] rowData = {{ usuario.getBDCPF(), usuario.getBDNOMEUSER(), usuario.getBDMAIL()} };
+			table.preencherTabela(rowData);
 		}
 	}
 	

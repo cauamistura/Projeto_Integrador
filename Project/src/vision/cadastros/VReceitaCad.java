@@ -246,6 +246,9 @@ public class VReceitaCad extends JFrame implements InterReceita{
 
 	        dialog.setVisible(true);
 		} catch (Exception e) {
+			
+			
+			
 			JOptionPane.showMessageDialog(null, "Existem itens em Branco!!\n"
 					+ "Preencha todos os itens e tente novamente.");
 		}
