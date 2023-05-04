@@ -1,11 +1,10 @@
 package vision.cadastros;
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -46,9 +45,6 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TelefoneTextField;
-import java.awt.Font;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class VUserCad extends JFrame implements InterUsuario {
 
@@ -100,7 +96,6 @@ public class VUserCad extends JFrame implements InterUsuario {
 			bg = ImageIO.read(new File("src/vision/images/BGuser.png"));
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

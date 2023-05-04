@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.MTAtendimenoEntrada;
@@ -121,18 +122,33 @@ public class DAOAtendimentoEntrada extends MTAtendimenoEntrada {
 
 		Connection c = prDAO.append();
 		try {
-			wSql = " SELECT a.*, pet.*, us.BDNOME as BDNOMEUSER, com.*"
-					+ " FROM tatendimento_entrada a"
-					+ " inner join tpets pet on (a.BDIDPET = pet.BDIDPET)"
-					+ " inner join tdadosuser us on (pet.BDIDUSER = us.BDIDUSER)"
-					+ " left outer join tcomorbidade com on (a.BDCOMORBIDADE = com.BDIDCOMORBIDADE)";
+			wSql = " SELECT a.*, pet.*, raca.BDNOMERACA, esp.BDNOMEESPECIE, us.BDNOME as BDNOMEUSER, u.BDIDUSER, u.BDCPF, com.*  "
+					+ "FROM tatendimento_entrada a  "
+					+ "inner join tpets pet on (a.BDIDPET = pet.BDIDPET) "
+					+ "inner join traca raca on (raca.BDIDRACA = pet.BDIDRACA) "
+					+ "inner join tespecie esp on (raca.BDIDESPECIE = esp.BDIDESPECIE) "
+					+ "inner join tdadosuser us on (pet.BDIDUSER = us.BDIDUSER)  "
+					+ "inner join tuser u on (u.BDIDUSER = us.BDIDUSER) "
+					+ "left outer join tcomorbidade com on (a.BDCOMORBIDADE = com.BDIDCOMORBIDADE) ";
 			Statement stm = c.createStatement();
 			ResultSet rs = stm.executeQuery(wSql);
 
 			while (rs.next()) {
 				MTAtendimenoEntrada lc = new MTAtendimenoEntrada();
 				
+				lc.setBDIDENTRADA(rs.getInt("BDIDENTRADA"));
+				lc.setBDIDPET(rs.getInt("BDIDPET"));
+				lc.setBDCOMORBIDADE(rs.getInt("BDCOMORBIDADE"));
+				lc.setBDIDRACA(rs.getInt("BDIDRACA"));
 				
+				lc.setBDDESC(rs.getString("BDDESC"));
+				lc.setBDNOMEPET(rs.getString("BDNOMEPET"));
+				lc.setBDCPF(rs.getString("BDCPF"));
+				lc.setBDNOMEUSER(rs.getString("BDNOMEUSER"));
+				lc.setBDNOMEESPECIE(rs.getString("BDNOMEESPECIE"));
+				lc.setBDNOMERACA(rs.getString("BDNOMERACA"));
+				
+				lc.setBDDATAENT(rs.getDate("BDDATAENT").toLocalDate());
 				
 				ListaAtendCons.add(lc);
 			}

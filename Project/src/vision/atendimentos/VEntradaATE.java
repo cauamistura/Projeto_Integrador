@@ -1,7 +1,21 @@
 package vision.atendimentos;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOAtendimentoEntrada;
@@ -9,41 +23,29 @@ import control.DAOTComorbidade;
 import control.DAOTDadosUser;
 import control.DAOTPet;
 import control.DAOTUser;
+import model.MTAtendimenoEntrada;
 import model.MTComorbidade;
 import model.MTDadosUser;
 import model.MTPet;
 import model.interfaces.InterComorbidade;
+import model.interfaces.InterEntrada;
 import model.interfaces.InterPet;
 import model.interfaces.InterUsuario;
 import vision.cadastros.VComorbidadeCad;
 import vision.cadastros.VPetCad;
 import vision.cadastros.VUserCad;
-import vision.consultas.*;
+import vision.consultas.VComCon;
+import vision.consultas.VEntradaCON;
 import vision.consultas.VPetCON;
 import vision.consultas.VUserCON;
-import vision.padrao.*;
-import java.util.ArrayList;
-import java.util.List;
+import vision.padrao.CPFTextField;
+import vision.padrao.DateTextField;
+import vision.padrao.RoundButton;
+import vision.padrao.RoundJTextField;
+import vision.padrao.RoundJTextFieldNum;
+import vision.padrao.lupaButton;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
-import javax.swing.JSpinner;
-import javax.swing.JScrollPane;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-
-public class VEntradaATE extends JFrame implements InterUsuario, InterPet, InterComorbidade {
+public class VEntradaATE extends JFrame implements InterUsuario, InterPet, InterComorbidade, InterEntrada {
 
 	/**
 	 * 
@@ -62,6 +64,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 
 	// Objetos do Atendimeno
 	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
+	private VEntradaCON FEntradaCON; 
 
 	// Objetos do usuario
 	private VUserCad TelaUser;
@@ -123,6 +126,15 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		contentPane.add(lbNumero);
 
 		edNumEntrada = new RoundJTextFieldNum(8);
+		edNumEntrada.setToolTipText("Aperte F9 para consultar.");
+		edNumEntrada.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConAtendimeno();
+				}
+			}
+		});
 		edNumEntrada.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -207,6 +219,11 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		contentPane.add(btnLimpar);
 
 		RoundButton btnConsulta = new RoundButton("Login");
+		btnConsulta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chamaConAtendimeno();
+			}
+		});
 		btnConsulta.setText("Consultar");
 		btnConsulta.setBounds(236, 230, 89, 23);
 		contentPane.add(btnConsulta);
@@ -295,7 +312,15 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		lbStatus.setBounds(25, 264, 180, 14);
 		contentPane.add(lbStatus);
 	}
+	
+	private void chamaConAtendimeno() { 
+		ArrayList<MTAtendimenoEntrada> list = new ArrayList<>();
+		list = FDAOEntrada.ListConsulta(FDAOEntrada);
 
+		FEntradaCON = new VEntradaCON(list, this);
+		FEntradaCON.setVisible(true);
+	}
+	
 	private void chamaConUser() {
 		ArrayList<MTDadosUser> list = new ArrayList<>();
 		list = FDAOUserDados.ListConsulta(FDAOUserDados);
@@ -374,7 +399,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 			}
 		}
 	}
-
+	
 	private void acaoConfirma() {
 		if (edNumEntrada.getText().isEmpty()) {
 			int resposta = JOptionPane.showConfirmDialog(null,
@@ -446,5 +471,16 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		FDAOTComorbidade.setBDIDCOMORBIDADE(dado.getBDIDCOMORBIDADE());
 		FDAOTComorbidade.setBDNOMECOMORBIDADE(dado.getBDNOMECOMORBIDADE());
 		edComorbidade.setText(FDAOTComorbidade.getBDNOMECOMORBIDADE());
+	}
+
+	@Override
+	public void preencheDadosEntrada(MTAtendimenoEntrada listAtendimento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exluirAtendimento(Integer numAtendimento) {
+		excluirAtendimento(numAtendimento);
 	}
 }
