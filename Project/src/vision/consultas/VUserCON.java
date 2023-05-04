@@ -39,14 +39,13 @@ public class VUserCON extends JFrame {
 	private JPanel panelBotoes;
 	private JPanel panelTabela;
 	private JLabel lbFiltro;
+	private TableSimples table;
 	private RoundJTextField edFiltro;
 	private RoundButton btnFiltro;
 	private RoundButton btnConfirmar;
 	private RoundButton btnExcluir;
 	private JLabel lblNewLabel_1;
 	private JScrollPane scrollPane;
-	private JTable table;
-
 	public VUserCON(List<MTDadosUser> dados, InterUsuario inter) {
 		BufferedImage bg = null;
 		;
@@ -82,27 +81,13 @@ public class VUserCON extends JFrame {
 		panelTabela.add(lblNewLabel_1, "cell 1 0,alignx center");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		table = new TableSimples(new Object[][] {}, new String[] { "CPF", "Nome", "Email" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		atualizarTabela(dados, false);
-		panelTabela.add(scrollPane, "cell 1 1,grow");
-		
 		scrollPane.setViewportView(table);
+		panelTabela.add(scrollPane, "cell 1 1,grow");
 
-		model = new DefaultTableModel();
-		model.addColumn("CPF");
-		model.addColumn("Nome");
-		model.addColumn("Email");
-
-		for (MTDadosUser dado : dados) {
-			Object[] rowData = { dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDMAIL() };
-			model.addRow(rowData);
-		}
-
-		table.setModel(model);
-		
 		panelFiltro = new JPanel();
 		panelFiltro.setBackground(new Color(125, 137, 245));
 		panelBackgroud.add(panelFiltro, "cell 0 1,grow");
@@ -170,15 +155,6 @@ public class VUserCON extends JFrame {
 		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		panelBotoes.add(btnExcluir, "cell 3 0,growx");
 
-		model = new DefaultTableModel();
-		model.addColumn("CPF");
-		model.addColumn("Nome");
-		model.addColumn("Email");
-
-		for (MTDadosUser dado : dados) {
-			Object[] rowData = { dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDMAIL() };
-			model.addRow(rowData);
-		}
 	}
 
 	public void atualizarTabela(List<MTDadosUser> usuarios, Boolean prFiltro) {
