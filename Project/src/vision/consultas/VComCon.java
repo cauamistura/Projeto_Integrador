@@ -34,8 +34,8 @@ public class VComCon extends JFrame {
 
 	public VComCon(List<MTComorbidade> dados ,InterComorbidade event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 500, 300);
-		setTitle("Consulta de Usuario");
+		setBounds(100, 100, 616, 372);
+		setTitle("Consulta de Comorbidade");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());

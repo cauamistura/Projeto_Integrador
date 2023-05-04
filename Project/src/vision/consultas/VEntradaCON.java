@@ -33,7 +33,7 @@ public class VEntradaCON extends JFrame {
 	public VEntradaCON(List<MTAtendimenoEntrada> dados, InterEntrada inter) {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 707, 300);
+		setBounds(100, 100, 742, 385);
 		setTitle("Consulta Antendimento - Entrada");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
