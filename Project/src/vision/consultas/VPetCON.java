@@ -88,14 +88,14 @@ public class VPetCON extends JFrame {
 		lblTable.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		panelTabela.add(lblTable, "cell 1 0,alignx center");
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 434, 189);
-		contentPane.add(scrollPane);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		panelTabela.add(scrollPane_1, "cell 1 1");
+		scrollPane_1.setBounds(0, 0, 434, 189);
 
 		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Dono(a)", "Raça", "Nome", "Apelido" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane_1.setViewportView(table);
 		atualizarTabela(dados, false);
-		scrollPane.setViewportView(table);
 		
 		panelFiltro = new JPanel();
 		panelFiltro.setBackground(new Color(125, 137, 245));

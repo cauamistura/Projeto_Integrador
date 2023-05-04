@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.Label;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -80,28 +79,31 @@ public class TableSimples extends JTable {
 	 }
 	 
 	 public void definirCentralização() {
-		 TableColumn idColumn = null;
-		 if (idColumn.getHeaderValue().equals("CPF") || idColumn.getHeaderValue().equals("Data")) {
-	 
-			 getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-		            private static final long serialVersionUID = 1L;
+		 
+		 TableColumnModel columnModel = getColumnModel();
+		 for (int i = 0; i < columnModel.getColumnCount(); i++) {
+			 TableColumn idColumn = getColumnModel().getColumn(i);
+			 if (idColumn.getHeaderValue().equals("CPF") || idColumn.getHeaderValue().equals("Data")) {
+		 
+				 getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+			            private static final long serialVersionUID = 1L;
 
-		             @Override
-		             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-		                     boolean hasFocus, int row, int column) {
-		                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-		                         column);
-		                label.setHorizontalAlignment(JLabel.CENTER); // centraliza o conteúdo da célula
-		                 return label;
-		             }
+			             @Override
+			             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+			                     boolean hasFocus, int row, int column) {
+			                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+			                         column);
+			                label.setHorizontalAlignment(JLabel.CENTER); // centraliza o conteúdo da célula
+			                 return label;
+			             }
 
-		        });
-		        
-		    }
+			        });
+			        
+			    }
+		}
+		 
 	 }
-	 
-	 
-
+	
 	  // Renderer personalizado para centralizar as células que contêm inteiros
 	    
 	 private class InteiroCentralizadoRenderer extends DefaultTableCellRenderer {
