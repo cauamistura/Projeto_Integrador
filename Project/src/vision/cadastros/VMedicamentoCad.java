@@ -23,6 +23,7 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
@@ -38,8 +39,6 @@ public class VMedicamentoCad extends JFrame {
 	public DAOTMedicacao FDAOTMedicacao = new DAOTMedicacao();
 	private ArrayList<MTMedicacao> TListMedicacao = new ArrayList<>();
 	private JPanel contentPane;
-	private RoundJTextField edNomeMed;
-	private RoundJTextField edDescMed;
 	private RoundButton btnlimpar;
 	private RoundButton btnConf;
 	private RoundButton btnDelete;
@@ -54,6 +53,8 @@ public class VMedicamentoCad extends JFrame {
 	private String nome;
 	private String desc;
 	private Integer id;
+	private RoundJTextField edNomeMed;
+	private RoundJTextField edDescMed;
 
 
 	public VMedicamentoCad()  {
@@ -108,33 +109,33 @@ public class VMedicamentoCad extends JFrame {
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(125, 137, 245));
 		panel_3.add(panel_5, "cell 0 1,grow");
-		panel_5.setLayout(new MigLayout("", "[grow]", "[][][][130px][30px]"));
+		panel_5.setLayout(new MigLayout("", "[grow]", "[][][][][][130px][30px]"));
 
 		lbNome = new JLabel("Nome: ");
 		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		panel_5.add(lbNome, "flowy,cell 0 0");
 		
+		edNomeMed = new RoundJTextField();
+		edNomeMed.setFont(new Font("Dialog", Font.PLAIN, 14));
+		edNomeMed.setColumns(10);
+		panel_5.add(edNomeMed, "cell 0 1,growx");
+		
 		
 		lbDesc = new JLabel("Descrição:");
 		lbDesc.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_5.add(lbDesc, "flowy,cell 0 1");
+		panel_5.add(lbDesc, "flowy,cell 0 2");
+		
+		edDescMed = new RoundJTextField();
+		edDescMed.setFont(new Font("Dialog", Font.PLAIN, 14));
+		edDescMed.setColumns(10);
+		panel_5.add(edDescMed, "cell 0 3,growx");
 		
 		lbStatus= new JLabel("Status: Inserindo Medicamento");
 		lbStatus.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_5.add(lbStatus, "cell 0 4");
-		
-		edNomeMed = new RoundJTextField();
-		edNomeMed.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		panel_5.add(edNomeMed, "cell 0 1,growx");
-		edNomeMed.setColumns(10);
-		
-		edDescMed = new RoundJTextField();
-		edDescMed.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		edDescMed.setColumns(10);
-		panel_5.add(edDescMed, "cell 0 0,growx");
+		panel_5.add(lbStatus, "cell 0 6");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		panel_5.add(scrollPane, "cell 0 3");
+		panel_5.add(scrollPane, "cell 0 5");
 		
 		table = new TableSimples(new Object[][] {}, new String[] { "Id", "Medicamento", "Descrição" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

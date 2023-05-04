@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
+import model.interfaces.InterEntrada;
 import vision.cadastros.VReceitaCad;
 import vision.padrao.lupaButton;
 
@@ -129,4 +130,6 @@ public class VSaidaATE extends JFrame {
 		edNomeUser.setBounds(255, 89, 114, 19);
 		contentPane.add(edNomeUser);
 	}
+	
+	
 }

@@ -74,19 +74,6 @@ public class VReceitaCad extends JFrame implements InterReceita{
 	private JLabel title;
 	private JLabel lblStatus;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VReceitaCad frame = new VReceitaCad();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	public VReceitaCad() {
 		BufferedImage bg = null;
 		;
