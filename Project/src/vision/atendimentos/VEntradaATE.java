@@ -1,6 +1,6 @@
 package vision.atendimentos;
 
-import java.awt.Font;
+import java.awt.Font; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -58,8 +58,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	private RoundJTextFieldNum edNumEntrada;
 	private RoundJTextField edComorbidade;
 	private DateTextField edDataEntrada;
-	private JTextPane txtNomeUser;
-	private JTextPane txtNomeRaca;
+	private RoundJTextField edNomeUser;
+	private RoundJTextField edNomeRaca;
 	private JTextPane pnDesc;
 	private JLabel lbStatus;
 
@@ -250,15 +250,15 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		lbData.setBounds(75, 95, 67, 14);
 		contentPane.add(lbData);
 
-		txtNomeRaca = new JTextPane();
-		txtNomeRaca.setEnabled(false);
-		txtNomeRaca.setBounds(330, 64, 127, 20);
-		contentPane.add(txtNomeRaca);
+		edNomeRaca = new RoundJTextField();
+		edNomeRaca.setEnabled(false);
+		edNomeRaca.setBounds(330, 64, 127, 20);
+		contentPane.add(edNomeRaca);
 
-		txtNomeUser = new JTextPane();
-		txtNomeUser.setEnabled(false);
-		txtNomeUser.setBounds(330, 37, 127, 20);
-		contentPane.add(txtNomeUser);
+		edNomeUser = new RoundJTextField();
+		edNomeUser.setEnabled(false);
+		edNomeUser.setBounds(330, 37, 127, 20);
+		contentPane.add(edNomeUser);
 
 		JLabel lbDescricao = new JLabel("Descrição:");
 		lbDescricao.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -372,23 +372,23 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		
 		//Usuario 
 		edCpf.setText(dado.getBDCPF());
-		txtNomeUser.setText(dado.getBDNOMEUSER());
+		edNomeUser.setText(dado.getBDNOMEUSER());
 		FDAOEntrada.setBDIDUSER(dado.getBDIDUSER());
 		
 		//Pet 
 		edNomePet.setText(dado.getBDNOMEPET());
-		txtNomeRaca.setText(dado.getBDNOMERACA());
+		edNomeRaca.setText(dado.getBDNOMERACA());
 		FDAOEntrada.setBDIDPET(dado.getBDIDPET());
 	}
 
 	private void preencheUser(MTDadosUser list) {
 		edCpf.setText(list.getBDCPF());
-		txtNomeUser.setText(list.getBDNOMEUSER());
+		edNomeUser.setText(list.getBDNOMEUSER());
 	}
 
 	private void preenchePet(MTPet list) {
 		edNomePet.setText(list.getBDNOMEPET());
-		txtNomeRaca.setText(list.getBDNOMERACA());
+		edNomeRaca.setText(list.getBDNOMERACA());
 	}
 
 	public void limpaCampos() {
@@ -396,8 +396,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		edCpf.setText("");
 		edDataEntrada.setText("");
 		edNomePet.setText("");
-		txtNomeRaca.setText("");
-		txtNomeUser.setText("");
+		edNomeUser.setText("");
+		edNomeRaca.setText("");
 		pnDesc.setText("");
 		edComorbidade.setText("");
 		

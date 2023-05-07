@@ -1,6 +1,6 @@
 package vision.consultas;
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
-import model.interfaces.InterReceita;
+import model.interfaces.InterMedicamento;
 import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
@@ -49,7 +49,7 @@ public class VMedicamentoCON extends JFrame {
 	private JLabel lblNewLabel_1;
 	private TableSimples table;
 
-	public VMedicamentoCON(List<MTMedicacao> dados ,InterReceita event) {
+	public VMedicamentoCON(List<MTMedicacao> dados ,InterMedicamento event) {
 		BufferedImage bg = null;
 		;
 		try {

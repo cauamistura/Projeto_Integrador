@@ -1,16 +1,20 @@
 package vision.cadastros;
 
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,10 +28,13 @@ import javax.swing.JTextPane;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
+import control.DAOAtendimentoEntrada;
+import control.DAOAtendimentoSaida;
 import control.DAOTMedicacao;
 import control.DAOTReceita;
 import model.MTMedicacao;
 import model.MTReceita;
+import model.interfaces.InterMedicamento;
 import model.interfaces.InterReceita;
 import net.miginfocom.swing.MigLayout;
 import vision.consultas.VMedicamentoCON;
@@ -36,16 +43,15 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.lupaButton;
 
-public class VReceitaCad extends JFrame implements InterReceita{
+public class VReceitaCad extends JFrame implements InterMedicamento {
 
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private DAOTReceita FDAOTReceita = new DAOTReceita();
 	private DAOTMedicacao FDAOTMedicacao = new DAOTMedicacao();
 	private ArrayList<MTReceita> TListReceita = new ArrayList<>();
+	private ArrayList<MTMedicacao> TListMedicamento = new ArrayList<>();
+	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
 	private JPanel contentPane;
 	private Integer idmedicamento;
 	private boolean mudaReceita;
@@ -74,7 +80,31 @@ public class VReceitaCad extends JFrame implements InterReceita{
 	private JLabel title;
 	private JLabel lblStatus;
 	
-	public VReceitaCad() {
+	public VReceitaCad(InterReceita event, Boolean saida) {
+		
+		
+		
+		// Fazer um Join para retornar o nome do medicamento
+		if (saida == true) {
+			addComponentListener(new ComponentAdapter() {
+				@Override
+				public void componentShown(ComponentEvent e) {
+					TListReceita = FDAOTReceita.listTReceita(FDAOTReceita);
+					DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+					for (MTReceita mtReceita : TListReceita) {
+						
+						edDataFinal.setText(mtReceita.getBDFINALRECEITA().format(FOMATTER));
+						edDataInicio.setText(mtReceita.getBDINICIORECEITA().format(FOMATTER));
+						FDAOTReceita.setBDIDMEDICACAO(mtReceita.getBDIDMEDICACAO());
+						lblMedicamento.setText("");
+						textPane.setText(mtReceita.getBDDESCRICAO());
+					
+					}
+				}
+			});
+			
+		}
+
 		BufferedImage bg = null;
 		;
 		try {
@@ -182,6 +212,15 @@ public class VReceitaCad extends JFrame implements InterReceita{
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventConfirmar();
+				event.preecherReceita(FDAOTReceita);
+				dispose();
+				
+				if (saida) {
+					FDAOTReceita.inserir(FDAOTReceita);
+				}else {
+					FDAOTReceita.alterar(FDAOTReceita);
+				}
+				
 			}
 		});
 		panel_2.add(btnConf, "cell 1 0");
@@ -208,34 +247,32 @@ public class VReceitaCad extends JFrame implements InterReceita{
 		try {
 			if (edDataInicio.getDate().isBefore(edDataFinal.getDate()) || edDataFinal.getText().equals(edDataFinal.getText())) {
 				FDAOTReceita.setBDIDRECEITA(FDAOTReceita.getChaveID("treceita", "BDIDRECEITA"));
-				FDAOTReceita.setBDIDMEDICACAO(2);
+				FDAOTReceita.setBDIDMEDICACAO(idmedicamento);
 				FDAOTReceita.setBDINICIORECEITA(edDataInicio.getDate());
 				FDAOTReceita.setBDFINALRECEITA(edDataFinal.getDate());
 				FDAOTReceita.setBDDESCRICAO(textPane.getText());
-				FDAOTReceita.inserir(FDAOTReceita);
+				
+				optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+		        dialog = optionPane.createDialog("");
+
+		        timer = new Timer(1000, new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		                dialog.dispose();
+		            }
+		        });
+		        timer.setRepeats(false);
+		        timer.start();
+
+		        dialog.setVisible(true);
 				
 			}else {
 				JOptionPane.showMessageDialog(null, "Data Inicial menor que a Data final");
 	            
 	            edDataFinal.setText("");
-	            edDataInicio.setText(getName());
 			}
 				
 			
-			
-			optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-	        dialog = optionPane.createDialog("");
-
-	        timer = new Timer(1000, new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                dialog.dispose();
-	            }
-	        });
-	        timer.setRepeats(false);
-	        timer.start();
-
-	        dialog.setVisible(true);
 		} catch (Exception e) {
 			
 			
@@ -243,7 +280,6 @@ public class VReceitaCad extends JFrame implements InterReceita{
 			JOptionPane.showMessageDialog(null, "Existem itens em Branco!!\n"
 					+ "Preencha todos os itens e tente novamente.");
 		}
-		
 		
 	
 	}
@@ -266,7 +302,7 @@ public class VReceitaCad extends JFrame implements InterReceita{
 
 		textPane.setText("");
 
-		FDAOTReceita.setBDIDRECEITA(null);
+		FDAOTReceita = null;
 		lblmedicamento.setText("");
 		lblStatus.setText("Status: Inserindo Receita");
 	}
@@ -277,8 +313,5 @@ public class VReceitaCad extends JFrame implements InterReceita{
 		
 
 	}
-	
-	
-
 
 }

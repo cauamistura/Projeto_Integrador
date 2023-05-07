@@ -72,9 +72,15 @@ public class TableSimples extends JTable {
 	    }
 	 
 	 public void definirLarguraColunas() {
-		 TableColumn idColumn = getColumnModel().getColumn(0);
-		 if (idColumn.getHeaderValue().equals("Id")) {
-			 idColumn.setPreferredWidth(50);
+		 TableColumnModel columnModel = getColumnModel();
+		 for (int i = 0; i < columnModel.getColumnCount(); i++) {
+			 TableColumn idColumn = getColumnModel().getColumn(0);
+			 if (idColumn.getHeaderValue().equals("Id") ) {
+				 idColumn.setPreferredWidth(100);
+			 }
+			 if (idColumn.getHeaderValue().equals("Número ate.") ) {
+				 idColumn.setPreferredWidth(200);
+			 }
 		 }
 	 }
 	 
@@ -85,7 +91,7 @@ public class TableSimples extends JTable {
 			 TableColumn idColumn = getColumnModel().getColumn(i);
 			 if (idColumn.getHeaderValue().equals("CPF") || idColumn.getHeaderValue().equals("Data")) {
 		 
-				 getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+				 getColumnModel().getColumn(i).setCellRenderer(new DefaultTableCellRenderer() {
 			            private static final long serialVersionUID = 1L;
 
 			             @Override

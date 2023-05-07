@@ -158,7 +158,6 @@ public class VPetCON extends JFrame {
 		});
 		btnConf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		panelBotoes.add(btnConf, "cell 1 0,growx");
-		atualizarTabela(dados, false);
 		
 	}
 	

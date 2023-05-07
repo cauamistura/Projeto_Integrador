@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -11,19 +13,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import model.MTAtendimenoEntrada;
 import model.interfaces.InterEntrada;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import vision.padrao.TableSimples;
 
 public class VEntradaCON extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private DefaultTableModel model;
 	private JPanel contentPane;
-	private JTable table;
+	private TableSimples table;
 	private JLabel lbFiltro;
 	private RoundJTextField edFiltro;
 	private RoundButton btnConfirmar;
@@ -48,24 +52,10 @@ public class VEntradaCON extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
-		table = new JTable();
+		table = new TableSimples(new Object[][] {}, new String[] { "Número ate.", "CPF", "Nome", "Data", "Nome Pet", "Espécie","Raça"});
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		atualizarTabela(dados, false);
 		scrollPane.setViewportView(table);
-
-		model = new DefaultTableModel();
-		model.addColumn("Número ate.");
-		model.addColumn("CPF");
-		model.addColumn("Nome");
-		model.addColumn("Data");
-		model.addColumn("Nome Pet");
-		model.addColumn("Espécie");
-		model.addColumn("Raça");
-
-		for (MTAtendimenoEntrada dado : dados) {
-			Object[] rowData = { dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT(), dado.getBDNOMEPET(), dado.getBDNOMEESPECIE(), dado.getBDNOMERACA()};
-			model.addRow(rowData);
-		}
-
-		table.setModel(model);
 
 		btnConfirmar = new RoundButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
@@ -126,14 +116,15 @@ public class VEntradaCON extends JFrame {
 	}
 
 	public void atualizarTabela(List<MTAtendimenoEntrada> dados, Boolean prFiltro) {
-		model.setRowCount(0);
+		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		table.limparTabela();
 
 		for (MTAtendimenoEntrada dado : dados) {
 			if (prFiltro && !dado.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 				continue;
 			}
-			Object[] rowData = { dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT(), dado.getBDNOMEPET(), dado.getBDNOMEESPECIE(), dado.getBDNOMEESPECIE()};
-			model.addRow(rowData);
+			Object[][] rowData = {{ dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT().format(FOMATTER), dado.getBDNOMEPET(), dado.getBDNOMEESPECIE(), dado.getBDNOMEESPECIE()}};
+			table.preencherTabela(rowData);
 		}
 	}
 	

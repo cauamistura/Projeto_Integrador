@@ -100,7 +100,7 @@ private String wSql;
 				lr.setBDIDMEDICACAO(rs.getInt("BDIDMEDICACAO"));
 				lr.setBDFINALRECEITA(rs.getDate("BDFINALRECEITA").toLocalDate());
 				lr.setBDINICIORECEITA(rs.getDate("BDINICIORECEITA").toLocalDate());
-				lr.setBDDESCRICAO(rs.getString("BDDESCRICAO`"));
+				lr.setBDDESCRICAO(rs.getString("BDDESCRICAO"));
 				
 
 				ListTReceita.add(lr);
