@@ -1,7 +1,5 @@
 package model;
 
-import control.ObjectDAO;
-
 public class MTUser extends MTClinica {
 			
 	Integer BDIDUSER,

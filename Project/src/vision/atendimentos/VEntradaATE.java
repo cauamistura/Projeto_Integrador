@@ -20,11 +20,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOAtendimentoEntrada;
+import control.DAOAtendimentoSaida;
 import control.DAOTComorbidade;
 import control.DAOTDadosUser;
 import control.DAOTPet;
 import control.DAOTUser;
 import model.MTAtendimenoEntrada;
+import model.MTAtendimentoSaida;
 import model.MTComorbidade;
 import model.MTDadosUser;
 import model.MTPet;
@@ -83,6 +85,9 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	private DAOTComorbidade FDAOTComorbidade = new DAOTComorbidade();
 	private VComorbidadeCad TelaComorbidade;
 	private VComCon FConsultaComorbidade;
+	
+	// Objetos do Atendimeno saída
+	private DAOAtendimentoSaida FDAOAtendimentoSaida;
 
 	public VEntradaATE() {
 		setTitle("Atendimento de Entrada");
@@ -379,6 +384,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		edNomePet.setText(dado.getBDNOMEPET());
 		edNomeRaca.setText(dado.getBDNOMERACA());
 		FDAOEntrada.setBDIDPET(dado.getBDIDPET());
+		
 	}
 
 	private void preencheUser(MTDadosUser list) {
@@ -407,6 +413,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		FDAOEntrada.setBDCOMORBIDADE(null);
 		
 		lbStatus.setText("Status: Aguardando");
+		
+		edNumEntrada.requestFocus();
 	}
 	
 	private String achaComorbidade(Integer prID) {
@@ -416,6 +424,21 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 			for (MTComorbidade com : listCom) {
 				if (com.getBDIDCOMORBIDADE() == prID) {
 					return com.getBDNOMECOMORBIDADE();
+				}
+			}
+		} finally {
+			listCom = null;
+		}
+		return null;
+	}
+	
+	private Integer achaComorbidadeID(String prCOM) {
+		ArrayList<MTComorbidade> listCom = new ArrayList<>();
+		try {
+			listCom = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
+			for (MTComorbidade com : listCom) {
+				if (com.getBDNOMECOMORBIDADE().equalsIgnoreCase(prCOM)) {
+					return com.getBDIDCOMORBIDADE();
 				}
 			}
 		} finally {
@@ -445,7 +468,27 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		}
 	}
 	
+	private Boolean validaSaida() {
+		if (FDAOAtendimentoSaida == null) {
+			FDAOAtendimentoSaida = new DAOAtendimentoSaida();
+		}
+		ArrayList<MTAtendimentoSaida> list = new ArrayList<>();
+		try {
+			list = FDAOAtendimentoSaida.ListT(FDAOAtendimentoSaida);
+			for (MTAtendimentoSaida dado : list) {
+				if ((dado.getBDIDPET() == FDAOEntrada.getBDIDPET()) && (dado.getBDIDENTRADA() == FDAOEntrada.getBDIDENTRADA())) {
+					return false;
+				}
+			}
+		} finally {
+			list = null;
+		}
+		
+		return true;
+	}
+	
 	private void acaoConfirma() {
+		
 		if (edNumEntrada.getText().isEmpty()) {
 			int resposta = JOptionPane.showConfirmDialog(null,
 					"Número do atendimento não informado.\nDeseja prencher automaticamente?", "Confirmação",
@@ -467,23 +510,29 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 			return;
 		}
 
-		if (FDAOTComorbidade.getBDIDCOMORBIDADE() == null) {
+		if (achaComorbidadeID(edComorbidade.getText()) == null) {
 			JOptionPane.showInternalMessageDialog(null, "Comorbidade invalida!\nConsulte e tente novamente");
 			edComorbidade.requestFocus();
 			return;
 		}
-		
+
 		if (!edDataEntrada.validaDate()) {
 			JOptionPane.showInternalMessageDialog(null, "Data invalida.");
 			edDataEntrada.requestFocus();
 			return;
 		}
+		
 
 		FDAOEntrada.setBDIDPET(FDAOTPet.getBDIDPET());
-		FDAOEntrada.setBDCOMORBIDADE(FDAOTComorbidade.getBDIDCOMORBIDADE());
+		FDAOEntrada.setBDCOMORBIDADE(achaComorbidadeID(edComorbidade.getText()));
 		FDAOEntrada.setBDDATAENT(edDataEntrada.getDate());
 		FDAOEntrada.setBDDESC(pnDesc.getText());
 		
+		if (!validaSaida()) {
+			JOptionPane.showInternalMessageDialog(null, "Não é possivel a alteração do pet.\nEntrada já vinculada com uma saída.");
+			return;
+		}
+
 		try {
 			if (FDAOEntrada.existeAtendimento(FDAOEntrada)) {
 				FDAOEntrada.alterar(FDAOEntrada);
@@ -494,7 +543,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao salvar!");
 		}
-		
+
 		limpaCampos();
 	}
 

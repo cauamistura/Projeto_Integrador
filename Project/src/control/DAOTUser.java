@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.MTClinica;
 import model.MTUser;
-import net.miginfocom.layout.LC;
 import vision.VMenu;
 
 public class DAOTUser extends MTUser {

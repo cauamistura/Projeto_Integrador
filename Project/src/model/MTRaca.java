@@ -1,7 +1,5 @@
 package model;
 
-import control.ObjectDAO;
-
 public class MTRaca extends MTDadosUser{
 	Integer BDIDRACA,
 			BDIDESPECIE;

@@ -1,13 +1,12 @@
 package control;
 
-import java.sql.Connection;   
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.MTEndereco;
-import model.MTEstado;
  
 public class DAOTEndereco extends MTEndereco{
 	

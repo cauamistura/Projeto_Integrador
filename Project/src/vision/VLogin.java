@@ -1,6 +1,6 @@
 package vision;
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOTClinica;
@@ -30,8 +29,6 @@ import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJPasswordField;
-import vision.padrao.RoundJTextField;
-import javax.swing.JPasswordField;
 
 public class VLogin extends JFrame {
 
@@ -174,6 +171,7 @@ public class VLogin extends JFrame {
 		panel_2.add(btnLogin, "cell 1 3,growx");
 	}
 
+	@SuppressWarnings("deprecation")
 	private Boolean validaUser(ArrayList<MTDadosUser> prList) {
 		Boolean wValida = false;
 		for (MTDadosUser l : prList) {

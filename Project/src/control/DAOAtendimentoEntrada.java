@@ -6,12 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.MTAtendimenoEntrada;
-import model.MTDadosUser;
-import vision.VMenu;
 
 public class DAOAtendimentoEntrada extends MTAtendimenoEntrada {
 

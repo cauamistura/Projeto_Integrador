@@ -1,7 +1,5 @@
 package model;
 
-import control.ObjectDAO;
-
 public class MTCidade extends MTEstado{
 	
 	Integer BDIDCIDADE;

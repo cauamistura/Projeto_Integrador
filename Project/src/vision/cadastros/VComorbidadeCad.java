@@ -55,7 +55,7 @@ public class VComorbidadeCad extends JFrame {
 	private RoundButton btnlimpar;
 	private RoundButton btnConf;
 	private JLabel lblNewLabel_3;
-	private JScrollPane scrollPane;
+//	private JScrollPane scrollPane;
 	private JLabel lblNewLabel_4;
 	private TableSimples table;
 	private JLabel lbStatus;

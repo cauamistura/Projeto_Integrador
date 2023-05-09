@@ -6,11 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.MTDadosUser;
-import model.MTUser;
 import vision.VMenu;
 
 public class DAOTDadosUser extends MTDadosUser {

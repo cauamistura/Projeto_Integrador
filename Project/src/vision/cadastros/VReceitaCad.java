@@ -1,9 +1,8 @@
 package vision.cadastros;
 
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -28,7 +26,6 @@ import javax.swing.JTextPane;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import control.DAOAtendimentoEntrada;
 import control.DAOAtendimentoSaida;
 import control.DAOTMedicacao;
 import control.DAOTReceita;

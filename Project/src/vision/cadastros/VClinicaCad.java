@@ -1,7 +1,9 @@
 
 package vision.cadastros;
 
-import java.awt.event.ActionEvent;   
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -13,13 +15,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
@@ -32,6 +34,7 @@ import model.MTCidade;
 import model.MTClinica;
 import model.MTEndereco;
 import model.MTEstado;
+import net.miginfocom.swing.MigLayout;
 import vision.VLogin;
 import vision.VMenu;
 import vision.padrao.CEPTextField;
@@ -39,11 +42,6 @@ import vision.padrao.CNPJTextFiel;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
-
-import java.awt.BorderLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.ImageIcon;
-import java.awt.Color;
 
 public class VClinicaCad extends JFrame {
 

@@ -5,16 +5,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 import model.MTAtendimenoEntrada;
 import model.interfaces.InterEntrada;
@@ -25,7 +22,6 @@ import vision.padrao.TableSimples;
 public class VEntradaCON extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private DefaultTableModel model;
 	private JPanel contentPane;
 	private TableSimples table;
 	private JLabel lbFiltro;
@@ -53,8 +49,11 @@ public class VEntradaCON extends JFrame {
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		table = new TableSimples(new Object[][] {}, new String[] { "Número ate.", "CPF", "Nome", "Data", "Nome Pet", "Espécie","Raça"});
+		
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
 		atualizarTabela(dados, false);
+		
 		scrollPane.setViewportView(table);
 
 		btnConfirmar = new RoundButton("Confirmar");
@@ -123,7 +122,7 @@ public class VEntradaCON extends JFrame {
 			if (prFiltro && !dado.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 				continue;
 			}
-			Object[][] rowData = {{ dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT().format(FOMATTER), dado.getBDNOMEPET(), dado.getBDNOMEESPECIE(), dado.getBDNOMEESPECIE()}};
+			Object[][] rowData = {{ dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT().format(FOMATTER), dado.getBDNOMEPET(), dado.getBDNOMEESPECIE(), dado.getBDNOMERACA()}};
 			table.preencherTabela(rowData);
 		}
 	}

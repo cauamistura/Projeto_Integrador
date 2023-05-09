@@ -2,8 +2,6 @@ package model;
 
 import java.time.LocalDate;
 
-import control.ObjectDAO;
-
 public class MTPet extends MTEspecie {
 	
 	Integer BDIDPET,

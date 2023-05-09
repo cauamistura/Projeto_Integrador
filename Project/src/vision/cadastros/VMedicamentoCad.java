@@ -12,18 +12,15 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import control.DAOTMedicacao;
 import model.MTMedicacao;
@@ -49,7 +46,7 @@ public class VMedicamentoCad extends JFrame {
 	private JLabel lbNome;
 	private JLabel lbDesc;
 	private JLabel title;
-	private RoundButton btnReceita;
+//	private RoundButton btnReceita;
 	private String nome;
 	private String desc;
 	private Integer id;

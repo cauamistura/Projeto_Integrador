@@ -2,7 +2,6 @@ package vision.atendimentos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -11,13 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOAtendimentoEntrada;
 import control.DAOAtendimentoSaida;
-import control.DAOTReceita;
 import model.MTAtendimenoEntrada;
 import model.MTReceita;
 import model.interfaces.InterEntrada;
@@ -31,6 +28,10 @@ import vision.padrao.lupaButton;
 
 public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private RoundJTextField edNumEntrada;
 	private RoundJTextField edNomePet;
@@ -49,7 +50,7 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 	private Boolean EntradaSelecionada = false;
 	
 	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
-	private DAOTReceita FDAOReceita = new DAOTReceita();
+//	private DAOTReceita FDAOReceita = new DAOTReceita();
 	private VEntradaCON FEntradaCON; 
 	
 	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
