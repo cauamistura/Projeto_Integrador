@@ -2,18 +2,25 @@ package model;
 
 import java.time.LocalDate;
 
-import control.ObjectDAO;
-
-public class MTAtendimentoSaida extends ObjectDAO{
+public class MTAtendimentoSaida extends MTAtendimenoEntrada{
 	
-	 Integer BDIDENTRADA,
+	 Integer BDIDSAIDA,
+	 		 BDIDENTRADA,
 	  		 BDIDPET,
 	  		 BDIDCOMORBIDADE,
 	  		 BDIDRECEITA;
 	 
-	 String BDDESC;
+	String   BDDESC;
+		 
+	LocalDate BDDATASAIDA;
 	 
-	 LocalDate BDDATASAIDA;
+	 public Integer getBDIDSAIDA() {
+		return BDIDSAIDA;
+	}
+
+	public void setBDIDSAIDA(Integer bDIDSAIDA) {
+		BDIDSAIDA = bDIDSAIDA;
+	}
 
 	public Integer getBDIDENTRADA() {
 		return BDIDENTRADA;

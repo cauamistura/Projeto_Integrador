@@ -228,13 +228,14 @@ CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Entrada` (
 -- Table `DBPI`.`TAtendimento_Saida`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DBPI`.`TAtendimento_Saida` (
+  `BDIDSAIDA` INT NOT NULL,
   `BDIDENTRADA` INT NOT NULL,
   `BDIDPET` INT NOT NULL,
   `BDIDRECEITA` INT NULL,
   `BDIDCOMORBIDADE` INT NULL,
   `BDDATASAIDA` DATE NULL,
   `BDDESC` VARCHAR(150) NULL,
-  PRIMARY KEY (`BDIDENTRADA`, `BDIDPET`),
+  PRIMARY KEY (`BDIDSAIDA`,`BDIDENTRADA`, `BDIDPET`),
   INDEX `fk_TAtendimento_Saida_TReceita1_idx` (`BDIDRECEITA` ASC),
   INDEX `fk_TAtendimento_Saida_TComorbidade1_idx` (`BDIDCOMORBIDADE` ASC),
   CONSTRAINT `fk_TAtendimento_Saida_TAtendimento_Entrada1`

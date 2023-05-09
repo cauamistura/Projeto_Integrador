@@ -15,6 +15,7 @@ import vision.atendimentos.VEntradaATE;
 import vision.atendimentos.VSaidaATE;
 import vision.cadastros.*;
 import vision.consultas.VUserCON;
+import vision.consultas.VHistorico;
 import vision.consultas.VPetCON;
 
 import java.awt.BorderLayout;
@@ -71,6 +72,7 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 	private JMenuItem miComorbidade;
 	private JMenuItem miEntrada;
 	private JMenuItem miSaida;
+	private JMenuItem miHistorico;
 
 	/**
 	 * 
@@ -197,6 +199,16 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 				v.setVisible(true);
 			}
 		});
+		
+		miHistorico = new JMenuItem("Histórico...");
+		miHistorico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VHistorico v = new VHistorico();
+				v.setVisible(true);
+			}
+		});
+		miHistorico.setFont(new Font("Arial", Font.PLAIN, 12));
+		mmCON.add(miHistorico);
 		mmCON.add(miUserCons);
 
 		mmPetCons = new JMenuItem("Pet...");

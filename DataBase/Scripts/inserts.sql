@@ -161,14 +161,15 @@ VALUES
 (1, 1, 1, '2022-03-28', 'Pet apresentando sintomas de falta de ar.');
 
 INSERT INTO `dbpi`.`tatendimento_saida`
-(`BDIDENTRADA`,
+(`BDIDSAIDA`,
+`BDIDENTRADA`,
 `BDIDPET`,
 `BDIDRECEITA`,
 `BDIDCOMORBIDADE`,
 `BDDATASAIDA`,
 `BDDESC`)
 VALUES
-(1, 1, 1, 1, '2023-03-28', 'Alta após tratamento de infecção');
+(1, 1, 1, 1, 1, '2023-03-28', 'Alta após tratamento de infecção');
 
 
 
