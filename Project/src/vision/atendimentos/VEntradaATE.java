@@ -1,6 +1,6 @@
 package vision.atendimentos;
 
-import java.awt.Font; 
+import java.awt.Font;  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -139,14 +139,20 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		lbNumero.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		panel_2.add(lbNumero, "flowy,cell 1 2");
 		
-		edNumEntrada = new RoundJTextFieldNum(8);
-		panel_2.add(edNumEntrada, "cell 1 2,growx");
-		edNumEntrada.setColumns(10);
-		
 		JLabel lbData = new JLabel("Entrada:");
 		lbData.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbData, "flowy,cell 1 6");
 		
+		edNumEntrada = new RoundJTextFieldNum(8);
+		edNumEntrada.setToolTipText("Aperte F9 para consultar.");
+		edNumEntrada.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConAtendimeno();
+				}
+			}
+		});
 		edNumEntrada.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -178,6 +184,21 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		panel_2.add(lbUser, "flowy,cell 1 4");
 		
 		edCpf = new CPFTextField();
+		edCpf.setToolTipText("Aperte F9 para consultar.");
+		edCpf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConUser();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_F4) {
+					if (TelaUser == null) {
+						TelaUser = new VUserCad();
+					}
+					TelaUser.setVisible(true);
+				}
+			}
+		});
 		edCpf.setColumns(10);
 		panel_2.add(edCpf, "cell 1 4,growx");
 		
@@ -185,6 +206,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		edNomeUser.setEnabled(false);
 		panel_2.add(edNomeUser, "cell 3 4,growx,aligny bottom");
 		edNomeUser.setColumns(10);
+		
+
 		
 		JButton btnConPet = new lupaButton("");
 		btnConPet.addActionListener(new ActionListener() {
@@ -199,8 +222,25 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		panel_2.add(lblPet, "flowy,cell 1 5");
 		
 		edNomePet = new RoundJTextField();
+		edNomePet.setToolTipText("Aperte F9 para consultar.");
+		edNomePet.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConPet();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_F4) {
+					if (TelaPet == null) {
+						TelaPet = new VPetCad();
+					}
+					TelaPet.setVisible(true);
+				}
+			}
+		});
+		edNomePet.setToolTipText("Aperte F9 para consultar.");
 		edNomePet.setColumns(10);
 		panel_2.add(edNomePet, "cell 1 5,growx");
+		
 		
 		edNomeRaca = new RoundJTextField();
 		edNomeRaca.setEnabled(false);
@@ -260,7 +300,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		panel_3.add(btnExcluir, "cell 1 1,growx");
 		
-		JButton btnLimpar = new RoundButton("Limpar");
+		RoundButton btnLimpar = new RoundButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpaCampos();
@@ -359,6 +399,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	}
 
 	public void limpaCampos() {
+		
 		edNumEntrada.setText("");
 		edCpf.setText("");
 		edDataEntrada.setText("");
