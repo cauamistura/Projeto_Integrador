@@ -365,7 +365,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		FConsultaComorbidade.setVisible(true);
 	}
 	
-	private void preencheAtendimeno(MTAtendimenoEntrada dado) {
+	public void preencheAtendimeno(MTAtendimenoEntrada dado) {
 		edNumEntrada.setText(String.valueOf(dado.getBDIDENTRADA()));
 		pnDesc.setText(dado.getBDDESC());
 		
@@ -384,10 +384,9 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		edNomePet.setText(dado.getBDNOMEPET());
 		edNomeRaca.setText(dado.getBDNOMERACA());
 		FDAOEntrada.setBDIDPET(dado.getBDIDPET());
-		
 	}
 
-	private void preencheUser(MTDadosUser list) {
+	public void preencheUser(MTDadosUser list) {
 		edCpf.setText(list.getBDCPF());
 		edNomeUser.setText(list.getBDNOMEUSER());
 	}

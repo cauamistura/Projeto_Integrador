@@ -17,30 +17,69 @@ public class DAOHistorico extends MHistorico {
 
 		Connection c = prDAO.append();
 		try {
-			wSql =    " select e.BDIDENTRADA as BDID, e.BDIDPET, e.BDCOMORBIDADE, e.BDDATAENT as BDDATA, BDDESC, 'Entrada' as BDTIPO"
-					+ " from tatendimento_entrada e "
-					+ " union all"
-					+ " select s.BDIDSAIDA, s.BDIDPET, s.BDIDCOMORBIDADE, s.BDDATASAIDA, s.BDDESC, 'Saida' as BDTIPO"
-					+ " from tatendimento_saida s";
+			wSql =    " SELECT m.*,"
+					+ "       u.*,"
+					+ "       p.BDNOMEPET,"
+					+ "       r.BDNOMERACA"
+					+ " FROM"
+					+ "  ("
+					+ "  SELECT e.BDIDENTRADA AS BDID,"
+					+ "          e.BDIDPET,"
+					+ "          e.BDCOMORBIDADE,"
+					+ "          e.BDDATAENT AS BDDATA,"
+					+ "          BDDESC,"
+					+ "          \"Entrada\" AS BDTIPO"
+					+ "   FROM tatendimento_entrada e"
+					+ "   UNION ALL SELECT s.BDIDSAIDA,"
+					+ "                    s.BDIDPET,"
+					+ "                    s.BDIDCOMORBIDADE,"
+					+ "                    s.BDDATASAIDA,"
+					+ "                    s.BDDESC,"
+					+ "                    \"Saida\" AS BDTIPO"
+					+ "   FROM tatendimento_saida s"
+					+ "   ) m"
+					+ " INNER JOIN tpets p ON (m.BDIDPET = p.BDIDPET)"
+					+ " inner join traca r on (r.BDIDRACA = p.BDIDRACA)"
+					+ " inner join tdadosuser u on (u.BDIDUSER = p.BDIDUSER)";
+			
+			if (prDAO.getBDIDUSER() != null) {
+				String User = String.valueOf(prDAO.getBDIDUSER());
+				wSql = wSql + " WHERE u.BDIDUSER = " + User; 
+						
+				if (prDAO.getBDIDPET() != null) { 
+					String Pet  = String.valueOf(prDAO.getBDIDPET());
+					wSql = wSql + " AND m.BDIDPET = " + Pet; 
+				}
+			}
+			
 			Statement stm = c.createStatement();
 			ResultSet rs = stm.executeQuery(wSql);
 
 			while (rs.next()) {
 				MHistorico lc = new MHistorico();
 				
-//				Entrada
+				//Entrada
 				lc.setBDIDENTRADA(rs.getInt("BDID"));
 				lc.setBDIDPET(rs.getInt("BDIDPET"));
 				lc.setBDIDCOMORBIDADE(rs.getInt("BDCOMORBIDADE"));
 				lc.setBDDATAENT(rs.getDate("BDDATA").toLocalDate());
 				lc.setTipo(rs.getString("BDTIPO"));
 				
-//				Entrada
+				//Saida
+				lc.setBDCOMORBIDADE(rs.getInt("BDCOMORBIDADE"));
 				lc.setBDIDSAIDA(rs.getInt("BDID"));
 				lc.setBDIDPET(rs.getInt("BDIDPET"));
 				lc.setBDCOMORBIDADE(getBDCOMORBIDADE());
 				lc.setBDDATASAIDA(rs.getDate("BDDATA").toLocalDate());
 				lc.setTipo(rs.getString("BDTIPO"));
+				
+				lc.setBDNOMEPET(rs.getString("BDNOMEPET"));
+				lc.setBDNOMERACA(rs.getString("BDNOMERACA"));
+				
+				lc.setBDDESC(rs.getString("BDDESC"));
+				
+				lc.setBDNOMEUSER(rs.getString("BDNOME"));
+				lc.setBDIDUSER(rs.getInt("BDIDUSER"));
 				
 				Lista.add(lc); // Adiciona objeto à lista
 			}

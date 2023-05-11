@@ -5,14 +5,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -20,21 +27,26 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOHistorico;
-import control.DAOTComorbidade;
+import control.DAOTDadosUser;
+import control.DAOTPet;
+import control.DAOTUser;
 import model.MHistorico;
-import model.MTComorbidade;
+import model.MTAtendimenoEntrada;
+import model.MTDadosUser;
+import model.MTPet;
+import model.MTUser;
+import model.interfaces.InterPet;
+import model.interfaces.InterUsuario;
 import net.miginfocom.swing.MigLayout;
+import vision.atendimentos.VEntradaATE;
 import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
 import vision.padrao.lupaButton;
-import javax.swing.JComboBox;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
-public class VHistorico extends JFrame {
+public class VHistorico extends JFrame implements InterUsuario, InterPet {
 	/**
 	 * 
 	 */
@@ -62,6 +74,16 @@ public class VHistorico extends JFrame {
 	private lupaButton btnConPet;
 	private JComboBox<String> cbTipo;
 	
+	// Objetos do usuario
+	private DAOTUser FDAOTUser = new DAOTUser();
+	private DAOTDadosUser FDAOUserDados = new DAOTDadosUser();
+	private VUserCON FVUserCON;
+	
+	// Obejtos do Pet
+	private ArrayList<MTPet> listPet = new ArrayList<>();
+	private DAOTPet FDAOTPet = new DAOTPet();
+	private VPetCON FVPetCON;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -72,7 +94,6 @@ public class VHistorico extends JFrame {
 			bg = ImageIO.read(new File("src/vision/images/BGLogin.png"));
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -80,7 +101,7 @@ public class VHistorico extends JFrame {
 		Lista = FDAOHistorico.List(FDAOHistorico);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 710, 830);
+		setBounds(100, 100, 654, 743);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -96,7 +117,7 @@ public class VHistorico extends JFrame {
 		container_card = new PanelComBackgroundImage(bg);
 		container_card.setBackground(new Color(158, 174, 255));
 		panel.add(container_card, "cell 1 1,alignx center");
-		container_card.setLayout(new MigLayout("", "[350px,grow]", "[600px,grow]"));
+		container_card.setLayout(new MigLayout("", "[478.00px,grow 600]", "[600px,grow]"));
 
 		card = new JPanel();
 		card.setBackground(new Color(125, 137, 245));
@@ -111,14 +132,14 @@ public class VHistorico extends JFrame {
 		container_content = new JPanel();
 		container_content.setBackground(new Color(125, 137, 245));
 		card.add(container_content, "cell 0 2,grow");
-		container_content.setLayout(new MigLayout("", "[grow]", "[][][][][][][][][350px][50px]"));
+		container_content.setLayout(new MigLayout("", "[grow 600]", "[][][][][][][][][350px][50px]"));
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		container_content.add(scrollPane_1, "cell 0 8,growy");
 
-		table = new TableSimples(new Object[][] {}, new String[] { "Número", "Data", "Comorbidade" });
+		table = new TableSimples(new Object[][] {}, new String[] { "Número", "Nome Usuário", "Nome Pet", "Raça", "Data", "Comorbidade"});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+		table.getColumnModel().getColumn(1).setPreferredWidth(800);
 		scrollPane_1.setViewportView(table);
 
 		lbUser = new JLabel("Usuario:");
@@ -127,11 +148,24 @@ public class VHistorico extends JFrame {
 		container_content.add(lbUser, "flowx,cell 0 3");
 
 		edCpf = new CPFTextField();
+		edCpf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConUser();
+				}
+			}
+		});
 		edCpf.setToolTipText("Aperte F9 para consultar.");
 		edCpf.setColumns(10);
 		container_content.add(edCpf, "cell 0 3");
 
 		btnConUser = new lupaButton("");
+		btnConUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chamaConUser();
+			}
+		});
 		container_content.add(btnConUser, "cell 0 3");
 
 		edNomeUser = new RoundJTextField();
@@ -146,11 +180,24 @@ public class VHistorico extends JFrame {
 		container_content.add(lblPet, "flowx,cell 0 4");
 
 		edNomePet = new RoundJTextField();
+		edNomePet.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConPet();
+				}
+			}
+		});
 		edNomePet.setToolTipText("Aperte F9 para consultar.");
 		edNomePet.setColumns(10);
 		container_content.add(edNomePet, "cell 0 4");
 
 		btnConPet = new lupaButton("");
+		btnConPet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chamaConPet();
+			}
+		});
 		container_content.add(btnConPet, "cell 0 4");
 
 		edNomeRaca = new RoundJTextField();
@@ -183,6 +230,17 @@ public class VHistorico extends JFrame {
 		btnlimpar.setText("Confirmar");
 		btnlimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				MHistorico dado = null;
+				int[] selectedRows = table.getSelectedRows();
+				for (int i = 0; i < selectedRows.length; i++) {
+					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
+					dado = Lista.get(modelIndex);
+				}
+				
+				if (cbTipo.getSelectedIndex() == 0) {
+					buscaENTCAD(dado);
+				}
+				
 				table.clearSelection();
 			}
 		});
@@ -193,15 +251,15 @@ public class VHistorico extends JFrame {
 	}
 
 	private void atualizatabela() {
+		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		Lista = FDAOHistorico.List(FDAOHistorico);
-		
 		table.limparTabela();
-		
+
 		if (cbTipo.getSelectedIndex() == 0) {
 			for (MHistorico com : Lista) {
 				if (com.getTipo().equalsIgnoreCase("entrada")) {
 					Object[][] rowData = {
-							{ com.getBDIDENTRADA(), com.getBDDATAENT(), com.getBDCOMORBIDADE() } };
+					{ com.getBDIDENTRADA(), com.getBDNOMEUSER(), com.getBDNOMEPET(), com.getBDNOMERACA(), com.getBDDATAENT().format(FOMATTER), com.getBDCOMORBIDADE()} };
 					table.preencherTabela(rowData);	
 				}
 			}
@@ -209,11 +267,106 @@ public class VHistorico extends JFrame {
 			for (MHistorico com : Lista) {
 				if (com.getTipo().equalsIgnoreCase("saida")) {
 					Object[][] rowData = {
-							{ com.getBDIDSAIDA(), com.getBDDATASAIDA(), com.getBDIDCOMORBIDADE() } };
+					{ com.getBDIDENTRADA(), com.getBDNOMEUSER(), com.getBDNOMEPET(), com.getBDNOMERACA(), com.getBDDATASAIDA().format(FOMATTER), com.getBDIDCOMORBIDADE()} };
 					table.preencherTabela(rowData);	
 				}
 			}	
 		}	
+	}
+	
+	private void chamaConUser() {
+		ArrayList<MTDadosUser> list = new ArrayList<>();
+		list = FDAOUserDados.ListConsulta(FDAOUserDados);
+
+		FVUserCON = new VUserCON(list, this);
+		FVUserCON.desabilitaExcluir();
+		FVUserCON.setVisible(true);
+	}
+
+	private void chamaConPet() {
+		if (!edCpf.existeCpfUsuario(FDAOTUser)) {
+			JOptionPane.showInternalMessageDialog(null,
+					"Usuário informado não existe!\nInforme um usuário valido ou aperte F4 para cadastrar.");
+			edCpf.requestFocus();
+			return;
+		}
+		FDAOTUser.setBDCPF(edCpf.getText());
+		FDAOTPet.setBDIDUSER(FDAOTUser.getIDUser(FDAOTUser));
+		listPet = FDAOTPet.listTPetFiltradoUser(FDAOTPet);
+
+		if (listPet.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Este usuario não tem Pet(s) cadastrados!\nAperte F4 para cadastrar.");
+			return;
+		}
+		FVPetCON = new VPetCON(listPet, this);
+		
+		FVPetCON.desExcluir();
+		FVPetCON.setVisible(true);
+	}
+	
+	private void buscaENTCAD(MHistorico list) {
+		MTAtendimenoEntrada ent = new MTAtendimenoEntrada();
+		
+		ent.setBDIDENTRADA(list.getBDIDENTRADA());
+		ent.setBDDESC(list.getBDDESC());
+		ent.setBDCOMORBIDADE(list.getBDCOMORBIDADE());
+		ent.setBDDATAENT(list.getBDDATAENT());
+		ent.setBDCPF(getCPF(list.getBDIDUSER()));
+		ent.setBDNOMEUSER(list.getBDNOMEUSER());
+		ent.setBDNOMEPET(list.getBDNOMEPET());
+		ent.setBDNOMERACA(list.getBDNOMERACA());
+		ent.setBDIDPET(list.getBDIDPET());
+		
+		VEntradaATE self = new VEntradaATE();
+		self.preencheAtendimeno(ent);
+		self.setVisible(true);
+	}
+	
+	private String getCPF(Integer I) {
+		ArrayList<MTUser> l = new ArrayList<>();
+		try {
+			l = FDAOTUser.ListTUser(FDAOTUser);
+			for (MTUser i : l) {
+				if (i.getBDIDUSER() == I) {
+					return i.getBDCPF();
+				}
+			}
+			return null;	
+		} finally {
+			l = null;
+		}
+	}
+
+	@Override
+	public void preencheDadosUser(MTDadosUser listUser) {
+		edCpf.setText(listUser.getBDCPF());
+		edNomeUser.setText(listUser.getBDNOMEUSER());
+		FDAOHistorico.setBDIDUSER(listUser.getBDIDUSER());
+		
+		FDAOHistorico.setBDIDPET(null);
+		edNomePet.setText("");
+		edNomeRaca.setText("");
+		
+		atualizatabela();
+	}
+
+	@Override
+	public void exluiUser(Integer bdiduser) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void preencheDadosPet(MTPet dado) {
+		edNomePet.setText(dado.getBDNOMEPET());
+		edNomeRaca.setText(dado.getBDNOMERACA());
+		FDAOHistorico.setBDIDPET(dado.getBDIDPET());
+		atualizatabela();
+	}
+
+	@Override
+	public void exluiPet(Integer IdPet) {
+		// TODO Auto-generated method stub
 	}
 
 }
