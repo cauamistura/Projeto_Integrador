@@ -233,7 +233,7 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 		miSaida = new JMenuItem("Saida..");
 		miSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VSaidaATE v = new VSaidaATE();
+				VSaidaATE v = new VSaidaATE(null);
 				v.setLocationRelativeTo(null);
 				v.setVisible(true);
 			}

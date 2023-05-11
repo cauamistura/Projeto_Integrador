@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class MTAtendimenoEntrada extends MTPet{
 	
+	
 	private Integer BDIDENTRADA, BDIDPET, BDCOMORBIDADE;
 	private String  BDDESC;
 	private LocalDate BDDATAENT;

@@ -22,7 +22,7 @@ public class DAOAtendimentoSaida extends MTAtendimentoSaida {
 
 			stm.setInt(1, prDAO.getBDIDENTRADA());
 			stm.setInt(2, prDAO.getBDIDPET());
-			stm.setInt(3, prDAO.getBDIDCOMORBIDADE());
+			stm.setInt(3, prDAO.getBDCOMORBIDADE());
 			stm.setInt(4, prDAO.getBDIDRECEITA());
 			stm.setString(5, prDAO.getBDDESC());
 			stm.setDate(6, Date.valueOf(prDAO.getBDDATASAIDA()));
