@@ -40,6 +40,7 @@ import model.MTUser;
 import model.interfaces.InterPet;
 import model.interfaces.InterUsuario;
 import net.miginfocom.swing.MigLayout;
+import vision.VMenu;
 import vision.atendimentos.VEntradaATE;
 import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
@@ -365,6 +366,16 @@ public class VHistorico extends JFrame implements InterUsuario, InterPet {
 			listCom = null;
 		}
 		return null;
+	}
+	
+	public void HistoricoUser() {
+		edCpf.setText(VMenu.FCPFUSER);
+		edNomeUser.setText(VMenu.FNomeUser);
+		FDAOHistorico.setBDIDUSER(VMenu.FIDUSER);
+		
+		btnConUser.setEnabled(false);
+		edCpf.setEnabled(false);
+		edNomeUser.setEnabled(false);
 	}
 
 	@Override

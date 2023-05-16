@@ -96,6 +96,13 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	private JTextField edNomeRaca;
 	private JTextPane pnDesc;
 	private JLabel lbStatus;
+	private lupaButton btnConUser;
+	private lupaButton btnConPet;
+	private lupaButton btnConComorbidade;
+	private RoundButton btnExcluir;
+	private RoundButton btnLimpar;
+	private RoundButton btnConsulta; 
+	private RoundButton btnConfirmar;
 
 	public VEntradaATE() {
 		BufferedImage bg = null;
@@ -137,7 +144,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		lbNumero.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		card.add(lbNumero, "flowy,cell 1 2");
 
-		JButton btnConUser = new lupaButton("");
+		btnConUser = new lupaButton("");
 		btnConUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chamaConUser();
@@ -173,7 +180,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		card.add(edNomeUser, "cell 3 4,growx,aligny bottom");
 		edNomeUser.setColumns(10);
 
-		JButton btnConPet = new lupaButton("");
+		btnConPet = new lupaButton("");
 		btnConPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chamaConPet();
@@ -212,7 +219,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		edComorbidade.setColumns(10);
 		card.add(edComorbidade, "cell 1 6,growx");
 
-		JButton btnConComorbidade = new lupaButton("");
+		btnConComorbidade = new lupaButton("");
 		btnConComorbidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chamaConComorbidade();
@@ -300,7 +307,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		desc_card.add(buttons_content, "cell 1 0,grow");
 		buttons_content.setLayout(new MigLayout("", "[][][][]", "[100px][][][][70px]"));
 
-		JButton btnExcluir = new RoundButton("Excluir");
+		btnExcluir = new RoundButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!edNumEntrada.getText().isEmpty()) {
@@ -311,7 +318,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		buttons_content.add(btnExcluir, "cell 1 1,growx");
 
-		RoundButton btnLimpar = new RoundButton("Limpar");
+		btnLimpar = new RoundButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpaCampos();
@@ -320,7 +327,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 		buttons_content.add(btnLimpar, "cell 3 1,growx");
 
-		JButton btnConsulta = new RoundButton("Consultar");
+		btnConsulta = new RoundButton("Consultar");
 		btnConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chamaConAtendimeno();
@@ -487,7 +494,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		}
 		ArrayList<MTAtendimentoSaida> list = new ArrayList<>();
 		try {
-			list = FDAOAtendimentoSaida.ListT(FDAOAtendimentoSaida);
+			list = FDAOAtendimentoSaida.ListTSaida(FDAOAtendimentoSaida);
 			for (MTAtendimentoSaida dado : list) {
 				if ((dado.getBDIDPET() == FDAOEntrada.getBDIDPET())
 						&& (dado.getBDIDENTRADA() == FDAOEntrada.getBDIDENTRADA())) {
@@ -586,10 +593,28 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		ArrayList<MTAtendimenoEntrada> list = new ArrayList<>();
 		list = FDAOEntrada.ListConsulta(FDAOEntrada);
 
-		FEntradaCON = new VEntradaCON(list, this);
+		FEntradaCON = new VEntradaCON(list, this, false);
 		FEntradaCON.setVisible(true);
 	}
 
+	private void travaCliente() {
+		btnConUser.setEnabled(false);
+		btnConPet.setEnabled(false);
+		btnConComorbidade.setEnabled(false);
+		
+		btnExcluir.setVisible(false);
+		btnLimpar.setVisible(false);
+		btnConsulta.setVisible(false);
+		btnConfirmar.setVisible(false);
+		
+		edNumEntrada.setEnabled(false);
+//		edCpf
+//		edNomePet
+//		edComorbidade
+//		edDataEntrada
+//		pnDesc
+	}
+	
 	@Override
 	public void preencheCom(MTComorbidade dado) {
 		FDAOTComorbidade.setBDIDCOMORBIDADE(dado.getBDIDCOMORBIDADE());

@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.MHistorico;
+import vision.VMenu;
 
 public class DAOHistorico extends MHistorico {
 
@@ -52,6 +53,9 @@ public class DAOHistorico extends MHistorico {
 					String Pet  = String.valueOf(prDAO.getBDIDPET());
 					wSql = wSql + " AND m.BDIDPET = " + Pet; 
 				}
+			}
+			if (VMenu.FPERMICAO == 3) {
+				wSql = wSql + " WHERE u.BDIDUSER = " + String.valueOf(VMenu.FIDUSER); 
 			}
 			
 			Statement stm = c.createStatement();

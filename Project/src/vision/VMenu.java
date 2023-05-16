@@ -205,6 +205,9 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 		miHistorico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VHistorico v = new VHistorico();
+				if (VMenu.FPERMICAO == 3) {
+					v.HistoricoUser();
+				}
 				v.setVisible(true);
 			}
 		});
