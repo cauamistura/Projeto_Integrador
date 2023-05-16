@@ -89,6 +89,8 @@ public class VReceitaCad extends JFrame implements InterMedicamento{
 						FDAOTReceita.setBDIDMEDICACAO(receita.getBDIDMEDICACAO());
 						lblNomemedicamento.setText(receita.getBDNOMEMEDICACAO());
 						textPane.setText(receita.getBDDESCRICAO());
+						
+						lblStatus.setText("Status: Alterando uma Receita");
 				}
 			});
 		}
@@ -180,7 +182,7 @@ public class VReceitaCad extends JFrame implements InterMedicamento{
 		edDataFinal.setColumns(10);
 		panel_3.add(edDataFinal, "cell 1 1,growx");
 		
-		lblStatus = new JLabel("Status: Aguardando");
+		lblStatus = new JLabel("Status: Inserindo uma Receita");
 		lblStatus.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_3.add(lblStatus, "cell 1 3");
 		

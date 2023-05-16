@@ -2,6 +2,8 @@ package vision.atendimentos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -17,9 +19,11 @@ import control.DAOAtendimentoEntrada;
 import control.DAOAtendimentoSaida;
 import control.DAOTReceita;
 import model.MTAtendimenoEntrada;
+import model.MTAtendimentoSaida;
 import model.MTReceita;
 import model.interfaces.InterEntrada;
 import model.interfaces.InterReceita;
+import model.interfaces.InterSaida;
 import vision.cadastros.VReceitaCad;
 import vision.consultas.VEntradaCON;
 import vision.padrao.CPFTextField;
@@ -27,11 +31,9 @@ import vision.padrao.DateTextField;
 import vision.padrao.RoundJTextField;
 import vision.padrao.lupaButton;
 
-public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
+public class VSaidaATE extends JFrame implements InterEntrada, InterReceita,InterSaida{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private RoundJTextField edNumEntrada;
@@ -49,25 +51,34 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 	private JLabel lblNumEntrada;
 	private Boolean ExisteReceita = false;
 	private Boolean EntradaSelecionada = false;
+	private JLabel lblStatus;
 	
 	
 	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
 	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
+	ArrayList<MTAtendimenoEntrada> list = new ArrayList<>();
 	private DAOTReceita FDAOReceita = new DAOTReceita();
-	
-	//	private DAOTReceita FDAOReceita = new DAOTReceita();
 	private VEntradaCON FEntradaCON; 
 	
-	
-	
-	public VSaidaATE(InterReceita event) {
+	public VSaidaATE(InterReceita event, MTAtendimenoEntrada dado, Boolean saida) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 482, 343);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				if(saida) {
+					preencheDadosEntrada(dado);
+				}
+	
+			}
+		});
+		setBounds(100, 100, 848, 524);
 		
 		btReceita = new lupaButton("Receita");
 		btReceita.setText("");
@@ -178,13 +189,16 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 		JLabel lblDataEntrada = new JLabel("Entrada");
 		lblDataEntrada.setBounds(29, 118, 70, 15);
 		contentPane.add(lblDataEntrada);
+		
+		lblStatus = new JLabel("Status: Inserindo uma Saida");
+		lblStatus.setBounds(29, 283, 135, 13);
+		contentPane.add(lblStatus);
 	}
 	
 	private void chamaEntradaCon() {
 		
-			ArrayList<MTAtendimenoEntrada> list = new ArrayList<>();
 			list = FDAOEntrada.ListConsulta(FDAOEntrada);
-			FEntradaCON = new VEntradaCON(list, this);
+			FEntradaCON = new VEntradaCON(list, this,true);
 			FEntradaCON.setVisible(true);
 		
 	}
@@ -203,37 +217,40 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 
 	private void preecheDados(MTAtendimenoEntrada atendimentos) {
 		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
-		if(!FDAOSaida.retornaIdReceita(atendimentos.getBDIDENTRADA())) {
 			edCpfUser.setText(atendimentos.getBDCPF());
 			edNomeUser.setText(atendimentos.getBDNOMEUSER());
 			edNumEntrada.setText(String.valueOf(atendimentos.getBDIDENTRADA()));
-			edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
+			
 			edNomePet.setText(atendimentos.getBDNOMEPET());
+			edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
 			
 			FDAOSaida.setBDCOMORBIDADE(atendimentos.getBDCOMORBIDADE());
 			FDAOSaida.setBDIDENTRADA(atendimentos.getBDIDENTRADA());
 			FDAOSaida.setBDIDPET(atendimentos.getBDIDPET());
 			
-			EntradaSelecionada = true;
+			edDataSaida.setEditable(true);
+			DescSaida.setEditable(true);
+				
+	}
+	
+	private void preecheDadosSaida(MTAtendimentoSaida atendimentos) {
+		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+			edCpfUser.setText(atendimentos.getBDCPF());
+			edNomeUser.setText(atendimentos.getBDNOMEUSER());
+			edNumEntrada.setText(String.valueOf(atendimentos.getBDIDENTRADA()));
+			
+			edNomePet.setText(atendimentos.getBDNOMEPET());
+			edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
+			edDataSaida.setText(atendimentos.getBDDATASAIDA().format(FOMATTER));
+			DescSaida.setText(atendimentos.getBDDESC());
+			
+			FDAOSaida.setBDCOMORBIDADE(atendimentos.getBDCOMORBIDADE());
+			FDAOSaida.setBDIDENTRADA(atendimentos.getBDIDENTRADA());
+			FDAOSaida.setBDIDPET(atendimentos.getBDIDPET());
 			
 			edDataSaida.setEditable(true);
 			DescSaida.setEditable(true);
-			
-		}else {
-			int resposta = JOptionPane.showConfirmDialog(null,
-					"Entrada já possui uma saida! Deseja alterar os dados da Entrada?.",
-					"Confirmação", JOptionPane.YES_NO_OPTION);
-
-			if (resposta == JOptionPane.YES_OPTION) {
 				
-				
-			}
-			
-			EntradaSelecionada = false;
-			
-		}
-			
-			
 	}
 	
 	private void eventConfirmar() {
@@ -254,8 +271,6 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 		edNomePet.setText("");
 		edNomeUser.setText("");
 		edNumEntrada.setText("");
-		ExisteReceita = false;
-		
 	}
 	
 	private void eventDadosReceita(MTReceita listReceita) {
@@ -268,14 +283,14 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 		FDAOReceita.setBDDESCRICAO(listReceita.getBDDESCRICAO());
 		FDAOReceita.setBDNOMEMEDICACAO(listReceita.getBDNOMEMEDICACAO());
 		
-		
-
 	}
 	
 	@Override
 	public void preencheDadosEntrada(MTAtendimenoEntrada listAtendimento) {
 		preecheDados(listAtendimento);
 	}
+	
+	
 	
 	@Override
 	public void preecherReceita(MTReceita dado) {
@@ -287,4 +302,8 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	public void preencheDadosSaida(MTAtendimentoSaida listAtendimento) {
+		preecheDadosSaida(listAtendimento);
+	}
 }

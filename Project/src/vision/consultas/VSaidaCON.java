@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -16,16 +15,16 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import control.DAOAtendimentoEntrada;
-import control.DAOAtendimentoSaida;
 import model.MTAtendimenoEntrada;
 import model.MTAtendimentoSaida;
 import model.interfaces.InterEntrada;
+import model.interfaces.InterSaida;
 import vision.atendimentos.VEntradaATE;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
 
-public class VEntradaCON extends JFrame {
+public class VSaidaCON extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -36,15 +35,13 @@ public class VEntradaCON extends JFrame {
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
-	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
-
-	public VEntradaCON(List<MTAtendimenoEntrada> dados, InterEntrada inter, Boolean saida ) {
 	
-		VEntradaCON Entrada = this;
-		
+
+	public VSaidaCON(List<MTAtendimentoSaida> dados, InterSaida inter) {
+	
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 742, 385);
-		setTitle("Consulta Antendimento - Entrada");
+		setTitle("Consulta Antendimento - Saida");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
@@ -58,7 +55,7 @@ public class VEntradaCON extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
-		table = new TableSimples(new Object[][] {}, new String[] { "Número ate.", "CPF", "Nome", "Data", "Nome Pet", "Espécie","Raça"});
+		table = new TableSimples(new Object[][] {}, new String[] { "Número ate.", "CPF", "Nome", "Data Entrada","Data Saida", "Nome Pet", "Espécie","Raça"});
 		
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
@@ -73,28 +70,10 @@ public class VEntradaCON extends JFrame {
 				int[] selectedRows = table.getSelectedRows();
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
-					MTAtendimenoEntrada dado = dados.get(modelIndex);
+					MTAtendimentoSaida dado = dados.get(modelIndex);
 
-					if (saida == true) {
-						if(FDAOEntrada.retornaIdReceita(dado.getBDIDENTRADA())) {
-							int resposta = JOptionPane.showConfirmDialog(null,
-									"Entrada já possui uma saida! Deseja consultar as saidas?.",
-									"Confirmação", JOptionPane.YES_NO_OPTION);
-
-							if (resposta == JOptionPane.YES_OPTION) {
-								
-								ArrayList<MTAtendimentoSaida> list = new ArrayList<>();
-								list = FDAOSaida.ListTSaida(FDAOSaida);
-								
-								VSaidaCON v = new VSaidaCON(list, Entrada);
-								v.setVisible(true);
-							}
-						}
-						
-					}else {
-						inter.preencheDadosEntrada(dado);
-					}
-						dispose();
+					inter.preencheDadosSaida(dado);
+					dispose();
 				}
 			}
 		});
@@ -106,9 +85,7 @@ public class VEntradaCON extends JFrame {
 				int[] selectedRows = table.getSelectedRows();
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
-					MTAtendimenoEntrada dado = dados.get(modelIndex);
-					inter.exluirAtendimento(dado.getBDIDENTRADA());
-					dispose();
+					
 				}
 			}
 		});
@@ -143,26 +120,18 @@ public class VEntradaCON extends JFrame {
 		contentPane.add(buttonsPanel, BorderLayout.SOUTH);
 	}
 
-	public void atualizarTabela(List<MTAtendimenoEntrada> dados, Boolean prFiltro) {
+	public void atualizarTabela(List<MTAtendimentoSaida> dados, Boolean prFiltro) {
 		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		table.limparTabela();
 
-		for (MTAtendimenoEntrada dado : dados) {
+		for (MTAtendimentoSaida dado : dados) {
 			if (prFiltro && !dado.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 				continue;
 			}
-			Object[][] rowData = {{ dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT().format(FOMATTER), dado.getBDNOMEPET(), dado.getBDNOMEESPECIE(), dado.getBDNOMERACA()}};
+			Object[][] rowData = {{ dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT().format(FOMATTER),dado.getBDDATASAIDA().format(FOMATTER), dado.getBDNOMEPET(), dado.getBDNOMEESPECIE(), dado.getBDNOMERACA()}};
 			table.preencherTabela(rowData);
 		}
 	}
 	
-	public void desabilitaExcluir() {
-		btnExcluir.setVisible(false);
-	}
 	
-	public void desBotoes() {
-		btnConfirmar.setVisible(false);
-		btnExcluir.setVisible(false);
-	}
-
 }

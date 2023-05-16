@@ -36,27 +36,8 @@ public class DAOAtendimentoSaida extends MTAtendimentoSaida {
 		return false;
 	}
 
-	public Boolean retornaIdReceita(Integer idEntrada) {
-		Connection c = append();
-		try {
-			Statement stm = c.createStatement();
-			wSql = "SELECT `BDIDRECEITA` FROM `dbpi`.`tatendimento_saida` where `BDIDENTRADA` = " + idEntrada + ";";
-
-			ResultSet rs = stm.executeQuery(wSql);
-
-			if (rs.next()) {
-				return true;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		post();
-		return false;
-	}
-	
 	// SELECT
-	public ArrayList<MTAtendimentoSaida> ListT (DAOAtendimentoSaida prDAO) {
+	public ArrayList<MTAtendimentoSaida> ListTSaida (DAOAtendimentoSaida prDAO) {
 		ArrayList<MTAtendimentoSaida> Lista = new ArrayList<>();
 
 		Connection c = prDAO.append();
