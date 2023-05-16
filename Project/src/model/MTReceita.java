@@ -4,10 +4,9 @@ import java.time.LocalDate;
 
 import control.ObjectDAO;
 
-public class MTReceita extends ObjectDAO{
+public class MTReceita extends MTMedicacao {
 
-	Integer BDIDRECEITA,
-			BDIDMEDICACAO;
+	Integer BDIDRECEITA;
 	
 	LocalDate BDINICIORECEITA,
 		      BDFINALRECEITA;
@@ -20,14 +19,6 @@ public class MTReceita extends ObjectDAO{
 
 	public void setBDIDRECEITA(Integer bDIDRECEITA) {
 		BDIDRECEITA = bDIDRECEITA;
-	}
-
-	public Integer getBDIDMEDICACAO() {
-		return BDIDMEDICACAO;
-	}
-
-	public void setBDIDMEDICACAO(Integer bDIDMEDICACAO) {
-		BDIDMEDICACAO = bDIDMEDICACAO;
 	}
 
 	public LocalDate getBDINICIORECEITA() {

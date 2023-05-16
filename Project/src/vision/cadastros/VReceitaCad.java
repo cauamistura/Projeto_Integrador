@@ -40,7 +40,7 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.lupaButton;
 
-public class VReceitaCad extends JFrame implements InterMedicamento {
+public class VReceitaCad extends JFrame implements InterMedicamento{
 
 	
 	private static final long serialVersionUID = 1L;
@@ -62,7 +62,7 @@ public class VReceitaCad extends JFrame implements InterMedicamento {
 	private JPanel panel_4;
 	private JPanel panel_5;
 	private JLabel lblMedicamento;
-	private JLabel lblmedicamento;
+	private JLabel lblNomemedicamento;
 	private lupaButton btnLupa;
 	private DateTextField edDataInicio;
 	private DateTextField edDataFinal;
@@ -77,29 +77,20 @@ public class VReceitaCad extends JFrame implements InterMedicamento {
 	private JLabel title;
 	private JLabel lblStatus;
 	
-	public VReceitaCad(InterReceita event, Boolean saida) {
+	public VReceitaCad(InterReceita event,  DAOTReceita receita) {
 		
-		
-		
-		// Fazer um Join para retornar o nome do medicamento
-		if (saida == true) {
+		if (receita.getBDIDRECEITA() != null) {
 			addComponentListener(new ComponentAdapter() {
 				@Override
 				public void componentShown(ComponentEvent e) {
-					TListReceita = FDAOTReceita.listTReceita(FDAOTReceita);
 					DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
-					for (MTReceita mtReceita : TListReceita) {
-						
-						edDataFinal.setText(mtReceita.getBDFINALRECEITA().format(FOMATTER));
-						edDataInicio.setText(mtReceita.getBDINICIORECEITA().format(FOMATTER));
-						FDAOTReceita.setBDIDMEDICACAO(mtReceita.getBDIDMEDICACAO());
-						lblMedicamento.setText("");
-						textPane.setText(mtReceita.getBDDESCRICAO());
-					
-					}
+						edDataFinal.setText(receita.getBDFINALRECEITA().format(FOMATTER));
+						edDataInicio.setText(receita.getBDINICIORECEITA().format(FOMATTER));
+						FDAOTReceita.setBDIDMEDICACAO(receita.getBDIDMEDICACAO());
+						lblNomemedicamento.setText(receita.getBDNOMEMEDICACAO());
+						textPane.setText(receita.getBDDESCRICAO());
 				}
 			});
-			
 		}
 
 		BufferedImage bg = null;
@@ -155,9 +146,9 @@ public class VReceitaCad extends JFrame implements InterMedicamento {
 		});
 		panel_5.add(btnLupa, "cell 3 0");
 		
-		lblmedicamento = new JLabel("");
-		lblmedicamento.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		panel_5.add(lblmedicamento, "cell 5 0");
+		lblNomemedicamento = new JLabel("");
+		lblNomemedicamento.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_5.add(lblNomemedicamento, "cell 5 0");
 		
 		panel_4 = new JPanel();
 		panel_4.setBackground(new Color(125, 137, 245));
@@ -211,13 +202,6 @@ public class VReceitaCad extends JFrame implements InterMedicamento {
 				eventConfirmar();
 				event.preecherReceita(FDAOTReceita);
 				dispose();
-				
-				if (saida) {
-					FDAOTReceita.inserir(FDAOTReceita);
-				}else {
-					FDAOTReceita.alterar(FDAOTReceita);
-				}
-				
 			}
 		});
 		panel_2.add(btnConf, "cell 1 0");
@@ -230,24 +214,19 @@ public class VReceitaCad extends JFrame implements InterMedicamento {
 		});
 		panel_2.add(btnLimpar, "cell 3 0");
 		
-		btnDeletar= new RoundButton("Deletar");
-		btnDeletar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 eventDeletar();
-			}
-		});
-		panel_2.add(btnDeletar, "cell 5 0");
 	
 	}
 	private void eventConfirmar() {
 		
 		try {
 			if (edDataInicio.getDate().isBefore(edDataFinal.getDate()) || edDataFinal.getText().equals(edDataFinal.getText())) {
+				
 				FDAOTReceita.setBDIDRECEITA(FDAOTReceita.getChaveID("treceita", "BDIDRECEITA"));
 				FDAOTReceita.setBDIDMEDICACAO(idmedicamento);
 				FDAOTReceita.setBDINICIORECEITA(edDataInicio.getDate());
 				FDAOTReceita.setBDFINALRECEITA(edDataFinal.getDate());
 				FDAOTReceita.setBDDESCRICAO(textPane.getText());
+				FDAOTReceita.setBDNOMEMEDICACAO(FDAOTMedicacao.getBDNOMEMEDICACAO());
 				
 				optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 		        dialog = optionPane.createDialog("");
@@ -265,30 +244,23 @@ public class VReceitaCad extends JFrame implements InterMedicamento {
 				
 			}else {
 				JOptionPane.showMessageDialog(null, "Data Inicial menor que a Data final");
-	            
 	            edDataFinal.setText("");
 			}
 				
 			
 		} catch (Exception e) {
-			
-			
-			
+
 			JOptionPane.showMessageDialog(null, "Existem itens em Branco!!\n"
 					+ "Preencha todos os itens e tente novamente.");
 		}
 		
 	
 	}
-	private void eventDeletar() {
-			
-		FDAOTReceita.setBDIDRECEITA(FDAOTReceita.getBDIDRECEITA());
-		FDAOTReceita.deletar(FDAOTReceita);
-	}
+	
 	public void med(MTMedicacao med) {
 		
 		idmedicamento = med.getBDIDMEDICACAO();
-		lblmedicamento.setText(med.getBDNOMEMEDICACAO());
+		lblNomemedicamento.setText(med.getBDNOMEMEDICACAO());
 		textPane.setText("\nDescrição do medicamento:\n - "+med.getBDDESCRICAO());
 		
 	}
@@ -300,7 +272,7 @@ public class VReceitaCad extends JFrame implements InterMedicamento {
 		textPane.setText("");
 
 		FDAOTReceita = null;
-		lblmedicamento.setText("");
+		lblNomemedicamento.setText("");
 		lblStatus.setText("Status: Inserindo Receita");
 	}
 
@@ -308,7 +280,6 @@ public class VReceitaCad extends JFrame implements InterMedicamento {
 	public void preencheMedicamento(MTMedicacao dados) {
 		med(dados);
 		
-
 	}
 
 }

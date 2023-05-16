@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import control.DAOAtendimentoEntrada;
 import control.DAOAtendimentoSaida;
+import control.DAOTReceita;
 import model.MTAtendimenoEntrada;
 import model.MTReceita;
 import model.interfaces.InterEntrada;
@@ -46,16 +47,20 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 	private lupaButton btnEntrada;
 	private lupaButton btReceita;
 	private JLabel lblNumEntrada;
-	private Boolean ExisteReceita = true;
+	private Boolean ExisteReceita = false;
 	private Boolean EntradaSelecionada = false;
 	
-	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
-//	private DAOTReceita FDAOReceita = new DAOTReceita();
-	private VEntradaCON FEntradaCON; 
 	
 	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
+	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
+	private DAOTReceita FDAOReceita = new DAOTReceita();
 	
-	public VSaidaATE() {
+	//	private DAOTReceita FDAOReceita = new DAOTReceita();
+	private VEntradaCON FEntradaCON; 
+	
+	
+	
+	public VSaidaATE(InterReceita event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -186,27 +191,15 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 	
 	private void chamaReceitaCad() {
 		
-		//fazer com que a tela volte a ser true qaundo o usuario não cadastrar uma receita
 		if(EntradaSelecionada) {
-			if (ExisteReceita) {
-				VReceitaCad v = new VReceitaCad(this, false);
-				v.setLocationRelativeTo(null);
-				v.setVisible(true);
-				
-				ExisteReceita = false;
-				
-			}else {
-				VReceitaCad v = new VReceitaCad(this, true);
-				v.setLocationRelativeTo(null);
-				v.setVisible(true);
-			}
+			VReceitaCad v = new VReceitaCad(this, FDAOReceita);
+			v.setLocationRelativeTo(null);
+			v.setVisible(true);
+			
 		}else {
 			JOptionPane.showMessageDialog(null, "Selecione uma entrada antes de emitir uma receita");
-		}
-			
-			
+		}	
 	}
-
 
 	private void preecheDados(MTAtendimenoEntrada atendimentos) {
 		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
@@ -217,7 +210,7 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 			edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
 			edNomePet.setText(atendimentos.getBDNOMEPET());
 			
-			FDAOSaida.setBDIDCOMORBIDADE(atendimentos.getBDCOMORBIDADE());
+			FDAOSaida.setBDCOMORBIDADE(atendimentos.getBDCOMORBIDADE());
 			FDAOSaida.setBDIDENTRADA(atendimentos.getBDIDENTRADA());
 			FDAOSaida.setBDIDPET(atendimentos.getBDIDPET());
 			
@@ -227,7 +220,15 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 			DescSaida.setEditable(true);
 			
 		}else {
-			JOptionPane.showMessageDialog(null, "Entrada já possui uma saida");
+			int resposta = JOptionPane.showConfirmDialog(null,
+					"Entrada já possui uma saida! Deseja alterar os dados da Entrada?.",
+					"Confirmação", JOptionPane.YES_NO_OPTION);
+
+			if (resposta == JOptionPane.YES_OPTION) {
+				
+				
+			}
+			
 			EntradaSelecionada = false;
 			
 		}
@@ -240,7 +241,10 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 		FDAOSaida.setBDDESC(DescSaida.getText());
 		FDAOSaida.setBDDATASAIDA(edDataSaida.getDate());
 		
+		FDAOReceita.inserir(FDAOReceita);
+
 		FDAOSaida.inserir(FDAOSaida);
+		
 	}
 	
 	private void eventLimpar() {
@@ -250,14 +254,23 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 		edNomePet.setText("");
 		edNomeUser.setText("");
 		edNumEntrada.setText("");
-		ExisteReceita = true;
+		ExisteReceita = false;
 		
 	}
 	
 	private void eventDadosReceita(MTReceita listReceita) {
 		FDAOSaida.setBDIDRECEITA(listReceita.getBDIDRECEITA());
+		
+		FDAOReceita.setBDIDMEDICACAO(listReceita.getBDIDMEDICACAO());
+		FDAOReceita.setBDIDRECEITA(listReceita.getBDIDRECEITA());
+		FDAOReceita.setBDINICIORECEITA(listReceita.getBDINICIORECEITA());
+		FDAOReceita.setBDFINALRECEITA(listReceita.getBDFINALRECEITA());
+		FDAOReceita.setBDDESCRICAO(listReceita.getBDDESCRICAO());
+		FDAOReceita.setBDNOMEMEDICACAO(listReceita.getBDNOMEMEDICACAO());
+		
+		
+
 	}
-	
 	
 	@Override
 	public void preencheDadosEntrada(MTAtendimenoEntrada listAtendimento) {

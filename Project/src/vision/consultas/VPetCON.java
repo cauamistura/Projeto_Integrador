@@ -178,6 +178,8 @@ public class VPetCON extends JFrame {
 	}
 	
 	public void atualizarTabela(List<MTPet> pets, Boolean prFiltro) {
+		
+		table.limparTabela();
 
 	    for (MTPet pet : pets) {
 	        if (prFiltro && !pet.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {

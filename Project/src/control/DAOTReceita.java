@@ -23,8 +23,8 @@ private String wSql;
 			
 			stm.setInt   (1, prDAO.getBDIDRECEITA());
 			stm.setInt(2, prDAO.getBDIDMEDICACAO());
-			stm.setDate(3,Date.valueOf(getBDFINALRECEITA()));
-			stm.setDate(4,Date.valueOf(getBDINICIORECEITA()));
+			stm.setDate(3,Date.valueOf(getBDINICIORECEITA()));
+			stm.setDate(4,Date.valueOf(getBDFINALRECEITA()));
 			stm.setString(5, prDAO.getBDDESCRICAO());
 			
 			stm.executeUpdate();
@@ -87,7 +87,9 @@ private String wSql;
 		    
 		Connection c = prDAO.append();
 		try {
-			wSql = "SELECT * FROM treceita";
+			wSql = "SELECT r.*, m.BDNOMEMEDICACAO FROM treceita r "
+					+ "inner join tmedicacao m on (r.BDIDMEDICACAO = m.BDIDMEDICACAO)";
+			
 			Statement stm = c.createStatement();
 			ResultSet rs =  stm.executeQuery(wSql);
 			
@@ -100,7 +102,7 @@ private String wSql;
 				lr.setBDFINALRECEITA(rs.getDate("BDFINALRECEITA").toLocalDate());
 				lr.setBDINICIORECEITA(rs.getDate("BDINICIORECEITA").toLocalDate());
 				lr.setBDDESCRICAO(rs.getString("BDDESCRICAO"));
-				
+				lr.setBDNOMEMEDICACAO(rs.getString("BDNOMEMEDICACAO"));
 
 				ListTReceita.add(lr);
 			}

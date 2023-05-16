@@ -1,15 +1,12 @@
 package vision.atendimentos;
 
-import java.awt.Font;  
+import java.awt.Font; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -46,18 +43,10 @@ import vision.consultas.VPetCON;
 import vision.consultas.VUserCON;
 import vision.padrao.CPFTextField;
 import vision.padrao.DateTextField;
-import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.RoundJTextFieldNum;
 import vision.padrao.lupaButton;
-import java.awt.BorderLayout;
-import java.awt.Color;
-
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JTextField;
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
 
 public class VEntradaATE extends JFrame implements InterUsuario, InterPet, InterComorbidade, InterEntrada {
 
@@ -66,6 +55,15 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private CPFTextField edCpf;
+	private RoundJTextField edNomePet;
+	private RoundJTextFieldNum edNumEntrada;
+	private RoundJTextField edComorbidade;
+	private DateTextField edDataEntrada;
+	private RoundJTextField edNomeUser;
+	private RoundJTextField edNomeRaca;
+	private JTextPane pnDesc;
+	private JLabel lbStatus;
 
 	// Objetos do Atendimeno
 	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
@@ -90,59 +88,49 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 	
 	// Objetos do Atendimeno saída
 	private DAOAtendimentoSaida FDAOAtendimentoSaida;
-	private JTextField edNumEntrada;
-	private DateTextField edDataEntrada;
-	private CPFTextField edCpf;
-	private JTextField edNomePet;
-	private JTextField edComorbidade;
-	private JTextField edNomeUser;
-	private JTextField edNomeRaca;
-	private JTextPane pnDesc;
-	private JLabel lbStatus;
 
 	public VEntradaATE() {
-		BufferedImage bg = null;
-		;
-		try {
-			bg = ImageIO.read(new File("src/vision/images/BGLogin.png"));
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		setTitle("Atendimento de Entrada");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 651, 720);
+		setBounds(100, 100, 494, 337);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(158, 174, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[150px][600px,grow][150px]", "[50px][600px,grow][50px]"));
-		
-		JPanel panel = new PanelComBackgroundImage(bg);
-		panel.setBackground(new Color(158, 174, 255));
-		contentPane.add(panel, "cell 1 1,alignx center");
-		panel.setLayout(new MigLayout("", "[450px,grow]", "[][200px,grow][grow]"));
-		
-		JLabel lblNewLabel = new JLabel("Atendimento Entrada");
-		lblNewLabel.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 20));
-		panel.add(lblNewLabel, "cell 0 0,alignx center");
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(125, 137, 245));
-		panel.add(panel_2, "cell 0 1,grow");
-		panel_2.setLayout(new MigLayout("", "[60px][200px,grow][100px][200px,grow][50px]", "[][][][][][][][]"));
-		
-		JLabel lbNumero = new JLabel("Numero de entrada:");
-		lbNumero.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		panel_2.add(lbNumero, "flowy,cell 1 2");
-		
-		JLabel lbData = new JLabel("Entrada:");
-		lbData.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		panel_2.add(lbData, "flowy,cell 1 6");
-		
+		contentPane.setLayout(null);
+
+		JLabel lbUser = new JLabel("Usuario:");
+		lbUser.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbUser.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbUser.setBounds(75, 40, 67, 14);
+		contentPane.add(lbUser);
+
+		edCpf = new CPFTextField();
+		edCpf.setBounds(152, 37, 105, 20);
+		edCpf.setToolTipText("Aperte F9 para consultar.");
+		edCpf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConUser();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_F4) {
+					if (TelaUser == null) {
+						TelaUser = new VUserCad();
+					}
+					TelaUser.setVisible(true);
+				}
+			}
+		});
+		contentPane.add(edCpf);
+		edCpf.setColumns(10);
+
+		JLabel lbNumero = new JLabel("Número de Entrada:");
+		lbNumero.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbNumero.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbNumero.setBounds(10, 11, 132, 14);
+		contentPane.add(lbNumero);
+
 		edNumEntrada = new RoundJTextFieldNum(8);
 		edNumEntrada.setToolTipText("Aperte F9 para consultar.");
 		edNumEntrada.addKeyListener(new KeyAdapter() {
@@ -166,61 +154,16 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 				}
 			}
 		});
-		
-		edDataEntrada = new DateTextField();
-		edDataEntrada.setColumns(10);
-		panel_2.add(edDataEntrada, "cell 1 6,growx");
-		
-		JButton btnConUser = new lupaButton("");
-		btnConUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chamaConUser();
-			}
-		});
-		panel_2.add(btnConUser, "cell 2 4,alignx center,aligny bottom");
-		
-		JLabel lbUser = new JLabel("Usuario:");
-		lbUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		panel_2.add(lbUser, "flowy,cell 1 4");
-		
-		edCpf = new CPFTextField();
-		edCpf.setToolTipText("Aperte F9 para consultar.");
-		edCpf.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_F9) {
-					chamaConUser();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_F4) {
-					if (TelaUser == null) {
-						TelaUser = new VUserCad();
-					}
-					TelaUser.setVisible(true);
-				}
-			}
-		});
-		edCpf.setColumns(10);
-		panel_2.add(edCpf, "cell 1 4,growx");
-		
-		edNomeUser = new RoundJTextField();
-		edNomeUser.setEnabled(false);
-		panel_2.add(edNomeUser, "cell 3 4,growx,aligny bottom");
-		edNomeUser.setColumns(10);
-		
+		edNumEntrada.setBounds(152, 11, 105, 20);
+		contentPane.add(edNumEntrada);
+		edNumEntrada.setColumns(10);
 
-		
-		JButton btnConPet = new lupaButton("");
-		btnConPet.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chamaConPet();
-			}
-		});
-		panel_2.add(btnConPet, "cell 2 5,alignx center,aligny bottom");
-		
 		JLabel lblPet = new JLabel("Pet:");
-		lblPet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		panel_2.add(lblPet, "flowy,cell 1 5");
-		
+		lblPet.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPet.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPet.setBounds(75, 67, 67, 14);
+		contentPane.add(lblPet);
+
 		edNomePet = new RoundJTextField();
 		edNomePet.setToolTipText("Aperte F9 para consultar.");
 		edNomePet.addKeyListener(new KeyAdapter() {
@@ -239,57 +182,28 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		});
 		edNomePet.setToolTipText("Aperte F9 para consultar.");
 		edNomePet.setColumns(10);
-		panel_2.add(edNomePet, "cell 1 5,growx");
-		
-		
-		edNomeRaca = new RoundJTextField();
-		edNomeRaca.setEnabled(false);
-		panel_2.add(edNomeRaca, "cell 3 5,growx,aligny bottom");
-		edNomeRaca.setColumns(10);
-		
-		JButton btnConComorbidade = new lupaButton("");
-		btnConComorbidade.addActionListener(new ActionListener() {
+		edNomePet.setBounds(152, 64, 105, 20);
+		contentPane.add(edNomePet);
+
+		lupaButton btnConPet = new lupaButton("");
+		btnConPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				chamaConComorbidade();
+				chamaConPet();
 			}
 		});
-		panel_2.add(btnConComorbidade, "cell 2 7,alignx center,aligny bottom");
-		
-		JLabel lbComo = new JLabel("Comorbidade:");
-		lbComo.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		panel_2.add(lbComo, "flowy,cell 1 7");
-		
-		edComorbidade = new RoundJTextField();
-		edComorbidade.setColumns(10);
-		panel_2.add(edComorbidade, "cell 1 7,growx");
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(125, 137, 245));
-		panel.add(panel_1, "cell 0 2,grow");
-		panel_1.setLayout(new MigLayout("", "[300px,grow][grow]", "[160px,grow]"));
-		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(125, 137, 245));
-		panel_1.add(panel_4, "cell 0 0,grow");
-		panel_4.setLayout(new MigLayout("", "[100px][300px,grow][]", "[grow][]"));
-		
-		JLabel lblNewLabel_8 = new JLabel("Descrição:");
-		lblNewLabel_8.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		panel_4.add(lblNewLabel_8, "flowy,cell 1 0");
-		
-		JTextPane pnDesc = new JTextPane();
-		panel_4.add(pnDesc, "cell 1 0,grow");
-		
-		JLabel lbStatus = new JLabel("Status: Aguardando");
-		lbStatus.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		panel_4.add(lbStatus, "cell 1 1");
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(125, 137, 245));
-		panel_1.add(panel_3, "cell 1 0,grow");
-		panel_3.setLayout(new MigLayout("", "[][][][]", "[100px][][][][70px]"));
-		
-		JButton btnExcluir = new RoundButton("Excluir");
+		btnConPet.setBounds(267, 63, 53, 23);
+		contentPane.add(btnConPet);
+
+		lupaButton btnConUser = new lupaButton("");
+		btnConUser.setBounds(267, 36, 53, 23);
+		btnConUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chamaConUser();
+			}
+		});
+		contentPane.add(btnConUser);
+
+		RoundButton btnExcluir = new RoundButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!edNumEntrada.getText().isEmpty()) {
@@ -297,74 +211,120 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 				}
 			}
 		});
-		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
-		panel_3.add(btnExcluir, "cell 1 1,growx");
-		
-		RoundButton btnLimpar = new RoundButton("Limpar");
+		btnExcluir.setBounds(57, 230, 86, 23);
+		contentPane.add(btnExcluir);
+
+		RoundButton btnLimpar = new RoundButton("Login");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpaCampos();
 			}
 		});
-		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
-		panel_3.add(btnLimpar, "cell 3 1,growx");
-		
-		JButton btnConsulta = new RoundButton("Consultar");
+		btnLimpar.setText("Limpar");
+		btnLimpar.setBounds(147, 230, 79, 23);
+		contentPane.add(btnLimpar);
+
+		RoundButton btnConsulta = new RoundButton("Login");
 		btnConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chamaConAtendimeno();
 			}
 		});
-		btnConsulta.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
-		panel_3.add(btnConsulta, "cell 1 3,growx");
-		
-		JButton btnConfirmar = new RoundButton("Confirmar");
+		btnConsulta.setText("Consultar");
+		btnConsulta.setBounds(236, 230, 89, 23);
+		contentPane.add(btnConsulta);
+
+		RoundButton btnConfirmar = new RoundButton("Login");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				acaoConfirma();
 			}
 		});
-		btnConfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
-		panel_3.add(btnConfirmar, "cell 3 3,growx");
+		btnConfirmar.setText("Confirmar");
+		btnConfirmar.setBounds(329, 230, 95, 23);
+		contentPane.add(btnConfirmar);
+
+		edDataEntrada = new DateTextField();
+		edDataEntrada.setBounds(152, 92, 105, 20);
+		contentPane.add(edDataEntrada);
+		edDataEntrada.setColumns(10);
+
+		JLabel lbData = new JLabel("Entrada:");
+		lbData.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbData.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbData.setBounds(75, 95, 67, 14);
+		contentPane.add(lbData);
+
+		edNomeRaca = new RoundJTextField();
+		edNomeRaca.setEnabled(false);
+		edNomeRaca.setBounds(330, 64, 127, 20);
+		contentPane.add(edNomeRaca);
+
+		edNomeUser = new RoundJTextField();
+		edNomeUser.setEnabled(false);
+		edNomeUser.setBounds(330, 37, 127, 20);
+		contentPane.add(edNomeUser);
+
+		JLabel lbDescricao = new JLabel("Descrição:");
+		lbDescricao.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbDescricao.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbDescricao.setBounds(75, 149, 67, 14);
+		contentPane.add(lbDescricao);
+
+		JScrollPane pnPane = new JScrollPane();
+		pnPane.setBounds(152, 149, 272, 73);
+		contentPane.add(pnPane);
+
+		pnDesc = new JTextPane();
+		pnPane.setViewportView(pnDesc);
+
+		JLabel lbComo = new JLabel("Comorbidade:");
+		lbComo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbComo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbComo.setBounds(37, 122, 105, 14);
+		contentPane.add(lbComo);
+
+		edComorbidade = new RoundJTextField();
+		edComorbidade.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConComorbidade();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_F4) {
+					if (TelaComorbidade == null) {
+						TelaComorbidade = new VComorbidadeCad();
+					}
+					TelaComorbidade.setVisible(true);
+				}
+			}
+		});
+		edComorbidade.setToolTipText("Aperte F9 para consultar.");
+		edComorbidade.setColumns(10);
+		edComorbidade.setBounds(152, 119, 105, 20);
+		contentPane.add(edComorbidade);
+
+		lupaButton btnConComorbidade = new lupaButton("");
+		btnConComorbidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chamaConComorbidade();
+			}
+		});
+		btnConComorbidade.setBounds(267, 118, 53, 23);
+		contentPane.add(btnConComorbidade);
+
+		lbStatus = new JLabel("Status: Aguardando");
+		lbStatus.setHorizontalAlignment(SwingConstants.LEFT);
+		lbStatus.setBounds(25, 264, 180, 14);
+		contentPane.add(lbStatus);
 	}
 	
-	private void chamaConComorbidade() {
-		ArrayList<MTComorbidade> list = new ArrayList<>();
-		list = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
+	private void chamaConAtendimeno() { 
+		ArrayList<MTAtendimenoEntrada> list = new ArrayList<>();
+		list = FDAOEntrada.ListConsulta(FDAOEntrada);
 
-		FConsultaComorbidade = new VComCon(list, this);
-		FConsultaComorbidade.setVisible(true);
-	}
-	
-	public void preencheAtendimeno(MTAtendimenoEntrada dado) {
-		edNumEntrada.setText(String.valueOf(dado.getBDIDENTRADA()));
-		pnDesc.setText(dado.getBDDESC());
-		
-		edComorbidade.setText(achaComorbidade(dado.getBDCOMORBIDADE()));
-		FDAOEntrada.setBDCOMORBIDADE(dado.getBDCOMORBIDADE());
-		
-		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
-		edDataEntrada.setText(dado.getBDDATAENT().format(FOMATTER));
-		
-		//Usuario 
-		edCpf.setText(dado.getBDCPF());
-		edNomeUser.setText(dado.getBDNOMEUSER());
-		FDAOEntrada.setBDIDUSER(dado.getBDIDUSER());
-		
-		//Pet 
-		edNomePet.setText(dado.getBDNOMEPET());
-		edNomeRaca.setText(dado.getBDNOMERACA());
-		FDAOEntrada.setBDIDPET(dado.getBDIDPET());
-	}
-
-	public void preencheUser(MTDadosUser list) {
-		edCpf.setText(list.getBDCPF());
-		edNomeUser.setText(list.getBDNOMEUSER());
-	}
-
-	private void preenchePet(MTPet list) {
-		edNomePet.setText(list.getBDNOMEPET());
-		edNomeRaca.setText(list.getBDNOMERACA());
+		FEntradaCON = new VEntradaCON(list, this);
+		FEntradaCON.setVisible(true);
 	}
 	
 	private void chamaConUser() {
@@ -375,7 +335,7 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		FVUserCON.desabilitaExcluir();
 		FVUserCON.setVisible(true);
 	}
-	
+
 	private void chamaConPet() {
 		if (!edCpf.existeCpfUsuario(FDAOTUser)) {
 			JOptionPane.showInternalMessageDialog(null,
@@ -396,9 +356,48 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		FVPetCON.desExcluir();
 		FVPetCON.setVisible(true);
 	}
+	
+	private void chamaConComorbidade() {
+		ArrayList<MTComorbidade> list = new ArrayList<>();
+		list = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
+
+		FConsultaComorbidade = new VComCon(list, this);
+		FConsultaComorbidade.setVisible(true);
+	}
+	
+	private void preencheAtendimeno(MTAtendimenoEntrada dado) {
+		edNumEntrada.setText(String.valueOf(dado.getBDIDENTRADA()));
+		pnDesc.setText(dado.getBDDESC());
+		
+		edComorbidade.setText(achaComorbidade(dado.getBDCOMORBIDADE()));
+		FDAOEntrada.setBDCOMORBIDADE(dado.getBDCOMORBIDADE());
+		
+		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+		edDataEntrada.setText(dado.getBDDATAENT().format(FOMATTER));
+		
+		//Usuario 
+		edCpf.setText(dado.getBDCPF());
+		edNomeUser.setText(dado.getBDNOMEUSER());
+		FDAOEntrada.setBDIDUSER(dado.getBDIDUSER());
+		
+		//Pet 
+		edNomePet.setText(dado.getBDNOMEPET());
+		edNomeRaca.setText(dado.getBDNOMERACA());
+		FDAOEntrada.setBDIDPET(dado.getBDIDPET());
+		
+	}
+
+	private void preencheUser(MTDadosUser list) {
+		edCpf.setText(list.getBDCPF());
+		edNomeUser.setText(list.getBDNOMEUSER());
+	}
+
+	private void preenchePet(MTPet list) {
+		edNomePet.setText(list.getBDNOMEPET());
+		edNomeRaca.setText(list.getBDNOMERACA());
+	}
 
 	public void limpaCampos() {
-		
 		edNumEntrada.setText("");
 		edCpf.setText("");
 		edDataEntrada.setText("");
@@ -487,28 +486,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		
 		return true;
 	}
-
-	@Override
-	public void preencheDadosUser(MTDadosUser listUser) {
-		preencheUser(listUser);
-	}
-
-	@Override
-	public void exluiUser(Integer bdiduser) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void preencheDadosPet(MTPet dado) {
-		FDAOTPet.setBDIDPET(dado.getBDIDPET());
-		preenchePet(dado);
-	}
-
-	@Override
-	public void exluiPet(Integer IdPet) {
-		// TODO Auto-generated method stub
-	}
-private void acaoConfirma() {
+	
+	private void acaoConfirma() {
 		
 		if (edNumEntrada.getText().isEmpty()) {
 			int resposta = JOptionPane.showConfirmDialog(null,
@@ -567,13 +546,27 @@ private void acaoConfirma() {
 
 		limpaCampos();
 	}
-private void chamaConAtendimeno() { 
-	ArrayList<MTAtendimenoEntrada> list = new ArrayList<>();
-	list = FDAOEntrada.ListConsulta(FDAOEntrada);
 
-	FEntradaCON = new VEntradaCON(list, this);
-	FEntradaCON.setVisible(true);
-}
+	@Override
+	public void preencheDadosUser(MTDadosUser listUser) {
+		preencheUser(listUser);
+	}
+
+	@Override
+	public void exluiUser(Integer bdiduser) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void preencheDadosPet(MTPet dado) {
+		FDAOTPet.setBDIDPET(dado.getBDIDPET());
+		preenchePet(dado);
+	}
+
+	@Override
+	public void exluiPet(Integer IdPet) {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public void preencheCom(MTComorbidade dado) {
