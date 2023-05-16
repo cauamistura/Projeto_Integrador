@@ -73,6 +73,7 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 	private JMenuItem miEntrada;
 	private JMenuItem miSaida;
 	private JMenuItem miHistorico;
+	private JMenuItem miEncerrar;
 
 	/**
 	 * 
@@ -243,6 +244,7 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 		mmATE.add(miEntrada);
 		
 		miSaida = new JMenuItem("Saida..");
+		miSaida.setFont(new Font("Dialog", Font.PLAIN, 12));
 		miSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VSaidaATE v = new VSaidaATE(null);
@@ -259,6 +261,20 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 		miLogout = new JMenuItem("Logout...");
 		miLogout.setFont(new Font("Dialog", Font.PLAIN, 12));
 		mmSair.add(miLogout);
+		
+		miEncerrar = new JMenuItem("Encerrar...");
+		miEncerrar.setFont(new Font("Dialog", Font.PLAIN, 12));
+		miEncerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int resposta = JOptionPane.showConfirmDialog(null,
+						"Você realmente deseja fechar o sistema?", "Confirmação",
+						JOptionPane.YES_NO_OPTION);
+				if (resposta == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
+		mmSair.add(miEncerrar);
 		miLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int resposta = JOptionPane.showConfirmDialog(null,

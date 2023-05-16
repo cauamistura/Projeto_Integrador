@@ -366,6 +366,8 @@ public class VEntradaATE extends JFrame implements InterUsuario, InterPet, Inter
 		edNomePet.setText(dado.getBDNOMEPET());
 		edNomeRaca.setText(dado.getBDNOMERACA());
 		FDAOEntrada.setBDIDPET(dado.getBDIDPET());
+		
+		lbStatus.setText("Status: Alterando");
 	}
 
 	public void preencheUser(MTDadosUser list) {
