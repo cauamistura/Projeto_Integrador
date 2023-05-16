@@ -215,7 +215,7 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita,Inte
 		}	
 	}
 
-	private void preecheDados(MTAtendimenoEntrada atendimentos) {
+	public void preecheDados(MTAtendimenoEntrada atendimentos) {
 		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
 			edCpfUser.setText(atendimentos.getBDCPF());
 			edNomeUser.setText(atendimentos.getBDNOMEUSER());

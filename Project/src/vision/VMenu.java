@@ -15,6 +15,7 @@ import vision.atendimentos.VEntradaATE;
 import vision.atendimentos.VSaidaATE;
 import vision.cadastros.*;
 import vision.consultas.VUserCON;
+import vision.consultas.VHistorico;
 import vision.consultas.VPetCON;
 
 import java.awt.BorderLayout;
@@ -71,6 +72,8 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 	private JMenuItem miComorbidade;
 	private JMenuItem miEntrada;
 	private JMenuItem miSaida;
+	private JMenuItem miHistorico;
+	private JMenuItem miEncerrar;
 
 	/**
 	 * 
@@ -197,6 +200,16 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 				v.setVisible(true);
 			}
 		});
+		
+		miHistorico = new JMenuItem("Histórico...");
+		miHistorico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VHistorico v = new VHistorico();
+				v.setVisible(true);
+			}
+		});
+		miHistorico.setFont(new Font("Arial", Font.PLAIN, 12));
+		mmCON.add(miHistorico);
 		mmCON.add(miUserCons);
 
 		mmPetCons = new JMenuItem("Pet...");
@@ -231,6 +244,7 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 		mmATE.add(miEntrada);
 		
 		miSaida = new JMenuItem("Saida..");
+		miSaida.setFont(new Font("Dialog", Font.PLAIN, 12));
 		miSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VSaidaATE v = new VSaidaATE(null,null,false);
@@ -247,6 +261,20 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 		miLogout = new JMenuItem("Logout...");
 		miLogout.setFont(new Font("Dialog", Font.PLAIN, 12));
 		mmSair.add(miLogout);
+		
+		miEncerrar = new JMenuItem("Encerrar...");
+		miEncerrar.setFont(new Font("Dialog", Font.PLAIN, 12));
+		miEncerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int resposta = JOptionPane.showConfirmDialog(null,
+						"Você realmente deseja fechar o sistema?", "Confirmação",
+						JOptionPane.YES_NO_OPTION);
+				if (resposta == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
+		mmSair.add(miEncerrar);
 		miLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int resposta = JOptionPane.showConfirmDialog(null,

@@ -1,38 +1,33 @@
 package vision.consultas;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 import model.MTDadosUser;
 import model.interfaces.InterUsuario;
+import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JTextField;
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import java.awt.Font;
 
 public class VUserCON extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private DefaultTableModel model;
+//	private DefaultTableModel model;
 	private JPanel contentPane;
 	private JPanel panelBackgroud;
 	private JPanel panelFiltro;
@@ -45,7 +40,7 @@ public class VUserCON extends JFrame {
 	private RoundButton btnConfirmar;
 	private RoundButton btnExcluir;
 	private JLabel lblNewLabel_1;
-	private JScrollPane scrollPane;
+//	private JScrollPane scrollPane;
 	public VUserCON(List<MTDadosUser> dados, InterUsuario inter) {
 		BufferedImage bg = null;
 		;

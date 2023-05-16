@@ -2,18 +2,50 @@ package model;
 
 import java.time.LocalDate;
 
-import control.ObjectDAO;
-
 public class MTAtendimentoSaida extends MTAtendimenoEntrada{
 	
-
-	 Integer BDIDRECEITA;
+	 Integer BDIDSAIDA,
+	 		 BDIDENTRADA,
+	  		 BDIDPET,
+	  		 BDIDCOMORBIDADE,
+	  		 BDIDRECEITA;
 	 
-	 String BDDESC;
+	String   BDDESC;
+		 
+	LocalDate BDDATASAIDA;
 	 
-	 LocalDate BDDATASAIDA;
+	 public Integer getBDIDSAIDA() {
+		return BDIDSAIDA;
+	}
 
-	
+	public void setBDIDSAIDA(Integer bDIDSAIDA) {
+		BDIDSAIDA = bDIDSAIDA;
+	}
+
+	public Integer getBDIDENTRADA() {
+		return BDIDENTRADA;
+	}
+
+	public void setBDIDENTRADA(Integer bDIDENTRADA) {
+		BDIDENTRADA = bDIDENTRADA;
+	}
+
+	public Integer getBDIDPET() {
+		return BDIDPET;
+	}
+
+	public void setBDIDPET(Integer bDIDPET) {
+		BDIDPET = bDIDPET;
+	}
+
+	public Integer getBDIDCOMORBIDADE() {
+		return BDIDCOMORBIDADE;
+	}
+
+	public void setBDIDCOMORBIDADE(Integer bDIDCOMORBIDADE) {
+		BDIDCOMORBIDADE = bDIDCOMORBIDADE;
+	}
+
 	public Integer getBDIDRECEITA() {
 		return BDIDRECEITA;
 	}
