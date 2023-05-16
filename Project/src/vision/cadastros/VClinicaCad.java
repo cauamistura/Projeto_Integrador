@@ -87,9 +87,7 @@ public class VClinicaCad extends JFrame {
 			}
 		});
 		setBounds(100, 100, 848, 524);
-		
-		
-		
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		BufferedImage bg = null;

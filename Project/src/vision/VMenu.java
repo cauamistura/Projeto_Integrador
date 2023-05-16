@@ -247,7 +247,7 @@ public class VMenu extends JFrame implements InterUsuario, InterPet{
 		miSaida.setFont(new Font("Dialog", Font.PLAIN, 12));
 		miSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VSaidaATE v = new VSaidaATE(null);
+				VSaidaATE v = new VSaidaATE(null,null,false);
 				v.setLocationRelativeTo(null);
 				v.setVisible(true);
 			}

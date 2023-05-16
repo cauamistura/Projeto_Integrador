@@ -157,4 +157,24 @@ public class DAOAtendimentoEntrada extends MTAtendimenoEntrada {
 
 		return ListaAtendCons;
 	}
+	
+	public Boolean retornaIdReceita(Integer idEntrada) {
+		Connection c = append();
+		try {
+			Statement stm = c.createStatement();
+			wSql = "SELECT `BDIDRECEITA` FROM `dbpi`.`tatendimento_saida` where `BDIDENTRADA` = " + idEntrada + ";";
+
+			ResultSet rs = stm.executeQuery(wSql);
+
+			if (rs.next()) {
+				return true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		post();
+		return false;
+	}
+	
 }
