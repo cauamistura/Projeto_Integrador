@@ -27,11 +27,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.DAOHistorico;
+import control.DAOTComorbidade;
 import control.DAOTDadosUser;
 import control.DAOTPet;
 import control.DAOTUser;
 import model.MHistorico;
 import model.MTAtendimenoEntrada;
+import model.MTComorbidade;
 import model.MTDadosUser;
 import model.MTPet;
 import model.MTUser;
@@ -83,6 +85,9 @@ public class VHistorico extends JFrame implements InterUsuario, InterPet {
 	private ArrayList<MTPet> listPet = new ArrayList<>();
 	private DAOTPet FDAOTPet = new DAOTPet();
 	private VPetCON FVPetCON;
+	
+	//Objetos comorbidade 
+	private DAOTComorbidade FDAOTComorbidade = new DAOTComorbidade();;
 	
 	/**
 	 * Create the frame.
@@ -237,8 +242,15 @@ public class VHistorico extends JFrame implements InterUsuario, InterPet {
 					dado = Lista.get(modelIndex);
 				}
 				
+				if (dado == null) {
+					JOptionPane.showMessageDialog(null, "Selecine um atendimento antes de continuar!");
+					return;
+				}
+				
 				if (cbTipo.getSelectedIndex() == 0) {
 					buscaENTCAD(dado);
+				} else {
+					buscaSAICAD(dado);
 				}
 				
 				table.clearSelection();
@@ -259,7 +271,7 @@ public class VHistorico extends JFrame implements InterUsuario, InterPet {
 			for (MHistorico com : Lista) {
 				if (com.getTipo().equalsIgnoreCase("entrada")) {
 					Object[][] rowData = {
-					{ com.getBDIDENTRADA(), com.getBDNOMEUSER(), com.getBDNOMEPET(), com.getBDNOMERACA(), com.getBDDATAENT().format(FOMATTER), com.getBDCOMORBIDADE()} };
+					{ com.getBDIDENTRADA(), com.getBDNOMEUSER(), com.getBDNOMEPET(), com.getBDNOMERACA(), com.getBDDATAENT().format(FOMATTER), achaComorbidade(com.getBDIDCOMORBIDADE())} };
 					table.preencherTabela(rowData);	
 				}
 			}
@@ -267,7 +279,7 @@ public class VHistorico extends JFrame implements InterUsuario, InterPet {
 			for (MHistorico com : Lista) {
 				if (com.getTipo().equalsIgnoreCase("saida")) {
 					Object[][] rowData = {
-					{ com.getBDIDENTRADA(), com.getBDNOMEUSER(), com.getBDNOMEPET(), com.getBDNOMERACA(), com.getBDDATASAIDA().format(FOMATTER), com.getBDIDCOMORBIDADE()} };
+					{ com.getBDIDENTRADA(), com.getBDNOMEUSER(), com.getBDNOMEPET(), com.getBDNOMERACA(), com.getBDDATASAIDA().format(FOMATTER), achaComorbidade(com.getBDIDCOMORBIDADE())} };
 					table.preencherTabela(rowData);	
 				}
 			}	
@@ -322,6 +334,10 @@ public class VHistorico extends JFrame implements InterUsuario, InterPet {
 		self.setVisible(true);
 	}
 	
+	private void buscaSAICAD(MHistorico list) {
+		// precisa ser imoplemantado
+	}
+	
 	private String getCPF(Integer I) {
 		ArrayList<MTUser> l = new ArrayList<>();
 		try {
@@ -335,6 +351,20 @@ public class VHistorico extends JFrame implements InterUsuario, InterPet {
 		} finally {
 			l = null;
 		}
+	}
+	
+	private String achaComorbidade(Integer prID) {
+		ArrayList<MTComorbidade> listCom = FDAOTComorbidade.ListTComorbidade(FDAOTComorbidade);
+		try {
+			for (MTComorbidade com : listCom) {
+				if (com.getBDIDCOMORBIDADE() == prID) {
+					return com.getBDNOMECOMORBIDADE();
+				}
+			}
+		} finally {
+			listCom = null;
+		}
+		return null;
 	}
 
 	@Override

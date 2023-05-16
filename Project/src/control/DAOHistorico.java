@@ -18,29 +18,31 @@ public class DAOHistorico extends MHistorico {
 		Connection c = prDAO.append();
 		try {
 			wSql =    " SELECT m.*,"
-					+ "       u.*,"
-					+ "       p.BDNOMEPET,"
-					+ "       r.BDNOMERACA"
-					+ " FROM"
-					+ "  ("
-					+ "  SELECT e.BDIDENTRADA AS BDID,"
-					+ "          e.BDIDPET,"
-					+ "          e.BDCOMORBIDADE,"
-					+ "          e.BDDATAENT AS BDDATA,"
-					+ "          BDDESC,"
-					+ "          \"Entrada\" AS BDTIPO"
-					+ "   FROM tatendimento_entrada e"
-					+ "   UNION ALL SELECT s.BDIDSAIDA,"
-					+ "                    s.BDIDPET,"
-					+ "                    s.BDIDCOMORBIDADE,"
-					+ "                    s.BDDATASAIDA,"
-					+ "                    s.BDDESC,"
-					+ "                    \"Saida\" AS BDTIPO"
-					+ "   FROM tatendimento_saida s"
-					+ "   ) m"
+					+ "        u.*,"
+					+ "        p.BDNOMEPET,"
+					+ "        r.BDNOMERACA"
+					+ "    FROM ("
+					+ "    SELECT e.BDIDENTRADA AS BDID,"
+					+ "        e.BDIDPET,"
+					+ "        e.BDCOMORBIDADE,"
+					+ "        e.BDDATAENT AS BDDATA,"
+					+ "        BDDESC,"
+					+ "        \"Entrada\" AS BDTIPO,"
+					+ "        null as BDRELACAO"
+					+ "        FROM tatendimento_entrada e"
+					+ "    UNION ALL"
+					+ "    SELECT s.BDIDSAIDA,"
+					+ "        s.BDIDPET,"
+					+ "        s.BDIDCOMORBIDADE,"
+					+ "        s.BDDATASAIDA,"
+					+ "        s.BDDESC,"
+					+ "        \"Saida\" AS BDTIPO,"
+					+ "        BDIDENTRADA "
+					+ "        FROM tatendimento_saida s "
+					+ "        ) m"
 					+ " INNER JOIN tpets p ON (m.BDIDPET = p.BDIDPET)"
-					+ " inner join traca r on (r.BDIDRACA = p.BDIDRACA)"
-					+ " inner join tdadosuser u on (u.BDIDUSER = p.BDIDUSER)";
+					+ " INNER JOIN traca r ON (r.BDIDRACA = p.BDIDRACA)"
+					+ " INNER JOIN tdadosuser u ON (u.BDIDUSER = p.BDIDUSER)";
 			
 			if (prDAO.getBDIDUSER() != null) {
 				String User = String.valueOf(prDAO.getBDIDUSER());
@@ -59,7 +61,12 @@ public class DAOHistorico extends MHistorico {
 				MHistorico lc = new MHistorico();
 				
 				//Entrada
-				lc.setBDIDENTRADA(rs.getInt("BDID"));
+				if (rs.getString("BDRELACAO") == null) {
+					lc.setBDIDENTRADA(rs.getInt("BDID"));
+				} else {
+					lc.setBDIDENTRADA(rs.getInt("BDRELACAO"));
+				}
+				
 				lc.setBDIDPET(rs.getInt("BDIDPET"));
 				lc.setBDIDCOMORBIDADE(rs.getInt("BDCOMORBIDADE"));
 				lc.setBDDATAENT(rs.getDate("BDDATA").toLocalDate());
@@ -83,13 +90,11 @@ public class DAOHistorico extends MHistorico {
 				
 				Lista.add(lc); // Adiciona objeto à lista
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			prDAO.post();
 		}
-
 		return Lista;
 	}
 

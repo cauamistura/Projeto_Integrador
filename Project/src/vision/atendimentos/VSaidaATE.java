@@ -201,8 +201,9 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 		}	
 	}
 
-	private void preecheDados(MTAtendimenoEntrada atendimentos) {
+	public void preecheDados(MTAtendimenoEntrada atendimentos) {
 		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+		
 		if(!FDAOSaida.retornaIdReceita(atendimentos.getBDIDENTRADA())) {
 			edCpfUser.setText(atendimentos.getBDCPF());
 			edNomeUser.setText(atendimentos.getBDNOMEUSER());
@@ -218,21 +219,15 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 			
 			edDataSaida.setEditable(true);
 			DescSaida.setEditable(true);
-			
 		}else {
 			int resposta = JOptionPane.showConfirmDialog(null,
 					"Entrada já possui uma saida! Deseja alterar os dados da Entrada?.",
 					"Confirmação", JOptionPane.YES_NO_OPTION);
 
 			if (resposta == JOptionPane.YES_OPTION) {
-				
-				
 			}
-			
 			EntradaSelecionada = false;
-			
 		}
-			
 			
 	}
 	
@@ -267,8 +262,6 @@ public class VSaidaATE extends JFrame implements InterEntrada, InterReceita{
 		FDAOReceita.setBDFINALRECEITA(listReceita.getBDFINALRECEITA());
 		FDAOReceita.setBDDESCRICAO(listReceita.getBDDESCRICAO());
 		FDAOReceita.setBDNOMEMEDICACAO(listReceita.getBDNOMEMEDICACAO());
-		
-		
 
 	}
 	
