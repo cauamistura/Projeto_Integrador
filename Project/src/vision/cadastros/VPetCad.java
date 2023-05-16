@@ -260,7 +260,6 @@ public class VPetCad extends JFrame implements InterPet {
 					return;
 				}
 
-				
 				FDAOTPet.setBDIDESPECIE(FDAOTPet.getChaveID("tespecie", "BDIDESPECIE"));
 				if (idPet == 0) {
 					FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("tpets", "BDIDPET"));
@@ -281,7 +280,7 @@ public class VPetCad extends JFrame implements InterPet {
 				}
 				try {
 
-					if (FDAOTPet.existePet(FDAOTPet, idPet)) {
+					if (FDAOTPet.existePet(FDAOTPet, idPet) != null) {
 						FDAOTPet.alterar(FDAOTPet);
 						JOptionPane.showMessageDialog(null, "Seu pet foi alterado com sucesso!");
 					} else {
