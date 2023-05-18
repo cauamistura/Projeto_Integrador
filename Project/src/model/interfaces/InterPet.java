@@ -1,10 +1,10 @@
 package model.interfaces;
 
-import model.MTPet;
+import model.Pet;
 
 public interface InterPet  {
 	
-	public void preencheDadosPet(MTPet dado);
+	public void preencheDadosPet(Pet dado);
 
 	public void exluiPet(Integer IdPet);
 

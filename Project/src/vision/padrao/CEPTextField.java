@@ -6,23 +6,23 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import control.DAOTCidade;
-import control.DAOTClinica;
-import control.DAOTEndereco;
-import control.DAOTEstado;
-import model.MTCidade;
-import model.MTEndereco;
-import model.MTEstado;
+import control.DAOCidade;
+import control.DAOClinica;
+import control.DAOEndereco;
+import control.DAOEstado;
+import model.Cidade;
+import model.Endereco;
+import model.Estado;
 
 public class CEPTextField extends RoundJFormattedTextField {
 
-	public DAOTClinica FDAOTClinica = new DAOTClinica();
-	public DAOTEndereco FDAOTEndereco = new DAOTEndereco();
-	public DAOTEstado FDAOTEstado = new DAOTEstado();
-	public DAOTCidade FDAOTCidade = new DAOTCidade();
-	ArrayList<MTEndereco> lEndereco = new ArrayList<>();
-	ArrayList<MTEstado> TListEstado = new ArrayList<>();
-	ArrayList<MTCidade> lCidade = new ArrayList<>();
+	public DAOClinica FDAOTClinica = new DAOClinica();
+	public DAOEndereco FDAOTEndereco = new DAOEndereco();
+	public DAOEstado FDAOTEstado = new DAOEstado();
+	public DAOCidade FDAOTCidade = new DAOCidade();
+	ArrayList<Endereco> lEndereco = new ArrayList<>();
+	ArrayList<Estado> TListEstado = new ArrayList<>();
+	ArrayList<Cidade> lCidade = new ArrayList<>();
 
 	private static final long serialVersionUID = 1L;
 
@@ -56,12 +56,12 @@ public class CEPTextField extends RoundJFormattedTextField {
 		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
 		lCidade = FDAOTCidade.ListTCidade(FDAOTCidade);
 
-		for (MTEndereco l : lEndereco) {
+		for (Endereco l : lEndereco) {
 
 			if (l.getBDCEP() == prCEP) {
 				edBairro.setText(l.getBDBAIRRO());
 				// Procura Cidade Vinculada
-				for (MTCidade lc : lCidade) {
+				for (Cidade lc : lCidade) {
 
 					if (l.getBDIDCIDADE() == lc.getBDIDCIDADE()) {
 
@@ -69,7 +69,7 @@ public class CEPTextField extends RoundJFormattedTextField {
 						edDescricao.setText(lc.getBDDESCCID());
 						
 						// Procura Estado vinculado
-						for (MTEstado le : TListEstado) {
+						for (Estado le : TListEstado) {
 							if (lc.getBDIDUF() == le.getBDIDUF()) {
 								cbUF.setSelectedIndex(lc.getBDIDUF());
 							}
@@ -85,10 +85,10 @@ public class CEPTextField extends RoundJFormattedTextField {
 	public Integer achaIdUf(JComboBox cbUF) {
 		
 		Integer idUf = 0; 
-		ArrayList<MTEstado> TListEstado = new ArrayList<>();
+		ArrayList<Estado> TListEstado = new ArrayList<>();
 		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
 
-		for (MTEstado mtEstado : TListEstado) {
+		for (Estado mtEstado : TListEstado) {
 			
 		if (mtEstado.getBDSIGLAUF().equals(cbUF.getSelectedItem().toString())) {
 			idUf = mtEstado.getBDIDUF();

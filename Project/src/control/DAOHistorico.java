@@ -5,15 +5,16 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.MHistorico;
+import model.Historico;
+import vision.Menu;
 
-public class DAOHistorico extends MHistorico {
+public class DAOHistorico extends Historico {
 
 	private String wSql;
 
 	// SELECT
-	public ArrayList<MHistorico> List(DAOHistorico prDAO) {
-		ArrayList<MHistorico> Lista = new ArrayList<>();
+	public ArrayList<Historico> List(DAOHistorico prDAO) {
+		ArrayList<Historico> Lista = new ArrayList<>();
 
 		Connection c = prDAO.append();
 		try {
@@ -53,12 +54,15 @@ public class DAOHistorico extends MHistorico {
 					wSql = wSql + " AND m.BDIDPET = " + Pet; 
 				}
 			}
+			if (Menu.FPERMICAO == 3) {
+				wSql = wSql + " WHERE u.BDIDUSER = " + String.valueOf(Menu.FIDUSER); 
+			}
 			
 			Statement stm = c.createStatement();
 			ResultSet rs = stm.executeQuery(wSql);
 
 			while (rs.next()) {
-				MHistorico lc = new MHistorico();
+				Historico lc = new Historico();
 				
 				//Entrada
 				if (rs.getString("BDRELACAO") == null) {

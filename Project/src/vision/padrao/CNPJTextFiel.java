@@ -8,14 +8,14 @@ import java.util.ArrayList;
 
 import javax.swing.text.MaskFormatter;
 
-import control.DAOTClinica;
-import model.MTClinica;
+import control.DAOClinica;
+import model.Clinica;
 
 public class CNPJTextFiel extends RoundJFormattedTextField {
 	/**
 	 * 
 	 */
-	public DAOTClinica FDAOTClinica = new DAOTClinica();
+	public DAOClinica FDAOTClinica = new DAOClinica();
 	private static final long serialVersionUID = 1L;
 	
 	public CNPJTextFiel() {
@@ -36,7 +36,7 @@ public class CNPJTextFiel extends RoundJFormattedTextField {
 	      return formatter;
 	}
 	    
-	public Boolean existeCnpjClinica(DAOTClinica prDAOClinica) {
+	public Boolean existeCnpjClinica(DAOClinica prDAOClinica) {
 		Connection c = prDAOClinica.append();
 			try {
 				Statement stm = c.createStatement();
@@ -61,10 +61,10 @@ public class CNPJTextFiel extends RoundJFormattedTextField {
 	public Integer IdClinica() {
 	    	
 		Integer idClinica = 0; 
-		ArrayList<MTClinica> TListClinica = new ArrayList<>();
+		ArrayList<Clinica> TListClinica = new ArrayList<>();
 		TListClinica = FDAOTClinica.ListTClinica(FDAOTClinica);
 
-		for (MTClinica mtClinica: TListClinica) {
+		for (Clinica mtClinica: TListClinica) {
 				
 			if (mtClinica.getBDCNPJ().equals(getText())) {
 				idClinica = mtClinica.getBDIDCLINICA();		

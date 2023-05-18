@@ -1,0 +1,28 @@
+package model;
+
+import control.ObjectDAO;
+
+public class Comorbidade extends ObjectDAO {
+	
+	private Integer BDIDCOMORBIDADE;
+	private String BDNOMECOMORBIDADE, BDDESCCOMORBIDADE;
+
+	public Integer getBDIDCOMORBIDADE() {
+		return BDIDCOMORBIDADE;
+	}
+	public void setBDIDCOMORBIDADE(Integer bDIDCOMORBIDADE) {
+		BDIDCOMORBIDADE = bDIDCOMORBIDADE;
+	}
+	public String getBDNOMECOMORBIDADE() {
+		return BDNOMECOMORBIDADE;
+	}
+	public void setBDNOMECOMORBIDADE(String bDNOMECOMORBIDADE) {
+		BDNOMECOMORBIDADE = bDNOMECOMORBIDADE;
+	}
+	public String getBDDESCCOMORBIDADE() {
+		return BDDESCCOMORBIDADE;
+	}
+	public void setBDDESCCOMORBIDADE(String bDDESCCOMORBIDADE) {
+		BDDESCCOMORBIDADE = bDDESCCOMORBIDADE;
+	}
+}

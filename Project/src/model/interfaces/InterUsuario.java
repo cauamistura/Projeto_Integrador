@@ -1,10 +1,10 @@
 package model.interfaces;
 
-import model.MTDadosUser;
+import model.DadosUser;
 
 public interface InterUsuario {
 	
-	public void preencheDadosUser(MTDadosUser listUser);
+	public void preencheDadosUser(DadosUser listUser);
 
 	public void exluiUser(Integer bdiduser);
 	
