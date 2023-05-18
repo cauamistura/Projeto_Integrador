@@ -93,7 +93,7 @@ public class ClinicaCAD extends JFrame {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src/vision/images/BGuser.png"));
+			bg = ImageIO.read(new File("src/vision/images/BGLogin.png"));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -125,43 +125,29 @@ public class ClinicaCAD extends JFrame {
 		panel_1.add(panel_2, "cell 2 1,alignx center");
 		panel_2.setLayout(new MigLayout("", "[100px][200px,grow][200px,grow][100px]", "[80px][][][][][][][50px][80px]"));
 		
-		JLabel lbNomeFan = new JLabel("Nome Fantasia:");
-		panel_2.add(lbNomeFan, "flowy,cell 1 2");
-		
-		edNomeFan = new RoundJTextField();
-		edNomeFan.setBackground(new Color(255, 255, 255));
-		panel_2.add(edNomeFan, "cell 1 2,growx");
-		edNomeFan.setColumns(10);
-		
-		JLabel lbDesc = new JLabel("Descricao:");
-		panel_2.add(lbDesc, "flowy,cell 2 2");
-		
-		edDescricao = new RoundJTextField();
-		edDescricao.setBackground(new Color(255, 255, 255));
-		panel_2.add(edDescricao, "cell 2 2,growx");
-		edDescricao.setColumns(10);
-		
 		JLabel lbNome = new JLabel("Nome:");
-		panel_2.add(lbNome, "flowy,cell 1 3");
+		panel_2.add(lbNome, "flowy,cell 1 2");
 		
 		edNome = new RoundJTextField();
 		edNome.setBackground(new Color(255, 255, 255));
-		panel_2.add(edNome, "cell 1 3,growx");
+		panel_2.add(edNome, "cell 1 2,growx");
 		edNome.setColumns(10);
 		
+		JLabel lbNomeFan = new JLabel("Nome Fantasia:");
+		panel_2.add(lbNomeFan, "flowy,cell 2 2");
+		
+		edNomeFan = new RoundJTextField();
+		edNomeFan.setBackground(new Color(255, 255, 255));
+		panel_2.add(edNomeFan, "cell 2 2,growx");
+		edNomeFan.setColumns(10);
+		
 		JLabel lbCnpj = new JLabel("CNPJ:");
-		panel_2.add(lbCnpj, "flowy,cell 2 3");
+		panel_2.add(lbCnpj, "flowy,cell 1 3");
 		
 		edCnpj = new CNPJTextFiel();
 		edCnpj.setBackground(new Color(255, 255, 255));
-		panel_2.add(edCnpj, "cell 2 3,growx");
+		panel_2.add(edCnpj, "cell 1 3,growx");
 		edCnpj.setColumns(10);
-		
-		JLabel lbCep = new JLabel("CEP:");
-		panel_2.add(lbCep, "cell 1 5");
-		
-		JLabel lbUf = new JLabel("UF:     ");
-		panel_2.add(lbUf, "flowx,cell 2 5");
 		
 		edCep = new CEPTextField();
 		edCep.setBackground(new Color(255, 255, 255));
@@ -194,17 +180,23 @@ public class ClinicaCAD extends JFrame {
 					}
 				}
 			});
+		
+		JLabel lbCep = new JLabel("CEP:");
+		panel_2.add(lbCep, "flowy,cell 2 3");
 		edCep.setColumns(10);
 		edCep.setBounds(104, 11, 156, 20);
-		panel_2.add(edCep, "cell 1 6,growx");
+		panel_2.add(edCep, "cell 2 3,growx");
 		
 		JLabel lbBairro = new JLabel("Bairro:");
-		panel_2.add(lbBairro, "flowy,cell 1 7,alignx left");
+		panel_2.add(lbBairro, "cell 1 5,alignx left");
+		
+		JLabel lbUf = new JLabel("UF:     ");
+		panel_2.add(lbUf, "flowx,cell 2 5");
 		
 		edBairro = new RoundJTextField();
 		edBairro.setBackground(new Color(255, 255, 255));
 		edBairro.setBorder(new EmptyBorder(3, 3, 3, 3));
-		panel_2.add(edBairro, "cell 1 7,growx");
+		panel_2.add(edBairro, "cell 1 6,growx");
 		edBairro.setColumns(10);
 
 		TListEstado = FDAOTEstado.ListTEstado(FDAOTEstado);
@@ -223,6 +215,14 @@ public class ClinicaCAD extends JFrame {
 		JLabel lbCidade = new JLabel("Cidade:");
 		panel_2.add(lbCidade, "cell 2 5");
 		
+		JLabel lbDesc = new JLabel("Descricao:");
+		panel_2.add(lbDesc, "flowy,cell 1 7");
+		
+		edDescricao = new RoundJTextField();
+		edDescricao.setBackground(new Color(255, 255, 255));
+		panel_2.add(edDescricao, "cell 1 7,growx");
+		edDescricao.setColumns(10);
+		
 		JLabel lbSenha = new JLabel("Senha:");
 		panel_2.add(lbSenha, "flowy,cell 2 7");
 		
@@ -232,18 +232,18 @@ public class ClinicaCAD extends JFrame {
 		panel_2.add(edSenha, "cell 2 7,growx");
 		edSenha.setColumns(10);
 		
-		JPanel panel_3 = new JPanel();
+		JPanel panel_3 = new PanelComBackgroundImage(bg);
 		panel_3.setBackground(new Color(158, 174, 255));
 		panel_1.add(panel_3, "cell 3 1,grow");
 		panel_3.setLayout(new MigLayout("", "[10px][10px,grow][]", "[grow][grow][][][][][][grow][][]"));
 		
-		JPanel panel_4 = new PanelComBackgroundImage(bg);
+		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(125, 137, 245));
 		panel_3.add(panel_4, "cell 1 0,grow");
 		panel_4.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 		
 		JLabel lblNewLabel_8 = new JLabel("");
-		lblNewLabel_8.setIcon(new ImageIcon(ClinicaCAD.class.getResource("/vision/images/dogmal.png")));
+		lblNewLabel_8.setIcon(new ImageIcon(ClinicaCAD.class.getResource("/vision/images/clinica (2).png")));
 		panel_4.add(lblNewLabel_8, "cell 1 2,alignx center");
 		
 		JPanel panel_5 = new JPanel();
