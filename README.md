@@ -47,7 +47,7 @@ Next/Finish
 
 </p>
 
-# 👨‍💻👩‍💻 Desenvolvedores 
+# 👨‍💻 Desenvolvedores 
 
 <p><a href="https://github.com/cauamistura">Cauã Mistura</a></p>
 <p><a href="https://github.com/SoaresVini">Vinicius Soares</a></p>
