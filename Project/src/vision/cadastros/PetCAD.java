@@ -37,19 +37,26 @@ import model.Especie;
 import model.Pet;
 import model.Raca;
 import model.interfaces.InterPet;
+import model.interfaces.InterUsuario;
 import net.miginfocom.swing.MigLayout;
 import vision.consultas.PetCON;
+import vision.consultas.UserCON;
 import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import vision.padrao.CPFTextField;
+import vision.padrao.lupaButton;
 
-public class PetCAD extends JFrame implements InterPet {
+public class PetCAD extends JFrame implements InterPet, InterUsuario {
 	/**
 	 * 
 	 */
 
 	private static final long serialVersionUID = 1L;
+
+	private CPFTextField edCpf;
+	private RoundJTextField edNomeUser;
 
 	public DAOPet FDAOTPet = new DAOPet();
 	public DAOUser FDAOTUser = new DAOUser();
@@ -67,9 +74,13 @@ public class PetCAD extends JFrame implements InterPet {
 	private DateTextField txtDataNasc;
 	private JTextField txtNomePet;
 
+	// Objetos do usuario
+	private UserCAD TelaUser;
+	private DAODadosUser FDAOUserDados = new DAODadosUser();
+	private UserCON FVUserCON;
+
 	JComboBox<Especie> especieCb = new JComboBox<Especie>();
 	JComboBox<Raca> racaCb = new JComboBox<Raca>();
-	JComboBox<DadosUser> userCb = new JComboBox<DadosUser>();
 
 	Integer idPet = 0;
 
@@ -90,7 +101,7 @@ public class PetCAD extends JFrame implements InterPet {
 		setTitle("Cadastro de pets");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 700, 800);
+		setBounds(100, 100, 542, 681);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("");
@@ -157,10 +168,6 @@ public class PetCAD extends JFrame implements InterPet {
 		JLabel lblNewLabel_3 = new JLabel("Dono:");
 		panel_3.add(lblNewLabel_3, "flowy,cell 1 3");
 
-		userCb = new JComboBox<DadosUser>();
-		userCb.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_3.add(userCb, "cell 1 3,growx");
-
 		JLabel l = new JLabel("Nome:");
 		panel_3.add(l, "flowy,cell 1 4");
 
@@ -177,6 +184,33 @@ public class PetCAD extends JFrame implements InterPet {
 		txtNomePet.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_3.add(txtNomePet, "cell 1 4,growx");
 		txtNomePet.setColumns(10);
+
+		edCpf = new CPFTextField();
+		edCpf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConUser();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_F4) {
+					if (TelaUser == null) {
+						TelaUser = new UserCAD();
+					}
+					TelaUser.setVisible(true);
+				}
+			}
+		});
+		edCpf.setToolTipText("Aperte F9 para consultar.");
+		edCpf.setColumns(10);
+		panel_3.add(edCpf, "cell 1 3");
+
+		lupaButton btnConUser = new lupaButton("");
+		panel_3.add(btnConUser, "cell 1 3");
+
+		edNomeUser = new RoundJTextField();
+		edNomeUser.setEnabled(false);
+		edNomeUser.setColumns(10);
+		panel_3.add(edNomeUser, "cell 1 3");
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(125, 137, 245));
@@ -203,13 +237,7 @@ public class PetCAD extends JFrame implements InterPet {
 		btnLimpar.setBackground((new Color(255, 199, 0)));
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtApelidoPet.setText("");
-				txtDataNasc.setText("");
-				txtNomePet.setText("");
-
-				racaCb.setSelectedIndex(0);
-				especieCb.setSelectedIndex(0);
-				userCb.setSelectedIndex(0);
+				limpaCampos();
 			}
 		});
 		btnLimpar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -254,12 +282,8 @@ public class PetCAD extends JFrame implements InterPet {
 					return;
 				}
 
-				if (userCb.getSelectedItem() == null) {
-					JOptionPane.showMessageDialog(null, "Campo vazio: Dono");
-					return;
-				}
-
 				FDAOTPet.setBDIDESPECIE(FDAOTPet.getChaveID("tespecie", "BDIDESPECIE"));
+				
 				if (idPet == 0) {
 					FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("tpets", "BDIDPET"));
 				} else {
@@ -271,30 +295,28 @@ public class PetCAD extends JFrame implements InterPet {
 				FDAOTPet.setBDIDRACA(achaIdRaca());
 				FDAOTPet.setBDNOMEPET(txtNomePet.getText());
 				FDAOTPet.setBDAPELIDO(txtApelidoPet.getText());
-				FDAOTPet.setBDIDUSER(achaIdUser());
+
+				if (FDAOTUser.getBDIDUSER() == null) {
+					JOptionPane.showMessageDialog(null, "Usuario invalido, consulte e tente novamente.");
+					return;
+				}
+
+				FDAOTPet.setBDIDUSER(FDAOTUser.getBDIDUSER());
 
 				if (!txtDataNasc.validaDate()) {
 					JOptionPane.showMessageDialog(null, "Data inválida. Tente novamente.");
 					return;
 				}
-				try {
-
-					if (FDAOTPet.existePet(FDAOTPet, idPet) != null) {
+				try {					
+					if (FDAOTPet.existePet(FDAOTPet, idPet)) {
 						FDAOTPet.alterar(FDAOTPet);
 						JOptionPane.showMessageDialog(null, "Seu pet foi alterado com sucesso!");
 					} else {
 						FDAOTPet.inserir(FDAOTPet);
 						JOptionPane.showMessageDialog(null, "Seu pet foi cadastrado com sucesso!");
-
 					}
 
-					txtNomePet.setText("");
-					txtApelidoPet.setText("");
-					especieCb.setSelectedIndex(0);
-					racaCb.setSelectedIndex(0);
-					userCb.setSelectedIndex(0);
-					txtDataNasc.setText("");
-					idPet = 0;
+					limpaCampos();
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -310,13 +332,6 @@ public class PetCAD extends JFrame implements InterPet {
 		for (Especie mtEspecie : TListEspecie) {
 			especieCb.addItem(mtEspecie);
 		}
-
-		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
-
-		for (DadosUser mtUser : TListUser) {
-			userCb.addItem(mtUser);
-		}
-
 	}
 
 	public void exluirUser(Integer prIDPET) {
@@ -358,23 +373,18 @@ public class PetCAD extends JFrame implements InterPet {
 		return idRaca;
 	}
 
-	private Integer achaIdUser() {
-		Integer idUser = 0;
-		ArrayList<DadosUser> TListUser = new ArrayList<>();
-		TListUser = FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
-
-		for (DadosUser mtUser : TListUser) {
-			if (mtUser.getBDNOMEUSER().equals(userCb.getSelectedItem().toString())) {
-				idUser = mtUser.getBDIDUSER();
-			}
-		}
-		return idUser;
-	}
-
 	public void limpaCampos() {
-		txtNomePet.setText("");
 		txtApelidoPet.setText("");
 		txtDataNasc.setText("");
+		txtNomePet.setText("");
+
+		racaCb.setSelectedIndex(0);
+		especieCb.setSelectedIndex(0);
+
+		edCpf.setText("");
+		edNomeUser.setText("");
+
+		FDAOTUser.setBDIDUSER(null);
 	}
 
 	public void preencheCampos(Pet list) {
@@ -403,13 +413,11 @@ public class PetCAD extends JFrame implements InterPet {
 				}
 
 			}
-
-			for (int i = 0; i < userCb.getItemCount(); i++) {
-				if (userCb.getItemAt(i).getBDNOMEUSER().equals(list.getBDNOMEUSER())) {
-					userCb.setSelectedIndex(i);
-					break;
-				}
-			}
+			
+			edCpf.setText(list.getBDCPF());
+			edNomeUser.setText(list.getBDNOMEUSER());
+			
+			FDAOTUser.setBDIDUSER(list.getBDIDUSER());
 		}
 	}
 
@@ -422,6 +430,15 @@ public class PetCAD extends JFrame implements InterPet {
 		}
 	}
 
+	private void chamaConUser() {
+		ArrayList<DadosUser> list = new ArrayList<>();
+		list = FDAOUserDados.ListConsulta(FDAOUserDados);
+
+		FVUserCON = new UserCON(list, this);
+		FVUserCON.desabilitaExcluir();
+		FVUserCON.setVisible(true);
+	}
+
 	@Override
 	public void preencheDadosPet(Pet listPet) {
 		preencheCampos(listPet);
@@ -431,5 +448,18 @@ public class PetCAD extends JFrame implements InterPet {
 	@Override
 	public void exluiPet(Integer IdPet) {
 		exluirUser(IdPet);
+	}
+
+	@Override
+	public void preencheDadosUser(DadosUser listUser) {
+		edCpf.setText(listUser.getBDCPF());
+		edNomeUser.setText(listUser.getBDNOMEUSER());
+		FDAOTUser.setBDIDUSER(listUser.getBDIDUSER());
+	}
+
+	@Override
+	public void exluiUser(Integer bdiduser) {
+		// TODO Auto-generated method stub
+
 	}
 }

@@ -90,10 +90,16 @@ public class DAOPet extends Pet {
 		ArrayList<Pet> ListaTePet = new ArrayList<>();
 		Connection c = prDAO.append();
 		try {
-			wSql = "SELECT p.*, d.bdnome as BDNOMEUSER, r.*, e.* " + "FROM tpets p "
-					+ "inner join traca r on (r.BDIDRACA = p.BDIDRACA) "
-					+ "inner join tdadosuser d on (d.BDIDUSER = p.BDIDUSER) "
-					+ "inner join tespecie e on (e.BDIDESPECIE = r.BDIDESPECIE)  ";
+			wSql = " SELECT p.*,"
+					+ "       d.bdnome AS BDNOMEUSER,"
+					+ "       r.*,"
+					+ "       e.*,"
+					+ "       u.BDCPF"
+					+ " FROM tpets p"
+					+ " INNER JOIN traca r ON (r.BDIDRACA = p.BDIDRACA)"
+					+ " INNER JOIN tdadosuser d ON (d.BDIDUSER = p.BDIDUSER)"
+					+ " inner join tuser u on (d.BDIDUSER = u.BDIDUSER)"
+					+ " INNER JOIN tespecie e ON (e.BDIDESPECIE = r.BDIDESPECIE) ";
 
 			Statement stm = c.prepareStatement(wSql);
 			ResultSet rs = stm.executeQuery(wSql);
@@ -111,6 +117,7 @@ public class DAOPet extends Pet {
 				le.setBDNOMERACA(rs.getString("BDNOMERACA"));
 				le.setBDIDESPECIE(rs.getInt("BDIDESPECIE"));
 				le.setBDNOMEESPECIE(rs.getString("BDNOMEESPECIE"));
+				le.setBDCPF(rs.getString("BDCPF"));
 				ListaTePet.add(le);
 			}
 
@@ -152,7 +159,7 @@ public class DAOPet extends Pet {
 		return listaDePets;
 	}
 
-	public Pet existePet(DAOPet prDAOUser, Integer id) {
+	public Boolean existePet(DAOPet prDAOUser, Integer id) {
 		Connection c = prDAOUser.append();
 		try {
 			Statement stm = c.createStatement();
@@ -165,24 +172,14 @@ public class DAOPet extends Pet {
 			ResultSet rs = stm.executeQuery(wSql);
 
 			if (rs.next()) {
-				Pet pet = new Pet();
-				pet.setBDIDPET(rs.getInt("BDIDPET"));
-				pet.setBDIDRACA(rs.getInt("BDIDRACA"));
-				pet.setBDNOMEPET(rs.getString("BDNOMEPET"));
-				pet.setBDAPELIDO(rs.getString("BDAPELIDO"));
-				pet.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
-				pet.setBDIDUSER(rs.getInt("BDIDUSER"));
-				pet.setBDNOMEUSER(rs.getString("BDNOMEUSER"));
-				pet.setBDNOMERACA(rs.getString("BDNOMERACA"));
-
-				return pet;
+				return true;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		prDAOUser.post();
-		return prDAOUser;
+		return false;
 	}
 
 }
