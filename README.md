@@ -1,4 +1,4 @@
-<h1 align="center"> Clínica Veterinária 🩺</h1>
+<h1 align="center"> 🐶 Clínica Veterinária 🩺</h1>
 
 # O que é 💻 ? 
 
