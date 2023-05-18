@@ -5,5 +5,5 @@ import model.*;
 
 public interface InterComorbidade {
 
-	void preencheCom(MTComorbidade dado);
+	void preencheCom(Comorbidade dado);
 }

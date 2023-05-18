@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.ParseException;
 
-import control.DAOTPet;
-import control.DAOTUser;
-import vision.VMenu;
+import control.DAOPet;
+import control.DAOUser;
+import vision.Menu;
 
 public class CPFTextField extends RoundJFormattedTextField{
 	
@@ -71,12 +71,12 @@ public class CPFTextField extends RoundJFormattedTextField{
         return true;
     }
 
-	public Boolean existeCpfUsuario(DAOTUser prDAOUser) {
+	public Boolean existeCpfUsuario(DAOUser prDAOUser) {
 		Connection c = prDAOUser.append();
 		try {
 			Statement stm = c.createStatement();
 			
-			String wSql = "SELECT BDCPF FROM `dbpi`.`tuser` t where t.BDIDCLINICA = "+String.valueOf(VMenu.FIDClinica)+" and t.BDCPF = '"+getText()+"'";
+			String wSql = "SELECT BDCPF FROM `dbpi`.`tuser` t where t.BDIDCLINICA = "+String.valueOf(Menu.FIDClinica)+" and t.BDCPF = '"+getText()+"'";
 			
 			ResultSet rs =  stm.executeQuery(wSql);
 

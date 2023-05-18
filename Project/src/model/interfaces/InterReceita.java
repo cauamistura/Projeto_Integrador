@@ -1,9 +1,9 @@
 package model.interfaces;
 
-import model.MTReceita;
+import model.Receita;
 
 public interface InterReceita {
 	
-	void preecherReceita(MTReceita dado);
+	void preecherReceita(Receita dado);
 
 }

@@ -1,8 +1,8 @@
 package model.interfaces;
 
-import model.MTAtendimentoSaida;
+import model.AtendimentoSaida;
 
 public interface InterSaida {
 	
-	public void preencheDadosSaida(MTAtendimentoSaida listAtendimento);
+	public void preencheDadosSaida(AtendimentoSaida listAtendimento);
 }

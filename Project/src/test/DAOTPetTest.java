@@ -1,21 +1,21 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 import org.junit.Test;
 
-import control.DAOTPet;
-import model.MTPet;
+import control.DAOPet;
+import model.Pet;
 
 public class DAOTPetTest {
 
 	@Test
 	public void testInserir() {
-		DAOTPet dao = new DAOTPet();
+		DAOPet dao = new DAOPet();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		dao.setBDIDESPECIE(dao.getChaveID("tespecie", "BDIDESPECIE"));
@@ -34,7 +34,7 @@ public class DAOTPetTest {
 
 	@Test
 	public void testAlterar() {
-		DAOTPet dao = new DAOTPet();
+		DAOPet dao = new DAOPet();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		dao.setBDIDESPECIE(dao.getChaveID("tespecie", "BDIDESPECIE"));
@@ -51,7 +51,7 @@ public class DAOTPetTest {
 
 	@Test
 	public void testDeletar() {
-		DAOTPet dao = new DAOTPet();
+		DAOPet dao = new DAOPet();
 
 		Boolean result = dao.deletar(1);
 		assertEquals(true, result);
@@ -60,9 +60,9 @@ public class DAOTPetTest {
 
 	@Test
 	public void testExistePet() {
-		DAOTPet dao = new DAOTPet();
+		DAOPet dao = new DAOPet();
 
-		MTPet result = dao.existePet(dao, 4);
+		Pet result = dao.existePet(dao, 4);
 		assertNotNull(result);
 
 	}

@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.MTAtendimentoSaida;
+import model.AtendimentoSaida;
 
-public class DAOAtendimentoSaida extends MTAtendimentoSaida {
+public class DAOAtendimentoSaida extends AtendimentoSaida {
 
 	private String wSql;
 
@@ -37,8 +37,8 @@ public class DAOAtendimentoSaida extends MTAtendimentoSaida {
 	}
 
 	// SELECT
-	public ArrayList<MTAtendimentoSaida> ListTSaida (DAOAtendimentoSaida prDAO) {
-		ArrayList<MTAtendimentoSaida> Lista = new ArrayList<>();
+	public ArrayList<AtendimentoSaida> ListTSaida (DAOAtendimentoSaida prDAO) {
+		ArrayList<AtendimentoSaida> Lista = new ArrayList<>();
 
 		Connection c = prDAO.append();
 		try {
@@ -48,7 +48,7 @@ public class DAOAtendimentoSaida extends MTAtendimentoSaida {
 
 			while (rs.next()) {
 
-				MTAtendimentoSaida lc = new MTAtendimentoSaida();
+				AtendimentoSaida lc = new AtendimentoSaida();
 
 				lc.setBDIDENTRADA(rs.getInt("BDIDENTRADA"));
 				lc.setBDIDPET(rs.getInt("BDIDPET"));

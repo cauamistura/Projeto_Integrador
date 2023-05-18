@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.MTAtendimenoEntrada;
+import model.AtenimentoEntrada;
 
-public class DAOAtendimentoEntrada extends MTAtendimenoEntrada {
+public class DAOAtendimentoEntrada extends AtenimentoEntrada {
 
 	private String wSql;
 	private Conexao FConexao;
@@ -114,8 +114,8 @@ public class DAOAtendimentoEntrada extends MTAtendimenoEntrada {
 	}
 
 	// SELECT CONSULTA
-	public ArrayList<MTAtendimenoEntrada> ListConsulta(DAOAtendimentoEntrada prDAO) {
-		ArrayList<MTAtendimenoEntrada> ListaAtendCons = new ArrayList<>();
+	public ArrayList<AtenimentoEntrada> ListConsulta(DAOAtendimentoEntrada prDAO) {
+		ArrayList<AtenimentoEntrada> ListaAtendCons = new ArrayList<>();
 
 		Connection c = prDAO.append();
 		try {
@@ -131,7 +131,7 @@ public class DAOAtendimentoEntrada extends MTAtendimenoEntrada {
 			ResultSet rs = stm.executeQuery(wSql);
 
 			while (rs.next()) {
-				MTAtendimenoEntrada lc = new MTAtendimenoEntrada();
+				AtenimentoEntrada lc = new AtenimentoEntrada();
 				
 				lc.setBDIDENTRADA(rs.getInt("BDIDENTRADA"));
 				lc.setBDIDPET(rs.getInt("BDIDPET"));
