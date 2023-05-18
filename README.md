@@ -35,7 +35,7 @@ Next/Finish
 
 # 👨‍💻👩‍💻 Desenvolvedores 
 
-<p><a href="https://github.com/cauamistura">Cauã Mistura</a>.</p>
+<p><a href="https://github.com/cauamistura">Cauã Mistura</a></p>
 <p><a href="https://github.com/SoaresVini">Vinicius Soares</a></p>
 <p><a href="https://github.com/enzo-rocha">Enzo Rocha</a></p>
 <p><a href="https://github.com/Daviravezeiro">Davi Augusto Boff</a></p>
