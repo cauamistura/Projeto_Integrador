@@ -26,6 +26,7 @@ import model.interfaces.InterReceita;
 import model.interfaces.InterSaida;
 import vision.cadastros.ReceitaCAD;
 import vision.consultas.EntradaCON;
+import vision.consultas.SaidaCON;
 import vision.padrao.CPFTextField;
 import vision.padrao.DateTextField;
 import vision.padrao.RoundJTextField;
@@ -42,6 +43,7 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	private DateTextField edDataSaida;
 	private DateTextField edDataEntrada;
 	private RoundJTextField edNomeUser;
+	private RoundJTextField edRaca;
 	private JTextPane DescSaida;
 	private JButton btnConf;
 	private JButton btnLimpar;
@@ -49,7 +51,6 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	private lupaButton btnEntrada;
 	private lupaButton btReceita;
 	private JLabel lblNumEntrada;
-	private Boolean ExisteReceita = false;
 	private Boolean EntradaSelecionada = false;
 	private JLabel lblStatus;
 	
@@ -58,27 +59,18 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
 	ArrayList<AtenimentoEntrada> list = new ArrayList<>();
 	private DAOReceita FDAOReceita = new DAOReceita();
-	private EntradaCON FEntradaCON; 
+	private EntradaCON FEntradaCON;
+	private boolean existeSaida; 
 	
 	public SaidaATE(InterReceita event, AtenimentoEntrada dado, Boolean saida) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 482, 343);
+		setTitle("Atendimento de Saida");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-				if(saida) {
-					preencheDadosEntrada(dado);
-				}
-	
-			}
-		});
-		setBounds(100, 100, 848, 524);
 		
 		btReceita = new lupaButton("Receita");
 		btReceita.setText("");
@@ -123,6 +115,11 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		contentPane.add(btnLimpar);
 		
 		btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventDelete(FDAOSaida.getBDIDENTRADA());
+			}
+		});
 		btnExcluir.setBounds(68, 236, 117, 25);
 		contentPane.add(btnExcluir);
 		
@@ -193,75 +190,141 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		lblStatus = new JLabel("Status: Inserindo uma Saida");
 		lblStatus.setBounds(29, 283, 135, 13);
 		contentPane.add(lblStatus);
+		
+		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chamaSaida();
+			}
+		});
+		btnConsultar.setBounds(284, 238, 85, 21);
+		contentPane.add(btnConsultar);
+		
+		edRaca = new RoundJTextField();
+		edRaca.setEditable(false);
+		edRaca.setColumns(10);
+		edRaca.setBounds(255, 58, 114, 19);
+		contentPane.add(edRaca);
+	}
+	
+	private void chamaSaida() {
+		ArrayList<AtendimentoSaida> list = new ArrayList<>();
+		list = FDAOSaida.ListTSaida(FDAOSaida);
+		
+		SaidaCON v = new SaidaCON(list,this);
+		v.setVisible(true);
 	}
 	
 	private void chamaEntradaCon() {
-		
 			list = FDAOEntrada.ListConsulta(FDAOEntrada);
-			FEntradaCON = new EntradaCON(list, this,true);
+			FEntradaCON = new EntradaCON(list, this,true,this);
 			FEntradaCON.setVisible(true);
-		
 	}
 	
 	private void chamaReceitaCad() {
 		
 		if(EntradaSelecionada) {
-			ReceitaCAD v = new ReceitaCAD(this, FDAOReceita);
-			v.setLocationRelativeTo(null);
-			v.setVisible(true);
+
+				ReceitaCAD v = new ReceitaCAD(this, FDAOReceita);
+				v.setLocationRelativeTo(null);
+				v.setVisible(true);
 			
 		}else {
 			JOptionPane.showMessageDialog(null, "Selecione uma entrada antes de emitir uma receita");
 		}	
 	}
 
-	public void preecheDados(AtenimentoEntrada atendimentos) {
+	private void preecheDados(AtenimentoEntrada atendimentos) {
+		eventLimpar();
+		
 		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
-			edCpfUser.setText(atendimentos.getBDCPF());
-			edNomeUser.setText(atendimentos.getBDNOMEUSER());
-			edNumEntrada.setText(String.valueOf(atendimentos.getBDIDENTRADA()));
+		
+		//Setando text
+		edCpfUser.setText(atendimentos.getBDCPF());
+		edNomeUser.setText(atendimentos.getBDNOMEUSER());
+		edNumEntrada.setText(String.valueOf(atendimentos.getBDIDENTRADA()));
+		edNomePet.setText(atendimentos.getBDNOMEPET());
+		edRaca.setText(atendimentos.getBDNOMERACA());
+		edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
 			
-			edNomePet.setText(atendimentos.getBDNOMEPET());
-			edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
+		//Setando DAOSaida
+		FDAOSaida.setBDCOMORBIDADE(atendimentos.getBDCOMORBIDADE());
+		FDAOSaida.setBDIDENTRADA(atendimentos.getBDIDENTRADA());
+		FDAOSaida.setBDIDPET(atendimentos.getBDIDPET());
 			
-			FDAOSaida.setBDCOMORBIDADE(atendimentos.getBDCOMORBIDADE());
-			FDAOSaida.setBDIDENTRADA(atendimentos.getBDIDENTRADA());
-			FDAOSaida.setBDIDPET(atendimentos.getBDIDPET());
+		edDataSaida.setEditable(true);
+		DescSaida.setEditable(true);
 			
-			edDataSaida.setEditable(true);
-			DescSaida.setEditable(true);
+		EntradaSelecionada = true;
+		btnExcluir.setEnabled(false);
 				
 	}
 	
 	private void preecheDadosSaida(AtendimentoSaida atendimentos) {
+		
+		eventLimpar();
 		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
-			edCpfUser.setText(atendimentos.getBDCPF());
-			edNomeUser.setText(atendimentos.getBDNOMEUSER());
-			edNumEntrada.setText(String.valueOf(atendimentos.getBDIDENTRADA()));
+		
+		//Setando text
+		edNumEntrada.setText(String.valueOf(atendimentos.getBDIDENTRADA()));
+		edCpfUser.setText(atendimentos.getBDCPF());
+		edNomeUser.setText(atendimentos.getBDNOMEUSER());
+		edNomePet.setText(atendimentos.getBDNOMEPET());
+		edRaca.setText(atendimentos.getBDNOMERACA());
+		edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
+		edDataSaida.setText(atendimentos.getBDDATASAIDA().format(FOMATTER));
+		DescSaida.setText(atendimentos.getBDDESC());
 			
-			edNomePet.setText(atendimentos.getBDNOMEPET());
-			edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
-			edDataSaida.setText(atendimentos.getBDDATASAIDA().format(FOMATTER));
-			DescSaida.setText(atendimentos.getBDDESC());
+		//Setando DAOSaida
+		FDAOSaida.setBDIDRECEITA(atendimentos.getBDIDRECEITA());
+		FDAOSaida.setBDCOMORBIDADE(atendimentos.getBDCOMORBIDADE());
+		FDAOSaida.setBDIDENTRADA(atendimentos.getBDIDENTRADA());
+		FDAOSaida.setBDIDPET(atendimentos.getBDIDPET());
+		eventDadosReceita(FDAOReceita.retornaReceita(atendimentos.getBDIDENTRADA()));
+		
+		EntradaSelecionada = true;
+		existeSaida = true;
 			
-			FDAOSaida.setBDCOMORBIDADE(atendimentos.getBDCOMORBIDADE());
-			FDAOSaida.setBDIDENTRADA(atendimentos.getBDIDENTRADA());
-			FDAOSaida.setBDIDPET(atendimentos.getBDIDPET());
+		edDataSaida.setEditable(true);
+		DescSaida.setEditable(true);
 			
-			edDataSaida.setEditable(true);
-			DescSaida.setEditable(true);
-				
 	}
 	
 	private void eventConfirmar() {
-		
-		FDAOSaida.setBDDESC(DescSaida.getText());
-		FDAOSaida.setBDDATASAIDA(edDataSaida.getDate());
-		
-		FDAOReceita.inserir(FDAOReceita);
+	
+		if(EntradaSelecionada) {
+			
+			FDAOSaida.setBDDESC(DescSaida.getText());
+			FDAOSaida.setBDDATASAIDA(edDataSaida.getDate());
 
-		FDAOSaida.inserir(FDAOSaida);
+			if(existeSaida) {
+				FDAOReceita.alterar(FDAOReceita);
+				FDAOSaida.alterar(FDAOSaida);
+				
+				JOptionPane.showMessageDialog(null, "Dados alterados com SUCESSO!!");
+				
+			}else {
+				FDAOReceita.inserir(FDAOReceita);
+				FDAOSaida.inserir(FDAOSaida);
+				
+				btnExcluir.setEnabled(true);
+				
+				JOptionPane.showMessageDialog(null, "Dados inseridos com SUCESSO!!");
+			}
+			
+			int resposta = JOptionPane.showConfirmDialog(null,
+					"Deseja os dados presentes na Tela?",
+					"Confirmação", JOptionPane.YES_NO_OPTION);
+
+			if (resposta == JOptionPane.YES_OPTION) {
+				eventLimpar();
+			}
 		
+		}else {
+			JOptionPane.showMessageDialog(null, "Selecione um  atendimento antes de confirmar a ação");
+		}	
+		
+			
 	}
 	
 	private void eventLimpar() {
@@ -271,9 +334,23 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		edNomePet.setText("");
 		edNomeUser.setText("");
 		edNumEntrada.setText("");
+		DescSaida.setText("");
+		edRaca.setText("");
+		
+		FDAOSaida.setBDIDENTRADA(null);
+		FDAOReceita.setBDIDRECEITA(null);;
+		
+		edDataSaida.setEditable(false);
+		DescSaida.setEditable(false);
+		
+		EntradaSelecionada = false;
+		existeSaida = false;
+		
+		
 	}
 	
 	private void eventDadosReceita(Receita listReceita) {
+		
 		FDAOSaida.setBDIDRECEITA(listReceita.getBDIDRECEITA());
 		
 		FDAOReceita.setBDIDMEDICACAO(listReceita.getBDIDMEDICACAO());
@@ -282,15 +359,37 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		FDAOReceita.setBDFINALRECEITA(listReceita.getBDFINALRECEITA());
 		FDAOReceita.setBDDESCRICAO(listReceita.getBDDESCRICAO());
 		FDAOReceita.setBDNOMEMEDICACAO(listReceita.getBDNOMEMEDICACAO());
-		
+	
+	}
+	
+	private void eventDelete(Integer numEntrada) {
+		numEntrada = FDAOSaida.getBDIDENTRADA();
+	
+		if (!(numEntrada == null)) {
+			int resposta = JOptionPane.showConfirmDialog(null,
+					"Você realmente deseja excluir?\nTodos os dados vinculados a esta saida serão excluídos.",
+					"Confirmação", JOptionPane.YES_NO_OPTION);
+
+			if (resposta == JOptionPane.YES_OPTION) {
+				FDAOSaida.deletar(numEntrada);
+				eventLimpar();
+				
+				JOptionPane.showMessageDialog(null, "Exclusão Confirmada");
+			}else {
+				JOptionPane.showMessageDialog(null, "Exclusão cancelada");
+			}
+			
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Nenhum atedimento selecionado para realizar a exclusão");
+		}
+			
 	}
 	
 	@Override
 	public void preencheDadosEntrada(AtenimentoEntrada listAtendimento) {
 		preecheDados(listAtendimento);
 	}
-	
-	
 	
 	@Override
 	public void preecherReceita(Receita dado) {
@@ -305,5 +404,12 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	@Override
 	public void preencheDadosSaida(AtendimentoSaida listAtendimento) {
 		preecheDadosSaida(listAtendimento);
+		
+	}
+
+	@Override
+	public void exluirAtendimentoSaida(Integer numAtendimento) {
+		eventDelete(numAtendimento);
+		
 	}
 }

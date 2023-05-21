@@ -592,7 +592,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		ArrayList<AtenimentoEntrada> list = new ArrayList<>();
 		list = FDAOEntrada.ListConsulta(FDAOEntrada);
 
-		FEntradaCON = new EntradaCON(list, this, false);
+		FEntradaCON = new EntradaCON(list, this, false, null);
 		FEntradaCON.setVisible(true);
 	}
 
