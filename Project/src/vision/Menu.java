@@ -250,7 +250,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 		miSaida.setFont(new Font("Dialog", Font.PLAIN, 12));
 		miSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SaidaATE v = new SaidaATE(null,null,false);
+				SaidaATE v = new SaidaATE();
 				v.setLocationRelativeTo(null);
 				v.setVisible(true);
 			}

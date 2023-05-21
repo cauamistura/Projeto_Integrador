@@ -48,8 +48,9 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	private JButton btnConf;
 	private JButton btnLimpar;
 	private JButton btnExcluir;
+	private JButton btnConsultar;
 	private lupaButton btnEntrada;
-	private lupaButton btReceita;
+	private lupaButton btnReceita;
 	private JLabel lblNumEntrada;
 	private Boolean EntradaSelecionada = false;
 	private JLabel lblStatus;
@@ -62,7 +63,7 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	private EntradaCON FEntradaCON;
 	private boolean existeSaida; 
 	
-	public SaidaATE(InterReceita event, AtenimentoEntrada dado, Boolean saida) {
+	public SaidaATE() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 482, 343);
 		setTitle("Atendimento de Saida");
@@ -72,15 +73,15 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		btReceita = new lupaButton("Receita");
-		btReceita.setText("");
-		btReceita.addActionListener(new ActionListener() {
+		btnReceita = new lupaButton("Receita");
+		btnReceita.setText("");
+		btnReceita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chamaReceitaCad();
 			}			
 		});
-		btReceita.setBounds(353, 0, 49, 25);
-		contentPane.add(btReceita);
+		btnReceita.setBounds(353, 0, 49, 25);
+		contentPane.add(btnReceita);
 		
 		btnEntrada = new lupaButton("");
 		btnEntrada.addActionListener(new ActionListener() {
@@ -191,7 +192,7 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		lblStatus.setBounds(29, 283, 135, 13);
 		contentPane.add(lblStatus);
 		
-		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar = new JButton("Consultar");
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chamaSaida();
@@ -258,6 +259,24 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		EntradaSelecionada = true;
 		btnExcluir.setEnabled(false);
 				
+	}
+	public void travaCliente() {
+		btnEntrada.setEnabled(false);
+		btnReceita.setEnabled(false);
+		
+		btnExcluir.setVisible(false);
+		btnLimpar.setVisible(false);
+		btnConsultar.setVisible(false);
+		
+		edNumEntrada.setEnabled(false);
+		edCpfUser.setEnabled(false);
+		
+		edDataEntrada.setEnabled(false);
+		edDataSaida.setEnabled(false);
+		edNomePet.setEnabled(false);
+		DescSaida.setEnabled(false);
+		
+		lblStatus.setVisible(false);
 	}
 	
 	private void preecheDadosSaida(AtendimentoSaida atendimentos) {
