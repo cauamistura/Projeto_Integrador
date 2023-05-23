@@ -1,8 +1,22 @@
 package vision;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.DAODadosUser;
@@ -13,26 +27,16 @@ import model.interfaces.InterPet;
 import model.interfaces.InterUsuario;
 import vision.atendimentos.EntradaATE;
 import vision.atendimentos.SaidaATE;
-import vision.cadastros.*;
-import vision.consultas.UserCON;
+import vision.cadastros.AgendamentoCAD;
+import vision.cadastros.ClinicaCAD;
+import vision.cadastros.ComorbidadeCAD;
+import vision.cadastros.MedicamentoCAD;
+import vision.cadastros.PetCAD;
+import vision.cadastros.RacaCAD;
+import vision.cadastros.UserCAD;
 import vision.consultas.HistoricoCON;
 import vision.consultas.PetCON;
-
-import java.awt.BorderLayout;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-
-import javax.swing.SwingConstants;
-import java.awt.Color;
-import java.awt.Font;
+import vision.consultas.UserCON;
 
 public class Menu extends JFrame implements InterUsuario, InterPet{
 
@@ -74,6 +78,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 	private JMenuItem miSaida;
 	private JMenuItem miHistorico;
 	private JMenuItem miEncerrar;
+	private JMenuItem miAgendamento;
 
 	/**
 	 * 
@@ -244,6 +249,15 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 				v.setVisible(true);
 			}
 		});
+		
+		miAgendamento = new JMenuItem("Agendamento...");
+		miAgendamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AgendamentoCAD self = new AgendamentoCAD();
+				self.setVisible(true);
+			}
+		});
+		mmATE.add(miAgendamento);
 		mmATE.add(miEntrada);
 		
 		miSaida = new JMenuItem("Saida..");
