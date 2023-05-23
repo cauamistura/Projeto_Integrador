@@ -12,7 +12,7 @@ public class DAOAgendamento extends Agendamento{
 	private String wSql;
 	
 	//Select 
-	public ArrayList<Agendamento> ListTComorbidade(DAOAgendamento prDAO) {
+	public ArrayList<Agendamento> ListT(DAOAgendamento prDAO) {
 		ArrayList<Agendamento> Lista = new ArrayList<>();
 
 		Connection c = prDAO.append();
