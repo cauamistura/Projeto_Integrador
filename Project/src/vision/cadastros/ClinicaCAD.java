@@ -42,6 +42,7 @@ import vision.padrao.CNPJTextFiel;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import java.awt.Font;
 
 public class ClinicaCAD extends JFrame {
 
@@ -113,12 +114,12 @@ public class ClinicaCAD extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(158, 174, 255));
 		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[50px][800px,grow][50px]", "[50px][430px,grow][50px]"));
+		panel.setLayout(new MigLayout("", "[50px][800px,grow][50px]", "[50px][500px,grow][50px]"));
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(158, 174, 255));
 		panel.add(panel_1, "cell 1 1,alignx center");
-		panel_1.setLayout(new MigLayout("", "[50px][50px][400px,grow][50px,grow][50px]", "[50px,grow][150px,grow][][50px]"));
+		panel_1.setLayout(new MigLayout("", "[50px][50px][500px,grow][100px,grow][50px]", "[30px,grow][300px,grow][][30px]"));
 		
 		JPanel panel_2 = new PanelComBackgroundImage(bg);
 		panel_2.setBackground(new Color(158, 174, 255));
@@ -126,30 +127,37 @@ public class ClinicaCAD extends JFrame {
 		panel_2.setLayout(new MigLayout("", "[100px][200px,grow][200px,grow][100px]", "[80px][][][][][][][50px][80px]"));
 		
 		JLabel lbNome = new JLabel("Nome:");
+		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbNome, "flowy,cell 1 2");
 		
 		edNome = new RoundJTextField();
+		edNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edNome.setBackground(new Color(255, 255, 255));
 		panel_2.add(edNome, "cell 1 2,growx");
 		edNome.setColumns(10);
 		
 		JLabel lbNomeFan = new JLabel("Nome Fantasia:");
+		lbNomeFan.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbNomeFan, "flowy,cell 2 2");
 		
 		edNomeFan = new RoundJTextField();
+		edNomeFan.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edNomeFan.setBackground(new Color(255, 255, 255));
 		panel_2.add(edNomeFan, "cell 2 2,growx");
 		edNomeFan.setColumns(10);
 		
 		JLabel lbCnpj = new JLabel("CNPJ:");
+		lbCnpj.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbCnpj, "flowy,cell 1 3");
 		
 		edCnpj = new CNPJTextFiel();
+		edCnpj.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edCnpj.setBackground(new Color(255, 255, 255));
 		panel_2.add(edCnpj, "cell 1 3,growx");
 		edCnpj.setColumns(10);
 		
 		edCep = new CEPTextField();
+		edCep.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edCep.setBackground(new Color(255, 255, 255));
 		edCep.addFocusListener(new FocusAdapter() {
 				@Override
@@ -182,18 +190,22 @@ public class ClinicaCAD extends JFrame {
 			});
 		
 		JLabel lbCep = new JLabel("CEP:");
+		lbCep.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbCep, "flowy,cell 2 3");
 		edCep.setColumns(10);
 		edCep.setBounds(104, 11, 156, 20);
 		panel_2.add(edCep, "cell 2 3,growx");
 		
 		JLabel lbBairro = new JLabel("Bairro:");
+		lbBairro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbBairro, "cell 1 5,alignx left");
 		
-		JLabel lbUf = new JLabel("UF:     ");
+		JLabel lbUf = new JLabel("UF:  ");
+		lbUf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbUf, "flowx,cell 2 5");
 		
 		edBairro = new RoundJTextField();
+		edBairro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edBairro.setBackground(new Color(255, 255, 255));
 		edBairro.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edBairro, "cell 1 6,growx");
@@ -208,25 +220,31 @@ public class ClinicaCAD extends JFrame {
 		
 		
 		edCidade = new RoundJTextField();
+		edCidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edCidade.setBackground(new Color(255, 255, 255));
 		panel_2.add(edCidade, "cell 2 6,growx");
 		edCidade.setColumns(10);
 		
 		JLabel lbCidade = new JLabel("Cidade:");
+		lbCidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbCidade, "cell 2 5");
 		
 		JLabel lbDesc = new JLabel("Descricao:");
+		lbDesc.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbDesc, "flowy,cell 1 7");
 		
 		edDescricao = new RoundJTextField();
+		edDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edDescricao.setBackground(new Color(255, 255, 255));
 		panel_2.add(edDescricao, "cell 1 7,growx");
 		edDescricao.setColumns(10);
 		
 		JLabel lbSenha = new JLabel("Senha:");
+		lbSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbSenha, "flowy,cell 2 7");
 		
 		edSenha = new RoundJTextField();
+		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		edSenha.setBackground(new Color(255, 255, 255));
 		edSenha.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edSenha, "cell 2 7,growx");
@@ -235,7 +253,7 @@ public class ClinicaCAD extends JFrame {
 		JPanel panel_3 = new PanelComBackgroundImage(bg);
 		panel_3.setBackground(new Color(158, 174, 255));
 		panel_1.add(panel_3, "cell 3 1,grow");
-		panel_3.setLayout(new MigLayout("", "[10px][10px,grow][]", "[grow][grow][][][][][][grow][][]"));
+		panel_3.setLayout(new MigLayout("", "[10px][20px,grow][]", "[grow][grow][][][][][][grow][][]"));
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(125, 137, 245));
@@ -247,10 +265,12 @@ public class ClinicaCAD extends JFrame {
 		panel_4.add(lblNewLabel_8, "cell 1 2,alignx center");
 		
 		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(new Color(125, 137, 245));
 		panel_3.add(panel_5, "cell 1 1,grow");
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
 		btnConf = new RoundButton("Confirmar");
+		btnConf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -340,6 +360,7 @@ public class ClinicaCAD extends JFrame {
 		
 
 		btnDelet = new RoundButton("Deletar");
+		btnDelet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		btnDelet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

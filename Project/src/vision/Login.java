@@ -29,6 +29,7 @@ import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJPasswordField;
+import java.awt.Font;
 
 public class Login extends JFrame {
 	/**
@@ -91,12 +92,12 @@ public class Login extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(158, 174, 255));
 		panel.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new MigLayout("", "[100px][300px,grow][100px]", "[100px][380px,grow][100px]"));
+		panel_1.setLayout(new MigLayout("", "[80px][350px,grow][80px]", "[80px][380px,grow][80px]"));
 
 		JPanel panel_2 = new PanelComBackgroundImage(bg);
 		panel_2.setBackground(new Color(158, 174, 255));
 		panel_1.add(panel_2, "cell 1 1,alignx center");
-		panel_2.setLayout(new MigLayout("", "[25px][200px,grow][25px]", "[50px][60px][60px][][][30px]"));
+		panel_2.setLayout(new MigLayout("", "[25px][250px,grow][25px]", "[90px][60px][][60px][30px][40px][][30px]"));
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(125, 137, 245));
@@ -108,26 +109,32 @@ public class Login extends JFrame {
 		panel_3.add(lblNewLabel_2, "cell 1 1,alignx center");
 
 		JLabel lbCnpj = new JLabel("CPF:");
+		lbCnpj.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbCnpj, "flowy,cell 1 1");
 
 		edCNPJ = new CPFTextField();
+		edCNPJ.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCNPJ.setText("123.456.789-10");
-		panel_2.add(edCNPJ, "cell 1 1,growx");
+		panel_2.add(edCNPJ, "cell 1 1,grow");
 		edCNPJ.setColumns(10);
 
 		JLabel lbSenha = new JLabel("Senha:");
-		panel_2.add(lbSenha, "flowy,cell 1 2");
+		lbSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		panel_2.add(lbSenha, "flowy,cell 1 3");
 		
 		edSenha = new RoundJPasswordField();
+		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edSenha.setForeground(new Color(0, 0, 0));
 		edSenha.setText("senha123");
 		edSenha.setColumns(10);
-		panel_2.add(edSenha, "cell 1 2,growx");
+		panel_2.add(edSenha, "cell 1 3,grow");
 
 		JLabel lbAlerta = new JLabel("<Aguardando>");
-		panel_2.add(lbAlerta, "cell 1 5,alignx center");
+		lbAlerta.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		panel_2.add(lbAlerta, "cell 1 7,alignx center");
 
 		JButton btnLogin = new RoundButton("Login");
+		btnLogin.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<DadosUser> TListClinica = new ArrayList<>();
@@ -168,7 +175,7 @@ public class Login extends JFrame {
 				}
 			}
 		});
-		panel_2.add(btnLogin, "cell 1 3,growx");
+		panel_2.add(btnLogin, "cell 1 5,grow");
 	}
 
 	@SuppressWarnings("deprecation")
