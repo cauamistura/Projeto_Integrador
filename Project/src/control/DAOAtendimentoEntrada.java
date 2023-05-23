@@ -127,6 +127,7 @@ public class DAOAtendimentoEntrada extends AtenimentoEntrada {
 					+ "inner join tdadosuser us on (pet.BDIDUSER = us.BDIDUSER)  "
 					+ "inner join tuser u on (u.BDIDUSER = us.BDIDUSER) "
 					+ "left outer join tcomorbidade com on (a.BDCOMORBIDADE = com.BDIDCOMORBIDADE) ";
+			
 			Statement stm = c.createStatement();
 			ResultSet rs = stm.executeQuery(wSql);
 

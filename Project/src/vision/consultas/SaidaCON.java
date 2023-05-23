@@ -15,6 +15,7 @@ import javax.swing.ListSelectionModel;
 
 import control.DAOAtendimentoEntrada;
 import model.AtendimentoSaida;
+import model.AtenimentoEntrada;
 import model.interfaces.InterSaida;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -51,7 +52,7 @@ public class SaidaCON extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
-		table = new TableSimples(new Object[][] {}, new String[] { "Número ate.", "CPF", "Nome", "Data Entrada","Data Saida", "Nome Pet", "Espécie","Raça"});
+		table = new TableSimples(new Object[][] {}, new String[] { "Número ate.", "CPF", "Nome", "Data Entrada","Data Saida", "Nome Pet","Espécie","Raça"});
 		
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
@@ -67,8 +68,8 @@ public class SaidaCON extends JFrame {
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
 					AtendimentoSaida dado = dados.get(modelIndex);
-
 					inter.preencheDadosSaida(dado);
+			
 					dispose();
 				}
 			}
@@ -81,7 +82,9 @@ public class SaidaCON extends JFrame {
 				int[] selectedRows = table.getSelectedRows();
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
-					
+					AtenimentoEntrada dado = dados.get(modelIndex);
+					inter.exluirAtendimentoSaida(dado.getBDIDENTRADA());
+					dispose();
 				}
 			}
 		});
@@ -124,10 +127,11 @@ public class SaidaCON extends JFrame {
 			if (prFiltro && !dado.getBDNOMEUSER().toLowerCase().contains(edFiltro.getText().toLowerCase())) {
 				continue;
 			}
-			Object[][] rowData = {{ dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT().format(FOMATTER),dado.getBDDATASAIDA().format(FOMATTER), dado.getBDNOMEPET(), dado.getBDNOMEESPECIE(), dado.getBDNOMERACA()}};
+			Object[][] rowData = {{ dado.getBDIDENTRADA(), dado.getBDCPF(), dado.getBDNOMEUSER(), dado.getBDDATAENT().format(FOMATTER),dado.getBDDATASAIDA().format(FOMATTER), dado.getBDNOMEPET(),dado.getBDNOMEESPECIE(), dado.getBDNOMERACA()}};
 			table.preencherTabela(rowData);
 		}
 	}
+	
 	
 	
 }

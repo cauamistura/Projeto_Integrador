@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -15,8 +16,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import control.DAOAtendimentoEntrada;
+import control.DAOAtendimentoSaida;
+import model.AtendimentoSaida;
 import model.AtenimentoEntrada;
 import model.interfaces.InterEntrada;
+import model.interfaces.InterSaida;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
@@ -32,11 +36,9 @@ public class EntradaCON extends JFrame {
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
 	private DAOAtendimentoEntrada FDAOEntrada = new DAOAtendimentoEntrada();
-//	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
+	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
 
-	public EntradaCON(List<AtenimentoEntrada> dados, InterEntrada inter, Boolean saida ) {
-	
-//		VEntradaCON Entrada = this;
+	public EntradaCON(List<AtenimentoEntrada> dados, InterEntrada inter, Boolean saida, InterSaida interS ) {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 742, 385);
@@ -70,7 +72,8 @@ public class EntradaCON extends JFrame {
 				for (int i = 0; i < selectedRows.length; i++) {
 					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);
 					AtenimentoEntrada dado = dados.get(modelIndex);
-
+					
+					
 					if (saida == true) {
 						if(FDAOEntrada.retornaIdReceita(dado.getBDIDENTRADA())) {
 							int resposta = JOptionPane.showConfirmDialog(null,
@@ -79,18 +82,20 @@ public class EntradaCON extends JFrame {
 
 							if (resposta == JOptionPane.YES_OPTION) {
 								
-//								ArrayList<MTAtendimentoSaida> list = new ArrayList<>();
-//								list = FDAOSaida.ListTSaida(FDAOSaida);
-//								
-//								VSaidaCON v = new VSaidaCON(list, Entrada);
-//								v.setVisible(true);
+								ArrayList<AtendimentoSaida> list = new ArrayList<>();
+								list = FDAOSaida.ListTSaida(FDAOSaida);
+								
+								
+								SaidaCON v = new SaidaCON(list,interS);
+								v.setVisible(true);
 							}
+							}else {
+								inter.preencheDadosEntrada(dado);
 						}
-						
 					}else {
 						inter.preencheDadosEntrada(dado);
 					}
-						dispose();
+					dispose();
 				}
 			}
 		});
@@ -161,4 +166,6 @@ public class EntradaCON extends JFrame {
 		btnExcluir.setVisible(false);
 	}
 
+
 }
+

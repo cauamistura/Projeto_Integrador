@@ -109,12 +109,21 @@ public class TableSimples extends JTable {
 		}
 		 
 	 }
+	 public void alterarTituloColuna(int columnIndex, String novoTitulo) {
+	        TableColumnModel columnModel = getColumnModel();
+	        TableColumn column = columnModel.getColumn(columnIndex);
+	        column.setHeaderValue(novoTitulo);
+	        headerRenderer.setText(novoTitulo);
+	        getTableHeader().repaint();
+	    }
 	
 	  // Renderer personalizado para centralizar as células que contêm inteiros
 	    
 	 private class InteiroCentralizadoRenderer extends DefaultTableCellRenderer {
 	        
-	        @Override
+	        private static final long serialVersionUID = 1L;
+
+			@Override
 	        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 	                                                       boolean hasFocus, int row, int column) {
 	            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

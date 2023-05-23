@@ -113,4 +113,42 @@ private String wSql;
 		prDAO.post();
 		return ListTReceita;
 	}
+	
+
+	 public DAOReceita retornaReceita(Integer atendimentos){
+		 
+		 DAOReceita mr = new DAOReceita();
+	        Connection c = append();
+	      
+	        try {
+	           
+	            String wSql = "SELECT r.*, m.BDNOMEMEDICACAO FROM treceita r \n"
+	            		+ "inner join tmedicacao m on (r.BDIDMEDICACAO = m.BDIDMEDICACAO)\n"
+	            		+ "where BDIDRECEITA = "+atendimentos;
+	            
+	            Statement stm = c.createStatement();
+	            ResultSet rs =  stm.executeQuery(wSql);
+
+	            while (rs.next()) {
+	
+	            	mr.setBDIDRECEITA(rs.getInt("BDIDRECEITA"));
+	            	mr.setBDIDMEDICACAO(rs.getInt("BDIDMEDICACAO"));
+	            	mr.setBDFINALRECEITA(rs.getDate("BDFINALRECEITA").toLocalDate());
+					mr.setBDINICIORECEITA(rs.getDate("BDINICIORECEITA").toLocalDate());
+					mr.setBDDESCRICAO(rs.getString("BDDESCRICAO"));
+					mr.setBDNOMEMEDICACAO(rs.getString("BDNOMEMEDICACAO"));
+					
+					
+					
+				}
+	           
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        return mr ;
+	    }
+
 }
+

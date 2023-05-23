@@ -25,16 +25,18 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
-import control.DAOHistorico;
 import control.DAOComorbidade;
 import control.DAODadosUser;
+import control.DAOHistorico;
 import control.DAOPet;
 import control.DAOUser;
-import model.Historico;
+import model.AtendimentoSaida;
 import model.AtenimentoEntrada;
 import model.Comorbidade;
 import model.DadosUser;
+import model.Historico;
 import model.Pet;
 import model.User;
 import model.interfaces.InterPet;
@@ -42,6 +44,7 @@ import model.interfaces.InterUsuario;
 import net.miginfocom.swing.MigLayout;
 import vision.Menu;
 import vision.atendimentos.EntradaATE;
+import vision.atendimentos.SaidaATE;
 import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
@@ -124,7 +127,7 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		container_card = new PanelComBackgroundImage(bg);
 		container_card.setBackground(new Color(158, 174, 255));
 		panel.add(container_card, "cell 1 1,alignx center");
-		container_card.setLayout(new MigLayout("", "[478.00px,grow 600]", "[600px,grow]"));
+		container_card.setLayout(new MigLayout("", "[750.00px,grow 600]", "[600px,grow]"));
 
 		card = new JPanel();
 		card.setBackground(new Color(125, 137, 245));
@@ -142,7 +145,7 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		container_content.setLayout(new MigLayout("", "[grow 600]", "[][][][][][][][][350px][50px]"));
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		container_content.add(scrollPane_1, "cell 0 8,growy");
+		container_content.add(scrollPane_1, "cell 0 8,grow");
 
 		table = new TableSimples(new Object[][] {}, new String[] { "Número", "Nome Usuário", "Nome Pet", "Raça", "Data", "Comorbidade"});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -272,6 +275,7 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		if (cbTipo.getSelectedIndex() == 0) {
 			for (Historico com : Lista) {
 				if (com.getTipo().equalsIgnoreCase("entrada")) {
+					table.alterarTituloColuna(4, "Data de Entrada");
 					Object[][] rowData = {
 					{ com.getBDIDENTRADA(), com.getBDNOMEUSER(), com.getBDNOMEPET(), com.getBDNOMERACA(), com.getBDDATAENT().format(FOMATTER), achaComorbidade(com.getBDIDCOMORBIDADE())} };
 					table.preencherTabela(rowData);	
@@ -280,6 +284,7 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		} else {
 			for (Historico com : Lista) {
 				if (com.getTipo().equalsIgnoreCase("saida")) {
+					table.alterarTituloColuna(4, "Data de Saida");
 					Object[][] rowData = {
 					{ com.getBDIDENTRADA(), com.getBDNOMEUSER(), com.getBDNOMEPET(), com.getBDNOMERACA(), com.getBDDATASAIDA().format(FOMATTER), achaComorbidade(com.getBDIDCOMORBIDADE())} };
 					table.preencherTabela(rowData);	
@@ -340,7 +345,28 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 	}
 	
 	private void buscaSAICAD(Historico list) {
-		// precisa ser imoplemantado
+		AtendimentoSaida ent = new AtendimentoSaida();
+		
+		ent.setBDIDENTRADA(list.getBDIDENTRADA());
+		ent.setBDDESC(list.getBDDESC());
+		ent.setBDCOMORBIDADE(list.getBDCOMORBIDADE());
+		ent.setBDDATAENT(list.getBDDATAENT());
+		ent.setBDDATASAIDA(list.getBDDATASAIDA());
+		ent.setBDCPF(getCPF(list.getBDIDUSER()));
+		ent.setBDNOMEUSER(list.getBDNOMEUSER());
+		ent.setBDNOMEPET(list.getBDNOMEPET());
+		ent.setBDNOMERACA(list.getBDNOMERACA());
+		ent.setBDIDPET(list.getBDIDPET());
+		
+		SaidaATE self = new SaidaATE();
+		
+		self.preencheDadosSaida(list);
+		
+		if (Menu.FPERMICAO == 3) {
+			self.travaCliente();
+		}
+		self.setVisible(true);
+		
 	}
 	
 	private String getCPF(Integer I) {
