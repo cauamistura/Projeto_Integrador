@@ -45,6 +45,8 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TelefoneTextField;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class UserCAD extends JFrame implements InterUsuario {
 	/**
@@ -139,6 +141,16 @@ public class UserCAD extends JFrame implements InterUsuario {
 		JLabel lbCPF = new JLabel("CPF:");
 		pnContent.add(lbCPF, "flowy,cell 1 3");
 		edCpf = new CPFTextField();
+		edCpf.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (edCpf.existeCpfUsuario(FDAOTUser)) {
+					lbStatus.setText("Status: Alterando");
+				} else {
+					lbStatus.setText("Status: Inserindo");
+				}
+			}
+		});
 		edCpf.setToolTipText("Aperte F9 para consultar.");
 		edCpf.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		edCpf.setColumns(10);
