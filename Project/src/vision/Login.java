@@ -35,7 +35,7 @@ public class Login extends JFrame {
 	/**
 	 * 
 	 */
-	
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DAODadosUser FDAODadosUser = new DAODadosUser();
@@ -121,7 +121,7 @@ public class Login extends JFrame {
 		JLabel lbSenha = new JLabel("Senha:");
 		lbSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		panel_2.add(lbSenha, "flowy,cell 1 3");
-		
+
 		edSenha = new RoundJPasswordField();
 		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edSenha.setForeground(new Color(0, 0, 0));

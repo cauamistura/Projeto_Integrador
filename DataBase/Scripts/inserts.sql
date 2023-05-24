@@ -171,10 +171,10 @@ INSERT INTO `dbpi`.`tatendimento_saida`
 VALUES
 (1, 1, 1, 1, 1, '2023-03-28', 'Alta após tratamento de infecção');
 
-
-
-
-
-
-
-
+INSERT INTO `dbpi`.`tagendamento`
+(`bdidagendamento`,
+`bdidpet`,
+`bddataagen`,
+`bdhora`)
+VALUES
+(1, 1, '2023-05-23', '08:30');

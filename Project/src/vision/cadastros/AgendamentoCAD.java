@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -28,9 +29,11 @@ import control.DAOPet;
 import control.DAOUser;
 import model.Agendamento;
 import model.DadosUser;
+import model.Historico;
 import model.Pet;
 import model.interfaces.InterPet;
 import model.interfaces.InterUsuario;
+import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 import vision.consultas.PetCON;
 import vision.consultas.UserCON;
@@ -42,6 +45,8 @@ import vision.padrao.RoundJTextField;
 import vision.padrao.RoundJTextFieldNum;
 import vision.padrao.TableSimples;
 import vision.padrao.lupaButton;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 	/**
@@ -70,7 +75,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 	private lupaButton btnConPet;
 	private RoundJTextFieldNum edNumAtendimento;
 	private JLabel lblNmeroAgendamento;
-	private DateTextField textField;
+	private DateTextField edData;
 	private JLabel lbData;
 
 	// Objetos do usuario
@@ -98,7 +103,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		setTitle("Agendamento");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 455, 706);
+		setBounds(100, 100, 479, 706);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -144,9 +149,18 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		lbData.setHorizontalAlignment(SwingConstants.RIGHT);
 		container_content.add(lbData, "flowx,cell 0 2");
 		
-		textField = new DateTextField();
-		textField.setColumns(10);
-		container_content.add(textField, "cell 0 2");
+		edData = new DateTextField();
+		edData.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!edData.validaDate()) {
+					return;
+				}
+				atualizatabela(edData.getDate());
+			}
+		});
+		edData.setColumns(10);
+		container_content.add(edData, "cell 0 2");
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		container_content.add(scrollPane_1, "cell 0 10,grow");
@@ -235,15 +249,61 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		btnlimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		container_buttons.add(btnlimpar, "cell 4 0");
 
-		atualizatabela();
 	}
 
-	private void atualizatabela() {
-		Lista = fDAOAgendamento.ListT(fDAOAgendamento);
+	private void atualizatabela(LocalDate date) {
+		fDAOAgendamento.setDateAgendamento(date);
+		Lista = fDAOAgendamento.List(fDAOAgendamento);
+
 		table.limparTabela();
-		
+
+		ArrayList<Agendamento> dados = new ArrayList<>();
+
+		Boolean valida = false;
+		for (int hora = 8; hora < 19; hora++) {
+			for (int minuto = 0; minuto < 60; minuto += 30) {
+				valida = false;
+				String horaAtual = "";
+				if (hora < 10) {
+					horaAtual = '0' + String.valueOf(hora) + ':' + String.valueOf(minuto);
+				} else {
+					horaAtual = String.valueOf(hora) + ':' + String.valueOf(minuto);
+				}
+				if (minuto < 30) {
+					horaAtual += "0";
+				}
+
+				for (Agendamento agendamento : Lista) {
+					if (agendamento.getHora().equals(horaAtual)) {
+						Agendamento lc = new Agendamento();
+						lc.setDisponivel(false);
+						lc.setHora(horaAtual);
+						dados.add(lc);
+						valida = true;
+					}
+
+					if (!valida) {
+						Agendamento lc = new Agendamento();
+						lc.setDisponivel(true);
+						lc.setHora(horaAtual);
+						dados.add(lc);
+					}
+
+				}
+			}
+		}
+
+		for (Agendamento lis : dados) {
+			Object[][] rowData = { { lis.getHora(), descDisp(lis.getDisponivel()) } };
+			table.preencherTabela(rowData);
+		}
 	}
 
+	private String descDisp(Boolean dis) {
+		String result = dis ? "Disponível" : "Indisponível";
+		return result;
+	}
+	
 	private void chamaConUser() {
 		ArrayList<DadosUser> list = new ArrayList<>();
 		list = FDAOUserDados.ListConsulta(FDAOUserDados);
@@ -281,8 +341,6 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 
 		edNomePet.setText("");
 		edNomeRaca.setText("");
-
-		atualizatabela();
 	}
 
 	@Override
@@ -295,7 +353,6 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 	public void preencheDadosPet(Pet dado) {
 		edNomePet.setText(dado.getBDNOMEPET());
 		edNomeRaca.setText(dado.getBDNOMERACA());
-		atualizatabela();
 	}
 
 	@Override

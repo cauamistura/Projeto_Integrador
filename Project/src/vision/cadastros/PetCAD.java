@@ -162,45 +162,45 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 		racaCb = new JComboBox<Raca>();
 		panel_3.add(racaCb, "cell 1 1,growx");
 		racaCb.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(125, 137, 245));
 		panel_3.add(panel_4, "cell 1 2,growx");
 		panel_4.setLayout(new MigLayout("", "[250px][80px][250px]", "[][][]"));
-						
-								JLabel lblNewLabel_3 = new JLabel("Dono:");
-								lblNewLabel_3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-								panel_4.add(lblNewLabel_3, "cell 0 0");
-				
-						edCpf = new CPFTextField();
-						edCpf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-						panel_4.add(edCpf, "cell 0 1,growx");
-						edCpf.addKeyListener(new KeyAdapter() {
-							@Override
-							public void keyPressed(KeyEvent e) {
-								if (e.getKeyCode() == KeyEvent.VK_F9) {
-									chamaConUser();
-								}
-								if (e.getKeyCode() == KeyEvent.VK_F4) {
-									if (TelaUser == null) {
-										TelaUser = new UserCAD();
-									}
-									TelaUser.setVisible(true);
-								}
-							}
-						});
-						edCpf.setToolTipText("Aperte F9 para consultar.");
-						edCpf.setColumns(10);
-						
-								lupaButton btnConUser = new lupaButton("");
-								btnConUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-								panel_4.add(btnConUser, "cell 1 1,aligny center");
-										
-												edNomeUser = new RoundJTextField();
-												edNomeUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-												panel_4.add(edNomeUser, "cell 2 1,growx");
-												edNomeUser.setEnabled(false);
-												edNomeUser.setColumns(10);
+
+		JLabel lblNewLabel_3 = new JLabel("Dono:");
+		lblNewLabel_3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_4.add(lblNewLabel_3, "cell 0 0");
+
+		edCpf = new CPFTextField();
+		edCpf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_4.add(edCpf, "cell 0 1,growx");
+		edCpf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConUser();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_F4) {
+					if (TelaUser == null) {
+						TelaUser = new UserCAD();
+					}
+					TelaUser.setVisible(true);
+				}
+			}
+		});
+		edCpf.setToolTipText("Aperte F9 para consultar.");
+		edCpf.setColumns(10);
+
+		lupaButton btnConUser = new lupaButton("");
+		btnConUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_4.add(btnConUser, "cell 1 1,aligny center");
+
+		edNomeUser = new RoundJTextField();
+		edNomeUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_4.add(edNomeUser, "cell 2 1,growx");
+		edNomeUser.setEnabled(false);
+		edNomeUser.setColumns(10);
 
 		JLabel l = new JLabel("Nome:");
 		l.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
@@ -293,7 +293,7 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 				}
 
 				FDAOTPet.setBDIDESPECIE(FDAOTPet.getChaveID("tespecie", "BDIDESPECIE"));
-				
+
 				if (idPet == 0) {
 					FDAOTPet.setBDIDPET(FDAOTPet.getChaveID("tpets", "BDIDPET"));
 				} else {
@@ -317,7 +317,7 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 					JOptionPane.showMessageDialog(null, "Data inválida. Tente novamente.");
 					return;
 				}
-				try {					
+				try {
 					if (FDAOTPet.existePet(FDAOTPet, idPet)) {
 						FDAOTPet.alterar(FDAOTPet);
 						JOptionPane.showMessageDialog(null, "Seu pet foi alterado com sucesso!");
@@ -423,10 +423,10 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 				}
 
 			}
-			
+
 			edCpf.setText(list.getBDCPF());
 			edNomeUser.setText(list.getBDNOMEUSER());
-			
+
 			FDAOTUser.setBDIDUSER(list.getBDIDUSER());
 		}
 	}
