@@ -135,25 +135,28 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		container_content.setBackground(new Color(125, 137, 245));
 		card.add(container_content, "cell 0 2,grow");
 		container_content.setLayout(new MigLayout("", "[grow 600]", "[][][][][][][][][][][350px][50px]"));
-		
+
 		lblNmeroAgendamento = new JLabel("Número agendamento:");
 		lblNmeroAgendamento.setHorizontalAlignment(SwingConstants.RIGHT);
 		container_content.add(lblNmeroAgendamento, "flowx,cell 0 1");
-		
+
 		edNumAtendimento = new RoundJTextFieldNum(8);
 		edNumAtendimento.setToolTipText("Aperte F9 para consultar.");
 		edNumAtendimento.setColumns(10);
 		container_content.add(edNumAtendimento, "cell 0 1");
-		
+
 		lbData = new JLabel("Data:");
 		lbData.setHorizontalAlignment(SwingConstants.RIGHT);
 		container_content.add(lbData, "flowx,cell 0 2");
-		
+
 		edData = new DateTextField();
 		edData.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(!edData.validaDate()) {
+				if (!edData.validaDate()) {
+					JOptionPane.showMessageDialog(null, "Data invalida!\nInforme uma data valida!");
+					edData.requestFocus();
+					;
 					return;
 				}
 				atualizatabela(edData.getDate());
@@ -165,8 +168,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		container_content.add(scrollPane_1, "cell 0 10,grow");
 
-		table = new TableSimples(new Object[][] {},
-				new String[] { "Hora", "Disponibilidade" });
+		table = new TableSimples(new Object[][] {}, new String[] { "Hora", "Disponibilidade" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getColumnModel().getColumn(1).setPreferredWidth(800);
 		scrollPane_1.setViewportView(table);
@@ -303,7 +305,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		String result = dis ? "Disponível" : "Indisponível";
 		return result;
 	}
-	
+
 	private void chamaConUser() {
 		ArrayList<DadosUser> list = new ArrayList<>();
 		list = FDAOUserDados.ListConsulta(FDAOUserDados);
@@ -332,6 +334,20 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 
 		FVPetCON.desExcluir();
 		FVPetCON.setVisible(true);
+	}
+
+	private void actionConfirm() {
+		Boolean editar = false; 
+		if (!edNumAtendimento.getText().isEmpty()) {
+			if (fDAOAgendamento.existeUser(Integer.valueOf(edNumAtendimento.getText()))) {
+				fDAOAgendamento.setId(Integer.valueOf(edNumAtendimento.getText()));
+				editar = true;
+			}
+		} else {
+			fDAOAgendamento.setId(fDAOAgendamento.getChaveID("tagendamento", "BDIDAGENDAMENTO"));
+		}
+		
+		
 	}
 
 	@Override
