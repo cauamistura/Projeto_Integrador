@@ -125,7 +125,7 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 		panel_1.add(panel_5, "cell 0 0,alignx center,growy");
 
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\vinis\\eclipse-workspace\\ClinicaPets\\src\\main\\resources\\doglove.png"));
+		lblNewLabel.setIcon(new ImageIcon("src\\main\\resources\\doglove.png"));
 		panel_5.add(lblNewLabel);
 
 		JPanel panel_3 = new JPanel();

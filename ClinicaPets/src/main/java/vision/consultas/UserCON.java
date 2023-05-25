@@ -45,7 +45,7 @@ public class UserCON extends JFrame {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

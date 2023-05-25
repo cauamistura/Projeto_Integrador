@@ -112,7 +112,7 @@ public class ComorbidadeCAD extends JFrame {
 		panel_4.setLayout(new MigLayout("", "[100px][100px][100px]", "[10px][100px]"));
 
 		lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\vinis\\eclipse-workspace\\ClinicaPets\\src\\main\\resources\\simboloV.png"));
+		lblNewLabel_3.setIcon(new ImageIcon("src\\main\\resources\\simboloV.png"));
 		panel_4.add(lblNewLabel_3, "cell 1 1,alignx center");
 
 		panel_5 = new JPanel();

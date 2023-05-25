@@ -261,7 +261,7 @@ public class ClinicaCAD extends JFrame {
 		panel_4.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
 		JLabel lblNewLabel_8 = new JLabel("");
-		lblNewLabel_8.setIcon(new ImageIcon("C:\\Users\\vinis\\eclipse-workspace\\ClinicaPets\\src\\main\\resources\\clinica.png"));
+		lblNewLabel_8.setIcon(new ImageIcon("src\\main\\resources\\clinica.png"));
 		panel_4.add(lblNewLabel_8, "cell 1 2,alignx center");
 
 		JPanel panel_5 = new JPanel();

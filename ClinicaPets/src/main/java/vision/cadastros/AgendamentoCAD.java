@@ -94,7 +94,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -99,7 +99,7 @@ public class MedicamentoCAD extends JFrame {
 		title.setFont(new Font("Dialog", Font.BOLD, 20));
 
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\vinis\\eclipse-workspace\\ClinicaPets\\src\\main\\resources\\med.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("src\\main\\resources\\med.png"));
 		panel_6.add(lblNewLabel_2, "cell 1 1,alignx center,aligny center");
 
 		JPanel panel_5 = new JPanel();
