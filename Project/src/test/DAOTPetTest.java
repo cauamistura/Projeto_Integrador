@@ -62,8 +62,8 @@ public class DAOTPetTest {
 	public void testExistePet() {
 		DAOPet dao = new DAOPet();
 
-		Pet result = dao.existePet(dao, 4);
-		assertNotNull(result);
+		Boolean result = dao.existePet(dao, 4);
+		assertEquals(true, result);
 
 	}
 

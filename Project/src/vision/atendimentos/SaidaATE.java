@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ import model.interfaces.InterEntrada;
 import model.interfaces.InterReceita;
 import model.interfaces.InterSaida;
 import vision.cadastros.ReceitaCAD;
+import vision.cadastros.UserCAD;
 import vision.consultas.EntradaCON;
 import vision.consultas.SaidaCON;
 import vision.padrao.CPFTextField;
@@ -61,7 +64,8 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	ArrayList<AtenimentoEntrada> list = new ArrayList<>();
 	private DAOReceita FDAOReceita = new DAOReceita();
 	private EntradaCON FEntradaCON;
-	private boolean existeSaida; 
+	private boolean existeSaida;
+	private boolean existeReceita; 
 	
 	public SaidaATE() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -208,6 +212,12 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		contentPane.add(edRaca);
 	}
 	
+	protected void chamaEntrada() {
+		EntradaATE e = new EntradaATE();
+		e.setVisible(true);
+		
+	}
+
 	private void chamaSaida() {
 		ArrayList<AtendimentoSaida> list = new ArrayList<>();
 		list = FDAOSaida.ListTSaida(FDAOSaida);
@@ -246,6 +256,7 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		edNumEntrada.setText(String.valueOf(atendimentos.getBDIDENTRADA()));
 		edNomePet.setText(atendimentos.getBDNOMEPET());
 		edRaca.setText(atendimentos.getBDNOMERACA());
+		edCpfUser.setText(atendimentos.getBDCPF());
 		edDataEntrada.setText(atendimentos.getBDDATAENT().format(FOMATTER));
 			
 		//Setando DAOSaida
@@ -313,31 +324,39 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	
 		if(EntradaSelecionada) {
 			
-			FDAOSaida.setBDDESC(DescSaida.getText());
-			FDAOSaida.setBDDATASAIDA(edDataSaida.getDate());
+			if(existeReceita) {
+				FDAOSaida.setBDIDSAIDA(FDAOSaida.getChaveID("TAtendimento_Saida", "BDIDSAIDA"));
+				FDAOSaida.setBDDESC(DescSaida.getText());
+				FDAOSaida.setBDDATASAIDA(edDataSaida.getDate());
 
-			if(existeSaida) {
-				FDAOReceita.alterar(FDAOReceita);
-				FDAOSaida.alterar(FDAOSaida);
+				if(existeSaida) {
+					FDAOReceita.alterar(FDAOReceita);
+					FDAOSaida.alterar(FDAOSaida);
+					
+					JOptionPane.showMessageDialog(null, "Dados alterados com SUCESSO!!");
+					
+				}else {
+					FDAOReceita.inserir(FDAOReceita);
+					FDAOSaida.inserir(FDAOSaida);
+					
+					btnExcluir.setEnabled(true);
+					
+					JOptionPane.showMessageDialog(null, "Dados inseridos com SUCESSO!!");
+				}
 				
-				JOptionPane.showMessageDialog(null, "Dados alterados com SUCESSO!!");
-				
+				int resposta = JOptionPane.showConfirmDialog(null,
+						"Deseja deletar os dados presentes na Tela?",
+						"Confirmação", JOptionPane.YES_NO_OPTION);
+
+				if (resposta == JOptionPane.YES_OPTION) {
+					eventLimpar();
+				}
 			}else {
-				FDAOReceita.inserir(FDAOReceita);
-				FDAOSaida.inserir(FDAOSaida);
-				
-				btnExcluir.setEnabled(true);
-				
-				JOptionPane.showMessageDialog(null, "Dados inseridos com SUCESSO!!");
+				JOptionPane.showMessageDialog(null, "Cadastre uma receita antes de cadastrar uma saida");
+				chamaReceitaCad();
 			}
 			
-			int resposta = JOptionPane.showConfirmDialog(null,
-					"Deseja os dados presentes na Tela?",
-					"Confirmação", JOptionPane.YES_NO_OPTION);
-
-			if (resposta == JOptionPane.YES_OPTION) {
-				eventLimpar();
-			}
+			
 		
 		}else {
 			JOptionPane.showMessageDialog(null, "Selecione um  atendimento antes de confirmar a ação");
@@ -378,6 +397,8 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		FDAOReceita.setBDFINALRECEITA(listReceita.getBDFINALRECEITA());
 		FDAOReceita.setBDDESCRICAO(listReceita.getBDDESCRICAO());
 		FDAOReceita.setBDNOMEMEDICACAO(listReceita.getBDNOMEMEDICACAO());
+		
+		existeReceita = true;
 	
 	}
 	

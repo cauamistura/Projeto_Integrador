@@ -19,15 +19,16 @@ public class DAOAtendimentoSaida extends AtendimentoSaida {
 	public Boolean inserir(DAOAtendimentoSaida prDAO) {
 		Connection c = prDAO.append();
 		try {
-			wSql = "INSERT INTO `dbpi`.`tatendimento_saida` (`BDIDENTRADA`,`BDIDPET`,`BDIDCOMORBIDADE`,`BDIDRECEITA`,`BDDESC`,`BDDATASAIDA`) VALUES (?,?,?,?,?,?)";
+			wSql = "INSERT INTO `dbpi`.`tatendimento_saida` (`BDIDSAIDA`,`BDIDENTRADA`,`BDIDPET`,`BDIDCOMORBIDADE`,`BDIDRECEITA`,`BDDESC`,`BDDATASAIDA`) VALUES (?,?,?,?,?,?,?)";
 			PreparedStatement stm = c.prepareStatement(wSql);
 
-			stm.setInt(1, prDAO.getBDIDENTRADA());
-			stm.setInt(2, prDAO.getBDIDPET());
-			stm.setInt(3, prDAO.getBDCOMORBIDADE());
-			stm.setInt(4, prDAO.getBDIDRECEITA());
-			stm.setString(5, prDAO.getBDDESC());
-			stm.setDate(6, Date.valueOf(prDAO.getBDDATASAIDA()));
+			stm.setInt(1, prDAO.getBDIDSAIDA());
+			stm.setInt(2, prDAO.getBDIDENTRADA());
+			stm.setInt(3, prDAO.getBDIDPET());
+			stm.setInt(4, prDAO.getBDCOMORBIDADE());
+			stm.setInt(5, prDAO.getBDIDRECEITA());
+			stm.setString(6, prDAO.getBDDESC());
+			stm.setDate(7, Date.valueOf(prDAO.getBDDATASAIDA()));
 
 			stm.executeUpdate();
 			return true;
