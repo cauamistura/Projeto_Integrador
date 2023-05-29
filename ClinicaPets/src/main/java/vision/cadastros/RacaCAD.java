@@ -79,7 +79,7 @@ public class RacaCAD extends JFrame {
 		panel_1.setLayout(new MigLayout("", "[60px][200px,grow][60px]", "[25px][50px][50px][50px][][50px][25px]"));
 		
 		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("src\\main\\resources\\gatoAbo.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\gatoAbo.png"));
 		panel_1.add(lblNewLabel_2, "cell 1 1,alignx center");
 		
 		btnNewButton = new RoundButton("Login");

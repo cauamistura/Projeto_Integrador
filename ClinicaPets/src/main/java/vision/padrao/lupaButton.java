@@ -10,7 +10,7 @@ public class lupaButton extends RoundButton{
 	public lupaButton(String label) {
 		super(label);
 		
-		ImageIcon icon = new ImageIcon("src\\main\\resources\\lupa.png");
+		ImageIcon icon = new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\lupa.png");
 		
 		// Define a imagem como o ícone do botão
 		setIcon(icon);

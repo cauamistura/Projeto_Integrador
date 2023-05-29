@@ -127,7 +127,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 		pnImg.setLayout(new MigLayout("", "[][][][][][][][][]", "[]"));
 		
 				JLabel lblNewLabel = new JLabel("");
-				lblNewLabel.setIcon(new ImageIcon("src\\main\\resources\\person.png"));
+				lblNewLabel.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\person.png"));
 				pnImg.add(lblNewLabel, "cell 4 0,alignx center");
 
 		JPanel pnContent = new JPanel();

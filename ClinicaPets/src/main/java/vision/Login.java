@@ -103,9 +103,10 @@ public class Login extends JFrame {
 		panel_3.setBackground(new Color(125, 137, 245));
 		panel_2.add(panel_3, "cell 1 0,alignx center");
 		panel_3.setLayout(new MigLayout("", "[50px][50px][50px]", "[25px][25px][25px]"));
+		
 
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("src\\main\\resources\\logo.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\logo.png"));
 		panel_3.add(lblNewLabel_2, "cell 1 1,alignx center");
 
 		JLabel lbCnpj = new JLabel("CPF:");
