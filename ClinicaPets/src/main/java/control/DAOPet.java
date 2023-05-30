@@ -18,7 +18,7 @@ public class DAOPet extends Pet {
 	public Boolean inserir(DAOPet prDAO) {
 		Connection c = prDAO.append();
 		try {
-			wSql = "INSERT INTO `DBPI`.`TPets`(`BDIDPET`, `BDIDRACA`, `BDNOMEPET`, `BDAPELIDO`, `BDDATANASCIMENTO`, `BDIDUSER`)VALUES(?,?,?,?,?,?);";
+			wSql = "insert into `dbpi`.`tpets`(`bdidpet`, `bdidraca`, `bdnomepet`, `bdapelido`, `bddatanascimento`, `bdiduser`)values(?,?,?,?,?,?)";
 			PreparedStatement stm = c.prepareStatement(wSql);
 
 			stm.setInt(1, prDAO.getBDIDPET());

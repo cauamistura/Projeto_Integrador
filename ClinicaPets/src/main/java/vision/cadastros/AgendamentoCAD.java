@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -29,12 +31,12 @@ import control.DAOPet;
 import control.DAOUser;
 import model.Agendamento;
 import model.DadosUser;
-import model.Historico;
 import model.Pet;
+import model.interfaces.InterAgendamento;
 import model.interfaces.InterPet;
 import model.interfaces.InterUsuario;
-import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
+import vision.consultas.AgendamentoCON;
 import vision.consultas.PetCON;
 import vision.consultas.UserCON;
 import vision.padrao.CPFTextField;
@@ -45,10 +47,8 @@ import vision.padrao.RoundJTextField;
 import vision.padrao.RoundJTextFieldNum;
 import vision.padrao.TableSimples;
 import vision.padrao.lupaButton;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
-public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
+public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, InterAgendamento {
 	/**
 	 * 
 	 */
@@ -65,7 +65,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 	private JPanel container_buttons;
 	private JLabel lbTitle;
 	private JLabel lbUser;
-	private RoundButton btnlimpar;
+	private RoundButton btnConfirmar;
 	private CPFTextField edCpf;
 	private lupaButton btnConUser;
 	private JLabel lblPet;
@@ -87,6 +87,9 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 	private ArrayList<Pet> listPet = new ArrayList<>();
 	private DAOPet FDAOTPet = new DAOPet();
 	private PetCON FVPetCON;
+
+	private ArrayList<Agendamento> dados = new ArrayList<>();
+	private RoundButton btnExcluir;
 
 	/**
 	 */
@@ -141,6 +144,14 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		container_content.add(lblNmeroAgendamento, "flowx,cell 0 1");
 
 		edNumAtendimento = new RoundJTextFieldNum(8);
+		edNumAtendimento.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F9) {
+					chamaConAgendamento();
+				}
+			}
+		});
 		edNumAtendimento.setToolTipText("Aperte F9 para consultar.");
 		edNumAtendimento.setColumns(10);
 		container_content.add(edNumAtendimento, "cell 0 1");
@@ -156,7 +167,6 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 				if (!edData.validaDate()) {
 					JOptionPane.showMessageDialog(null, "Data invalida!\nInforme uma data valida!");
 					edData.requestFocus();
-					;
 					return;
 				}
 				atualizatabela(edData.getDate());
@@ -217,6 +227,11 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 				if (e.getKeyCode() == KeyEvent.VK_F9) {
 					chamaConPet();
 				}
+			
+				if (e.getKeyCode() == KeyEvent.VK_F4) {
+					PetCAD self = new PetCAD();
+					self.setVisible(true);
+				}
 			}
 		});
 		edNomePet.setToolTipText("Aperte F9 para consultar.");
@@ -240,16 +255,27 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		container_buttons = new JPanel();
 		container_buttons.setBackground(new Color(125, 137, 245));
 		card.add(container_buttons, "cell 0 3,grow");
-		container_buttons.setLayout(new MigLayout("", "[100px][][100px][100px][][100px][100px][100px]", "[][][][]"));
-
-		btnlimpar = new RoundButton("Limpar");
-		btnlimpar.setText("Confirmar");
-		btnlimpar.addActionListener(new ActionListener() {
+		container_buttons.setLayout(new MigLayout("", "[100px][][100px][][100px][][][100px][100px][100px]", "[][][][]"));
+		
+				btnConfirmar = new RoundButton("Limpar");
+				btnConfirmar.setText("Confirmar");
+				btnConfirmar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						actionConfirm();
+					}
+				});
+				btnConfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+				container_buttons.add(btnConfirmar, "cell 3 0");
+		
+		btnExcluir = new RoundButton("Limpar");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				deleteAction(edNumAtendimento.getNum());
 			}
 		});
-		btnlimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		container_buttons.add(btnlimpar, "cell 4 0");
+		btnExcluir.setText("Excluir");
+		btnExcluir.setFont(new Font("Dialog", Font.BOLD, 14));
+		container_buttons.add(btnExcluir, "cell 7 0");
 
 	}
 
@@ -258,8 +284,6 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		Lista = fDAOAgendamento.List(fDAOAgendamento);
 
 		table.limparTabela();
-
-		ArrayList<Agendamento> dados = new ArrayList<>();
 
 		Boolean valida = false;
 		for (int hora = 8; hora < 19; hora++) {
@@ -283,14 +307,12 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 						dados.add(lc);
 						valida = true;
 					}
-
-					if (!valida) {
-						Agendamento lc = new Agendamento();
-						lc.setDisponivel(true);
-						lc.setHora(horaAtual);
-						dados.add(lc);
-					}
-
+				}
+				if (!valida) {
+					Agendamento lc = new Agendamento();
+					lc.setDisponivel(true);
+					lc.setHora(horaAtual);
+					dados.add(lc);
 				}
 			}
 		}
@@ -335,19 +357,73 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 		FVPetCON.desExcluir();
 		FVPetCON.setVisible(true);
 	}
+	
+	private void chamaConAgendamento() {
+		AgendamentoCON self = new AgendamentoCON(this);
+		self.setVisible(true);
+	}
 
 	private void actionConfirm() {
-		Boolean editar = false; 
+		Boolean editar = false;
+
 		if (!edNumAtendimento.getText().isEmpty()) {
-			if (fDAOAgendamento.existeUser(Integer.valueOf(edNumAtendimento.getText()))) {
+			if (fDAOAgendamento.existeAgendamento(Integer.valueOf(edNumAtendimento.getText()))) {
 				fDAOAgendamento.setId(Integer.valueOf(edNumAtendimento.getText()));
 				editar = true;
 			}
 		} else {
 			fDAOAgendamento.setId(fDAOAgendamento.getChaveID("tagendamento", "BDIDAGENDAMENTO"));
 		}
+
+		if (!edData.validaDate()) {
+			JOptionPane.showMessageDialog(null, "Data invalida\nPor favor corrija para concluir!");
+			return;
+		}
+
+		if (fDAOAgendamento.getBDIDPET() == null) {
+			JOptionPane.showMessageDialog(null, "Pet invalido, consulte e tente novamente!");
+			return;
+		}
+
+		fDAOAgendamento.setDateAgendamento(edData.getDate());
+		fDAOAgendamento.setBDIDPET(fDAOAgendamento.getBDIDPET());
+
+		int[] selectedRows = table.getSelectedRows();
+		for (int selectedRow : selectedRows) {
+			int modelIndex = table.convertRowIndexToModel(selectedRow);
+			Agendamento dado = dados.get(modelIndex);
+			if(dado.getHora() == null) {
+				JOptionPane.showMessageDialog(null, "Hora invalida, selecione e tente novamente");
+				return;
+			}
+			fDAOAgendamento.setHora(dado.getHora());
+			break;
+		}
 		
-		
+		if (editar) {
+			if(fDAOAgendamento.alterar(fDAOAgendamento)) {
+				JOptionPane.showMessageDialog(null, "Editado com sucesso!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Erro ao salvar!");
+			}	
+		} else {
+			if(fDAOAgendamento.inserir(fDAOAgendamento)) {
+				JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Erro ao salvar!");
+			}	
+		}	
+		atualizatabela(edData.getDate());
+	}
+	
+	private void deleteAction(Integer prID) {
+		if(fDAOAgendamento.existeAgendamento(prID)) {
+			if(fDAOAgendamento.deletar(prID)){
+				JOptionPane.showMessageDialog(null, "Agendamento deletado!");
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Informe um agendamento valido");
+		}
 	}
 
 	@Override
@@ -369,11 +445,24 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet {
 	public void preencheDadosPet(Pet dado) {
 		edNomePet.setText(dado.getBDNOMEPET());
 		edNomeRaca.setText(dado.getBDNOMERACA());
+		fDAOAgendamento.setBDIDPET(dado.getBDIDPET());
 	}
 
 	@Override
 	public void exluiPet(Integer IdPet) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void preencheAge(Agendamento dado) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void excluiAge(Integer prId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

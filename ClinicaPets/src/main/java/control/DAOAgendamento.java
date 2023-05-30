@@ -13,7 +13,7 @@ public class DAOAgendamento extends Agendamento {
 
 	private String wSql;
 	private Conexao FConexao;
-	
+
 	// Select
 	public ArrayList<Agendamento> List(DAOAgendamento prDAO) {
 		ArrayList<Agendamento> Lista = new ArrayList<Agendamento>();
@@ -83,11 +83,7 @@ public class DAOAgendamento extends Agendamento {
 		try {
 			c = prDAO.append();
 
-			wSql = " UPDATE `dbpi`.`tagendamento`"
-					+ " SET"
-					+ " `BDIDPET` = ?,"
-					+ " `BDDATAAGEN` = ?,"
-					+ " `BDHORA` = ?"
+			wSql = " UPDATE `dbpi`.`tagendamento`" + " SET" + " `BDIDPET` = ?," + " `BDDATAAGEN` = ?," + " `BDHORA` = ?"
 					+ " WHERE `BDIDAGENDAMENTO` = ?";
 
 			stm = c.prepareStatement(wSql);
@@ -112,9 +108,8 @@ public class DAOAgendamento extends Agendamento {
 		FConexao = Conexao.getInstacia();
 		Connection c = Conexao.conectar();
 		try {
-			wSql = " DELETE FROM `dbpi`.`tagendamento`"
-			     + " WHERE BDIDAGENDAMENTO = ?";
-			
+			wSql = " DELETE FROM `dbpi`.`tagendamento`" + " WHERE BDIDAGENDAMENTO = ?";
+
 			PreparedStatement stm = c.prepareStatement(wSql);
 			stm.setInt(1, prID);
 			stm.execute();
@@ -126,26 +121,23 @@ public class DAOAgendamento extends Agendamento {
 		}
 		return false;
 	}
-	
+
 	public Boolean existeUser(Integer prId) {
 		FConexao = Conexao.getInstacia();
 		Connection c = Conexao.conectar();
 		try {
-			wSql = 	  " SELECT `tagendamento`.`BDIDAGENDAMENTO`,"
-					+ "    `tagendamento`.`BDIDPET`,"
-					+ "    `tagendamento`.`BDDATAAGEN`,"
-					+ "    `tagendamento`.`BDHORA`"
-					+ " FROM `dbpi`.`tagendamento`"
+			wSql = " SELECT `tagendamento`.`BDIDAGENDAMENTO`," + "    `tagendamento`.`BDIDPET`,"
+					+ "    `tagendamento`.`BDDATAAGEN`," + "    `tagendamento`.`BDHORA`" + " FROM `dbpi`.`tagendamento`"
 					+ " where BDIDAGENDAMENTO = ?";
-			
+
 			PreparedStatement stm = c.prepareStatement(wSql);
 			stm.setInt(1, prId);
-			
+
 			ResultSet rs = stm.executeQuery();
 			while (rs.next()) {
 				return true;
-			}			
-			
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -153,5 +145,43 @@ public class DAOAgendamento extends Agendamento {
 		}
 		return false;
 	}
-	
+
+	// Select
+	public ArrayList<Agendamento> ListCon(LocalDate prDate) {
+		ArrayList<Agendamento> Lista = new ArrayList<Agendamento>();
+
+		FConexao = Conexao.getInstacia();
+		Connection c = Conexao.conectar();
+
+		try {
+			String dataAgendamento = String.valueOf(prDate);
+
+			wSql = " select * " + " from tagendamento a" + " inner join tpets p on (a.bdidpet = p.bdidpet) "
+					+ "	where a.bddataagen = ?";
+
+			PreparedStatement stm = c.prepareStatement(wSql);
+			stm.setString(1, dataAgendamento);
+			ResultSet rs = stm.executeQuery();
+
+			while (rs.next()) {
+				Agendamento lc = new Agendamento();
+
+				lc.setDateAgendamento(rs.getDate("bddataagen").toLocalDate());
+				lc.setHora(rs.getString("bdhora"));
+				lc.setId(rs.getInt("bdidagendamento"));
+				lc.setDisponivel(false);
+
+				lc.setBDIDPET(rs.getInt("bdidpet"));
+
+				Lista.add(lc);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			FConexao.fecharConnection();
+		}
+
+		return Lista;
+	}
 }

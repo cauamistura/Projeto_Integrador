@@ -2,11 +2,11 @@ package vision.padrao;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
 public class RoundJTextFieldNum extends RoundJTextField{
 	
+	private static final long serialVersionUID = 1L;
 	private int maxCharacters;
 
     public RoundJTextFieldNum(int maxCharacters) {
@@ -14,9 +14,19 @@ public class RoundJTextFieldNum extends RoundJTextField{
         this.maxCharacters = maxCharacters;
         setDocument(new NumerosOnlyDocument());
     }
-
+    
+    public Integer getNum() {
+    	try {
+    		return Integer.valueOf(this.getText());
+		} catch (Exception e) {
+			return null;
+		}
+    }
+    
     private class NumerosOnlyDocument extends PlainDocument {
-        @Override
+        private static final long serialVersionUID = 1L;
+
+		@Override
         public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
             if (str == null) {
                 return;
