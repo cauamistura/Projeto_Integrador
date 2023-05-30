@@ -38,7 +38,7 @@ import vision.consultas.HistoricoCON;
 import vision.consultas.PetCON;
 import vision.consultas.UserCON;
 
-public class Menu extends JFrame implements InterUsuario, InterPet{
+public class Menu extends JFrame implements InterUsuario, InterPet {
 
 	/**
 	 * 
@@ -168,7 +168,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 		miMedicamento.setFont(new Font("Arial", Font.PLAIN, 13));
 		miMedicamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				MedicamentoCAD md = new MedicamentoCAD();
 				md.setLocationRelativeTo(null);
 				md.setVisible(true);
@@ -191,7 +191,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 		mmCON = new JMenu("Consultar");
 		mmCON.setFont(new Font("Arial", Font.PLAIN, 12));
 		menuBar.add(mmCON);
-		
+
 		miUserCons = new JMenuItem("Usuário...");
 		miUserCons.setFont(new Font("Arial", Font.PLAIN, 12));
 		miUserCons.addActionListener(new ActionListener() {
@@ -205,7 +205,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 				v.setVisible(true);
 			}
 		});
-		
+
 		miHistorico = new JMenuItem("Histórico...");
 		miHistorico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -249,7 +249,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 				v.setVisible(true);
 			}
 		});
-		
+
 		miAgendamento = new JMenuItem("Agendamento...");
 		miAgendamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -259,7 +259,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 		});
 		mmATE.add(miAgendamento);
 		mmATE.add(miEntrada);
-		
+
 		miSaida = new JMenuItem("Saida..");
 		miSaida.setFont(new Font("Dialog", Font.PLAIN, 12));
 		miSaida.addActionListener(new ActionListener() {
@@ -278,14 +278,13 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 		miLogout = new JMenuItem("Logout...");
 		miLogout.setFont(new Font("Dialog", Font.PLAIN, 12));
 		mmSair.add(miLogout);
-		
+
 		miEncerrar = new JMenuItem("Encerrar...");
 		miEncerrar.setFont(new Font("Dialog", Font.PLAIN, 12));
 		miEncerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(null,
-						"Você realmente deseja fechar o sistema?", "Confirmação",
-						JOptionPane.YES_NO_OPTION);
+				int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja fechar o sistema?",
+						"Confirmação", JOptionPane.YES_NO_OPTION);
 				if (resposta == JOptionPane.YES_OPTION) {
 					System.exit(0);
 				}
@@ -357,24 +356,24 @@ public class Menu extends JFrame implements InterUsuario, InterPet{
 	@Override
 	public void preencheDadosUser(DadosUser listUser) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void exluiUser(Integer bdiduser) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void preencheDadosPet(Pet listPet) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void exluiPet(Integer IdPet) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

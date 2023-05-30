@@ -127,7 +127,7 @@ public class DAOAgendamento extends Agendamento {
 		FConexao = Conexao.getInstacia();
 		Connection c = Conexao.conectar();
 		try {
-			wSql = " SELECT *"
+			wSql = " SELECT * from tagendamento"
 				 + " where BDIDAGENDAMENTO = ?";
 
 			PreparedStatement stm = c.prepareStatement(wSql);
@@ -158,7 +158,8 @@ public class DAOAgendamento extends Agendamento {
 
 			wSql = " select * " + 
 				   " from tagendamento a" + 
-				   " inner join tpets p on (a.bdidpet = p.bdidpet) ";
+				   " inner join tpets p on (a.bdidpet = p.bdidpet) " +
+				   " inner join traca r on (r.bdidraca = p.bdidraca)";
 			
 			if (Filter) {
 				wSql += " where a.bddataagen = ?";
@@ -183,6 +184,7 @@ public class DAOAgendamento extends Agendamento {
 				lc.setBDIDPET(rs.getInt("bdidpet"));
 				lc.setBDIDUSER(rs.getInt("bdiduser"));
 				lc.setBDNOMEPET(rs.getString("BDNOMEPET"));
+				lc.setBDNOMERACA(rs.getString("bdnomeraca"));
 
 				Lista.add(lc);
 			}

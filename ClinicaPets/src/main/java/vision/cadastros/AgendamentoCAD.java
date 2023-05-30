@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -91,6 +92,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 
 	private ArrayList<Agendamento> dados = new ArrayList<>();
 	private RoundButton btnExcluir;
+	private RoundButton btnLimpar;
 
 	/**
 	 */
@@ -166,8 +168,8 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (!edData.validaDate()) {
-					JOptionPane.showMessageDialog(null, "Data invalida!\nInforme uma data valida!");
-					edData.requestFocus();
+					JOptionPane.showMessageDialog(null,
+							"Data invalida!\nInforme uma data valida ou não sera atualizado.");
 					return;
 				}
 				atualizatabela(edData.getDate());
@@ -212,7 +214,6 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 
 		edNomeUser = new RoundJTextField();
 		edNomeUser.setEnabled(false);
-		edNomeUser.setToolTipText("Aperte F9 para consultar.");
 		edNomeUser.setColumns(10);
 		container_content.add(edNomeUser, "cell 0 5");
 
@@ -228,7 +229,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 				if (e.getKeyCode() == KeyEvent.VK_F9) {
 					chamaConPet();
 				}
-			
+
 				if (e.getKeyCode() == KeyEvent.VK_F4) {
 					PetCAD self = new PetCAD();
 					self.setVisible(true);
@@ -248,7 +249,6 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		container_content.add(btnConPet, "cell 0 6");
 
 		edNomeRaca = new RoundJTextField();
-		edNomeRaca.setToolTipText("Aperte F9 para consultar.");
 		edNomeRaca.setEnabled(false);
 		edNomeRaca.setColumns(10);
 		container_content.add(edNomeRaca, "cell 0 6");
@@ -256,37 +256,47 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		container_buttons = new JPanel();
 		container_buttons.setBackground(new Color(125, 137, 245));
 		card.add(container_buttons, "cell 0 3,grow");
-		container_buttons.setLayout(new MigLayout("", "[100px][][100px][][100px][][][100px][100px][100px]", "[][][][]"));
-		
-				btnConfirmar = new RoundButton("Limpar");
-				btnConfirmar.setText("Confirmar");
-				btnConfirmar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						actionConfirm();
-					}
-				});
-				btnConfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-				container_buttons.add(btnConfirmar, "cell 3 0");
-		
+		container_buttons.setLayout(new MigLayout("",
+				"[100px][][100px][12.00][30.00px][][][][][][][-32.00][100px][100px][100px]", "[][][][]"));
+
+		btnConfirmar = new RoundButton("Limpar");
+		btnConfirmar.setText("Confirmar");
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionConfirm();
+			}
+		});
+		btnConfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+		container_buttons.add(btnConfirmar, "cell 2 0");
+
+		btnLimpar = new RoundButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionClear();
+			}
+		});
+		btnLimpar.setFont(new Font("Dialog", Font.BOLD, 14));
+		container_buttons.add(btnLimpar, "cell 5 0");
+
 		btnExcluir = new RoundButton("Limpar");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deleteAction(edNumAtendimento.getNum());
+				actionDelete(edNumAtendimento.getNum());
 			}
 		});
 		btnExcluir.setText("Excluir");
 		btnExcluir.setFont(new Font("Dialog", Font.BOLD, 14));
-		container_buttons.add(btnExcluir, "cell 7 0");
+		container_buttons.add(btnExcluir, "cell 9 0");
 
 	}
 
 	private void atualizatabela(LocalDate date) {
 		fDAOAgendamento.setDateAgendamento(date);
 		Lista = fDAOAgendamento.List(fDAOAgendamento);
-		
+
 		dados.clear();
 		table.limparTabela();
-		
+
 		Boolean valida = false;
 		for (int hora = 8; hora < 19; hora++) {
 			for (int minuto = 0; minuto < 60; minuto += 30) {
@@ -322,7 +332,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		for (Agendamento lis : dados) {
 			Object[][] rowData = { { lis.getHora(), descDisp(lis.getDisponivel()) } };
 			table.preencherTabela(rowData);
-		}		
+		}
 	}
 
 	private String descDisp(Boolean dis) {
@@ -359,9 +369,15 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		FVPetCON.desExcluir();
 		FVPetCON.setVisible(true);
 	}
-	
+
 	private void chamaConAgendamento() {
-		ArrayList<Agendamento> list = fDAOAgendamento.ListCon(edData.getDate(), false);
+		ArrayList<Agendamento> list;
+		if (edData.validaDate()) {
+			list = fDAOAgendamento.ListCon(edData.getDate(), true);
+		} else {
+			list = fDAOAgendamento.ListCon(null, false);
+		}
+
 		AgendamentoCON self = new AgendamentoCON(list, this);
 		self.setVisible(true);
 	}
@@ -395,38 +411,62 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		for (int selectedRow : selectedRows) {
 			int modelIndex = table.convertRowIndexToModel(selectedRow);
 			Agendamento dado = dados.get(modelIndex);
-			if(dado.getHora() == null) {
-				JOptionPane.showMessageDialog(null, "Hora invalida, selecione e tente novamente");
+			if (dado.getHora() == null || !dado.getDisponivel()) {
+				JOptionPane.showMessageDialog(null, "Hora invalida, tente novamente!");
 				return;
 			}
 			fDAOAgendamento.setHora(dado.getHora());
 			break;
 		}
-		
+
 		if (editar) {
-			if(fDAOAgendamento.alterar(fDAOAgendamento)) {
+			if (fDAOAgendamento.alterar(fDAOAgendamento)) {
 				JOptionPane.showMessageDialog(null, "Editado com sucesso!");
 			} else {
 				JOptionPane.showMessageDialog(null, "Erro ao salvar!");
-			}	
+			}
 		} else {
-			if(fDAOAgendamento.inserir(fDAOAgendamento)) {
+			if (fDAOAgendamento.inserir(fDAOAgendamento)) {
 				JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
 			} else {
 				JOptionPane.showMessageDialog(null, "Erro ao salvar!");
-			}	
-		}	
+			}
+		}
 		atualizatabela(edData.getDate());
+
+		actionClear();
 	}
-	
-	private void deleteAction(Integer prID) {
-		if(fDAOAgendamento.existeAgendamento(prID)) {
-			if(fDAOAgendamento.deletar(prID)){
+
+	private void actionDelete(Integer prID) {
+		if (fDAOAgendamento.existeAgendamento(prID)) {
+			if (fDAOAgendamento.deletar(prID)) {
 				JOptionPane.showMessageDialog(null, "Agendamento deletado!");
+				actionClear();
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Informe um agendamento valido");
 		}
+	}
+
+	private void actionClear() {
+		fDAOAgendamento.setHora(null);
+		fDAOAgendamento.setDateAgendamento(null);
+		fDAOAgendamento.setBDIDPET(null);
+		FDAOTPet.setBDIDPET(null);
+		FDAOTUser.setBDIDUSER(null);
+		FDAOUserDados.setBDIDUSER(null);
+
+		edNumAtendimento.setText("");
+		edCpf.setText("");
+		edNomeUser.setText("");
+		edNomePet.setText("");
+		edNomeRaca.setText("");
+
+		if (edData.validaDate()) {
+			atualizatabela(edData.getDate());
+		}
+
+		edNumAtendimento.requestFocus();
 	}
 
 	@Override
@@ -458,20 +498,41 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 
 	@Override
 	public void preencheAge(Agendamento dado) {
-		//Campos
+		// Campos
 		edNumAtendimento.setText(String.valueOf(dado.getId()));
-		// Adiocionar os demais campos
-		
-		//DAO
+
+		getUser(dado.getBDIDUSER());
+
+		edNomePet.setText(dado.getBDNOMEPET());
+		edNomeRaca.setText(dado.getBDNOMERACA());
+
+		// DAO
 		fDAOAgendamento.setId(dado.getId());
 		fDAOAgendamento.setHora(dado.getHora());
 		fDAOAgendamento.setDateAgendamento(dado.getDateAgendamento());
 		fDAOAgendamento.setBDIDPET(dado.getBDIDPET());
+
+		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+		edData.setText(dado.getDateAgendamento().format(FOMATTER));
+
+		atualizatabela(edData.getDate());
 	}
 
 	@Override
-	public void excluiAge(Integer prId) {		
-		deleteAction(prId);
+	public void excluiAge(Integer prId) {
+		actionDelete(prId);
 	}
 
+	private void getUser(Integer prId) {
+		ArrayList<DadosUser> listUser = FDAOUserDados.ListConsulta(FDAOUserDados);
+		for (DadosUser user : listUser) {
+			if (user.getBDIDUSER() == prId) {
+				edCpf.setText(user.getBDCPF());
+				edNomeUser.setText(user.getBDNOMEUSER());
+				fDAOAgendamento.setBDIDUSER(prId);
+				FDAOUserDados.setBDIDUSER(prId);
+				return;
+			}
+		}
+	}
 }

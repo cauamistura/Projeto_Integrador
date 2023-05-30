@@ -174,7 +174,7 @@ public class DAODadosUser extends DadosUser {
 		// SELECT CONSULTA
 	public DadosUser ListConsultaUserLOG(DAODadosUser prDAO) { 
 	    Connection c = prDAO.append();
-	    DadosUser lc = new DadosUser();
+        DadosUser lc = new DadosUser();
 	    try {
 	        wSql = "SELECT u.BDIDUSER, u.BDIDPERMICAO, u.BDMAIL, u.BDCPF, u.BDSENHA, "
 	             + "du.BDNOME, du.BDCEP, du.BDGENERO, du.BDTELEFONE, du.BDDATANASCIMENTO "
@@ -184,7 +184,8 @@ public class DAODadosUser extends DadosUser {
 	             + " and u.bdiduser = " + String.valueOf(Menu.FIDUSER);
 	        Statement stm = c.createStatement();
 	        ResultSet rs = stm.executeQuery(wSql);
-	        
+		    
+
 	        while (rs.next()) {
 	            lc.setBDIDUSER(rs.getInt("BDIDUSER"));
 	            lc.setBDIDPERMICAO(rs.getInt("BDIDPERMICAO"));
@@ -197,8 +198,6 @@ public class DAODadosUser extends DadosUser {
 	            lc.setBDTELEFONE(rs.getString("BDTELEFONE"));
 	            lc.setBDDATANASCIMENTO(rs.getDate("BDDATANASCIMENTO").toLocalDate());
 	        }
-	        rs.close();
-	        stm.close();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {

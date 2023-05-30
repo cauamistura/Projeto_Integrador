@@ -96,13 +96,12 @@ public class AgendamentoCON extends JFrame {
 		btnFiltro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!edData.validaDate()) {
-					JOptionPane.showMessageDialog(null, "Informe uma data valida!");
-					edData.requestFocus();
-					return;
+				if(edData.validaDate()) {
+					dados = FDAOTAgendamento.ListCon(edData.getDate(), true);
+				} else {
+					dados = FDAOTAgendamento.ListCon(null, false);
 				}
 				
-				dados = FDAOTAgendamento.ListCon(edData.getDate(), true);
 				atualizarTabela(dados);
 			
 				table.setRowSelectionInterval(0, 0);
