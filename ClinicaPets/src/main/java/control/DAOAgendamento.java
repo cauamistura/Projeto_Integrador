@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.Agendamento;
@@ -122,13 +123,12 @@ public class DAOAgendamento extends Agendamento {
 		return false;
 	}
 
-	public Boolean existeUser(Integer prId) {
+	public Boolean existeAgendamento(Integer prId) {
 		FConexao = Conexao.getInstacia();
 		Connection c = Conexao.conectar();
 		try {
-			wSql = " SELECT `tagendamento`.`BDIDAGENDAMENTO`," + "    `tagendamento`.`BDIDPET`,"
-					+ "    `tagendamento`.`BDDATAAGEN`," + "    `tagendamento`.`BDHORA`" + " FROM `dbpi`.`tagendamento`"
-					+ " where BDIDAGENDAMENTO = ?";
+			wSql = " SELECT *"
+				 + " where BDIDAGENDAMENTO = ?";
 
 			PreparedStatement stm = c.prepareStatement(wSql);
 			stm.setInt(1, prId);
@@ -156,8 +156,10 @@ public class DAOAgendamento extends Agendamento {
 		try {
 			String dataAgendamento = String.valueOf(prDate);
 
-			wSql = " select * " + " from tagendamento a" + " inner join tpets p on (a.bdidpet = p.bdidpet) "
-					+ "	where a.bddataagen = ?";
+			wSql = " select * " + 
+				   " from tagendamento a" + 
+				   " inner join tpets p on (a.bdidpet = p.bdidpet) " +
+				   " where a.bddataagen = ?";
 
 			PreparedStatement stm = c.prepareStatement(wSql);
 			stm.setString(1, dataAgendamento);
@@ -172,6 +174,8 @@ public class DAOAgendamento extends Agendamento {
 				lc.setDisponivel(false);
 
 				lc.setBDIDPET(rs.getInt("bdidpet"));
+				lc.setBDIDUSER(rs.getInt("bdiduser"));
+				lc.setBDNOMEPET(rs.getString("BDNOMEPET"));
 
 				Lista.add(lc);
 			}

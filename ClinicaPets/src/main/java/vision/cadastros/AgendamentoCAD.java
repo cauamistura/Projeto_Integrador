@@ -282,9 +282,10 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 	private void atualizatabela(LocalDate date) {
 		fDAOAgendamento.setDateAgendamento(date);
 		Lista = fDAOAgendamento.List(fDAOAgendamento);
-
+		
+		dados.clear();
 		table.limparTabela();
-
+		
 		Boolean valida = false;
 		for (int hora = 8; hora < 19; hora++) {
 			for (int minuto = 0; minuto < 60; minuto += 30) {
@@ -320,7 +321,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		for (Agendamento lis : dados) {
 			Object[][] rowData = { { lis.getHora(), descDisp(lis.getDisponivel()) } };
 			table.preencherTabela(rowData);
-		}
+		}		
 	}
 
 	private String descDisp(Boolean dis) {

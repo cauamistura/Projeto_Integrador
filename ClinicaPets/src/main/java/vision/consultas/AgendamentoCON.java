@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,9 +124,9 @@ public class AgendamentoCON extends JFrame {
 	
 	public void atualizarTabela(List<Agendamento> com) {
 		table.limparTabela();
-
+		DateTimeFormatter FOMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		for (Agendamento agendamento: com) {			
-			Object[][] rowData = {{ agendamento.getId(), getUser(agendamento.getBDIDUSER()), agendamento.getBDNOMEPET(), agendamento.getDateAgendamento(), agendamento.getHora() }};
+			Object[][] rowData = {{ agendamento.getId(), getUser(agendamento.getBDIDUSER()), agendamento.getBDNOMEPET(), agendamento.getDateAgendamento().format(FOMATTER), agendamento.getHora() }};
 			table.preencherTabela(rowData);	
 		}
 	}
