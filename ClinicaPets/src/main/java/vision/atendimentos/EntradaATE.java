@@ -52,6 +52,7 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.RoundJTextFieldNum;
+import vision.padrao.Util;
 import vision.padrao.lupaButton;
 
 public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterComorbidade, InterEntrada {
@@ -107,7 +108,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

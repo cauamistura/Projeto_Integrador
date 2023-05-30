@@ -29,6 +29,8 @@ import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJPasswordField;
+import vision.padrao.Util;
+
 import java.awt.Font;
 
 public class Login extends JFrame {
@@ -69,7 +71,7 @@ public class Login extends JFrame {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -103,10 +105,9 @@ public class Login extends JFrame {
 		panel_3.setBackground(new Color(125, 137, 245));
 		panel_2.add(panel_3, "cell 1 0,alignx center");
 		panel_3.setLayout(new MigLayout("", "[50px][50px][50px]", "[25px][25px][25px]"));
-		
 
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\logo.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(Util.getCaminhoIMG("logo.png")));
 		panel_3.add(lblNewLabel_2, "cell 1 1,alignx center");
 
 		JLabel lbCnpj = new JLabel("CPF:");

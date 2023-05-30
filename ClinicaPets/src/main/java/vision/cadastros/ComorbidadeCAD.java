@@ -29,6 +29,7 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
+import vision.padrao.Util;
 
 public class ComorbidadeCAD extends JFrame {
 	/**
@@ -67,7 +68,7 @@ public class ComorbidadeCAD extends JFrame {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -112,7 +113,7 @@ public class ComorbidadeCAD extends JFrame {
 		panel_4.setLayout(new MigLayout("", "[100px][100px][100px]", "[10px][100px]"));
 
 		lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\simboloV.png"));
+		lblNewLabel_3.setIcon(new ImageIcon(Util.getCaminhoIMG("simboloV.png")));
 		panel_4.add(lblNewLabel_3, "cell 1 1,alignx center");
 
 		panel_5 = new JPanel();

@@ -42,6 +42,8 @@ import vision.padrao.CNPJTextFiel;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import vision.padrao.Util;
+
 import java.awt.Font;
 
 public class ClinicaCAD extends JFrame {
@@ -94,7 +96,7 @@ public class ClinicaCAD extends JFrame {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -261,7 +263,7 @@ public class ClinicaCAD extends JFrame {
 		panel_4.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 
 		JLabel lblNewLabel_8 = new JLabel("");
-		lblNewLabel_8.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\clinica.png"));
+		lblNewLabel_8.setIcon(new ImageIcon(Util.getCaminhoIMG("clinica.png")));
 		panel_4.add(lblNewLabel_8, "cell 1 2,alignx center");
 
 		JPanel panel_5 = new JPanel();

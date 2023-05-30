@@ -38,6 +38,7 @@ import vision.consultas.MedicamentoCON;
 import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
+import vision.padrao.Util;
 import vision.padrao.lupaButton;
 
 public class ReceitaCAD extends JFrame implements InterMedicamento{
@@ -98,7 +99,7 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			//TODO Auto-generated catch block
@@ -158,7 +159,7 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 		panel_4.setLayout(new MigLayout("", "[100px][][100px]", "[]"));
 		
 		lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\medicine.png"));
+		lblNewLabel_5.setIcon(new ImageIcon(Util.getCaminhoIMG("medicine.png")));
 		panel_4.add(lblNewLabel_5, "cell 1 0");
 		
 		panel_3 = new JPanel();

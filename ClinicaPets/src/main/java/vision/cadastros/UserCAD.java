@@ -45,6 +45,8 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TelefoneTextField;
+import vision.padrao.Util;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -93,7 +95,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -127,7 +129,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 		pnImg.setLayout(new MigLayout("", "[][][][][][][][][]", "[]"));
 		
 				JLabel lblNewLabel = new JLabel("");
-				lblNewLabel.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\person.png"));
+				lblNewLabel.setIcon(new ImageIcon(Util.getCaminhoIMG("person.png")));
 				pnImg.add(lblNewLabel, "cell 4 0,alignx center");
 
 		JPanel pnContent = new JPanel();

@@ -28,6 +28,7 @@ import net.miginfocom.swing.MigLayout;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import vision.padrao.Util;
 
 public class RacaCAD extends JFrame {
 
@@ -52,7 +53,7 @@ public class RacaCAD extends JFrame {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -79,7 +80,7 @@ public class RacaCAD extends JFrame {
 		panel_1.setLayout(new MigLayout("", "[60px][200px,grow][60px]", "[25px][50px][50px][50px][][50px][25px]"));
 		
 		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\gatoAbo.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(Util.getCaminhoIMG("gatoAbo.png")));
 		panel_1.add(lblNewLabel_2, "cell 1 1,alignx center");
 		
 		btnNewButton = new RoundButton("Login");

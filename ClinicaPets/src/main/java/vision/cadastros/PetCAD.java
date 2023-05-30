@@ -45,6 +45,7 @@ import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
+import vision.padrao.Util;
 import vision.padrao.CPFTextField;
 import vision.padrao.lupaButton;
 
@@ -92,7 +93,7 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -125,7 +126,7 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 		panel_1.add(panel_5, "cell 0 0,alignx center,growy");
 
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\doglove.png"));
+		lblNewLabel.setIcon(new ImageIcon(Util.getCaminhoIMG("doglove.png")));
 		panel_5.add(lblNewLabel);
 
 		JPanel panel_3 = new JPanel();

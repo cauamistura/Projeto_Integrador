@@ -50,6 +50,7 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
+import vision.padrao.Util;
 import vision.padrao.lupaButton;
 
 public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
@@ -101,7 +102,7 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		BufferedImage bg = null;
 		;
 		try {
-			bg = ImageIO.read(new File("src\\main\\resources\\BGLogin.png"));
+			bg = ImageIO.read(new File(Util.getCaminhoIMG("BGLogin.png")));
 
 		} catch (IOException e) {
 			e.printStackTrace();
