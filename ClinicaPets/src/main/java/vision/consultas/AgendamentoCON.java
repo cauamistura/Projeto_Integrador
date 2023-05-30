@@ -29,7 +29,6 @@ public class AgendamentoCON extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	public DAOAgendamento FDAOTAgendamento = new DAOAgendamento();
-	ArrayList<Agendamento> dados;
 	private JPanel contentPane;
 	private TableSimples table;
 	private JLabel lbFiltro;
@@ -37,12 +36,12 @@ public class AgendamentoCON extends JFrame {
 	private RoundButton btnConfirmar;
 	private RoundButton btnExcluir;
 	private RoundButton btnFiltro;
-	
+	private ArrayList<Agendamento> dados;
 	
 	private DAODadosUser user = new DAODadosUser();
 	private ArrayList<DadosUser> listUser = user.ListTDadosUser(user);
 	
-	public AgendamentoCON(InterAgendamento event) {
+	public AgendamentoCON(ArrayList<Agendamento> dadosConstr, InterAgendamento event) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 616, 372);
 		setTitle("Consulta de Agendamento");
@@ -83,7 +82,13 @@ public class AgendamentoCON extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Adicionar evento de exclusão
+				int[] selectedRows = table.getSelectedRows();
+				for (int i = 0; i < selectedRows.length; i++) {
+					int modelIndex = table.convertRowIndexToModel(selectedRows[i]);	
+					Agendamento dado = dados.get(modelIndex);
+					event.excluiAge(dado.getId());
+					dispose();
+				}
 			}
 		});
 		
@@ -97,7 +102,7 @@ public class AgendamentoCON extends JFrame {
 					return;
 				}
 				
-				dados = FDAOTAgendamento.ListCon(edData.getDate());
+				dados = FDAOTAgendamento.ListCon(edData.getDate(), true);
 				atualizarTabela(dados);
 			
 				table.setRowSelectionInterval(0, 0);
@@ -120,6 +125,9 @@ public class AgendamentoCON extends JFrame {
 		buttonsPanel.add(botoes);
 
 		contentPane.add(buttonsPanel, BorderLayout.SOUTH);
+		
+		dados = dadosConstr;
+		atualizarTabela(dados);
 	}
 	
 	public void atualizarTabela(List<Agendamento> com) {

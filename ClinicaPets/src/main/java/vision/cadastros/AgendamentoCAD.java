@@ -360,7 +360,8 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 	}
 	
 	private void chamaConAgendamento() {
-		AgendamentoCON self = new AgendamentoCON(this);
+		ArrayList<Agendamento> list = fDAOAgendamento.ListCon(edData.getDate(), false);
+		AgendamentoCON self = new AgendamentoCON(list, this);
 		self.setVisible(true);
 	}
 
@@ -456,14 +457,20 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 
 	@Override
 	public void preencheAge(Agendamento dado) {
-		// TODO Auto-generated method stub
+		//Campos
+		edNumAtendimento.setText(String.valueOf(dado.getId()));
+		// Adiocionar os demais campos
 		
+		//DAO
+		fDAOAgendamento.setId(dado.getId());
+		fDAOAgendamento.setHora(dado.getHora());
+		fDAOAgendamento.setDateAgendamento(dado.getDateAgendamento());
+		fDAOAgendamento.setBDIDPET(dado.getBDIDPET());
 	}
 
 	@Override
-	public void excluiAge(Integer prId) {
-		// TODO Auto-generated method stub
-		
+	public void excluiAge(Integer prId) {		
+		deleteAction(prId);
 	}
 
 }

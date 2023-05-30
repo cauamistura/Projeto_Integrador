@@ -147,7 +147,7 @@ public class DAOAgendamento extends Agendamento {
 	}
 
 	// Select
-	public ArrayList<Agendamento> ListCon(LocalDate prDate) {
+	public ArrayList<Agendamento> ListCon(LocalDate prDate, Boolean Filter) {
 		ArrayList<Agendamento> Lista = new ArrayList<Agendamento>();
 
 		FConexao = Conexao.getInstacia();
@@ -158,11 +158,18 @@ public class DAOAgendamento extends Agendamento {
 
 			wSql = " select * " + 
 				   " from tagendamento a" + 
-				   " inner join tpets p on (a.bdidpet = p.bdidpet) " +
-				   " where a.bddataagen = ?";
+				   " inner join tpets p on (a.bdidpet = p.bdidpet) ";
+			
+			if (Filter) {
+				wSql += " where a.bddataagen = ?";
+			}				   
 
 			PreparedStatement stm = c.prepareStatement(wSql);
-			stm.setString(1, dataAgendamento);
+			
+			if (Filter) {				
+				stm.setString(1, dataAgendamento);
+			}
+			
 			ResultSet rs = stm.executeQuery();
 
 			while (rs.next()) {
