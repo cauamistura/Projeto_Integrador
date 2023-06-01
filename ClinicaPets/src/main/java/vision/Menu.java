@@ -86,7 +86,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 
 	public Menu() {
 
-//		setExtendedState(MAXIMIZED_BOTH);
+		setExtendedState(MAXIMIZED_BOTH);
 		Menu local = this;
 		setTitle("Menu");
 
@@ -338,6 +338,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 					mmATE.setVisible(false);
 					mmCad.setVisible(false);
 					miUserCons.setVisible(false);
+					mmPetCons.setVisible(false);
 					descricao.setText("Usuario: " + FNomeUser + " | " + "Clinica: " + FNOMEClinica);
 				}
 			}
