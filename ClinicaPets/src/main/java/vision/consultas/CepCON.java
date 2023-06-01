@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
 
 import model.Endereco;
 import vision.padrao.TableSimples;
@@ -18,8 +17,6 @@ public class CepCON extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
     private TableSimples table;
-    
-    private DefaultTableModel model;
     
     public CepCON(List<Endereco> lista) {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

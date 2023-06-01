@@ -251,6 +251,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 		});
 
 		miAgendamento = new JMenuItem("Agendamento...");
+		miAgendamento.setFont(new Font("Arial", Font.PLAIN, 12));
 		miAgendamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgendamentoCAD self = new AgendamentoCAD();
@@ -260,7 +261,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 		mmATE.add(miAgendamento);
 		mmATE.add(miEntrada);
 
-		miSaida = new JMenuItem("Saida..");
+		miSaida = new JMenuItem("Saida...");
 		miSaida.setFont(new Font("Dialog", Font.PLAIN, 12));
 		miSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

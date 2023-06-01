@@ -3,6 +3,7 @@ package vision.cadastros;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -43,8 +44,6 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.Util;
-
-import java.awt.Font;
 
 public class ClinicaCAD extends JFrame {
 

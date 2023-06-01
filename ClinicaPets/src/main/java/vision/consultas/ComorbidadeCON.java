@@ -1,6 +1,6 @@
 package vision.consultas;
 
-import java.awt.BorderLayout;  
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,10 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import control.*;
-import model.*;
-import vision.padrao.*;
+import control.DAOComorbidade;
+import model.Comorbidade;
 import model.interfaces.InterComorbidade;
+import vision.padrao.RoundButton;
+import vision.padrao.RoundJTextField;
+import vision.padrao.TableSimples;
 
 public class ComorbidadeCON extends JFrame {
 	

@@ -194,6 +194,11 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 		edCpf.setColumns(10);
 
 		lupaButton btnConUser = new lupaButton("");
+		btnConUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chamaConUser();
+			}
+		});
 		btnConUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_4.add(btnConUser, "cell 1 1,aligny center");
 

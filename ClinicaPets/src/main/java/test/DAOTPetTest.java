@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import org.junit.Test;
 
 import control.DAOPet;
-import model.Pet;
 
 public class DAOTPetTest {
 

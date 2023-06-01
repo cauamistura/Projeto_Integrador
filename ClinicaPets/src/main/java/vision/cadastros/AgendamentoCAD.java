@@ -93,6 +93,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 	private ArrayList<Agendamento> dados = new ArrayList<>();
 	private RoundButton btnExcluir;
 	private RoundButton btnLimpar;
+	private RoundButton btnCom;
 
 	/**
 	 */
@@ -109,7 +110,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		setTitle("Agendamento");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 479, 706);
+		setBounds(100, 100, 530, 706);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -140,7 +141,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		container_content = new JPanel();
 		container_content.setBackground(new Color(125, 137, 245));
 		card.add(container_content, "cell 0 2,grow");
-		container_content.setLayout(new MigLayout("", "[grow 600]", "[][][][][][][][][][][350px][50px]"));
+		container_content.setLayout(new MigLayout("", "[grow 600]", "[][][][][][][][][][][][350px][50px]"));
 
 		lblNmeroAgendamento = new JLabel("Número agendamento:");
 		lblNmeroAgendamento.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -163,23 +164,8 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		lbData.setHorizontalAlignment(SwingConstants.RIGHT);
 		container_content.add(lbData, "flowx,cell 0 2");
 
-		edData = new DateTextField();
-		edData.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (!edData.validaDate()) {
-					JOptionPane.showMessageDialog(null,
-							"Data invalida!\nInforme uma data valida ou não sera atualizado.");
-					return;
-				}
-				atualizatabela(edData.getDate());
-			}
-		});
-		edData.setColumns(10);
-		container_content.add(edData, "cell 0 2");
-
 		JScrollPane scrollPane_1 = new JScrollPane();
-		container_content.add(scrollPane_1, "cell 0 10,grow");
+		container_content.add(scrollPane_1, "cell 0 11,grow");
 
 		table = new TableSimples(new Object[][] {}, new String[] { "Hora", "Disponibilidade" });
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -189,7 +175,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		lbUser = new JLabel("Usuario:");
 		lbUser.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbUser.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		container_content.add(lbUser, "flowx,cell 0 5");
+		container_content.add(lbUser, "flowx,cell 0 6");
 
 		edCpf = new CPFTextField();
 		edCpf.addKeyListener(new KeyAdapter() {
@@ -202,7 +188,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		});
 		edCpf.setToolTipText("Aperte F9 para consultar.");
 		edCpf.setColumns(10);
-		container_content.add(edCpf, "cell 0 5");
+		container_content.add(edCpf, "cell 0 6");
 
 		btnConUser = new lupaButton("");
 		btnConUser.addActionListener(new ActionListener() {
@@ -210,17 +196,17 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 				chamaConUser();
 			}
 		});
-		container_content.add(btnConUser, "cell 0 5");
+		container_content.add(btnConUser, "cell 0 6");
 
 		edNomeUser = new RoundJTextField();
 		edNomeUser.setEnabled(false);
 		edNomeUser.setColumns(10);
-		container_content.add(edNomeUser, "cell 0 5");
+		container_content.add(edNomeUser, "cell 0 6");
 
 		lblPet = new JLabel("Pet:");
 		lblPet.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPet.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		container_content.add(lblPet, "flowx,cell 0 6");
+		container_content.add(lblPet, "flowx,cell 0 7");
 
 		edNomePet = new RoundJTextField();
 		edNomePet.addKeyListener(new KeyAdapter() {
@@ -238,7 +224,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		});
 		edNomePet.setToolTipText("Aperte F9 para consultar.");
 		edNomePet.setColumns(10);
-		container_content.add(edNomePet, "cell 0 6");
+		container_content.add(edNomePet, "cell 0 7");
 
 		btnConPet = new lupaButton("");
 		btnConPet.addActionListener(new ActionListener() {
@@ -246,47 +232,71 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 				chamaConPet();
 			}
 		});
-		container_content.add(btnConPet, "cell 0 6");
+		container_content.add(btnConPet, "cell 0 7");
 
 		edNomeRaca = new RoundJTextField();
 		edNomeRaca.setEnabled(false);
 		edNomeRaca.setColumns(10);
-		container_content.add(edNomeRaca, "cell 0 6");
+		container_content.add(edNomeRaca, "cell 0 7");
+		
+				edData = new DateTextField();
+				edData.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						if (!edData.validaDate()) {
+							JOptionPane.showMessageDialog(null,
+									"Data invalida!\nInforme uma data valida ou não sera atualizado.");
+							return;
+						}
+						atualizatabela(edData.getDate());
+					}
+				});
+				edData.setColumns(10);
+				container_content.add(edData, "cell 0 2");
 
 		container_buttons = new JPanel();
 		container_buttons.setBackground(new Color(125, 137, 245));
 		card.add(container_buttons, "cell 0 3,grow");
-		container_buttons.setLayout(new MigLayout("",
-				"[100px][][100px][12.00][30.00px][][][][][][][-32.00][100px][100px][100px]", "[][][][]"));
-
-		btnConfirmar = new RoundButton("Limpar");
-		btnConfirmar.setText("Confirmar");
-		btnConfirmar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionConfirm();
-			}
-		});
-		btnConfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		container_buttons.add(btnConfirmar, "cell 2 0");
-
-		btnLimpar = new RoundButton("Limpar");
-		btnLimpar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionClear();
-			}
-		});
-		btnLimpar.setFont(new Font("Dialog", Font.BOLD, 14));
-		container_buttons.add(btnLimpar, "cell 5 0");
-
-		btnExcluir = new RoundButton("Limpar");
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionDelete(edNumAtendimento.getNum());
-			}
-		});
-		btnExcluir.setText("Excluir");
-		btnExcluir.setFont(new Font("Dialog", Font.BOLD, 14));
-		container_buttons.add(btnExcluir, "cell 9 0");
+		container_buttons.setLayout(new MigLayout("", "[100px][][][100px][][12.00][][30.00px][][][][][][][-32.00][100px][][][100px][100px]", "[][][][][][][]"));
+		
+				btnLimpar = new RoundButton("Limpar");
+				btnLimpar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						actionClear();
+					}
+				});
+				btnLimpar.setFont(new Font("Dialog", Font.BOLD, 14));
+				container_buttons.add(btnLimpar, "cell 2 1");
+		
+				btnConfirmar = new RoundButton("Limpar");
+				btnConfirmar.setText("Confirmar");
+				btnConfirmar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						actionConfirm();
+					}
+				});
+				
+						btnCom = new RoundButton("Limpar");
+						btnCom.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								chamaConAgendamento();
+							}
+						});
+						btnCom.setText("Consultar");
+						btnCom.setFont(new Font("Dialog", Font.BOLD, 14));
+						container_buttons.add(btnCom, "cell 4 1");
+				btnConfirmar.setFont(new Font("Dialog", Font.BOLD, 14));
+				container_buttons.add(btnConfirmar, "cell 16 1");
+		
+				btnExcluir = new RoundButton("Limpar");
+				btnExcluir.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						actionDelete(edNumAtendimento.getNum());
+					}
+				});
+				btnExcluir.setText("Excluir");
+				btnExcluir.setFont(new Font("Dialog", Font.BOLD, 14));
+				container_buttons.add(btnExcluir, "cell 17 1");
 
 	}
 
