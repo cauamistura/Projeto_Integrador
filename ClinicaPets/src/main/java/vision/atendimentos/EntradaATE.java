@@ -2,6 +2,7 @@ package vision.atendimentos;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -105,6 +106,9 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 	private RoundButton btnConfirmar;
 
 	public EntradaATE() {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
+		
 		BufferedImage bg = null;
 		;
 		try {

@@ -4,6 +4,7 @@ package vision.cadastros;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -51,7 +52,7 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 	private ArrayList<Medicamento> TListMedicamento = new ArrayList<>();
 	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
 	private JPanel contentPane;
-	private Integer idmedicamento;
+	private Integer idmedicamento = 0;
 	private boolean mudaReceita;
 	private JOptionPane optionPane;
 	private  JDialog dialog;
@@ -95,6 +96,8 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 				}
 			});
 		}
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
 
 		BufferedImage bg = null;
 		;
@@ -204,7 +207,6 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 			public void actionPerformed(ActionEvent e) {
 				eventConfirmar();
 				event.preecherReceita(FDAOTReceita);
-				dispose();
 			}
 		});
 		panel_2.add(btnConf, "cell 1 0");
@@ -224,26 +226,36 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 		try {
 			if (edDataInicio.getDate().isBefore(edDataFinal.getDate()) || edDataFinal.getText().equals(edDataFinal.getText())) {
 				
-				FDAOTReceita.setBDIDRECEITA(FDAOTReceita.getChaveID("treceita", "BDIDRECEITA"));
-				FDAOTReceita.setBDIDMEDICACAO(idmedicamento);
-				FDAOTReceita.setBDINICIORECEITA(edDataInicio.getDate());
-				FDAOTReceita.setBDFINALRECEITA(edDataFinal.getDate());
-				FDAOTReceita.setBDDESCRICAO(textPane.getText());
-				FDAOTReceita.setBDNOMEMEDICACAO(FDAOTMedicacao.getBDNOMEMEDICACAO());
+				if(idmedicamento == 0 || idmedicamento == null) {
+					
+					JOptionPane.showMessageDialog(null, "");
+					
+				}else {
+					FDAOTReceita.setBDIDRECEITA(FDAOTReceita.getChaveID("treceita", "BDIDRECEITA"));
+					FDAOTReceita.setBDIDMEDICACAO(idmedicamento);
+					FDAOTReceita.setBDINICIORECEITA(edDataInicio.getDate());
+					FDAOTReceita.setBDFINALRECEITA(edDataFinal.getDate());
+					FDAOTReceita.setBDDESCRICAO(textPane.getText());
+					FDAOTReceita.setBDNOMEMEDICACAO(FDAOTMedicacao.getBDNOMEMEDICACAO());
+					
+					optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+			        dialog = optionPane.createDialog("");
+
+			        timer = new Timer(1000, new ActionListener() {
+			            @Override
+			            public void actionPerformed(ActionEvent e) {
+			                dialog.dispose();
+			            }
+			        });
+			        timer.setRepeats(false);
+			        timer.start();
+
+			        dialog.setVisible(true);
+			        
+			        dispose();
+		
+				}
 				
-				optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-		        dialog = optionPane.createDialog("");
-
-		        timer = new Timer(1000, new ActionListener() {
-		            @Override
-		            public void actionPerformed(ActionEvent e) {
-		                dialog.dispose();
-		            }
-		        });
-		        timer.setRepeats(false);
-		        timer.start();
-
-		        dialog.setVisible(true);
 				
 			}else {
 				JOptionPane.showMessageDialog(null, "Data Inicial menor que a Data final");

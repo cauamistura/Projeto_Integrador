@@ -3,6 +3,7 @@ package vision.cadastros;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -92,6 +93,9 @@ public class UserCAD extends JFrame implements InterUsuario {
 	 * Create the frame.
 	 */
 	public UserCAD() {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
+		
 		BufferedImage bg = null;
 		;
 		try {

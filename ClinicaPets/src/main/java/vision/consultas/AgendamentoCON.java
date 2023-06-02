@@ -2,6 +2,7 @@ package vision.consultas;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
@@ -22,6 +23,7 @@ import model.interfaces.InterAgendamento;
 import vision.padrao.DateTextField;
 import vision.padrao.RoundButton;
 import vision.padrao.TableSimples;
+import vision.padrao.Util;
 
 public class AgendamentoCON extends JFrame {
 	
@@ -41,6 +43,9 @@ public class AgendamentoCON extends JFrame {
 	private ArrayList<DadosUser> listUser = user.ListTDadosUser(user);
 	
 	public AgendamentoCON(ArrayList<Agendamento> dadosConstr, InterAgendamento event) {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 616, 372);
 		setTitle("Consulta de Agendamento");

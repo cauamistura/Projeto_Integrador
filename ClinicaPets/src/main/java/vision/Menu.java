@@ -3,6 +3,7 @@ package vision;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -37,6 +38,7 @@ import vision.cadastros.UserCAD;
 import vision.consultas.HistoricoCON;
 import vision.consultas.PetCON;
 import vision.consultas.UserCON;
+import vision.padrao.Util;
 
 public class Menu extends JFrame implements InterUsuario, InterPet {
 
@@ -85,6 +87,8 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 	 */
 
 	public Menu() {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
 
 		setExtendedState(MAXIMIZED_BOTH);
 		Menu local = this;

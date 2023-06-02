@@ -2,6 +2,7 @@ package vision.cadastros;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -50,6 +51,9 @@ public class RacaCAD extends JFrame {
 	private JComboBox especieCb = new JComboBox<Especie>();
 
 	public RacaCAD() {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
+		
 		BufferedImage bg = null;
 		;
 		try {

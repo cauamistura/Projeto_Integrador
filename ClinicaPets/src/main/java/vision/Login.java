@@ -32,6 +32,7 @@ import vision.padrao.RoundJPasswordField;
 import vision.padrao.Util;
 
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 	/**
@@ -67,6 +68,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
 
 		BufferedImage bg = null;
 		;
@@ -115,7 +117,7 @@ public class Login extends JFrame {
 		panel_2.add(lbCnpj, "flowy,cell 1 1");
 
 		edCNPJ = new CPFTextField();
-		edCNPJ.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+		edCNPJ.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		edCNPJ.setText("123.456.789-10");
 		panel_2.add(edCNPJ, "cell 1 1,grow");
 		edCNPJ.setColumns(10);
@@ -125,7 +127,7 @@ public class Login extends JFrame {
 		panel_2.add(lbSenha, "flowy,cell 1 3");
 
 		edSenha = new RoundJPasswordField();
-		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		edSenha.setForeground(new Color(0, 0, 0));
 		edSenha.setText("senha123");
 		edSenha.setColumns(10);

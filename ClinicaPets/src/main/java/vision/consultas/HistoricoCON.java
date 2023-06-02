@@ -3,6 +3,7 @@ package vision.consultas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -98,6 +99,9 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 	 * Create the frame.
 	 */
 	public HistoricoCON() {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
+		
 		BufferedImage bg = null;
 		;
 		try {

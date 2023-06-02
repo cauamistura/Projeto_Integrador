@@ -2,6 +2,7 @@ package vision.consultas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -26,6 +27,7 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
+import vision.padrao.Util;
 
 public class MedicamentoCON extends JFrame {
 
@@ -47,6 +49,9 @@ public class MedicamentoCON extends JFrame {
 	private TableSimples table;
 
 	public MedicamentoCON(List<Medicamento> dados, InterMedicamento event) {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
+		
 		BufferedImage bg = null;
 		;
 		try {

@@ -2,6 +2,7 @@ package vision.consultas;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import model.interfaces.InterComorbidade;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
+import vision.padrao.Util;
 
 public class ComorbidadeCON extends JFrame {
 	
@@ -35,6 +37,9 @@ public class ComorbidadeCON extends JFrame {
 	private RoundButton btnFiltro;
 
 	public ComorbidadeCON(List<Comorbidade> dados ,InterComorbidade event) {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 616, 372);
 		setTitle("Consulta de Comorbidade");

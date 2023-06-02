@@ -2,6 +2,7 @@ package vision.consultas;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +25,7 @@ import model.interfaces.InterSaida;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.TableSimples;
+import vision.padrao.Util;
 
 public class EntradaCON extends JFrame {
 
@@ -39,6 +41,8 @@ public class EntradaCON extends JFrame {
 	private DAOAtendimentoSaida FDAOSaida = new DAOAtendimentoSaida();
 
 	public EntradaCON(List<AtenimentoEntrada> dados, InterEntrada inter, Boolean saida, InterSaida interS ) {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 742, 385);

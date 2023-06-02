@@ -2,6 +2,7 @@ package vision.consultas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -50,6 +51,9 @@ public class PetCON extends JFrame {
 	 * Create the frame.
 	 */
 	public PetCON(List<Pet> dados, InterPet ev) {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
+		
 		setTitle("Consulta de Pet");
 		BufferedImage bg = null;
 		;
