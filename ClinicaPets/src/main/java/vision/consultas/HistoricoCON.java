@@ -93,7 +93,8 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 	private PetCON FVPetCON;
 	
 	//Objetos comorbidade 
-	private DAOComorbidade FDAOTComorbidade = new DAOComorbidade();;
+	private DAOComorbidade FDAOTComorbidade = new DAOComorbidade();
+	private JPanel panelTable;;
 	
 	/**
 	 * Create the frame.
@@ -126,119 +127,124 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		panel = new JPanel();
 		panel.setBackground(new Color(158, 174, 255));
 		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[150px][700px,grow][150px]", "[50px][600px,grow][50px]"));
+		panel.setLayout(new MigLayout("", "[100px][600px,grow][100px]", "[50px][600px,grow][50px]"));
 
 		container_card = new PanelComBackgroundImage(bg);
 		container_card.setBackground(new Color(158, 174, 255));
 		panel.add(container_card, "cell 1 1,alignx center");
-		container_card.setLayout(new MigLayout("", "[750.00px,grow 600]", "[600px,grow]"));
+		container_card.setLayout(new MigLayout("", "[500px,grow 600]", "[600px,grow]"));
 
 		card = new JPanel();
 		card.setBackground(new Color(125, 137, 245));
-		container_card.add(card, "cell 0 0,grow");
-		card.setLayout(new MigLayout("", "[grow]", "[][0px,grow 0][280px,grow][10px,grow 10]"));
+		container_card.add(card, "cell 0 0,alignx center");
+		card.setLayout(new MigLayout("", "[grow]", "[][280px,grow][][0px,grow 0][10px,grow 10]"));
 
-		lbTitle = new JLabel("Histórico");
+		lbTitle = new JLabel("Historico");
 		card.add(lbTitle, "cell 0 0,alignx center");
 		lbTitle.setForeground(new Color(0, 0, 0));
-		lbTitle.setFont(new Font("Dialog", Font.BOLD, 20));
+		lbTitle.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 20));
+		
+		panelTable = new JPanel();
+		panelTable.setBackground(new Color(125, 137, 245));
+		card.add(panelTable, "cell 0 2,alignx center");
+		panelTable.setLayout(new MigLayout("", "[][][]", "[][]"));
+		
+				JScrollPane scrollPane_1 = new JScrollPane();
+				panelTable.add(scrollPane_1, "cell 1 0");
+				
+						table = new TableSimples(new Object[][] {}, new String[] { "Número", "Nome Usuário", "Nome Pet", "Raça", "Data", "Comorbidade"});
+						table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						table.getColumnModel().getColumn(1).setPreferredWidth(800);
+						scrollPane_1.setViewportView(table);
 
 		container_content = new JPanel();
 		container_content.setBackground(new Color(125, 137, 245));
-		card.add(container_content, "cell 0 2,grow");
-		container_content.setLayout(new MigLayout("", "[grow 600]", "[][][][][][][][][350px][50px]"));
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		container_content.add(scrollPane_1, "cell 0 8,grow");
-
-		table = new TableSimples(new Object[][] {}, new String[] { "Número", "Nome Usuário", "Nome Pet", "Raça", "Data", "Comorbidade"});
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getColumnModel().getColumn(1).setPreferredWidth(800);
-		scrollPane_1.setViewportView(table);
-
-		lbUser = new JLabel("Usuario:");
-		lbUser.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbUser.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		container_content.add(lbUser, "flowx,cell 0 3");
-
-		edCpf = new CPFTextField();
-		edCpf.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_F9) {
-					chamaConUser();
-				}
-			}
-		});
-		edCpf.setToolTipText("Aperte F9 para consultar.");
-		edCpf.setColumns(10);
-		container_content.add(edCpf, "cell 0 3");
-
-		btnConUser = new lupaButton("");
-		btnConUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chamaConUser();
-			}
-		});
-		container_content.add(btnConUser, "cell 0 3");
+		card.add(container_content, "cell 0 1,alignx center,growy");
+		container_content.setLayout(new MigLayout("", "[][][][][grow]", "[][][200px][][][][][][][grow][][350px][50px]"));
+		
+				edCpf = new CPFTextField();
+				edCpf.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if (e.getKeyCode() == KeyEvent.VK_F9) {
+							chamaConUser();
+						}
+					}
+				});
+				
+						lbUser = new JLabel("Usuario:");
+						lbUser.setHorizontalAlignment(SwingConstants.RIGHT);
+						lbUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+						container_content.add(lbUser, "cell 0 2");
+				edCpf.setToolTipText("Aperte F9 para consultar.");
+				edCpf.setColumns(10);
+				container_content.add(edCpf, "cell 0 4,growx");
+		
+				btnConUser = new lupaButton("");
+				btnConUser.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						chamaConUser();
+					}
+				});
+				container_content.add(btnConUser, "cell 2 4");
 
 		edNomeUser = new RoundJTextField();
 		edNomeUser.setEnabled(false);
 		edNomeUser.setToolTipText("Aperte F9 para consultar.");
 		edNomeUser.setColumns(10);
-		container_content.add(edNomeUser, "cell 0 3");
-
-		lblPet = new JLabel("Pet:");
-		lblPet.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPet.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		container_content.add(lblPet, "flowx,cell 0 4");
-
-		edNomePet = new RoundJTextField();
-		edNomePet.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_F9) {
-					chamaConPet();
-				}
-			}
-		});
-		edNomePet.setToolTipText("Aperte F9 para consultar.");
-		edNomePet.setColumns(10);
-		container_content.add(edNomePet, "cell 0 4");
-
-		btnConPet = new lupaButton("");
-		btnConPet.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chamaConPet();
-			}
-		});
-		container_content.add(btnConPet, "cell 0 4");
+		container_content.add(edNomeUser, "cell 4 4");
+		
+				edNomePet = new RoundJTextField();
+				edNomePet.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if (e.getKeyCode() == KeyEvent.VK_F9) {
+							chamaConPet();
+						}
+					}
+				});
+				
+						lblPet = new JLabel("Pet:");
+						lblPet.setHorizontalAlignment(SwingConstants.RIGHT);
+						lblPet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+						container_content.add(lblPet, "cell 0 5");
+				edNomePet.setToolTipText("Aperte F9 para consultar.");
+				edNomePet.setColumns(10);
+				container_content.add(edNomePet, "cell 0 6");
+		
+				btnConPet = new lupaButton("");
+				btnConPet.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						chamaConPet();
+					}
+				});
+				container_content.add(btnConPet, "cell 2 6");
 
 		edNomeRaca = new RoundJTextField();
 		edNomeRaca.setToolTipText("Aperte F9 para consultar.");
 		edNomeRaca.setEnabled(false);
 		edNomeRaca.setColumns(10);
-		container_content.add(edNomeRaca, "cell 0 4");
-
-		lbTipo = new JLabel("Tipo:");
-		lbTipo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbTipo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		container_content.add(lbTipo, "flowx,cell 0 6");
-
-		cbTipo = new JComboBox<String>();
-		cbTipo.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				atualizatabela();
-			}
-		});
-		cbTipo.addItem("Entrada");
-		cbTipo.addItem("Saída");
-		container_content.add(cbTipo, "cell 0 6");
+		container_content.add(edNomeRaca, "cell 4 6");
+		
+				cbTipo = new JComboBox<String>();
+				cbTipo.addItemListener(new ItemListener() {
+					public void itemStateChanged(ItemEvent e) {
+						atualizatabela();
+					}
+				});
+				cbTipo.addItem("Entrada");
+				cbTipo.addItem("Saída");
+				
+						lbTipo = new JLabel("Tipo:");
+						lbTipo.setHorizontalAlignment(SwingConstants.RIGHT);
+						lbTipo.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+						container_content.add(lbTipo, "flowy,cell 0 8");
+				container_content.add(cbTipo, "cell 0 8");
 
 		container_buttons = new JPanel();
 		container_buttons.setBackground(new Color(125, 137, 245));
-		card.add(container_buttons, "cell 0 3,grow");
-		container_buttons.setLayout(new MigLayout("", "[100px][][100px][100px][][100px][100px][100px]", "[][][][]"));
+		card.add(container_buttons, "cell 0 4,alignx center");
+		container_buttons.setLayout(new MigLayout("", "[100px][][100px][100px][][100px][100px][100px]", "[]"));
 
 		btnlimpar = new RoundButton("Limpar");
 		btnlimpar.setText("Confirmar");
