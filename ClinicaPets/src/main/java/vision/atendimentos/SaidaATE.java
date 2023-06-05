@@ -47,6 +47,7 @@ import java.awt.Toolkit;
 
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
+import java.awt.Font;
 
 public class SaidaATE extends JFrame implements InterEntrada, InterReceita,InterSaida{
 
@@ -73,8 +74,6 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	private RoundButton btnConsultar;
 	private RoundButton btnExcluir;
 	private RoundButton btnLimpar;
-
-	private JPanel panel;
 	private JPanel panel_3;
 	private JPanel panel_4;
 	private JPanel panel_2;
@@ -110,7 +109,7 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		background = new PanelComBackgroundImage(bg);
 		background.setBackground(new Color(158, 174, 255));
 		contentPane.add(background, "cell 1 1,alignx center");
-		background.setLayout(new MigLayout("", "[grow][200px,grow][grow]", "[grow]"));
+		background.setLayout(new MigLayout("", "[grow][300px,grow]", "[grow]"));
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(125, 137, 245));
@@ -122,39 +121,44 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		panel_2.add(panel_4, "cell 0 0,growx");
 		panel_4.setLayout(new MigLayout("", "[grow]", "[][][][][][][]"));
 		
-		JLabel lblNewLabel_9 = new JLabel("Antendimento Saida");
-		panel_4.add(lblNewLabel_9, "cell 0 0");
-		
 		JLabel lblNewLabel = new JLabel("Entrada:");
+		lblNewLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel, "flowx,cell 0 2");
 		
 		JLabel lblNewLabel_1 = new JLabel("Numero de entrada:");
+		lblNewLabel_1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel_1, "flowy,cell 0 4");
 		
 		edNumEntrada = new RoundJTextField();
+		edNumEntrada.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		panel_4.add(edNumEntrada, "cell 0 4,growx");
 		edNumEntrada.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Entrada:");
+		lblNewLabel_2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel_2, "flowy,cell 0 5");
 		
 		edDataEntrada = new DateTextField();
+		edDataEntrada.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edDataEntrada.setColumns(10);
 		panel_4.add(edDataEntrada, "cell 0 5,growx");
 		
 		JLabel lblNewLabel_3 = new JLabel("Saida:");
+		lblNewLabel_3.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel_3, "flowy,cell 0 6");
 		
 		edDataSaida = new DateTextField();
+		edDataSaida.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edDataSaida.setColumns(10);
 		panel_4.add(edDataSaida, "cell 0 6,growx");
 		
 		panel_3 = new JPanel();
 		panel_3.setBackground(new Color(125, 137, 245));
 		panel_2.add(panel_3, "cell 0 1,growx");
-		panel_3.setLayout(new MigLayout("", "[100px][30px][100px][0px]", "[][][][][]"));
+		panel_3.setLayout(new MigLayout("", "[100px][30px][100px][0px]", "[][][][]"));
 		
 		btnConfirmar = new RoundButton("Confirmar");
+		btnConfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventConfirmar();
@@ -163,6 +167,7 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		panel_3.add(btnConfirmar, "cell 0 0,growx,aligny bottom");
 		
 		btnLimpar = new RoundButton("Limpar");
+		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventLimpar();
@@ -171,6 +176,7 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		panel_3.add(btnLimpar, "cell 2 0,growx");
 		
 		btnExcluir = new RoundButton("Excluir");
+		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventDelete(FDAOSaida.getBDIDENTRADA());
@@ -179,6 +185,7 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		panel_3.add(btnExcluir, "cell 0 2,growx");
 		
 		btnConsultar = new RoundButton("Consultar");
+		btnConsultar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chamaSaida();
@@ -196,12 +203,13 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		
 
 		lblStatus = new JLabel("Status: Aguardando...");
+		lblStatus.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lblStatus, "cell 0 2");
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(125, 137, 245));
 		background.add(panel_1, "cell 1 0,alignx center");
-		panel_1.setLayout(new MigLayout("", "[200px,grow]", "[60px][][15px][][][][][150px,grow][50px]"));
+		panel_1.setLayout(new MigLayout("", "[200px,grow][][100px]", "[][70px][][][][][][][150px,grow][][]"));
 		
 		btnReceita = new lupaButton("");
 		btnReceita.addActionListener(new ActionListener() {
@@ -209,43 +217,46 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 				chamaReceitaCad();
 			}
 		});
-		panel_1.add(btnReceita, "cell 0 1");
 		
 		JLabel lblNewLabel_7 = new JLabel("Receita:");
-		panel_1.add(lblNewLabel_7, "flowx,cell 0 1");
+		lblNewLabel_7.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_1.add(lblNewLabel_7, "flowx,cell 0 1,aligny center");
+		panel_1.add(btnReceita, "cell 0 1,aligny center");
 		
 		JLabel lblNewLabel_4 = new JLabel("Pet:");
-		panel_1.add(lblNewLabel_4, "flowy,cell 0 4");
+		lblNewLabel_4.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_1.add(lblNewLabel_4, "cell 0 2");
 		
 		edNomePet = new RoundJTextField();
+		edNomePet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNomePet.setColumns(10);
-		panel_1.add(edNomePet, "cell 0 4,growx");
+		panel_1.add(edNomePet, "cell 0 3,growx");
+		
+		edRaca = new RoundJTextField();
+		edRaca.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+		panel_1.add(edRaca, "cell 2 3");
+		edRaca.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Usuario:");
-		panel_1.add(lblNewLabel_5, "flowy,cell 0 5");
+		lblNewLabel_5.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_1.add(lblNewLabel_5, "cell 0 4");
 		
 		edCpfUser = new CPFTextField();
+		edCpfUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCpfUser.setColumns(10);
 		panel_1.add(edCpfUser, "cell 0 5,growx");
 		
+		edNomeUser = new RoundJTextField();
+		edNomeUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+		panel_1.add(edNomeUser, "cell 2 5");
+		edNomeUser.setColumns(10);
+		
 		JLabel lblNewLabel_6 = new JLabel("Descrição:");
-		panel_1.add(lblNewLabel_6, "flowy,cell 0 6");
+		lblNewLabel_6.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		panel_1.add(lblNewLabel_6, "flowy,cell 0 7");
 		
 		DescSaida = new JTextPane();
-		panel_1.add(DescSaida, "cell 0 7,grow");
-		
-		panel = new JPanel();
-		panel.setBackground(new Color(125, 137, 245));
-		background.add(panel, "cell 2 0,growx");
-		panel.setLayout(new MigLayout("", "[grow]", "[30px][][][][][][][][13px][][120px]"));
-		
-		edRaca = new RoundJTextField();
-		edRaca.setColumns(10);
-		panel.add(edRaca, "cell 0 4,growx");
-		
-		edNomeUser = new RoundJTextField();
-		edNomeUser.setColumns(10);
-		panel.add(edNomeUser, "cell 0 6,growx");
+		panel_1.add(DescSaida, "cell 0 8,grow");
 	}
 	
 	protected void chamaEntrada() {

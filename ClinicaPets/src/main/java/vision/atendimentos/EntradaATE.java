@@ -133,7 +133,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		JPanel content = new PanelComBackgroundImage(bg);
 		content.setBackground(new Color(158, 174, 255));
 		contentPane.add(content, "cell 1 1,alignx center");
-		content.setLayout(new MigLayout("", "[450px,grow]", "[][200px,grow][grow]"));
+		content.setLayout(new MigLayout("", "[500px,grow]", "[][200px,grow][grow]"));
 
 		JLabel lbTitle = new JLabel("Atendimento Entrada");
 		lbTitle.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 20));
@@ -142,7 +142,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		JPanel card = new JPanel();
 		card.setBackground(new Color(125, 137, 245));
 		content.add(card, "cell 0 1,grow");
-		card.setLayout(new MigLayout("", "[60px][200px,grow][100px][200px,grow][50px]", "[][][][][][][][]"));
+		card.setLayout(new MigLayout("", "[50px][200px,grow][120px][200px,grow][50px]", "[][][][][][][][]"));
 
 		JLabel lbNumero = new JLabel("Numero de entrada:");
 		lbNumero.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
@@ -161,6 +161,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		card.add(lbUser, "flowy,cell 1 4");
 
 		edCpf = new CPFTextField();
+		edCpf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCpf.setToolTipText("Aperte F9 para consultar.");
 		edCpf.addKeyListener(new KeyAdapter() {
 			@Override
@@ -180,6 +181,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		card.add(edCpf, "cell 1 4,growx");
 
 		edNomeUser = new RoundJTextField();
+		edNomeUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNomeUser.setEnabled(false);
 		card.add(edNomeUser, "cell 3 4,growx,aligny bottom");
 		edNomeUser.setColumns(10);
@@ -197,6 +199,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		card.add(lblPet, "flowy,cell 1 5");
 
 		edNomeRaca = new RoundJTextField();
+		edNomeRaca.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNomeRaca.setEnabled(false);
 		card.add(edNomeRaca, "cell 3 5,growx,aligny bottom");
 		edNomeRaca.setColumns(10);
@@ -206,6 +209,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		card.add(lbComo, "flowy,cell 1 6");
 
 		edComorbidade = new RoundJTextField();
+		edComorbidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edComorbidade.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -236,10 +240,12 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		card.add(lbData, "flowy,cell 3 6");
 
 		edDataEntrada = new DateTextField();
+		edDataEntrada.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edDataEntrada.setColumns(10);
 		card.add(edDataEntrada, "cell 3 6,growx");
 
 		edNomePet = new RoundJTextField();
+		edNomePet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNomePet.setToolTipText("Aperte F9 para consultar.");
 		edNomePet.addKeyListener(new KeyAdapter() {
 			@Override
@@ -260,6 +266,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		card.add(edNomePet, "cell 1 5,growx");
 
 		edNumEntrada = new RoundJTextFieldNum(8);
+		edNumEntrada.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNumEntrada.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -319,7 +326,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 				}
 			}
 		});
-		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		buttons_content.add(btnExcluir, "cell 1 1,growx");
 
 		btnLimpar = new RoundButton("Limpar");
@@ -328,7 +335,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 				limpaCampos();
 			}
 		});
-		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		buttons_content.add(btnLimpar, "cell 3 1,growx");
 
 		btnConsulta = new RoundButton("Consultar");
@@ -337,7 +344,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 				chamaConAtendimeno();
 			}
 		});
-		btnConsulta.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		btnConsulta.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		buttons_content.add(btnConsulta, "cell 1 3,growx");
 
 		btnConfirmar = new RoundButton("Confirmar");
@@ -346,7 +353,7 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 				acaoConfirma();
 			}
 		});
-		btnConfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
+		btnConfirmar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		buttons_content.add(btnConfirmar, "cell 3 3,growx");
 	}
 

@@ -39,6 +39,8 @@ import vision.consultas.HistoricoCON;
 import vision.consultas.PetCON;
 import vision.consultas.UserCON;
 import vision.padrao.Util;
+import java.awt.Insets;
+import javax.swing.ImageIcon;
 
 public class Menu extends JFrame implements InterUsuario, InterPet {
 
@@ -98,10 +100,15 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 		setBounds(100, 100, 501, 300);
 
 		menuBar = new JMenuBar();
+		menuBar.setMargin(new Insets(10, 10, 10, 10));
+		menuBar.setBorderPainted(false);
+		menuBar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		menuBar.setBackground(new Color(255, 255, 255));
+		
 		setJMenuBar(menuBar);
 
 		mmDados = new JMenu("Dados");
-		mmDados.setFont(new Font("Arial", Font.PLAIN, 12));
+		mmDados.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		menuBar.add(mmDados);
 
 		miClinicaDados = new JMenuItem("Clinica...");
@@ -133,7 +140,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 		});
 
 		mmCad = new JMenu("Cadastrar");
-		mmCad.setFont(new Font("Arial", Font.PLAIN, 13));
+		mmCad.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		menuBar.add(mmCad);
 
 		miUser = new JMenuItem("Usuário...");
@@ -193,7 +200,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 		mmCad.add(miComorbidade);
 
 		mmCON = new JMenu("Consultar");
-		mmCON.setFont(new Font("Arial", Font.PLAIN, 12));
+		mmCON.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		menuBar.add(mmCON);
 
 		miUserCons = new JMenuItem("Usuário...");
@@ -241,7 +248,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 		mmCON.add(mmPetCons);
 
 		mmATE = new JMenu("Atendimento");
-		mmATE.setFont(new Font("Arial", Font.PLAIN, 13));
+		mmATE.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		menuBar.add(mmATE);
 
 		miEntrada = new JMenuItem("Entrada...");
@@ -277,7 +284,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 		mmATE.add(miSaida);
 
 		mmSair = new JMenu("Sair");
-		mmSair.setFont(new Font("Arial", Font.PLAIN, 13));
+		mmSair.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		menuBar.add(mmSair);
 
 		miLogout = new JMenuItem("Logout...");
@@ -310,6 +317,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 			}
 		});
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -324,6 +332,8 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 		contentPane.add(descricao, BorderLayout.SOUTH);
 
 		lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon(Util.getCaminhoIMG("FundoPets1.1.png")));
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
 
 		addWindowListener(new WindowAdapter() {
