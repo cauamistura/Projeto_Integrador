@@ -259,7 +259,7 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 				limpaCampos();
 			}
 		});
-		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		panel_2.add(btnLimpar, "flowx,cell 1 3");
 
 		PetCAD prSelf = this;
@@ -273,7 +273,7 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 				frame.setVisible(true);
 			}
 		});
-		btnNewButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		btnNewButton.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		panel_2.add(btnNewButton, "cell 1 3,growx");
 
 		JButton btnNewButton_1 = new RoundButton("Cadastrar");
@@ -343,7 +343,7 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 				}
 			}
 		});
-		btnNewButton_1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		btnNewButton_1.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		panel_2.add(btnNewButton_1, "flowx,cell 3 3,growx");
 
 		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);

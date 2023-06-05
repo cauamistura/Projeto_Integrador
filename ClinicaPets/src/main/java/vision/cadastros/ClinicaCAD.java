@@ -133,37 +133,37 @@ public class ClinicaCAD extends JFrame {
 				new MigLayout("", "[100px][200px,grow][200px,grow][100px]", "[80px][][][][][][][50px][80px]"));
 
 		JLabel lbNome = new JLabel("Nome:");
-		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbNome, "flowy,cell 1 2");
 
 		edNome = new RoundJTextField();
-		edNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNome.setBackground(new Color(255, 255, 255));
 		panel_2.add(edNome, "cell 1 2,growx");
 		edNome.setColumns(10);
 
 		JLabel lbNomeFan = new JLabel("Nome Fantasia:");
-		lbNomeFan.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbNomeFan.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbNomeFan, "flowy,cell 2 2");
 
 		edNomeFan = new RoundJTextField();
-		edNomeFan.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edNomeFan.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNomeFan.setBackground(new Color(255, 255, 255));
 		panel_2.add(edNomeFan, "cell 2 2,growx");
 		edNomeFan.setColumns(10);
 
 		JLabel lbCnpj = new JLabel("CNPJ:");
-		lbCnpj.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbCnpj.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbCnpj, "flowy,cell 1 3");
 
 		edCnpj = new CNPJTextFiel();
-		edCnpj.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edCnpj.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCnpj.setBackground(new Color(255, 255, 255));
 		panel_2.add(edCnpj, "cell 1 3,growx");
 		edCnpj.setColumns(10);
 
 		edCep = new CEPTextField();
-		edCep.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edCep.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCep.setBackground(new Color(255, 255, 255));
 		edCep.addFocusListener(new FocusAdapter() {
 			@Override
@@ -195,22 +195,22 @@ public class ClinicaCAD extends JFrame {
 		});
 
 		JLabel lbCep = new JLabel("CEP:");
-		lbCep.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbCep.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbCep, "flowy,cell 2 3");
 		edCep.setColumns(10);
 		edCep.setBounds(104, 11, 156, 20);
 		panel_2.add(edCep, "cell 2 3,growx");
 
 		JLabel lbBairro = new JLabel("Bairro:");
-		lbBairro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbBairro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbBairro, "cell 1 5,alignx left");
 
 		JLabel lbUf = new JLabel("UF:  ");
-		lbUf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbUf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbUf, "flowx,cell 2 5");
 
 		edBairro = new RoundJTextField();
-		edBairro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edBairro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edBairro.setBackground(new Color(255, 255, 255));
 		edBairro.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edBairro, "cell 1 6,growx");
@@ -224,31 +224,31 @@ public class ClinicaCAD extends JFrame {
 		panel_2.add(cbUF, "flowx,cell 2 6");
 
 		edCidade = new RoundJTextField();
-		edCidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edCidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCidade.setBackground(new Color(255, 255, 255));
 		panel_2.add(edCidade, "cell 2 6,growx");
 		edCidade.setColumns(10);
 
 		JLabel lbCidade = new JLabel("Cidade:");
-		lbCidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbCidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbCidade, "cell 2 5");
 
 		JLabel lbDesc = new JLabel("Descricao:");
-		lbDesc.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbDesc.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbDesc, "flowy,cell 1 7");
 
 		edDescricao = new RoundJTextField();
-		edDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edDescricao.setBackground(new Color(255, 255, 255));
 		panel_2.add(edDescricao, "cell 1 7,growx");
 		edDescricao.setColumns(10);
 
 		JLabel lbSenha = new JLabel("Senha:");
-		lbSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_2.add(lbSenha, "flowy,cell 2 7");
 
 		edSenha = new RoundJTextField();
-		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edSenha.setBackground(new Color(255, 255, 255));
 		edSenha.setBorder(new EmptyBorder(3, 3, 3, 3));
 		panel_2.add(edSenha, "cell 2 7,growx");
@@ -274,7 +274,7 @@ public class ClinicaCAD extends JFrame {
 		panel_5.setLayout(new BorderLayout(0, 0));
 
 		btnConf = new RoundButton("Confirmar");
-		btnConf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		btnConf.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -360,7 +360,7 @@ public class ClinicaCAD extends JFrame {
 		panel_3.add(btnConf, "cell 1 3,growx");
 
 		btnDelet = new RoundButton("Deletar");
-		btnDelet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		btnDelet.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnDelet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 

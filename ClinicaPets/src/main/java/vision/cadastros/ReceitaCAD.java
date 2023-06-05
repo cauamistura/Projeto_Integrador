@@ -140,10 +140,11 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 		panel_5.setLayout(new MigLayout("", "[100px][][][][][][100px]", "[]"));
 		
 		lblMedicamento= new JLabel("Medicamento");
-		lblMedicamento.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+		lblMedicamento.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_5.add(lblMedicamento, "cell 1 0");
 		
 		btnLupa = new lupaButton("");
+		btnLupa.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnLupa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MedicamentoCON med = new MedicamentoCON(FDAOTMedicacao.ListTMedicacao(FDAOTMedicacao), rec);
@@ -175,6 +176,7 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 		panel_3.add(lblDateInicio, "flowy,cell 1 0");
 		
 		edDataInicio = new DateTextField();
+		edDataInicio.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		panel_3.add(edDataInicio, "cell 1 0,growx");
 		edDataInicio.setColumns(10);
 		
@@ -183,6 +185,7 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 		panel_3.add(lblDateFinal, "flowy,cell 1 1");
 		
 		edDataFinal = new DateTextField();
+		edDataFinal.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edDataFinal.setColumns(10);
 		panel_3.add(edDataFinal, "cell 1 1,growx");
 		
@@ -200,9 +203,10 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(125, 137, 245));
 		panel_1.add(panel_2, "cell 0 4,alignx center");
-		panel_2.setLayout(new MigLayout("", "[20px][40px][10px][40px][10px][50px][20px]", "[]"));
+		panel_2.setLayout(new MigLayout("", "[20px][40px][10px][40px][10px][20px]", "[]"));
 		
 		btnConf = new RoundButton("Confirmar");
+		btnConf.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnConf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventConfirmar();
@@ -212,6 +216,7 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 		panel_2.add(btnConf, "cell 1 0");
 		
 		btnLimpar = new RoundButton("Limpar");
+		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limparDados();

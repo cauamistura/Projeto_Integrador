@@ -109,7 +109,7 @@ public class ComorbidadeCAD extends JFrame {
 		lblNewLabel_4 = new JLabel("Cadastro de Comorbidade");
 		panel_2.add(lblNewLabel_4, "cell 0 0,alignx center");
 		lblNewLabel_4.setForeground(new Color(0, 0, 0));
-		lblNewLabel_4.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblNewLabel_4.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 20));
 
 		panel_4 = new JPanel();
 		panel_4.setBackground(new Color(125, 137, 245));
@@ -126,20 +126,20 @@ public class ComorbidadeCAD extends JFrame {
 		panel_5.setLayout(new MigLayout("", "[grow]", "[][][][][][350px][50px]"));
 
 		lbNome = new JLabel("Nome:");
-		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_5.add(lbNome, "flowy,cell 0 1");
 
 		edNomeCom = new RoundJTextField();
-		edNomeCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edNomeCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNomeCom.setColumns(10);
 		panel_5.add(edNomeCom, "cell 0 1,growx");
 
 		lbDescricao = new JLabel("Descrição:");
-		lbDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+		lbDescricao.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_5.add(lbDescricao, "flowy,cell 0 3");
 
 		edDescCom = new RoundJTextField();
-		edDescCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		edDescCom.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edDescCom.setColumns(10);
 		panel_5.add(edDescCom, "cell 0 3,growx");
 

@@ -101,7 +101,7 @@ public class MedicamentoCAD extends JFrame {
 
 		title = new JLabel("Cadastro Medicamento");
 		panel_6.add(title, "cell 1 0");
-		title.setFont(new Font("Dialog", Font.BOLD, 20));
+		title.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 20));
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Util.getCaminhoIMG("med.png")));
@@ -113,20 +113,20 @@ public class MedicamentoCAD extends JFrame {
 		panel_5.setLayout(new MigLayout("", "[grow]", "[][][][][][130px][30px]"));
 
 		lbNome = new JLabel("Nome: ");
-		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_5.add(lbNome, "flowy,cell 0 0");
 
 		edNomeMed = new RoundJTextField();
-		edNomeMed.setFont(new Font("Dialog", Font.PLAIN, 14));
+		edNomeMed.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNomeMed.setColumns(10);
 		panel_5.add(edNomeMed, "cell 0 1,growx");
 
 		lbDesc = new JLabel("Descrição:");
-		lbDesc.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
+		lbDesc.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_5.add(lbDesc, "flowy,cell 0 2");
 
 		edDescMed = new RoundJTextField();
-		edDescMed.setFont(new Font("Dialog", Font.PLAIN, 14));
+		edDescMed.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edDescMed.setColumns(10);
 		panel_5.add(edDescMed, "cell 0 3,growx");
 

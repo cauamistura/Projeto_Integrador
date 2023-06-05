@@ -30,6 +30,7 @@ import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.Util;
+import java.awt.Font;
 
 public class RacaCAD extends JFrame {
 
@@ -88,6 +89,7 @@ public class RacaCAD extends JFrame {
 		panel_1.add(lblNewLabel_2, "cell 1 1,alignx center");
 		
 		btnNewButton = new RoundButton("Login");
+		btnNewButton.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (especieCb.getSelectedItem() == null) {
@@ -119,19 +121,23 @@ public class RacaCAD extends JFrame {
 		});
 		
 		lblNewLabel_1 = new JLabel("Nome:");
+		lblNewLabel_1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_1.add(lblNewLabel_1, "flowy,cell 1 3,alignx left");
 		
 		btnNewButton.setText("Cadastrar");
 		panel_1.add(btnNewButton, "cell 1 5,growx");
 		
 		txtNomeRaca =  new RoundJTextField();
+		txtNomeRaca.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_1.add(txtNomeRaca, "cell 1 3,growx");
 		txtNomeRaca.setColumns(10);
 		
 		lblNewLabel = new JLabel("Espécie:");
+		lblNewLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_1.add(lblNewLabel, "flowy,cell 1 2");
 		
 		especieCb = new JComboBox();
+		especieCb.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		panel_1.add(especieCb, "cell 1 2,growx");
 		
 		TListEspecie = FDAOTEspecie.ListTEspecie(FDAOTEspecie);

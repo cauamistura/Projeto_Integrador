@@ -142,7 +142,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		lbTitle = new JLabel("Agendamento");
 		card.add(lbTitle, "cell 0 0,alignx center");
 		lbTitle.setForeground(new Color(0, 0, 0));
-		lbTitle.setFont(new Font("Dialog", Font.BOLD, 20));
+		lbTitle.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 20));
 
 		container_content = new JPanel();
 		container_content.setBackground(new Color(125, 137, 245));
@@ -155,12 +155,12 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 		panelControle.setLayout(new MigLayout("", "[100px][90px][][50px][][160px][100px]", "[][][][][][]"));
 				
 						lblNmeroAgendamento = new JLabel("Numero agendamento:");
-						lblNmeroAgendamento.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+						lblNmeroAgendamento.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 						panelControle.add(lblNmeroAgendamento, "flowy,cell 1 0");
 						lblNmeroAgendamento.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 				edNumAtendimento = new RoundJTextFieldNum(8);
-				edNumAtendimento.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 10));
+				edNumAtendimento.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 				panelControle.add(edNumAtendimento, "cell 1 0,growx");
 				edNumAtendimento.addKeyListener(new KeyAdapter() {
 					@Override
@@ -174,12 +174,12 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 				edNumAtendimento.setColumns(10);
 						
 								lbData = new JLabel("Data:");
-								lbData.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+								lbData.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 								panelControle.add(lbData, "flowy,cell 5 0");
 								lbData.setHorizontalAlignment(SwingConstants.RIGHT);
 				
 						edData = new DateTextField();
-						edData.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 10));
+						edData.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 						panelControle.add(edData, "cell 5 0,growx");
 						edData.addFocusListener(new FocusAdapter() {
 							@Override
@@ -197,10 +197,10 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 										lbUser = new JLabel("Usuario:");
 										panelControle.add(lbUser, "cell 1 1");
 										lbUser.setHorizontalAlignment(SwingConstants.RIGHT);
-										lbUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+										lbUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 						
 								edCpf = new CPFTextField();
-								edCpf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 10));
+								edCpf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 								panelControle.add(edCpf, "cell 1 2,growx");
 								edCpf.addKeyListener(new KeyAdapter() {
 									@Override
@@ -217,7 +217,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 										panelControle.add(btnConUser, "cell 3 2");
 										
 												edNomeUser = new RoundJTextField();
-												edNomeUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 10));
+												edNomeUser.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 												panelControle.add(edNomeUser, "cell 5 2,growx");
 												edNomeUser.setEnabled(false);
 												edNomeUser.setColumns(10);
@@ -225,10 +225,10 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 																lblPet = new JLabel("Pet:");
 																panelControle.add(lblPet, "cell 1 3");
 																lblPet.setHorizontalAlignment(SwingConstants.RIGHT);
-																lblPet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
+																lblPet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 												
 														edNomePet = new RoundJTextField();
-														edNomePet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 10));
+														edNomePet.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 														panelControle.add(edNomePet, "cell 1 4,growx");
 														edNomePet.addKeyListener(new KeyAdapter() {
 															@Override
@@ -250,7 +250,7 @@ public class AgendamentoCAD extends JFrame implements InterUsuario, InterPet, In
 																panelControle.add(btnConPet, "cell 3 4");
 																
 																		edNomeRaca = new RoundJTextField();
-																		edNomeRaca.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 10));
+																		edNomeRaca.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 																		panelControle.add(edNomeRaca, "cell 5 4,growx");
 																		edNomeRaca.setEnabled(false);
 																		edNomeRaca.setColumns(10);

@@ -142,9 +142,11 @@ public class UserCAD extends JFrame implements InterUsuario {
 		pnContent.setLayout(new MigLayout("", "[50px][150px,grow][50px][150px,grow][50px]", "[][][][][][][][][][25px][][30px]"));
 
 		lbStatus = new JLabel("Status: Aguardando");
+		lbStatus.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbStatus, "cell 1 11");
 
 		JLabel lbCPF = new JLabel("CPF:");
+		lbCPF.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbCPF, "flowy,cell 1 3");
 		edCpf = new CPFTextField();
 		edCpf.addFocusListener(new FocusAdapter() {
@@ -158,7 +160,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 			}
 		});
 		edCpf.setToolTipText("Aperte F9 para consultar.");
-		edCpf.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edCpf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCpf.setColumns(10);
 		pnContent.add(edCpf, "cell 1 3,growx");
 		edCpf.addKeyListener(new KeyAdapter() {
@@ -171,81 +173,93 @@ public class UserCAD extends JFrame implements InterUsuario {
 		});
 
 		JLabel lbNome = new JLabel("Nome:");
+		lbNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbNome, "flowy,cell 3 3");
 
 		edNome = new RoundJTextField();
-		edNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edNome.setColumns(10);
 		pnContent.add(edNome, "cell 3 3,growx");
 
 		JLabel lblNewLabel_7 = new JLabel("Email:");
+		lblNewLabel_7.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lblNewLabel_7, "flowy,cell 1 4");
 
 		edEmail = new RoundJTextField();
-		edEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edEmail.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edEmail.setColumns(10);
 		pnContent.add(edEmail, "cell 1 4,growx");
 
 		JLabel lbTelefone = new JLabel("Telefone:");
+		lbTelefone.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbTelefone, "flowy,cell 3 4");
 
 		edTelefone = new TelefoneTextField();
-		edTelefone.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edTelefone.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edTelefone.setColumns(10);
 		pnContent.add(edTelefone, "cell 3 4,growx");
 
 		JLabel lbSenha = new JLabel("Senha:");
+		lbSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbSenha, "flowy,cell 1 5");
 
 		edSenha = new RoundJTextField();
-		edSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edSenha.setColumns(10);
 		pnContent.add(edSenha, "cell 1 5,growx");
 
 		JLabel lbCep = new JLabel("CEP:");
+		lbCep.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbCep, "flowy,cell 3 5");
 
 		edCep = new CEPTextField();
-		edCep.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edCep.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCep.setColumns(10);
 		pnContent.add(edCep, "cell 3 5,growx");
 
 		JLabel lblNewLabel_4 = new JLabel("Data de Nascimento:");
+		lblNewLabel_4.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lblNewLabel_4, "flowy,cell 1 6");
 
 		edDataNascimento = new DateTextField();
-		edDataNascimento.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edDataNascimento.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edDataNascimento.setColumns(10);
 		pnContent.add(edDataNascimento, "cell 1 6");
 
 		JLabel lbCidade = new JLabel("Cidade:");
+		lbCidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbCidade, "flowy,cell 3 6");
 
 		edCidade = new RoundJTextField();
-		edCidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edCidade.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edCidade.setColumns(10);
 		pnContent.add(edCidade, "cell 3 6,growx");
 
 		JLabel lbBairro = new JLabel("Bairro:");
+		lbBairro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbBairro, "flowy,cell 3 7");
 
 		edBairro = new RoundJTextField();
-		edBairro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		edBairro.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		edBairro.setColumns(10);
 		pnContent.add(edBairro, "cell 3 7,growx");
 
 		JLabel lbSexo = new JLabel("Sexo:");
+		lbSexo.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbSexo, "flowy,cell 1 7");
 
 		cbGenero = new JComboBox<String>();
+		cbGenero.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		cbGenero.addItem("Masculino");
 		cbGenero.addItem("Feminino");
 		pnContent.add(cbGenero, "cell 1 7");
 
 		JLabel lbPermissao = new JLabel("Permissão:");
+		lbPermissao.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbPermissao, "flowy,cell 1 8");
 
 		cbPermissao = new JComboBox<Permicao>();
+		cbPermissao.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		ArrayList<Permicao> listPermicao = new ArrayList<>();
 		listPermicao = FDAOTPermicao.ListTEstado(FDAOTPermicao);
 		for (Permicao mtPermicao : listPermicao) {
@@ -254,12 +268,15 @@ public class UserCAD extends JFrame implements InterUsuario {
 		pnContent.add(cbPermissao, "cell 1 8");
 
 		JLabel lbUf = new JLabel("UF:");
+		lbUf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbUf, "flowy,cell 3 8");
 
 		JComboBox<Estado> cbUF = new JComboBox<Estado>();
+		cbUF.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(cbUF, "cell 3 8");
 
 		btnExcluir = new RoundButton("Excluir");
+		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (edCpf.validaCPF() && edCpf.existeCpfUsuario(FDAOTUser)) {
@@ -273,6 +290,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 		pnContent.add(btnExcluir, "flowx,cell 1 10,growx");
 
 		btnConsulta = new RoundButton("Login");
+		btnConsulta.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				abreConsulta();
@@ -283,6 +301,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 		pnContent.add(btnConsulta, "flowx,cell 3 10,growx");
 
 		btnLimpar = new RoundButton("Login");
+		btnLimpar.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpaCampos(true);
@@ -293,6 +312,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 		pnContent.add(btnLimpar, "cell 1 10,growx");
 
 		btnCAD = new RoundButton("Login");
+		btnCAD.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
 		btnCAD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				{
