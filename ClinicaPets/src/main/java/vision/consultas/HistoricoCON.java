@@ -116,7 +116,7 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		Lista = FDAOHistorico.List(FDAOHistorico);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 654, 743);
+		setBounds(100, 100, 826, 743);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -147,7 +147,7 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		panelTable = new JPanel();
 		panelTable.setBackground(new Color(125, 137, 245));
 		card.add(panelTable, "cell 0 2,alignx center");
-		panelTable.setLayout(new MigLayout("", "[][][]", "[][]"));
+		panelTable.setLayout(new MigLayout("", "[][529.00][]", "[][]"));
 		
 				JScrollPane scrollPane_1 = new JScrollPane();
 				panelTable.add(scrollPane_1, "cell 1 0");

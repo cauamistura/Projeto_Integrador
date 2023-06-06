@@ -148,7 +148,6 @@ setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")
 		JButton btnExcluir = new RoundButton("Excluir");
 		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		panelBotoes.add(btnExcluir, "cell 3 0,growx");
-		atualizarTabela(dados, false);
 	}
 	
 	public void atualizarTabela(List<Comorbidade> com, Boolean prFiltro) {

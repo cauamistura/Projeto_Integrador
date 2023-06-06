@@ -168,9 +168,7 @@ public class SaidaCON extends JFrame {
 			}
 		});
 		btnExcluir.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
-		panelBotoes.add(btnExcluir, "cell 3 0,growx");
-		
-		atualizarTabela(dados, false);
+		panelBotoes.add(btnExcluir, "cell 3 0,growx");		
 	}
 
 	public void atualizarTabela(List<AtendimentoSaida> dados, Boolean prFiltro) {

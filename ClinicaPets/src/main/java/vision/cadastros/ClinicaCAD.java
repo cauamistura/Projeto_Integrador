@@ -358,28 +358,6 @@ public class ClinicaCAD extends JFrame {
 
 		});
 		panel_3.add(btnConf, "cell 1 3,growx");
-
-		btnDelet = new RoundButton("Deletar");
-		btnDelet.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 14));
-		btnDelet.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				int resposta = JOptionPane.showConfirmDialog(null,
-						"Ao deletar a clinica, todos os Dados que estão ligadas a ela serão Excluidas\nDeseja confirmar essa ação?",
-						"ATENÇÃO!!", JOptionPane.YES_NO_OPTION);
-				if (resposta == JOptionPane.YES_OPTION) {
-					FDAOTClinica.setBDIDCLINICA(edCnpj.IdClinica());
-					FDAOTClinica.deletar(FDAOTClinica);
-
-					JOptionPane.showInternalMessageDialog(null, "Excluido com sucesso!");
-				} else {
-					JOptionPane.showInternalMessageDialog(null, "Clinica não foi Excluida!");
-				}
-
-			}
-		});
-		panel_3.add(btnDelet, "cell 1 6,growx");
-
 	}
 
 	public void preencheCampos() {

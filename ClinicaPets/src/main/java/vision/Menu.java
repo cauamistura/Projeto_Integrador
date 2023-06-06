@@ -333,7 +333,7 @@ public class Menu extends JFrame implements InterUsuario, InterPet {
 
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(Util.getCaminhoIMG("FundoPets1.1.png")));
+		lblNewLabel.setIcon(new ImageIcon(Util.getCaminhoIMG("FundoPets.png")));
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
 
 		addWindowListener(new WindowAdapter() {
