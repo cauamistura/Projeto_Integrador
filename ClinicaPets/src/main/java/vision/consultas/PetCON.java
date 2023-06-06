@@ -82,7 +82,7 @@ public class PetCON extends JFrame {
 		panelTabela = new JPanel();
 		panelTabela.setBackground(new Color(125, 137, 245));
 		panelBackground.add(panelTabela, "cell 0 0,grow");
-		panelTabela.setLayout(new MigLayout("", "[][250px,grow][]", "[][250px,grow]"));
+		panelTabela.setLayout(new MigLayout("", "[20px][250px,grow][20px]", "[][250px,grow]"));
 
 		lblTable = new JLabel("Consulta Pets");
 		lblTable.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
