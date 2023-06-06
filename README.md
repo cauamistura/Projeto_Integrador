@@ -40,12 +40,44 @@ Next/Finish
 
 ![bacno](https://user-images.githubusercontent.com/110643682/224567588-c21deef9-2356-49b6-936d-bc7e2f3bf76b.jpg)
 
+# 🖥️ Principais Telas 
+
+Login
+![login](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/4f240948-dcfa-4b83-8c63-f38bc387d956)
+
+Menu
+![menu](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/784a0866-c617-4738-8b5f-80a61744e584)
+
+Cadastro da Clínica
+![clinica](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/89d19463-b73c-42bc-bae3-9eef61da1c6e)
+
+Cadastro de Usuário
+![usuario](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/3a7a9509-99a3-49e1-836b-4922349da013)
+
+Cadastro de Pet
+![pets](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/a495ff08-66cb-447e-826b-3691bb41ba32)
+
+Entrada e Saída de Pet
+
+![entrada](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/163c35ac-6683-4569-907f-fc1b41df6932)
+
+![saida](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/0f19351b-6990-4a19-acbe-9a9408085370)
+
+Agendamento 
+
+![agendamento](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/a3c9d4f2-4e3b-4e57-a816-ec46465f4b4b)
+
+Histórico de atendimentos
+![historico](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/0cef4008-e1b3-421e-bfed-f0223fb87cd1)
+
 # ⚙️ Ferramentas 
 
 <img align="center" alt="Eli-java" height="40" width="130" src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white"><img align="center" alt="Eli-java" height="40" width="100" src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" ><img align="center" alt="Eli-java" height="40" width="130" src="https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white"><img align="center" alt="Eli-java" height="40" width="130" src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">
 <img align="center" alt="Eli-java" height="40" width="130" src="https://img.shields.io/badge/Canva-%2300C4CC.svg?&style=for-the-badge&logo=Canva&logoColor=white"><img align="center" alt="Eli-java" height="40" width="130" src="https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white">
 
 </p>
+
+
 
 # 👨‍💻 Desenvolvedores 
 
