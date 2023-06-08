@@ -1,5 +1,8 @@
 package control;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,9 +11,11 @@ public class Conexao {
 
 	private static Connection conexao;
 	private static Conexao instancia;
-	private static final String DATABASE = "dbpi";
-	private static final String USER = "root";
-	private static final String PSW = "aluno";
+	private static String DATABASE = null;
+	private static String USER = null;
+	private static String PSW = null;
+	
+	
 
 	private Conexao() {
 	}
@@ -24,6 +29,7 @@ public class Conexao {
 
 	public static Connection conectar() {
 		try {
+			leArquivoBD();
 			conexao = DriverManager.getConnection("jdbc:mysql://localhost/" + DATABASE + "?serverTimezone=UTC", USER,
 					PSW);
 			return conexao;
@@ -41,5 +47,23 @@ public class Conexao {
 			return false;
 		}
 		return true;
+	}
+	
+	public static void leArquivoBD() {
+		// Lê as informações de login e senha do arquivo de texto
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("credentials.txt"));
+			if (reader != null) {
+				DATABASE = reader.readLine(); 
+				USER = reader.readLine(); 
+				PSW = reader.readLine(); 
+			}
+			reader.close();
+
+		} catch (IOException e) {
+			System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+			return;
+		}
 	}
 }
