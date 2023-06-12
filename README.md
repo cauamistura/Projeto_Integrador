@@ -48,7 +48,7 @@ Login
 Menu
 ![menu](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/784a0866-c617-4738-8b5f-80a61744e584)
 
-Cadastro da Clínica
+Consulta e edição de dados da clínica
 ![clinica](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/89d19463-b73c-42bc-bae3-9eef61da1c6e)
 
 Cadastro de Usuário
@@ -57,14 +57,11 @@ Cadastro de Usuário
 Cadastro de Pet
 ![pets](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/a495ff08-66cb-447e-826b-3691bb41ba32)
 
-Entrada e Saída de Pet
-
+Baixas de entrada e saída de antendimentos 
 ![entrada](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/163c35ac-6683-4569-907f-fc1b41df6932)
-
 ![saida](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/0f19351b-6990-4a19-acbe-9a9408085370)
 
-Agendamento 
-
+Agendamento de atendimentos
 ![agendamento](https://github.com/cauamistura/Projeto_Integrador/assets/111134748/a3c9d4f2-4e3b-4e57-a816-ec46465f4b4b)
 
 Histórico de atendimentos
