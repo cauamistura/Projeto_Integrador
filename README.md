@@ -1,6 +1,6 @@
 <h1 align="center"> 🐶 Clínica Veterinária 🩺</h1>
 
-# O que é 💻 ? 
+# O que é? 💻  
 
 Se trata de um trabalho acadêmico realizado para a unidade curricular "Projeto Integrador II", que tem como objetivo gerenciar uma clínica veterinária, cadastrando, consultando, alterando e excluindo usuários e pets.
 Para o desenvolvimento do sistema, foi utilizado a linguagem Java e o banco de dados relacional MySQL.
