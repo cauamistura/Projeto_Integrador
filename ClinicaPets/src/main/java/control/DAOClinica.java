@@ -12,7 +12,6 @@ import model.Clinica;
 
 public class DAOClinica extends Clinica {
 	
-//	private static DAOTClinica FDAOTClinica;
 	private String wSql;
 	
 	

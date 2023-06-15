@@ -76,6 +76,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 	
 	private Menu menu = new Menu();
 	private JComboBox<Permicao> cbPermissao;
+	private JComboBox<Estado> cbUF;
 	private JComboBox<String> cbGenero;
 
 	// Declarações dos Objetos
@@ -132,9 +133,9 @@ public class UserCAD extends JFrame implements InterUsuario {
 		pnCard.add(pnImg, "cell 1 0,alignx center");
 		pnImg.setLayout(new MigLayout("", "[][][][][][][][][]", "[]"));
 		
-				JLabel lblNewLabel = new JLabel("");
-				lblNewLabel.setIcon(new ImageIcon(Util.getCaminhoIMG("person.png")));
-				pnImg.add(lblNewLabel, "cell 4 0,alignx center");
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Util.getCaminhoIMG("person.png")));
+		pnImg.add(lblNewLabel, "cell 4 0,alignx center");
 
 		JPanel pnContent = new JPanel();
 		pnContent.setBackground(new Color(125, 137, 245));
@@ -271,7 +272,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 		lbUf.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(lbUf, "flowy,cell 3 8");
 
-		JComboBox<Estado> cbUF = new JComboBox<Estado>();
+		cbUF = new JComboBox<Estado>();
 		cbUF.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		pnContent.add(cbUF, "cell 3 8");
 
@@ -434,7 +435,7 @@ public class UserCAD extends JFrame implements InterUsuario {
 				try {
 					edCidade.setText(lista.getBDNOMECID());
 					edBairro.setText(lista.getBDBAIRRO());
-//					cbUF.setSelectedIndex(lista.getBDIDUF() - 1);
+					cbUF.setSelectedIndex(lista.getBDIDUF() - 1);
 					return true;
 				} catch (Exception e) {
 					return false;

@@ -141,42 +141,16 @@ public class Login extends JFrame {
 		btnLogin.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<DadosUser> TListClinica = new ArrayList<>();
-				TListClinica = FDAODadosUser.listLogin(FDAODadosUser);
+				ArrayList<DadosUser> TListUser = new ArrayList<>();
+				TListUser = FDAODadosUser.listLogin(FDAODadosUser);
 
-				try {
-					FDAOTClinica.ListTClinica(FDAOTClinica);
-					if (validaUser(TListClinica)) {
+					if (validaUser(TListUser)) {
 						menu.setVisible(true);
 						menu.setLocationRelativeTo(null);
 						dispose();
 					} else {
-						TListClinica = FDAODadosUser.ListTDadosUser(FDAODadosUser);
-
-						if (TListClinica.isEmpty()) {
-							int resposta = JOptionPane.showConfirmDialog(null,
-									"Nenhuma Usuario cadastrado\nDeseja Cadastrar um?", "ATENÇÃO!!",
-									JOptionPane.YES_NO_OPTION);
-							if (resposta == JOptionPane.YES_OPTION) {
-								UserCAD user = new UserCAD();
-								user.setVisible(true);
-								dispose();
-							}
-						} else {
-							lbAlerta.setText("CPF ou senha incorreto!");
-						}
-
+						lbAlerta.setText("CPF ou senha incorreto!");
 					}
-				} catch (Exception e2) {
-					int resposta = JOptionPane.showConfirmDialog(null,
-							"Nenhuma Clinica cadastrada\nDeseja Cadastrar uma?", "ATENÇÃO!!",
-							JOptionPane.YES_NO_OPTION);
-					if (resposta == JOptionPane.YES_OPTION) {
-						ClinicaCAD clinica = new ClinicaCAD();
-						clinica.setVisible(true);
-						dispose();
-					}
-				}
 			}
 		});
 		panel_2.add(btnLogin, "cell 1 5,grow");

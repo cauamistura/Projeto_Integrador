@@ -1,3 +1,5 @@
+use dbpi;
+
 INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (1,'AC', 'Acre');
 INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (2,'AL', 'Alagoas');
 INSERT INTO TEstados (`BDIDUF`, `BDSIGLAUF`, `BDNOMEUF`) VALUES (3,'AP', 'Amapá');
@@ -41,6 +43,7 @@ INSERT INTO `dbpi`.`tendereco`
 VALUES
 (11111111, 1, 'Bela vista');
 
+/*
 INSERT INTO `dbpi`.`tclinica`
 (`BDIDCLINICA`,
 `BDIDCEP`,
@@ -50,6 +53,7 @@ INSERT INTO `dbpi`.`tclinica`
 `BDSENHA`)
 VALUES
 (1, 11111111, '11.111.111/1111-11', 'Clinica Teste', 'nome fantasia', '1');
+*/
 
 INSERT INTO `dbpi`.`tpermicao`
 (`BDIDPERMICAO`,
@@ -60,6 +64,7 @@ VALUES
 (2, 'Funcionario', 'descricao'),
 (3, 'Cliente', 'descricao');
 
+/*
 INSERT INTO `dbpi`.`tuser`
 (`BDIDUSER`,
 `BDIDCLINICA`,
@@ -86,7 +91,7 @@ VALUES
 ('11111111', 'Enzo', 'Feminino', '(21) 99999-8888', '1980-03-10', 2, 1),
 ('11111111', 'Vini', 'Feminino', '(31) 55555-4444', '1999-12-01', 3, 1),
 ('11111111', 'Ana Flavia', 'Feminino', '(48) 77777-6666', '2004-11-19', 4, 1);
-
+*/
 
 -- Tabela tespecie
 INSERT INTO `dbpi`.`tespecie`

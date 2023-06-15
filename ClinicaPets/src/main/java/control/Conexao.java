@@ -14,8 +14,6 @@ public class Conexao {
 	private static String DATABASE = null;
 	private static String USER = null;
 	private static String PSW = null;
-	
-	
 
 	private Conexao() {
 	}
@@ -23,13 +21,14 @@ public class Conexao {
 	public static Conexao getInstacia() {
 		if (instancia == null) {
 			instancia = new Conexao();
+			leArquivoBD();
 		}
 		return instancia;
 	}
 
 	public static Connection conectar() {
 		try {
-			leArquivoBD();
+
 			conexao = DriverManager.getConnection("jdbc:mysql://localhost/" + DATABASE + "?serverTimezone=UTC", USER,
 					PSW);
 			return conexao;
@@ -48,16 +47,16 @@ public class Conexao {
 		}
 		return true;
 	}
-	
+
 	public static void leArquivoBD() {
 		// Lê as informações de login e senha do arquivo de texto
-		
+
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("credentials.txt"));
 			if (reader != null) {
-				DATABASE = reader.readLine(); 
-				USER = reader.readLine(); 
-				PSW = reader.readLine(); 
+				DATABASE = reader.readLine();
+				USER = reader.readLine();
+				PSW = reader.readLine();
 			}
 			reader.close();
 

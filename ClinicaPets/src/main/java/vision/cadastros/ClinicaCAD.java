@@ -284,7 +284,7 @@ public class ClinicaCAD extends JFrame {
 					FDAOTCidade.setBDIDCIDADE(FDAOTCidade.getChaveID("tcidades", "BDIDCIDADE"));
 					FDAOTCidade.setBDNOMECID(edCidade.getText());
 					FDAOTCidade.setBDDESCCID(edDescricao.getText());
-					FDAOTCidade.setBDIDUF(edCep.achaIdUf(cbUF));
+					FDAOTCidade.setBDIDUF(edCep.achaIdUf(cbUF)-1);
 
 					FDAOTCidade.inserir(FDAOTCidade);
 
