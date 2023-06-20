@@ -3,6 +3,8 @@ package vision;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -15,24 +17,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import control.DAOClinica;
 import control.DAODadosUser;
 import model.DadosUser;
 import net.miginfocom.swing.MigLayout;
-import vision.cadastros.ClinicaCAD;
-import vision.cadastros.UserCAD;
 import vision.padrao.CPFTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJPasswordField;
 import vision.padrao.Util;
-
-import java.awt.Font;
-import java.awt.Toolkit;
 
 public class Login extends JFrame {
 	/**
@@ -42,7 +37,6 @@ public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DAODadosUser FDAODadosUser = new DAODadosUser();
-	private DAOClinica FDAOTClinica = new DAOClinica();
 	private Menu menu;
 	private RoundJPasswordField edSenha;
 	private CPFTextField edCNPJ;
@@ -118,7 +112,7 @@ public class Login extends JFrame {
 
 		edCNPJ = new CPFTextField();
 		edCNPJ.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
-		edCNPJ.setText("123.456.789-10");
+		edCNPJ.setText("");
 		panel_2.add(edCNPJ, "cell 1 1,grow");
 		edCNPJ.setColumns(10);
 
@@ -129,7 +123,6 @@ public class Login extends JFrame {
 		edSenha = new RoundJPasswordField();
 		edSenha.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		edSenha.setForeground(new Color(0, 0, 0));
-		edSenha.setText("senha123");
 		edSenha.setColumns(10);
 		panel_2.add(edSenha, "cell 1 3,grow");
 

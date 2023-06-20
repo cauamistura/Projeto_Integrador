@@ -34,7 +34,7 @@ INSERT INTO `dbpi`.`tcidades`
 `BDDESCCID`,
 `BDIDUF`)
 VALUES
-(1, 'gaspar', 'linda', 1);
+(1, 'Gaspar', 'linda', 1);
 
 INSERT INTO `dbpi`.`tendereco`
 (`BDCEP`,
@@ -43,7 +43,7 @@ INSERT INTO `dbpi`.`tendereco`
 VALUES
 (11111111, 1, 'Bela vista');
 
-/*
+
 INSERT INTO `dbpi`.`tclinica`
 (`BDIDCLINICA`,
 `BDIDCEP`,
@@ -52,8 +52,8 @@ INSERT INTO `dbpi`.`tclinica`
 `BDNOMEFANTASIA`,
 `BDSENHA`)
 VALUES
-(1, 11111111, '11.111.111/1111-11', 'Clinica Teste', 'nome fantasia', '1');
-*/
+(1, 11111111, '11.111.111/1111-11', 'Clínica Demonstração', 'Nome Fantasia', '1');
+
 
 INSERT INTO `dbpi`.`tpermicao`
 (`BDIDPERMICAO`,
@@ -64,7 +64,7 @@ VALUES
 (2, 'Funcionario', 'descricao'),
 (3, 'Cliente', 'descricao');
 
-/*
+
 INSERT INTO `dbpi`.`tuser`
 (`BDIDUSER`,
 `BDIDCLINICA`,
@@ -73,9 +73,9 @@ INSERT INTO `dbpi`.`tuser`
 `BDSENHA`,
 `BDIDPERMICAO`)
 VALUES
-(1, 1, '123.456.789-10', 'joao@gmail.com', 'senha123', 1),
-(2, 1, '987.654.321-00', 'enzo@gmail.com', 'senha456', 1),
-(3, 1, '111.222.333-44', 'vini@gmail.com', 'senha789', 1),
+(1, 1, '111.111.111-11', 'admin@gmail.com', 'admin', 1),
+(2, 1, '987.654.321-00', 'enzo@gmail.com', 'senha456', 2),
+(3, 1, '111.222.333-44', 'vini@gmail.com', 'senha789', 3),
 (4, 1, '555.444.333-22', 'ana@gmail.com', 'senhaABC', 1);
 
 INSERT INTO `dbpi`.`tdadosuser`
@@ -87,21 +87,20 @@ INSERT INTO `dbpi`.`tdadosuser`
 `BDIDUSER`,
 `BDIDCLINICA`)
 VALUES
-('11111111', 'Joao Bolinhas', 'Masculino', '(11) 98765-4321', '1995-08-15', 1, 1),
+('11111111', 'Admin', 'Masculino', '(11) 98765-4321', '1995-08-15', 1, 1),
 ('11111111', 'Enzo', 'Feminino', '(21) 99999-8888', '1980-03-10', 2, 1),
 ('11111111', 'Vini', 'Feminino', '(31) 55555-4444', '1999-12-01', 3, 1),
 ('11111111', 'Ana Flavia', 'Feminino', '(48) 77777-6666', '2004-11-19', 4, 1);
-*/
 
 -- Tabela tespecie
 INSERT INTO `dbpi`.`tespecie`
 (`BDIDESPECIE`,
 `BDNOMEESPECIE`)
 VALUES
-(1, 'gato'),
-(2, 'cachorro'),
-(3, 'coelho'),
-(4, 'hamster');
+(1, 'Gato'),
+(2, 'Cachorro'),
+(3, 'Coelho'),
+(4, 'Hamster');
 
 -- Tabela traca
 INSERT INTO `dbpi`.`traca`
@@ -109,12 +108,12 @@ INSERT INTO `dbpi`.`traca`
 `BDNOMERACA`,
 `BDIDESPECIE`)
 VALUES
-(1, 'dogmall', 1),
-(2, 'labrador', 2),
-(3, 'angorá', 1),
-(4, 'poodle', 2),
-(5, 'holandês', 3),
-(6, 'sírio', 4);
+(1, 'Siamês', 1),
+(2, 'Labrador', 2),
+(3, 'Angorá', 1),
+(4, 'Poodle', 2),
+(5, 'Holandês', 3),
+(6, 'Sírio', 4);
 
 INSERT INTO `dbpi`.`tpets`
 (`BDIDPET`,
@@ -135,17 +134,17 @@ INSERT INTO `dbpi`.`tcomorbidade`
 `BDNOMECOMORBIDADE`,
 `BDDESCCOMORBIDADE`)
 VALUES
-(1, 'nomecomorbidade', 'desccomorbidade');
+(1, 'Febre', 'Muita dor na cabeça');
 
 INSERT INTO `dbpi`.`tmedicacao`
 (`BDIDMEDICACAO`,
 `BDNOMEMEDICACAO`,
 `BDDESCRICAO`)
 VALUES
-(1, 'paracetamol', 'dores'),
-(2, 'ibuprofeno', 'inflamações'),
-(3, 'amoxicilina', 'antibiótico'),
-(4, 'omeprazol', 'problemas no estômago');
+(1, 'Paracetamol', 'dores'),
+(2, 'Ibuprofeno', 'inflamações'),
+(3, 'Amoxicilina', 'antibiótico'),
+(4, 'Omeprazol', 'problemas no estômago');
 
 INSERT INTO `dbpi`.`treceita`
 (`BDIDRECEITA`,
