@@ -36,9 +36,7 @@ Next/Finish
 
 ### Rodar script de crição do Banco de dados (Pasta Banco\scrips\criacao.sql) 
 
-### No programa ir em SRC/Controller/Conexao  e inserir o nome do banco, usuário e senha.
-
-![bacno](https://user-images.githubusercontent.com/110643682/224567588-c21deef9-2356-49b6-936d-bc7e2f3bf76b.jpg)
+### No arquivo (\..\Projeto_Integrador\ClinicaPets\credenciais.txt) inserir o nome do banco, usuário e senha.
 
 # 🖥️ Principais Telas 
 
