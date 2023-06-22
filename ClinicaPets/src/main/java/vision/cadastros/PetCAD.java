@@ -48,6 +48,7 @@ import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
 import vision.padrao.Util;
 import vision.padrao.CPFTextField;
+import vision.padrao.CustomDialog;
 import vision.padrao.lupaButton;
 
 public class PetCAD extends JFrame implements InterPet, InterUsuario {
@@ -85,7 +86,10 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 	JComboBox<Raca> racaCb = new JComboBox<Raca>();
 
 	Integer idPet = 0;
-
+	
+	PetCAD pet = this;
+	private CustomDialog dialog;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -280,24 +284,29 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 		btnNewButton_1.setText("Confirmar");
 		btnNewButton_1.setBackground((new Color(255, 199, 0)));
 		btnNewButton_1.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				if (txtNomePet.getText().isEmpty() || txtNomePet.getText() == null) {
-					JOptionPane.showMessageDialog(null, "Campo vazio: Nome");
+					dialog = new CustomDialog("ATENÇÂO!!", "Campo vazio: Nome", pet, true, true);
+					dialog.setVisible(true);
 					return;
 				}
 
 				if (lblNasc.getText().isEmpty() || lblNasc.getText() == null) {
-					JOptionPane.showMessageDialog(null, "Campo vazio: Data de nascimento");
+					dialog = new CustomDialog("ATENÇÂO!!", "Campo vazio: Data de Nascimento", pet, true, true);
+					dialog.setVisible(true);
 					return;
 				}
 
 				if (especieCb.getSelectedItem() == null) {
-					JOptionPane.showMessageDialog(null, "Campo vazio: Espécie");
+					dialog = new CustomDialog("ATENÇÂO!!", "Campo vazio: Especie", pet, true, true);
+					dialog.setVisible(true);
 					return;
 				}
 
 				if (racaCb.getSelectedItem() == null) {
-					JOptionPane.showMessageDialog(null, "Campo vazio: Raça");
+					dialog = new CustomDialog("ATENÇÂO!!", "Campo vazio: Raça", pet, true, true);
+					dialog.setVisible(true);
 					return;
 				}
 
@@ -316,30 +325,36 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 				FDAOTPet.setBDAPELIDO(txtApelidoPet.getText());
 
 				if (FDAOTUser.getBDIDUSER() == null) {
-					JOptionPane.showMessageDialog(null, "Usuario invalido, consulte e tente novamente.");
+					dialog = new CustomDialog("ATENÇÂO!!", "Usuario invalido, consulte e tente novamente.", pet, true, true);
+					dialog.setVisible(true);
 					return;
 				}
 
 				FDAOTPet.setBDIDUSER(FDAOTUser.getBDIDUSER());
 
 				if (!txtDataNasc.validaDate()) {
-					JOptionPane.showMessageDialog(null, "Data inválida. Tente novamente.");
+					dialog = new CustomDialog("ATENÇÂO!!", "Data inválida. Tente novamente.", pet, true, true);
+					dialog.setVisible(true);
 					return;
 				}
 				try {
 					if (FDAOTPet.existePet(FDAOTPet, idPet)) {
 						FDAOTPet.alterar(FDAOTPet);
+						dialog = new CustomDialog("Confirmação", "Seu pet foi alterado com sucesso!", pet, true, false);
+						dialog.setVisible(true);
 						JOptionPane.showMessageDialog(null, "Seu pet foi alterado com sucesso!");
 					} else {
 						FDAOTPet.inserir(FDAOTPet);
-						JOptionPane.showMessageDialog(null, "Seu pet foi cadastrado com sucesso!");
+						dialog = new CustomDialog("Confirmação", "Seu pet foi cadastrado com sucesso!", pet, true, false);
+						dialog.setVisible(true);
 					}
 
 					limpaCampos();
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o pet");
+					dialog = new CustomDialog("Atenção!!", "Não foi possível cadastrar o pet", pet, true, true);
+					dialog.setVisible(true);
 				}
 			}
 		});
@@ -354,13 +369,15 @@ public class PetCAD extends JFrame implements InterPet, InterUsuario {
 	}
 
 	public void exluirUser(Integer prIDPET) {
-		int resposta = JOptionPane.showConfirmDialog(null,
-				"Você realmente deseja excluir? Todos os dados vinculados a este pet serão excluídos.", "Confirmação",
-				JOptionPane.YES_NO_OPTION);
-
-		if (resposta == JOptionPane.YES_OPTION) {
+		
+		dialog = new CustomDialog("ATENÇÂO!!", "Você realmente deseja excluir? Todos os dados vinculados a este pet serão excluídos.", pet, true, true);
+		dialog.setVisible(true);
+		
+	
+		if (dialog.showDialog()) {
 			FDAOTPet.deletar(prIDPET);
-			JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+			dialog = new CustomDialog("Confirmação","Excluido com sucesso!", pet, true, false);
+			dialog.setVisible(true);
 			limpaCampos();
 		}
 

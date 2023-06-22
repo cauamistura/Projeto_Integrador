@@ -26,6 +26,7 @@ import control.DAORaca;
 import model.Especie;
 import model.Raca;
 import net.miginfocom.swing.MigLayout;
+import vision.padrao.CustomDialog;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -50,6 +51,8 @@ public class RacaCAD extends JFrame {
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JComboBox especieCb = new JComboBox<Especie>();
+	private CustomDialog dialog;
+	RacaCAD raca = this;
 
 	public RacaCAD() {
 		
@@ -93,12 +96,14 @@ public class RacaCAD extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (especieCb.getSelectedItem() == null) {
-					JOptionPane.showMessageDialog(null, "Campo vazio: Espécie");
+					dialog = new CustomDialog("ATENÇÂO!!", "Campo vazio: Especie", raca, true, true);
+					dialog.setVisible(true);
 					return;
 				}
 				
 				if (txtNomeRaca.getText().isEmpty() || txtNomeRaca.getText() == null) {
-					JOptionPane.showMessageDialog(null, "Campo vazio: Nome");
+					dialog = new CustomDialog("ATENÇÂO!!", "Campo vazio: Nome da Raça", raca, true, true);
+					dialog.setVisible(true);
 					return;
 				}
 
@@ -111,10 +116,15 @@ public class RacaCAD extends JFrame {
 						FDAOTRaca.inserir(FDAOTRaca);
 						txtNomeRaca.setText("");
 						especieCb.setSelectedIndex(0);
-						JOptionPane.showMessageDialog(null, "Raça cadastrada com sucesso!");
+			
+						dialog = new CustomDialog("Confirmação", "Raça cadastrada com sucesso!", raca, true, false);
+						dialog.setVisible(true);
+						
 					} catch (Exception e1) {
 						e1.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Não foi possível cadastrar a raça.");
+						
+						dialog = new CustomDialog("ATENÇÂO!!", "Não foi possível cadastrar a raça.", raca, true, true);
+						dialog.setVisible(true);
 					}
 				}
 			}
@@ -174,7 +184,9 @@ public class RacaCAD extends JFrame {
 		for (Raca mtRaca : TListRaca) {
 
 			if (mtRaca.getBDNOMERACA().equalsIgnoreCase(txtNomeRaca.getText())) {
-				JOptionPane.showMessageDialog(null, "Raça já existente");
+				
+				dialog = new CustomDialog("ATENÇÂO!!", "Raça já existente", raca, true, true);
+				dialog.setVisible(true);
 			return false;
 			}
 

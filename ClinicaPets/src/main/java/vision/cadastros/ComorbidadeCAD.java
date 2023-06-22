@@ -26,6 +26,7 @@ import javax.swing.event.ListSelectionListener;
 import control.DAOComorbidade;
 import model.Comorbidade;
 import net.miginfocom.swing.MigLayout;
+import vision.padrao.CustomDialog;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -61,11 +62,15 @@ public class ComorbidadeCAD extends JFrame {
 	private JLabel lblNewLabel_4;
 	private TableSimples table;
 	private JLabel lbStatus;
+	private CustomDialog dialog;
+	ComorbidadeCAD comorbidade = this;
 
 	/**
 	 * Create the frame.
 	 */
 	public ComorbidadeCAD() {
+		
+		
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
 		
@@ -237,7 +242,8 @@ public class ComorbidadeCAD extends JFrame {
 	public void eventConfirmar() {
 
 		if (edNomeCom.getText() == null || edDescCom.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Campo vazio: Comobirdade", "Atenção", 0);
+			dialog = new CustomDialog("ATENÇÂO!!", "Campo vaziu: Comorbidade", comorbidade, true, true);
+			dialog.setVisible(true);
 			edNomeCom.requestFocus();
 			return;
 		}
@@ -258,22 +264,23 @@ public class ComorbidadeCAD extends JFrame {
 	}
 
 	public void eventExcluir(Integer prID) {
-		int resposta = JOptionPane.showConfirmDialog(null,
-				"Ao Deletar esta comorbidade, você não vai mais pode utiliza-la.", "Atenção!",
-				JOptionPane.YES_NO_OPTION);
-
-		if (resposta == JOptionPane.YES_NO_OPTION) {
+		dialog = new CustomDialog("ATENÇÂO!!", "Ao Deletar esta comorbidade, você não vai mais pode utiliza-la.", comorbidade, true, true);
+		dialog.setVisible(true);
+		
+		if (dialog.showDialog()) {
 			FDAOTComorbidade.deletar(prID);
 
 			table.limparTabela();
 			atualizatabela();
 			limparDados();
 
-			JOptionPane.showInternalMessageDialog(null, "Excluido com sucesso!");
+			dialog = new CustomDialog("Confirmação", "Excluido com sucesso!", comorbidade, true, false);
+			dialog.setVisible(true);
 		} else {
 
-			JOptionPane.showInternalMessageDialog(null, "Comorbidade não foi Excluida!");
-
+			dialog = new CustomDialog("Confirmação", "Comorbidade não foi Excluida!", comorbidade, true, false);
+			dialog.setVisible(true);
+			
 		}
 	}
 

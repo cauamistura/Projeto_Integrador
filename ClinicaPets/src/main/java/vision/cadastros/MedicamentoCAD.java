@@ -26,6 +26,7 @@ import javax.swing.event.ListSelectionListener;
 import control.DAOMedicacao;
 import model.Medicamento;
 import net.miginfocom.swing.MigLayout;
+import vision.padrao.CustomDialog;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -53,6 +54,8 @@ public class MedicamentoCAD extends JFrame {
 	private Integer id;
 	private RoundJTextField edNomeMed;
 	private RoundJTextField edDescMed;
+	private CustomDialog dialog;
+	MedicamentoCAD medicamento = this;
 
 	public MedicamentoCAD() {
 		
@@ -226,7 +229,9 @@ public class MedicamentoCAD extends JFrame {
 	public void eventConfirmar() {
 
 		if (edNomeMed.getText() == null || edDescMed.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Campo vazio: Medicamento", "Atenção", 0);
+			dialog = new CustomDialog("ATENÇÂO!!", "Campo vazio: Medicamento", medicamento, true, true);
+			dialog.setVisible(true);
+	
 			edNomeMed.requestFocus();
 			return;
 		}
@@ -249,22 +254,24 @@ public class MedicamentoCAD extends JFrame {
 	}
 
 	public void eventDeletar() {
-		int resposta = JOptionPane.showConfirmDialog(null,
-				"Ao Deletar este medicamento, você não vai mais pode utiliza-lo.", "Atenção!",
-				JOptionPane.YES_NO_OPTION);
-		if (resposta == JOptionPane.YES_NO_OPTION) {
+		
+		dialog = new CustomDialog("ATENÇÂO!!", "Ao Deletar este Medicamento, você não vai mais pode utiliza-lo.", medicamento, true, true);
+		dialog.setVisible(true);
+		
+		if (dialog.showDialog()) {
 
 			FDAOTMedicacao.deletar(FDAOTMedicacao);
 			table.limparTabela();
 			atualizatabela();
 			limparDados();
 
-			JOptionPane.showInternalMessageDialog(null, "Excluido com sucesso!");
-
+			dialog = new CustomDialog("Confirmação", "Excluido com sucesso!", medicamento, true, false);
+			dialog.setVisible(true);
 		} else {
 
-			JOptionPane.showInternalMessageDialog(null, "Medicamento não foi Excluido!");
-
+			dialog = new CustomDialog("Confirmação", "Medicamento não foi Excluido!", medicamento, true, false);
+			dialog.setVisible(true);
+			
 		}
 
 	}

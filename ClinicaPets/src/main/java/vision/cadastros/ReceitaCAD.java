@@ -36,6 +36,7 @@ import model.interfaces.InterMedicamento;
 import model.interfaces.InterReceita;
 import net.miginfocom.swing.MigLayout;
 import vision.consultas.MedicamentoCON;
+import vision.padrao.CustomDialog;
 import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
@@ -54,8 +55,7 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 	private JPanel contentPane;
 	private Integer idmedicamento = 0;
 	private boolean mudaReceita;
-	private JOptionPane optionPane;
-	private  JDialog dialog;
+	private CustomDialog dialog;
 	private Timer timer;
 	private JPanel panel;
 	private JPanel panel_1;
@@ -78,6 +78,7 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 	private JLabel lblNewLabel_5;
 	private JLabel title;
 	private JLabel lblStatus;
+	ReceitaCAD receita = this;
 	
 	public ReceitaCAD(InterReceita event,  DAOReceita receita) {
 		
@@ -243,32 +244,28 @@ public class ReceitaCAD extends JFrame implements InterMedicamento{
 					FDAOTReceita.setBDDESCRICAO(textPane.getText());
 					FDAOTReceita.setBDNOMEMEDICACAO(FDAOTMedicacao.getBDNOMEMEDICACAO());
 					
-					optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-			        dialog = optionPane.createDialog("");
-
-			        timer = new Timer(1000, new ActionListener() {
-			            @Override
-			            public void actionPerformed(ActionEvent e) {
-			                dialog.dispose();
-			            }
-			        });
-			        timer.setRepeats(false);
-			        timer.start();
-
-			        dialog.setVisible(true);
-			        
+					
+					
+					dialog = new CustomDialog("Confirmação", "Salvo com sucesso", receita, true, false);
+					dialog.setVisible(true);
 			        dispose();
 		
 				}
 				
 				
 			}else {
-				JOptionPane.showMessageDialog(null, "Data Inicial menor que a Data final");
+				dialog = new CustomDialog("Atenção!!", "Data Inicial menor que a Data final", receita, true, true);
+				dialog.setVisible(true);
+
 	            edDataFinal.setText("");
 			}
 				
 			
 		} catch (Exception e) {
+			
+			dialog = new CustomDialog("Atenção!!", "Existem itens em Branco!!\n"
+					+ "Preencha todos os itens e tente novamente.", receita, true, true);
+			dialog.setVisible(true);
 
 			JOptionPane.showMessageDialog(null, "Existem itens em Branco!!\n"
 					+ "Preencha todos os itens e tente novamente.");

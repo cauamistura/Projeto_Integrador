@@ -46,6 +46,7 @@ import vision.Menu;
 import vision.atendimentos.EntradaATE;
 import vision.atendimentos.SaidaATE;
 import vision.padrao.CPFTextField;
+import vision.padrao.CustomDialog;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -95,6 +96,9 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 	//Objetos comorbidade 
 	private DAOComorbidade FDAOTComorbidade = new DAOComorbidade();
 	private JPanel panelTable;;
+	
+	private CustomDialog dialog;
+	HistoricoCON historico = this;
 	
 	/**
 	 * Create the frame.
@@ -258,7 +262,9 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 				}
 				
 				if (dado == null) {
-					JOptionPane.showMessageDialog(null, "Selecine um atendimento antes de continuar!");
+					dialog = new CustomDialog("Atenção!!", "Selecine um atendimento antes de continuar!", historico, true, true);
+					dialog.setVisible(true);
+	
 					return;
 				}
 				
@@ -314,8 +320,10 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 
 	private void chamaConPet() {
 		if (!edCpf.existeCpfUsuario(FDAOTUser)) {
-			JOptionPane.showInternalMessageDialog(null,
-					"Usuário informado não existe!\nInforme um usuário valido ou aperte F4 para cadastrar.");
+			
+			dialog = new CustomDialog("Atenção!!", "Usuário informado não existe!\nInforme um usuário valido ou aperte F4 para cadastrar.", historico, true, true);
+			dialog.setVisible(true);
+
 			edCpf.requestFocus();
 			return;
 		}
@@ -324,7 +332,8 @@ public class HistoricoCON extends JFrame implements InterUsuario, InterPet {
 		listPet = FDAOTPet.listTPetFiltradoUser(FDAOTPet);
 
 		if (listPet.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Este usuario não tem Pet(s) cadastrados!\nAperte F4 para cadastrar.");
+			dialog = new CustomDialog("Atenção!!", "Este usuario não tem Pet(s) cadastrados!\nAperte F4 para cadastrar.", historico, true, true);
+			dialog.setVisible(true);
 			return;
 		}
 		FVPetCON = new PetCON(listPet, this);

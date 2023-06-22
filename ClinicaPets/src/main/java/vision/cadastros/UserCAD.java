@@ -41,6 +41,7 @@ import vision.Menu;
 import vision.consultas.UserCON;
 import vision.padrao.CEPTextField;
 import vision.padrao.CPFTextField;
+import vision.padrao.CustomDialog;
 import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
@@ -88,7 +89,8 @@ public class UserCAD extends JFrame implements InterUsuario {
 	private DAOCidade FDAOTCidade = new DAOCidade();
 	private DAODadosUser FDAOTDadosUser = new DAODadosUser();
 	private DAOPermicao FDAOTPermicao = new DAOPermicao();
-
+	private CustomDialog dialog;
+	UserCAD user = this;
 
 	/**
 	 * Create the frame.
@@ -335,7 +337,9 @@ public class UserCAD extends JFrame implements InterUsuario {
 					if (Menu.FPERMICAO == 0) {
 						Permicao select = (Permicao) cbPermissao.getSelectedItem();
 						if (select.getBDIDPERMICAO() == 0) {
-							JOptionPane.showMessageDialog(null, "Você não tem permição para cadastrar um admin!");
+							dialog = new CustomDialog("Atenção!!", "Você não tem permição para cadastrar um admin!", user, true, true);
+							dialog.setVisible(true);
+
 							cbPermissao.requestFocus();
 							return;
 						}
@@ -388,15 +392,20 @@ public class UserCAD extends JFrame implements InterUsuario {
 
 						if (existeCpf) {
 							if (FDAOTDadosUser.alterar(FDAOTDadosUser)) {
-								JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+								dialog = new CustomDialog("Confirmação", "Salvo com sucesso!", user, true, false);
+								dialog.setVisible(true);
+
 							} else {
-								JOptionPane.showMessageDialog(null, "Erro ao salvar");
+								dialog = new CustomDialog("Confirmação", "Erro ao Salvar", user, true, false);
+								dialog.setVisible(true);
 							}
 						} else {
 							if (FDAOTDadosUser.inserir(FDAOTDadosUser)) {
-								JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+								dialog = new CustomDialog("Confirmação", "Salvo com sucesso!", user, true, false);
+								dialog.setVisible(true);
 							} else {
-								JOptionPane.showMessageDialog(null, "Erro ao salvar");
+								dialog = new CustomDialog("Confirmação", "Erro ao Salvar", user, true, false);
+								dialog.setVisible(true);
 							}
 						}
 						
@@ -407,7 +416,8 @@ public class UserCAD extends JFrame implements InterUsuario {
 						limpaCampos(false);
 
 					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "Erro ao salvar");
+						dialog = new CustomDialog("Confirmação", "Erro ao Salvar", user, true, false);
+						dialog.setVisible(true);
 					}
 
 				}

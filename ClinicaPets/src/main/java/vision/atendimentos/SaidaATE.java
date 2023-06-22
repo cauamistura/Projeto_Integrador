@@ -35,6 +35,7 @@ import vision.cadastros.UserCAD;
 import vision.consultas.EntradaCON;
 import vision.consultas.SaidaCON;
 import vision.padrao.CPFTextField;
+import vision.padrao.CustomDialog;
 import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
@@ -81,6 +82,8 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 	private lupaButton btnEntrada;
 	private lupaButton btnReceita;
 	private JLabel lblStatus;
+	private CustomDialog dialog;
+	SaidaATE saida = this;
 	
 	
 	public SaidaATE() {
@@ -288,7 +291,8 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 				v.setVisible(true);
 			
 		}else {
-			JOptionPane.showMessageDialog(null, "Selecione uma entrada antes de emitir uma receita");
+			dialog = new CustomDialog("Atenção!!", "Selecione uma entrada para cadastrar uma Receita", saida, true, true);
+			dialog.setVisible(true);
 		}	
 	}
 
@@ -384,7 +388,9 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 					FDAOReceita.alterar(FDAOReceita);
 					FDAOSaida.alterar(FDAOSaida);
 					
-					JOptionPane.showMessageDialog(null, "Dados alterados com SUCESSO!!");
+					dialog = new CustomDialog("Confirmação",  "Dados alterados com SUCESSO!!", saida, true, false);
+					dialog.setVisible(true);
+
 					
 				}else {
 					FDAOReceita.inserir(FDAOReceita);
@@ -392,25 +398,30 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 					
 					btnExcluir.setEnabled(true);
 					
-					JOptionPane.showMessageDialog(null, "Dados inseridos com SUCESSO!!");
+					dialog = new CustomDialog("Confirmação",  "Dados inseridos com SUCESSO!!", saida, true, false);
+					dialog.setVisible(true);
+
 				}
 				
-				int resposta = JOptionPane.showConfirmDialog(null,
-						"Deseja limpra os dados presentes na Tela?",
-						"Confirmação", JOptionPane.YES_NO_OPTION);
-
-				if (resposta == JOptionPane.YES_OPTION) {
+				dialog = new CustomDialog("Confirmação",  "Deseja limpra os dados presentes na Tela?", saida, true, true);
+				dialog.setVisible(true);
+				
+				if (dialog.showDialog()) {
 					eventLimpar();
 				}
 			}else {
-				JOptionPane.showMessageDialog(null, "Cadastre uma receita antes de cadastrar uma saida");
+				
+				dialog = new CustomDialog("Confirmação",  "Cadastre uma receita antes de cadastrar uma saida", saida, true, false);
+				dialog.setVisible(true);
+				
 				chamaReceitaCad();
 			}
 			
 			
 		
 		}else {
-			JOptionPane.showMessageDialog(null, "Selecione um  atendimento antes de confirmar a ação");
+			dialog = new CustomDialog("Confirmação", "Selecione um  atendimento antes de confirmar a ação", saida, true, false);
+			dialog.setVisible(true);
 		}	
 		
 			
@@ -458,22 +469,26 @@ public class SaidaATE extends JFrame implements InterEntrada, InterReceita,Inter
 		numEntrada = FDAOSaida.getBDIDENTRADA();
 	
 		if (!(numEntrada == null)) {
-			int resposta = JOptionPane.showConfirmDialog(null,
-					"Você realmente deseja excluir?\nTodos os dados vinculados a esta saida serão excluídos.",
-					"Confirmação", JOptionPane.YES_NO_OPTION);
 
-			if (resposta == JOptionPane.YES_OPTION) {
+			dialog = new CustomDialog("Confirmação",  "Você realmente deseja excluir?\nTodos os dados vinculados a esta saida serão excluídos.", saida, true, true);
+			dialog.setVisible(true);
+			
+			if (dialog.showDialog()) {
 				FDAOSaida.deletar(numEntrada);
 				eventLimpar();
 				
-				JOptionPane.showMessageDialog(null, "Exclusão Confirmada");
+				dialog = new CustomDialog("Confirmação","Exclusão Confirmada", saida, true, false);
+				dialog.setVisible(true);
+	
 			}else {
-				JOptionPane.showMessageDialog(null, "Exclusão cancelada");
+				dialog = new CustomDialog("Confirmação","Exclusão Cancelada", saida, true, false);
+				dialog.setVisible(true);
 			}
 			
 			
 		} else {
-			JOptionPane.showMessageDialog(null, "Nenhum atedimento selecionado para realizar a exclusão");
+			dialog = new CustomDialog("Atenção!!", "Nenhum atedimento selecionado para realizar a exclusão", saida, true, true);
+			dialog.setVisible(true);
 		}
 			
 	}

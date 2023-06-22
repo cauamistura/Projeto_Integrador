@@ -48,6 +48,7 @@ import vision.consultas.EntradaCON;
 import vision.consultas.PetCON;
 import vision.consultas.UserCON;
 import vision.padrao.CPFTextField;
+import vision.padrao.CustomDialog;
 import vision.padrao.DateTextField;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
@@ -104,6 +105,8 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 	private RoundButton btnLimpar;
 	private RoundButton btnConsulta; 
 	private RoundButton btnConfirmar;
+	private CustomDialog dialog;
+	EntradaATE entrada = this;
 
 	public EntradaATE() {
 		
@@ -409,8 +412,10 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 
 	private void chamaConPet() {
 		if (!edCpf.existeCpfUsuario(FDAOTUser)) {
-			JOptionPane.showInternalMessageDialog(null,
-					"Usuário informado não existe!\nInforme um usuário valido ou aperte F4 para cadastrar.");
+			
+			dialog = new CustomDialog("Atençao!!", "Usuário informado não existe!\\nInforme um usuário valido ou aperte F4 para cadastrar.", entrada, true, true);
+			dialog.setVisible(true);
+			
 			edCpf.requestFocus();
 			return;
 		}
@@ -419,7 +424,9 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		listPet = FDAOTPet.listTPetFiltradoUser(FDAOTPet);
 
 		if (listPet.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Este usuario não tem Pet(s) cadastrados!\nAperte F4 para cadastrar.");
+			dialog = new CustomDialog("Atençao!!", "Este usuario não tem Pet(s) cadastrados!\nAperte F4 para cadastrar.", entrada, true, true);
+			dialog.setVisible(true);
+
 			return;
 		}
 		FVPetCON = new PetCON(listPet, this);
@@ -480,21 +487,25 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 
 	private void excluirAtendimento(Integer prID) {
 		if (prID == null) {
-			JOptionPane.showMessageDialog(null, "Número de atendimento invalido!");
+			
+			dialog = new CustomDialog("Atençao!!", "Este usuario não tem Pet(s) cadastrados!\nAperte F4 para cadastrar.", entrada, true, true);
+			dialog.setVisible(true);
+			
 			edNumEntrada.requestFocus();
 			return;
 		}
 
-		int resposta = JOptionPane.showConfirmDialog(null,
-				"Você realmente deseja excluir?\nTodos os dados vinculados a esta entrada serão excluídos.",
-				"Confirmação", JOptionPane.YES_NO_OPTION);
-
-		if (resposta == JOptionPane.YES_OPTION) {
+		dialog = new CustomDialog("Confirmação", "Você realmente deseja excluir?\nTodos os dados vinculados a esta entrada serão excluídos.", entrada, true, true);
+		dialog.setVisible(true);
+		
+		if (dialog.showDialog()) {
 			try {
 				FDAOEntrada.deletar(prID);
-				JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+				dialog = new CustomDialog("Confirmaçãi", "Excluido com sucesso!", entrada, true, false);
+				dialog.setVisible(true);
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Erro ao excluir.");
+				dialog = new CustomDialog("Confirmaçãi", "Erro ao excluir.", entrada, true, false);
+				dialog.setVisible(true);
 			}
 		}
 	}
@@ -543,11 +554,10 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 	private void acaoConfirma() {
 
 		if (edNumEntrada.getText().isEmpty()) {
-			int resposta = JOptionPane.showConfirmDialog(null,
-					"Número do atendimento não informado.\nDeseja prencher automaticamente?", "Confirmação",
-					JOptionPane.YES_NO_OPTION);
-
-			if (resposta == JOptionPane.YES_OPTION) {
+			dialog = new CustomDialog("Confirmação", "Número do atendimento não informado.\nDeseja prencher automaticamente?", entrada, true, true);
+			dialog.setVisible(true);
+			
+			if (dialog.showDialog()) {
 				FDAOEntrada.setBDIDENTRADA(FDAOEntrada.getChaveID("tatendimento_entrada", "BDIDENTRADA"));
 			} else {
 				edNumEntrada.requestFocus();
@@ -564,13 +574,16 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		}
 
 		if (achaComorbidadeID(edComorbidade.getText()) == null) {
-			JOptionPane.showInternalMessageDialog(null, "Comorbidade invalida!\nConsulte e tente novamente");
-			edComorbidade.requestFocus();
+			dialog = new CustomDialog("Atençaõ!!", "Comorbidade invalida!\nConsulte e tente novamente", entrada, true, true);
+			dialog.setVisible(true);
+		
 			return;
 		}
 
 		if (!edDataEntrada.validaDate()) {
-			JOptionPane.showInternalMessageDialog(null, "Data invalida.");
+			dialog = new CustomDialog("Atençaõ!!", "Data invalida.", entrada, true, true);
+			dialog.setVisible(true);
+			
 			edDataEntrada.requestFocus();
 			return;
 		}
@@ -581,8 +594,9 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 		FDAOEntrada.setBDDESC(pnDesc.getText());
 
 		if (!validaSaida()) {
-			JOptionPane.showInternalMessageDialog(null,
-					"Não é possivel a alteração do pet.\nEntrada já vinculada com uma saída.");
+			dialog = new CustomDialog("Confirmação", "Não é possivel a alteração do pet.\nEntrada já vinculada com uma saída.", entrada, true, false);
+			dialog.setVisible(true);
+		
 			return;
 		}
 
@@ -592,9 +606,11 @@ public class EntradaATE extends JFrame implements InterUsuario, InterPet, InterC
 			} else {
 				FDAOEntrada.inserir(FDAOEntrada);
 			}
-			JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+			dialog = new CustomDialog("Confirmação", "Salvo com sucesso!!", entrada, true, false);
+			dialog.setVisible(true);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao salvar!");
+			dialog = new CustomDialog("Confirmação", "Erro ao salvar!", entrada, true, false);
+			dialog.setVisible(true);
 		}
 
 		limpaCampos();

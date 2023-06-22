@@ -14,13 +14,14 @@ public class CustomDialog extends JDialog {
 
     public CustomDialog(String title, String conteudo, Frame parent, boolean modal, Boolean mensagem ) {
         super(parent, title, modal);
+        getContentPane().setBackground(new Color(158, 174, 255));
 
         // Cria os botões personalizados
         okButton = new RoundButton("OK");
-        okButton.setBounds(76, 156, 73, 21);
+        okButton.setBounds(184, 112, 73, 21);
         cancelButton = new RoundButton("Cancelar");
-        cancelButton.setBounds(189, 156, 87, 21);
-
+        cancelButton.setBounds(349, 112, 87, 21);
+       
 
         // Adiciona a ação ao botão OK
         okButton.addActionListener(new ActionListener() {
@@ -41,29 +42,31 @@ public class CustomDialog extends JDialog {
         });
         getContentPane().setLayout(null);
         
-  
+        
+        JLabel lblIcon = new JLabel();
+        lblIcon.setIcon(new ImageIcon(Util.getCaminhoIMG("atencao.png")));
+        lblIcon.setBounds(10, 0, 113, 156);
+        getContentPane().add(lblIcon);
+
+        
         if(!mensagem) {
         	cancelButton.setVisible(mensagem);
-        	okButton.setBounds(145, 156, 73, 21);
+        	lblIcon.setIcon(new ImageIcon(Util.getCaminhoIMG("GatoConfirma.png")));
+        	okButton.setBounds(276, 112, 73, 21);
         }
         
-
-
         // Adiciona os botões ao diálogo
         getContentPane().add(okButton);
         getContentPane().add(cancelButton);
         
         JLabel lblConteudo = new JLabel(conteudo);
-        lblConteudo.setBounds(153, 63, 145, 13);
+        lblConteudo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblConteudo.setBounds(118, 37, 401, 46);
         getContentPane().add(lblConteudo);
         
-        JLabel lblIcon = new JLabel("");
-        lblIcon.setIcon(new ImageIcon("C:\\Git\\Projeto_Integrador\\ClinicaPets\\src\\main\\resources\\dogmal.png"));
-        lblIcon.setBounds(21, 10, 100, 118);
-        getContentPane().add(lblIcon);
-
+        
         // Configura o tamanho do diálogo
-        setSize(354, 245);
+        setSize(543, 198);
         setLocationRelativeTo(parent);
     }
 

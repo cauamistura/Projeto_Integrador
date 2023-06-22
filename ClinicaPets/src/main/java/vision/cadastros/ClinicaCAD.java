@@ -41,6 +41,7 @@ import vision.Login;
 import vision.Menu;
 import vision.padrao.CEPTextField;
 import vision.padrao.CNPJTextFiel;
+import vision.padrao.CustomDialog;
 import vision.padrao.PanelComBackgroundImage;
 import vision.padrao.RoundButton;
 import vision.padrao.RoundJTextField;
@@ -77,11 +78,13 @@ public class ClinicaCAD extends JFrame {
 	private JOptionPane optionPane;
 	private JDialog dialog;
 	private Timer timer;
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public ClinicaCAD() {
+		ClinicaCAD Clinica = this;
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getCaminhoIMG("logo.png")));
 
@@ -318,34 +321,22 @@ public class ClinicaCAD extends JFrame {
 						FDAOTDadosUser.ListTDadosUser(FDAOTDadosUser);
 
 					} catch (Exception e2) {
-						int resposta = JOptionPane.showConfirmDialog(null,
-								"Nenhuma Usuario cadastrado\nDeseja Cadastrar um?", "ATENÇÃO!!",
-								JOptionPane.YES_NO_OPTION);
-						if (resposta == JOptionPane.YES_OPTION) {
+						
+						CustomDialog dialog = new CustomDialog("ATENÇÃO!!","Nenhuma Usuario cadastrado\nDeseja Cadastrar um?", Clinica, true, true );
+			            dialog.setVisible(true);
+						
+						if (dialog.showDialog()) {
 							UserCAD user = new UserCAD();
 							user.setVisible(true);
 							dispose();
 						}
 					}
-
 				}
 
 				menu.AtualizaDadosLogin("", edNome.getText());
 
-				optionPane = new JOptionPane("Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE,
-						JOptionPane.DEFAULT_OPTION, null, new Object[] {}, null);
-				dialog = optionPane.createDialog("");
-
-				timer = new Timer(800, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						dialog.dispose();
-					}
-				});
-				timer.setRepeats(false);
-				timer.start();
-
-				dialog.setVisible(true);
+				CustomDialog dialog = new CustomDialog("Confirmação","Salvo com Sucesso", Clinica, true, false );
+	            dialog.setVisible(true);
 
 				if (!edCnpj.existeCnpjClinica(FDAOTClinica)) {
 
